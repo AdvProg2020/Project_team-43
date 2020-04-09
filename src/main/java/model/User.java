@@ -12,7 +12,7 @@ public abstract class User {
     protected String password;
     protected double balance;
     protected ArrayList<Discount> discounts;
-    protected ArrayList<Order> orders;
+    protected ArrayList<SellOrder> orders;
     protected int userType;
 
 
@@ -25,7 +25,7 @@ public abstract class User {
         this.password = password;
         /////balance
         discounts = new ArrayList<Discount>();
-        orders = new ArrayList<Order>();
+        orders = new ArrayList<SellOrder>();
     }
 
     public void setFirstName(String firstName) {
@@ -58,6 +58,10 @@ public abstract class User {
     }
 
     public void editFields(String field) {
+
+    }
+
+    public void viewBalance(){
 
     }
 

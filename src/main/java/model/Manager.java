@@ -19,17 +19,6 @@ public class Manager extends User {
 
     }
 
-    public void changeUser(String userName, int type) {
-        User user = User.getUserByUserName(userName);
-        if (type == 1 && user.userType != 1) {
-
-        } else if (type == 2 && user.userType != 2) {
-
-        } else if (type == 3 && user.userType != 3) {
-
-        }
-    }
-
     public void deleteUser(String userName) {
 
     }

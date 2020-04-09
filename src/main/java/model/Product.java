@@ -11,17 +11,21 @@ public class Product {
     private String companyName;
     private double price;
     private boolean isAvailable;
+    private Category category;
+    ////////moshakhasate daste
+    private String explanation;/////////tozihat
     private ArrayList<Double> score;
     private ArrayList<Opinion> opinions;
     public ArrayList<Buyer> buyers;
     private ArrayList<Seller> sellers;
 
-    public Product(String productId, String name, String companyName, double price) {
+    public Product(String productId, String name, String companyName, double price, Category category) {
         this.productId = productId;
         this.productState = State.ProductState.creatingProcess;
         this.name = name;
         this.companyName = companyName;
         this.price = price;
+        this.category = category;
         buyers = new ArrayList<Buyer>();
         sellers = new ArrayList<Seller>();
         score = new ArrayList<Double>();
