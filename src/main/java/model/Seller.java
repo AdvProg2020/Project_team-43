@@ -7,8 +7,8 @@ public class Seller extends User {
     private ArrayList<Product> products;
     private ArrayList<Off> offs;
 
-    public Seller(String nickName, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
-        super(nickName, firstName, lastName, email, phoneNumber, password);
+    public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
+        super(username, firstName, lastName, email, phoneNumber, password);
         this.company = Company.getCompanyByName(companyName);
         this.userType = 2;
         products = new ArrayList<Product>();

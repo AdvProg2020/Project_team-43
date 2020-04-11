@@ -6,8 +6,8 @@ public class Buyer extends User {
     //TODO
     private ArrayList<Product> cart;
 
-    public Buyer(String nickName, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(nickName, firstName, lastName, email, phoneNumber, password);
+    public Buyer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        super(username, firstName, lastName, email, phoneNumber, password);
         this.userType = 1;
         cart = new ArrayList<Product>();
         User.allUsers.add(this);

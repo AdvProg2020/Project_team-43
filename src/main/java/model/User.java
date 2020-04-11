@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class User {
     public static ArrayList<User> allUsers = new ArrayList<User>();
-    protected final String nickName;
+    protected final String username;
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -16,8 +16,8 @@ public abstract class User {
     protected int userType;
 
 
-    public User(String nickName, String firstName, String lastName, String email, String phoneNumber, String password) {
-        this.nickName = nickName;
+    public User(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

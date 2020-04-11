@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Manager extends User {
     public static ArrayList<Request> allRequest = new ArrayList<Request>();
 
-    public Manager(String nickName, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(nickName, firstName, lastName, email, phoneNumber, password);
+    public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
+        super(username, firstName, lastName, email, phoneNumber, password);
         this.userType = 3;
         User.allUsers.add(this);
     }
@@ -19,11 +19,11 @@ public class Manager extends User {
 
     }
 
-    public void deleteUser(String userName) {
+    public void deleteUser(String username) {
 
     }
 
-    public void viewUser(String userName) {
+    public void viewUser(String username) {
 
     }
 
