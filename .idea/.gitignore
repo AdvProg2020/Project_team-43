@@ -1,5 +1,5 @@
 # Default ignored files
 /workspace.xml
-/*.xml
-/*.iml
-/*.class
+*.xml
+*.iml
+*.class
