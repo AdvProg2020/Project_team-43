@@ -49,7 +49,7 @@ public class Buyer extends User {
 
     public void viewOrders(){
 
-    }//////view logs
+    }//////View logs
 
     public void showOrder(String orderId){
 

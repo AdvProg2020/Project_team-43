@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class LoggedOutStatus extends Menu implements LoginStatus {
     public LoggedOutStatus(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer,Menu> submenus=new HashMap<>();
+        HashMap<Integer,Menu> submenus=new HashMap<Integer, Menu>();
         submenus.put(1,getLoginMenu());
         submenus.put(2,getRegisterMenu());
         this.setSubmenus(submenus);
@@ -14,11 +14,11 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
         return new Menu(this.parent,"login") {
             @Override
             public void show(){
-
+                //TODO
             }
             @Override
             public void run() {
-                //login
+                //TODO : login
                 ((UserPanelMenu)this.parent).changeStatus();
                 this.parent.parent.show();
                 this.parent.parent.run();
@@ -33,7 +33,7 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
             }
             @Override
             public void run() {
-                //register
+                //TODO : register
                 ((UserPanelMenu)this.parent).changeStatus();
                 this.parent.parent.show();
                 this.parent.parent.run();

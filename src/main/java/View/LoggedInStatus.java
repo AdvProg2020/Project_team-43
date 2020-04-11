@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class LoggedInStatus extends Menu implements LoginStatus {
     public LoggedInStatus(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer,Menu> submenus=new HashMap<>();
+        HashMap<Integer,Menu> submenus=new HashMap<Integer, Menu>();
         submenus.put(1,getLogoutMenu());
         this.setSubmenus(submenus);
     }
