@@ -16,12 +16,14 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
             public void show(){
                 //TODO
             }
+
             @Override
             public void run() {
                 //TODO : login
+                //TODo : set user in loggedInStatus
                 ((UserPanelMenu)this.parent).changeStatus();
-                this.parent.parent.show();
-                this.parent.parent.run();
+                this.parent.show();
+                this.parent.run();
             }
         };
     }
@@ -34,7 +36,6 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
             @Override
             public void run() {
                 //TODO : register
-                ((UserPanelMenu)this.parent).changeStatus();
                 this.parent.parent.show();
                 this.parent.parent.run();
             }

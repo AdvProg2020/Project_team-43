@@ -53,6 +53,10 @@ public abstract class User {
         return null;
     }
 
+    public int getUserType() {
+        return userType;
+    }
+
     public void viewPersonalInfo(){
 
     }

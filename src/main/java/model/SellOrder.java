@@ -20,7 +20,6 @@ public class SellOrder {
         this.products = products;
         this.buyer = buyer;
     }
-
     public static SellOrder getSellOrderById(String orderId){
         return null;
     }
