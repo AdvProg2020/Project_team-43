@@ -7,34 +7,31 @@ public abstract class User {
     protected String username;
     protected PersonalInfo personalInfo;
     protected double credit;//hamoon etebare
-    protected ArrayList<Discount> discounts;
     protected UserType userType;
 
 
-
-    public User(String username,PersonalInfo personalInfo) {
+    public User(String username, PersonalInfo personalInfo) {
         this.username = username;
         this.personalInfo = personalInfo;
         setUserType();
         credit = 0;
-        discounts = new ArrayList<Discount>();
         allUsers.add(this);
     }
 
     public abstract void setUserType();
 
-    public static boolean hasUserWithUserName(String username){
+    public static boolean hasUserWithUserName(String username) {
         for (User user : allUsers) {
-            if (user.username.equals(username)){
+            if (user.username.equals(username)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static User getUserByUserName(String username){
+    public static User getUserByUserName(String username) {
         for (User user : allUsers) {
-            if (user.username.equals(username)){
+            if (user.username.equals(username)) {
                 return user;
             }
         }
@@ -45,7 +42,7 @@ public abstract class User {
         return userType;
     }
 
-    public void viewPersonalInfo(){
+    public void viewPersonalInfo() {
 
     }
 
@@ -53,7 +50,7 @@ public abstract class User {
 
     }
 
-    public void viewCredit(){
+    public void viewCredit() {
 
     }
 

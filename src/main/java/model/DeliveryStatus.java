@@ -1,6 +1,5 @@
 package model;
 
 public enum DeliveryStatus {
-    DELIVERED,
-
+    DELIVERED_SUCCESSFULLY, DELIVERING
 }
