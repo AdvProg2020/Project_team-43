@@ -13,8 +13,7 @@ public abstract class User {
     protected double balance;
     protected ArrayList<Discount> discounts;
     protected ArrayList<SellOrder> orders;
-    protected int userType;
-
+    protected UserType userType;
 
     public User(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         this.username = username;
@@ -48,12 +47,25 @@ public abstract class User {
         this.password = password;
     }
 
-    public static User getUserByUserName(String userName){
+    public static boolean hasUserWithUserName(String username){
+        for (User user : allUsers) {
+            if (user.username.equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static User getUserByUserName(String username){
+        for (User user : allUsers) {
+            if (user.username.equals(username)){
+                return user;
+            }
+        }
         return null;
     }
 
-    public int getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 

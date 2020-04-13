@@ -10,7 +10,7 @@ public class Seller extends User {
     public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
         super(username, firstName, lastName, email, phoneNumber, password);
         this.company = Company.getCompanyByName(companyName);
-        this.userType = 2;
+        this.userType = UserType.SELLER;
         products = new ArrayList<Product>();
         offs = new ArrayList<Off>();
         User.allUsers.add(this);

@@ -7,7 +7,7 @@ public class Manager extends User {
 
     public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
         super(username, firstName, lastName, email, phoneNumber, password);
-        this.userType = 3;
+        this.userType = UserType.MANAGER;
         User.allUsers.add(this);
     }
 
