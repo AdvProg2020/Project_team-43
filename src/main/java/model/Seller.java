@@ -6,14 +6,19 @@ public class Seller extends User {
     private Company company;
     private ArrayList<Product> products;
     private ArrayList<Off> offs;
+    private ArrayList<SellOrder> orders;
 
-    public Seller(String username, String firstName, String lastName, String email, String phoneNumber, String password, String companyName) {
-        super(username, firstName, lastName, email, phoneNumber, password);
+    public Seller(String username, PersonalInfo personalInfo, String companyName) {
+        super(username, personalInfo);
         this.company = Company.getCompanyByName(companyName);
-        this.userType = UserType.SELLER;
         products = new ArrayList<Product>();
         offs = new ArrayList<Off>();
-        User.allUsers.add(this);
+        orders = new ArrayList<SellOrder>();
+    }
+
+    @Override
+    public void setUserType() {
+        userType = UserType.SELLER;
     }
 
     public void viewPersonalInfo() {
@@ -52,15 +57,15 @@ public class Seller extends User {
 
     }
 
-    public void viewOffs(){
+    public void viewOffs() {
 
     }
 
-    public void editOff(String offId){
+    public void editOff(String offId) {
 
     }
 
-    public void addOff(){
+    public void addOff() {
 
     }
 }

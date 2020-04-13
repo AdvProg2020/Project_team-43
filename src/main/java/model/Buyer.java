@@ -5,14 +5,18 @@ import java.util.ArrayList;
 public class Buyer extends User {
     //TODO
     private ArrayList<Product> cart;
+    private ArrayList<BuyOrder> orders;
 
-    public Buyer(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password);
-        this.userType = UserType.BUYER;
+    public Buyer(String username, PersonalInfo personalInfo) {
+        super(username, personalInfo);
         cart = new ArrayList<Product>();
-        User.allUsers.add(this);
+        orders = new ArrayList<BuyOrder>();
     }
 
+    @Override
+    public void setUserType(){
+        userType = UserType.BUYER;
+    }
     public void viewPersonalInfo() {
 
     }

@@ -1,28 +1,21 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class BuyOrder {
-    public static ArrayList<BuyOrder> allBuyOrders = new ArrayList<BuyOrder>();
-    private String OrderId;
-    private String date;
+public class BuyOrder extends Order {
     private double payment;
-    private double CodedDiscountAmount;///////object auction ham mitoone bashe
+    private double codedDiscountAmount;///////object auction ham mitoone bashe
     private ArrayList<Product> products;
     private Seller seller;
-    ///////////////vaziat ersal
+    private DeliveryStatus deliveryStatus;
 
 
-    public BuyOrder(String orderId, String date, double payment, ArrayList<Product> products, Seller seller) {
-        OrderId = orderId;
-        this.date = date;
+    public BuyOrder(String orderId, Date date, double payment, ArrayList<Product> products, Seller seller) {
+        super(orderId, date);
         this.payment = payment;
         this.products = products;
         this.seller = seller;
-    }
-
-    public static SellOrder getBuyOrderById(String orderId){
-        return null;
     }
 
 }

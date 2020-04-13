@@ -5,10 +5,13 @@ import java.util.ArrayList;
 public class Manager extends User {
     public static ArrayList<Request> allRequest = new ArrayList<Request>();
 
-    public Manager(String username, String firstName, String lastName, String email, String phoneNumber, String password) {
-        super(username, firstName, lastName, email, phoneNumber, password);
-        this.userType = UserType.MANAGER;
-        User.allUsers.add(this);
+    public Manager(String username, PersonalInfo personalInfo) {
+        super(username, personalInfo);
+    }
+
+    @Override
+    public void setUserType() {
+        userType = UserType.MANAGER;
     }
 
     public static Request getRequestById(String requestId) {
