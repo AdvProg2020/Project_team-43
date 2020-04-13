@@ -1,27 +1,38 @@
 package View;
 
+import model.Category;
+
+import java.util.ArrayList;
 
 public class ProductsPanel extends Menu {
+    private ArrayList<Category> categories = manager.viewCategories();
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
-        submenus.put(1, getCategory());
-        submenus.put(2, getFiltering());
-        submenus.put(3, getSorting());
-        submenus.put(4, getProducts());
-        submenus.put(5, new ProductPanel(this, "product Panel"));
+        submenus.put(1, new ProductsOfCategory(this,"productsInCategory"));
+        //submenus.put(2, new ProductPanel(this, "product Panel"));
+        //submenus.put(2, getFiltering());
+        //submenus.put(3, getSorting());
+        //submenus.put(4, getProducts());
     }
+
     private Menu getCategory() {
 
         return new Menu(this, "category") {
+
             @Override
             public void show() {
-                manager.viewCategories();
+                ArrayList<Category> categories = manager.viewCategories();
+                for (int i = 0; i < categories.size(); i++)
+                    System.out.println((i + 1) + ".  " + categories.get(i).getName());
+                System.out.println((categories.size() + 1) + " " + "back");
             }
 
             @Override
             public void run() {
-                this.parent.show();
-                this.parent.run();
+                int input = Integer.parseInt(scanner.nextLine());
+
+
+
             }
         };
     }
@@ -61,6 +72,7 @@ public class ProductsPanel extends Menu {
             }
         };
     }
+
     private Menu getProducts() {
 
         return new Menu(this, "products") {
@@ -77,12 +89,23 @@ public class ProductsPanel extends Menu {
         };
     }
 
+    public void show(){
 
-
-    public void execute() {
-        this.show();
-        this.run();
+        for (int i = 0; i < categories.size(); i++)
+            System.out.println((i + 1) + ".  " + categories.get(i).getName());
+        System.out.println((categories.size() + 1) + " " + "back");
     }
+    public void run(){
+        int input=scanner.nextInt();
+        if (categories.size()>=input){
+            ((ProductsOfCategory)submenus.get(1)).show(categories.get(input-1).getName());
+            ((ProductsOfCategory)submenus.get(1)).run(categories.get(input-1).getName());
+        }
+        else {
+            this.parent.show();
+            this.parent.run();
+        }
 
+    }
 }
 

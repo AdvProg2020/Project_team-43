@@ -81,6 +81,9 @@ public class ProductPanel extends Menu{
         String Id = scanner.nextLine();
         return Id;
     }
+    public void run(String productId){
+        this.Id=productId;
+    }
 }
 
 

@@ -39,4 +39,11 @@ public class Product {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
 }

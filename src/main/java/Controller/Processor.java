@@ -1,5 +1,6 @@
 package Controller;
 
+import model.BuyOrder;
 import model.Category;
 import model.Off;
 import model.Product;
@@ -7,11 +8,12 @@ import model.Product;
 import java.util.ArrayList;
 
 public class Processor {
+    private BuyOrder buyOrder;
     public Processor() {
     }
 
-    public void viewCategories() {
-        ArrayList<Category> categories = Category.allCategories;
+    public ArrayList<Category> viewCategories() {
+        return Category.getAllCategories();
         //TODO : send to view //how?? (optional)
     }
 
