@@ -11,6 +11,11 @@ public class Manager extends User {
         User.allUsers.add(this);
     }
 
+    public static Request getRequestById(String requestId) {
+
+        return null;
+    }
+
     public void viewPersonalInfo() {
 
     }
@@ -78,5 +83,7 @@ public class Manager extends User {
     public void removeCategory(Category category) {
 
     }
+
+
 
 }

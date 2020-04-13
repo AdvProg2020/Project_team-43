@@ -1,8 +1,6 @@
 package Controller;
 
-import model.Category;
-import model.Off;
-import model.Product;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -25,44 +23,141 @@ public class Processor {
 
     }
 
-    public void showProducts(){
+    public void showProducts() {
         ArrayList<Product> products = Product.allProductsInList;
 
 
     }
-    public void showProductById(String Id){
+
+    public void showProductById(String Id) {
         Product product = Product.getProductById(Id);
 
 
     }
 
-    public void showDigest(String command, String Id){
+    public void showDigest(String command, String Id) {
         Product product = Product.getProductById(Id);
 
     }
 
-    public void showAttributes(String Id){
+    public void showAttributes(String Id) {
         Product product = Product.getProductById(Id);
 
     }
 
-    public void compareProcess(String firstProductId, String secondProductId){
+    public void compareProcess(String firstProductId, String secondProductId) {
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
 
 
     }
 
-    public void showComments(String Id){
+    public void showComments(String Id) {
         Product product = Product.getProductById(Id);
 
     }
 
-    public void showOffs(){
+    public void showOffs() {
         ArrayList<Off> offs = Off.acceptedOffs;
 
 
     }
+
+    public void viewPersonalInfo(String userName) {
+        User user = User.getUserByUserName(userName);
+
+
+    }
+
+    public void editField(String userName, String field) {
+        User user = User.getUserByUserName(userName);
+
+
+    }
+
+    public void viewUser(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void deleteUser(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void createManagerProfile() {//voroodi : field hayi ke bayad gerefte shee
+
+
+    }
+
+
+    public void removeProduct(String productId) {
+        Product product = Product.getProductById(productId);
+
+    }
+
+    public void createDiscountCode() {//vorodi : field hayi ke bayad gerefte she
+
+    }
+
+    public void viewDiscountCodes() {
+
+
+    }
+
+    public void viewDiscountCode(String code) {
+        Discount discount = Discount.getDiscountById(code);
+
+    }
+
+    public void editDiscountCode(String code) {
+        Discount discount = Discount.getDiscountById(code);
+
+    }
+
+    public void removeDiscountCode(String code){
+        Discount discount  = Discount.getDiscountById(code);
+
+    }
+
+    public void viewRequests(){
+
+
+    }
+
+    public void viewRequestDetails(String requestId){
+        Request request = Manager.getRequestById(requestId);
+
+    }
+
+    public void acceptRequest(String requestId){
+        Request request = Manager.getRequestById(requestId);
+
+    }
+
+    public void declineRequest(String requestId){
+        Request request = Manager.getRequestById(requestId);
+
+    }
+
+
+    public void editCategory(String categoryName){
+        Category category = Category.getCategoryByName(categoryName);
+
+    }
+
+    public void addCategory(){//vorodi : field haye marboote
+
+    }
+
+    public void removeCategory(String categoryName){
+        Category category = Category.getCategoryByName(categoryName);
+
+
+    }
+
+
+
 
 
 }

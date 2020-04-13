@@ -2,6 +2,7 @@ package model;
 
 
 public abstract class Request {
+
     protected String requestId;
     protected String requestType;
 
