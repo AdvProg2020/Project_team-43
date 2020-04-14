@@ -8,12 +8,15 @@ public class Processor {
     private BuyOrder buyOrder;
     public Processor() {
     }
-
     public ArrayList<Category> viewCategories() {
         return Category.getAllCategories();
         //TODO : send to view //how?? (optional)
     }
-
+    public boolean loginProcess(String username, String password){
+        if(User.hasUserWithUserName(username))
+            return User.getUserByUserName(username).getPersonalInfo().getPassword().equals(password);
+        return false;
+    }
     public void filteringProcess(String command) {
 
 

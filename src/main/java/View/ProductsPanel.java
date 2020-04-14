@@ -9,10 +9,6 @@ public class ProductsPanel extends Menu {
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
         submenus.put(1, new ProductsOfCategory(this,"productsInCategory"));
-        //submenus.put(2, new ProductPanel(this, "product Panel"));
-        //submenus.put(2, getFiltering());
-        //submenus.put(3, getSorting());
-        //submenus.put(4, getProducts());
     }
 
     private Menu getCategory() {

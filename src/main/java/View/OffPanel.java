@@ -44,8 +44,4 @@ public class OffPanel extends Menu {
         };
     }
 
-    public void execute() {
-        this.show();
-        this.run();
-    }
 }
