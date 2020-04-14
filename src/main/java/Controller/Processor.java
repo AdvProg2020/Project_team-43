@@ -5,11 +5,12 @@ import model.*;
 import java.util.ArrayList;
 
 public class Processor {
+    private BuyOrder buyOrder;
     public Processor() {
     }
 
-    public void viewCategories() {
-        ArrayList<Category> categories = Category.allCategories;
+    public ArrayList<Category> viewCategories() {
+        return Category.getAllCategories();
         //TODO : send to view //how?? (optional)
     }
 
