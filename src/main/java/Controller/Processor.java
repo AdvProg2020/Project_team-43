@@ -212,7 +212,51 @@ public class Processor {
 
     }
 
+    public void viewCompanyInfo(String userName){
+        User user = User.getUserByUserName(userName);
 
+    }
+
+    public void viewSalesHistory(String userName){
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void viewProducts(String userName){
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void addProduct(String userName){//gereftan field haye product
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void removeProduct(String userName, String productId){
+        User user = User.getUserByUserName(userName);
+        Product product = Product.getProductById(productId);
+
+    }
+
+    public void viewOffs(String userName){
+        User user = User.getUserByUserName(userName);
+        ArrayList<Off> offs = ((Seller)user).getAllOffs();
+    }
+
+    public void viewOff(String userName, String offId){
+        User user = User.getUserByUserName(userName);
+        Off off = ((Seller)user).getOffById(offId);
+
+    }
+    public void editOff(String userName, String offId){//be soorate darkhast
+        User user = User.getUserByUserName(userName);
+        Off off = ((Seller)user).getOffById(offId);
+    }
+
+    public void addOff(String userName){//vorodi : baghie field ha gerefte mishe // besoorate darkhast
+        User user = User.getUserByUserName(userName);
+
+    }
 
 
 }

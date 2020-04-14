@@ -68,4 +68,13 @@ public class Seller extends User {
     public void addOff() {
 
     }
+
+    public Off getOffById(String offId){
+
+        return null;
+    }
+
+    public ArrayList<Off> getAllOffs(){
+        return offs;
+    }
 }

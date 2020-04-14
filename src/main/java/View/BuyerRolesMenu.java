@@ -19,8 +19,6 @@ public class BuyerRolesMenu extends Menu {
         submenus.put(11, getRateProduct());
         submenus.put(12, getViewBalance());
         submenus.put(13, getViewDiscountCodes());
-
-
     }
 
     public void setUserName(String userName) {
