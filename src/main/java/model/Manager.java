@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Manager extends User {
     public static ArrayList<Request> allRequest = new ArrayList<Request>();
 
-    public Manager(String username, PersonalInfo personalInfo) {
-        super(username, personalInfo);
+    public Manager(String username, UserPersonalInfo userPersonalInfo) {
+        super(username, userPersonalInfo);
     }
 
     @Override

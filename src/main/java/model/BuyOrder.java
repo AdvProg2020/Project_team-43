@@ -18,4 +18,7 @@ public class BuyOrder extends Order {
         this.seller = seller;
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
 }

@@ -8,8 +8,8 @@ public class Buyer extends User {
     private ArrayList<Product> cart;
     private ArrayList<BuyOrder> orders;
 
-    public Buyer(String username, PersonalInfo personalInfo) {
-        super(username, personalInfo);
+    public Buyer(String username, UserPersonalInfo userPersonalInfo) {
+        super(username, userPersonalInfo);
         discounts = new ArrayList<Discount>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
@@ -29,6 +29,11 @@ public class Buyer extends User {
     }
 
     //////////viewCart??????
+
+
+    public ArrayList<BuyOrder> getOrders() {
+        return orders;
+    }
 
     public void showProducts() {
 

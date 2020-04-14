@@ -14,7 +14,7 @@ public class Processor {
     }
     public boolean loginProcess(String username, String password){
         if(User.hasUserWithUserName(username))
-            return User.getUserByUserName(username).getPersonalInfo().getPassword().equals(password);
+            return User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password);
         return false;
     }
     public void filteringProcess(String command) {

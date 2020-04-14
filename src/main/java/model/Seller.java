@@ -8,8 +8,8 @@ public class Seller extends User {
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;
 
-    public Seller(String username, PersonalInfo personalInfo, String companyName) {
-        super(username, personalInfo);
+    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
+        super(username, userPersonalInfo);
         this.company = Company.getCompanyByName(companyName);
         products = new ArrayList<Product>();
         offs = new ArrayList<Off>();

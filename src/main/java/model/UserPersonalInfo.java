@@ -1,13 +1,17 @@
 package model;
 
-public class PersonalInfo {
+public class UserPersonalInfo {
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String password;
 
-    public PersonalInfo(String firstName, String lastName, String email, String phoneNumber, String password) {
+    public UserPersonalInfo() {
+
+    }
+
+    public UserPersonalInfo(String firstName, String lastName, String email, String phoneNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
