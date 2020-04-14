@@ -5,11 +5,6 @@ import java.util.ArrayList;
 public abstract class User {
     public static ArrayList<User> allUsers = new ArrayList<User>();
     protected String username;
-
-    public PersonalInfo getPersonalInfo() {
-        return personalInfo;
-    }
-
     protected PersonalInfo personalInfo;
     protected double credit;//hamoon etebare
     protected UserType userType;
@@ -24,6 +19,10 @@ public abstract class User {
     }
 
     public abstract void setUserType();
+
+    public PersonalInfo getPersonalInfo() {
+        return personalInfo;
+    }
 
     public static boolean hasUserWithUserName(String username) {
         for (User user : allUsers) {

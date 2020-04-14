@@ -6,17 +6,21 @@ import java.util.ArrayList;
 
 public class Processor {
     private BuyOrder buyOrder;
+
     public Processor() {
     }
+
     public ArrayList<Category> viewCategories() {
         return Category.getAllCategories();
         //TODO : send to view //how?? (optional)
     }
-    public boolean loginProcess(String username, String password){
-        if(User.hasUserWithUserName(username))
+
+    public boolean loginProcess(String username, String password) {
+        if (User.hasUserWithUserName(username))
             return User.getUserByUserName(username).getPersonalInfo().getPassword().equals(password);
         return false;
     }
+
     public void filteringProcess(String command) {
 
 
@@ -119,47 +123,94 @@ public class Processor {
 
     }
 
-    public void removeDiscountCode(String code){
-        Discount discount  = Discount.getDiscountById(code);
+    public void removeDiscountCode(String code) {
+        Discount discount = Discount.getDiscountById(code);
 
     }
 
-    public void viewRequests(){
+    public void viewRequests() {
 
 
     }
 
-    public void viewRequestDetails(String requestId){
+    public void viewRequestDetails(String requestId) {
         Request request = Manager.getRequestById(requestId);
 
     }
 
-    public void acceptRequest(String requestId){
+    public void acceptRequest(String requestId) {
         Request request = Manager.getRequestById(requestId);
 
     }
 
-    public void declineRequest(String requestId){
+    public void declineRequest(String requestId) {
         Request request = Manager.getRequestById(requestId);
 
     }
 
 
-    public void editCategory(String categoryName){
+    public void editCategory(String categoryName) {
         Category category = Category.getCategoryByName(categoryName);
 
     }
 
-    public void addCategory(){//vorodi : field haye marboote
+    public void addCategory() {//vorodi : field haye marboote
 
     }
 
-    public void removeCategory(String categoryName){
+    public void removeCategory(String categoryName) {
         Category category = Category.getCategoryByName(categoryName);
 
 
     }
 
+    public void viewProductInCart(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void increaseProduct(String userName, String productId) {
+        User user = User.getUserByUserName(userName);
+        Product product = Product.getProductById(productId);
+
+    }
+
+    public void decreaseProduct(String userName, String productId) {
+        User user = User.getUserByUserName(userName);
+        Product product = Product.getProductById(productId);
+
+    }
+
+    public void showTotalPrice(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void viewBalance(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void viewOrders(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void showOrder(String userName, String orderId) {
+        User user = User.getUserByUserName(userName);
+
+    }
+
+    public void rateProduct(String userName, String productId, int score) {
+        User user = User.getUserByUserName(userName);
+
+
+    }
+
+    public void viewDiscountCodes(String userName) {
+        User user = User.getUserByUserName(userName);
+
+    }
 
 
 
