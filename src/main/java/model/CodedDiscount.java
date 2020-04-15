@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public class CodedDiscount {
     public static ArrayList<CodedDiscount> allCodedDiscount = new ArrayList<CodedDiscount>();
     private String discountCode;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private double discountAmount;
     private int repeat;
     private ArrayList<Buyer> users;
 
-    public CodedDiscount(String discountCode, Date startTime, Date endTime, double discount, int repeat) {
+    public CodedDiscount(String discountCode, String startTime, String endTime, double discount, int repeat) {
         this.discountCode = discountCode;
         this.startTime = startTime;
         this.endTime = endTime;

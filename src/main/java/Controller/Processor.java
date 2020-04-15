@@ -83,8 +83,9 @@ public class Processor {
     }
 
     public void viewPersonalInfo(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
-
+        viewManager.viewUser(user);
 
     }
 
@@ -95,18 +96,29 @@ public class Processor {
     }
 
     public void viewUser(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
+        viewManager.viewUser(user);
 
     }
 
     public void deleteUser(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
+        User.allUsers.remove(user);
 
     }
 
-    public void createManagerProfile(String userName, String firstName, String lastName, String email, String phoneNumber, String password) {
+    public void createManagerProfile() {
         //TODO : error handling
-
+        ArrayList<String > managerInfo = new ArrayList<String>();
+        viewManager.getManagerInfo(managerInfo);
+        String userName = managerInfo.get(0);
+        String firstName = managerInfo.get(1);
+        String lastName = managerInfo.get(2);
+        String email = managerInfo.get(3);
+        String phoneNumber = managerInfo.get(4);
+        String password = managerInfo.get(5);
         UserPersonalInfo newPersonalInfo = new UserPersonalInfo(firstName, lastName, email, phoneNumber, password);
         User newManager = new Manager(userName, newPersonalInfo);
 
@@ -115,20 +127,26 @@ public class Processor {
 
     public void removeProduct(String productId) {
         Product product = Product.getProductById(productId);
-        if (product != null) {
-            Product.allProductsInList.remove(product);
-        }
+        Product.allProductsInList.remove(product);
 
     }
 
-    public void createDiscountCode(String discountCode, Date startTime, Date endTime, double discountAmount, int repeat) {
+    public void createDiscountCode() {
         //TODO : error handling
+        ArrayList<String> discountCodedInfo = new ArrayList<String>();
+        viewManager.getDiscountCodedInfo(discountCodedInfo);
+        String discountCode = discountCodedInfo.get(0);
+        String startTime = discountCodedInfo.get(1);
+        String endTime = discountCodedInfo.get(2);
+        double discountAmount = Double.parseDouble(discountCodedInfo.get(3));
+        int repeat = Integer.parseInt(discountCodedInfo.get(4));
         CodedDiscount newDiscount = new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
 
     }
 
-    public void viewDiscountCodes() {
+    public void viewBossDiscountCodes() {
         ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
+
 
     }
 
@@ -228,31 +246,44 @@ public class Processor {
 
     }
 
-    public void viewDiscountCodes(String userName) {
+    public void viewBuyerDiscountCodes(String userName) {
         User user = User.getUserByUserName(userName);
+
 
     }
 
     public void viewCompanyInfo(String userName) {
         User user = User.getUserByUserName(userName);
+        Company company = ((Seller)user).getCompany();
+        viewManager.showCompanyInfo(company);
 
     }
 
     public void viewSalesHistory(String userName) {
         User user = User.getUserByUserName(userName);
-
+        ArrayList<SellOrder> orders = ((Seller)user).getOrders();
+        viewManager.showSellOrders(orders);
     }
 
-    public void viewProducts(String userName) {
+    public void viewSellerProducts(String userName) {
         User user = User.getUserByUserName(userName);
-
+        ArrayList<Product> products = ((Seller)user).getProducts();
+        viewManager.showProducts(products);
     }
 
-    public void addProduct(String userName) {//gereftan field haye product
+    public void addProduct(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
         ArrayList<String> productInfo = new ArrayList<String>();
         viewManager.getProductInfo(productInfo);
-
+        String Id = productInfo.get(0);
+        String name = productInfo.get(1);
+        Company company = Company.getCompanyByName(productInfo.get(2));
+        Category category = Category.getCategoryByName(productInfo.get(3));
+        double price = Double.parseDouble(productInfo.get(4));
+        ArrayList<String> features = new ArrayList<String>();
+        viewManager.getProductFeatures(category.getFeatures(), features);
+        ((Seller)user).addProduct(new Product(Id, name, company, price, category, (Seller)user, features));
     }
 
     public void removeProduct(String userName, String productId) {

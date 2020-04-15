@@ -27,21 +27,6 @@ public class Manager extends User {
 
     }
 
-    public void deleteUser(String username) {
-
-    }
-
-    public void viewUser(String username) {
-
-    }
-
-    public void createManager() {
-
-    }
-
-    public void removeProduct(String productId) {
-
-    }
 
     public void createDiscountCode() {
 

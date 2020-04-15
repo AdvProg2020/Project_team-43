@@ -102,20 +102,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this.parent, "create manager profile") {
             @Override
             public void show() {
-                System.out.print("user name : ");
-                String userName = scanner.nextLine();
-                System.out.print("first name : ");
-                String firstName = scanner.nextLine();
-                System.out.print("last name : ");
-                String lastName = scanner.nextLine();
-                System.out.print("email : ");
-                String email = scanner.nextLine();
-                System.out.print("phone number : ");
-                String phoneNumber = scanner.nextLine();
-                System.out.print("password : ");
-                String password = scanner.nextLine();
-
-                manager.createManagerProfile(userName, firstName, lastName, email, phoneNumber, password);
+                manager.createManagerProfile();
             }
 
             @Override
@@ -146,7 +133,6 @@ public class BossRolesMenu extends Menu {
         return new Menu(this.parent, "create discount code") {
             @Override
             public void show() {
-                // gereftan field haa baraye sakht code takhfif
                 manager.createDiscountCode();
             }
 
@@ -162,7 +148,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this.parent, "view all discount codes") {
             @Override
             public void show() {
-                manager.viewDiscountCodes();
+                manager.viewBossDiscountCodes();
             }
 
             @Override

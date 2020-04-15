@@ -63,6 +63,11 @@ public class Category {
     }
 
     public static Category getCategoryByName(String categoryName) {
+        for (Category category : allCategories) {
+            if (category.name.equals(categoryName)){
+                return category;
+            }
+        }
         return null;
     }
 }

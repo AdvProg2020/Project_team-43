@@ -186,7 +186,7 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this.parent, "view discount Codes") {
             @Override
             public void show() {
-                manager.viewDiscountCodes(userName);
+                manager.viewBuyerDiscountCodes(userName);
             }
 
             @Override

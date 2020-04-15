@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 public class Product {
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
@@ -10,7 +11,7 @@ public class Product {
     private String productId;
     private State.ProductState productState;
     private String name;
-    private String companyName;
+    private Company company;
     private double price;
     private int availableCount;
     private Category category;
@@ -21,11 +22,11 @@ public class Product {
     private ArrayList<Opinion> opinions;
 
 
-    public Product(String productId, String name, String companyName, double price, Category category, Seller seller, ArrayList<String> features) {
+    public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {
         this.productId = productId;
         this.productState = State.ProductState.creatingProcess;
         this.name = name;
-        this.companyName = companyName;
+        this.company = company;
         this.price = price;
         this.category = category;
         fillFeaturesMap(features);

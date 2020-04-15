@@ -58,7 +58,11 @@ public class Off {
     }
 
     public static Off getOffById(String offId) {
-
+        for (Off off : acceptedOffs) {
+            if (off.getOffId().equals(offId)){
+                return off;
+            }
+        }
         return null;
     }
 }

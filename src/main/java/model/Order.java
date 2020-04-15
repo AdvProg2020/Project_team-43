@@ -14,4 +14,7 @@ public abstract class Order {
         allOrders.add(this);
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
 }

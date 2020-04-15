@@ -97,7 +97,6 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this.parent, "add product") {
             @Override
             public void show() {
-
                 manager.addProduct(userName);//baghie field ha byd dade shavad
             }
 

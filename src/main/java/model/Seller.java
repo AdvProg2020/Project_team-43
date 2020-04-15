@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Seller extends User {
     private Company company;
@@ -29,6 +30,18 @@ public class Seller extends User {
 
     }
 
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public ArrayList<SellOrder> getOrders() {
+        return orders;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
     public void viewProduct(String productId) {
 
     }
@@ -41,8 +54,8 @@ public class Seller extends User {
 
     }
 
-    public void addProduct() {
-
+    public void addProduct(Product product) {
+        products.add(product);
     }
 
     public void removeProduct(Product product) {
