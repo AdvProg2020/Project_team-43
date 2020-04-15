@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Product {
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
@@ -11,31 +12,32 @@ public class Product {
     private String name;
     private String companyName;
     private double price;
-    private boolean available;
+    private int availableCount;
     private Category category;
+    private Map<String, String >featuresMap;
+    private Seller seller;
     private String description;/////////tozihat
     private ProductScore score;
     private ArrayList<Opinion> opinions;
 
 
-    public Product(String productId, String name, String companyName, double price, Category category) {
+    public Product(String productId, String name, String companyName, double price, Category category, Seller seller, ArrayList<String> features) {
         this.productId = productId;
         this.productState = State.ProductState.creatingProcess;
         this.name = name;
         this.companyName = companyName;
         this.price = price;
         this.category = category;
+        fillFeaturesMap(features);
+        this.seller = seller;
         score = new ProductScore();
         opinions = new ArrayList<Opinion>();
         allProductsInQueueExpect.add(this);
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 
     public boolean isAvailable() {
-        return available;
+        return availableCount>0;
     }
 
     public String getDescription() {
@@ -55,6 +57,13 @@ public class Product {
         return null;
     }
 
+    private void fillFeaturesMap(ArrayList<String> features2){
+        ArrayList<String>features1 = this.category.getFeatures();
+        for(int i=0;i<features1.size();i++){
+            featuresMap.put(features1.get(i), features2.get(i));
+        }
+    }
+
     public String getName() {
         return name;
     }
@@ -62,4 +71,5 @@ public class Product {
     public String getProductId() {
         return productId;
     }
+
 }

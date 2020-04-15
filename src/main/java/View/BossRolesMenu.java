@@ -34,10 +34,11 @@ public class BossRolesMenu extends Menu {
         submenus.put(19, getRemoveCategory());
 
     }
-    private Menu getPersonalInfo(){
-        return new Menu(this.parent,"view personal info") {
+
+    private Menu getPersonalInfo() {
+        return new Menu(this.parent, "view personal info") {
             @Override
-            public void show(){
+            public void show() {
                 manager.viewPersonalInfo(userName);
             }
 
@@ -48,10 +49,11 @@ public class BossRolesMenu extends Menu {
             }
         };
     }
-    private Menu getEdit(){
-        return new Menu(this.parent,"edit fields") {
+
+    private Menu getEdit() {
+        return new Menu(this.parent, "edit fields") {
             @Override
-            public void show(){
+            public void show() {
                 String field = scanner.nextLine();
                 manager.editField(userName, field);
             }
@@ -64,10 +66,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewUser(){
-        return new Menu(this.parent,"view user") {
+    private Menu getViewUser() {
+        return new Menu(this.parent, "view user") {
             @Override
-            public void show(){
+            public void show() {
                 String userNameToBeView = scanner.nextLine();
                 manager.viewUser(userNameToBeView);
             }
@@ -80,10 +82,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getDeleteUser(){
-        return new Menu(this.parent,"delete user") {
+    private Menu getDeleteUser() {
+        return new Menu(this.parent, "delete user") {
             @Override
-            public void show(){
+            public void show() {
                 String userNameToBeDelete = scanner.nextLine();
                 manager.deleteUser(userNameToBeDelete);
             }
@@ -96,12 +98,24 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getCreateManagerProfile(){
-        return new Menu(this.parent,"create manager profile") {
+    private Menu getCreateManagerProfile() {
+        return new Menu(this.parent, "create manager profile") {
             @Override
-            public void show(){
-                // gereftan field haa
-                manager.createManagerProfile();
+            public void show() {
+                System.out.print("user name : ");
+                String userName = scanner.nextLine();
+                System.out.print("first name : ");
+                String firstName = scanner.nextLine();
+                System.out.print("last name : ");
+                String lastName = scanner.nextLine();
+                System.out.print("email : ");
+                String email = scanner.nextLine();
+                System.out.print("phone number : ");
+                String phoneNumber = scanner.nextLine();
+                System.out.print("password : ");
+                String password = scanner.nextLine();
+
+                manager.createManagerProfile(userName, firstName, lastName, email, phoneNumber, password);
             }
 
             @Override
@@ -112,10 +126,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getRemoveProduct(){
-        return new Menu(this.parent,"remove product") {
+    private Menu getRemoveProduct() {
+        return new Menu(this.parent, "remove product") {
             @Override
-            public void show(){
+            public void show() {
                 String productId = scanner.nextLine();
                 manager.removeProduct(productId);
             }
@@ -128,10 +142,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getCreateDiscountCode(){
-        return new Menu(this.parent,"create discount code") {
+    private Menu getCreateDiscountCode() {
+        return new Menu(this.parent, "create discount code") {
             @Override
-            public void show(){
+            public void show() {
                 // gereftan field haa baraye sakht code takhfif
                 manager.createDiscountCode();
             }
@@ -144,10 +158,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewDiscountCodes(){
-        return new Menu(this.parent,"view all discount codes") {
+    private Menu getViewDiscountCodes() {
+        return new Menu(this.parent, "view all discount codes") {
             @Override
-            public void show(){
+            public void show() {
                 manager.viewDiscountCodes();
             }
 
@@ -159,10 +173,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewDiscountCode(){
-        return new Menu(this.parent,"view discount code by Id") {
+    private Menu getViewDiscountCode() {
+        return new Menu(this.parent, "view discount code by Id") {
             @Override
-            public void show(){
+            public void show() {
                 String discountCode = scanner.nextLine();
                 manager.viewDiscountCode(discountCode);
             }
@@ -175,10 +189,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getEditDiscountCode(){
-        return new Menu(this.parent,"edit discount code by Id") {
+    private Menu getEditDiscountCode() {
+        return new Menu(this.parent, "edit discount code by Id") {
             @Override
-            public void show(){
+            public void show() {
                 String discountCode = scanner.nextLine();
                 manager.editDiscountCode(discountCode);
             }
@@ -191,10 +205,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getRemoveDiscountCodes(){
-        return new Menu(this.parent,"remove discount code") {
+    private Menu getRemoveDiscountCodes() {
+        return new Menu(this.parent, "remove discount code") {
             @Override
-            public void show(){
+            public void show() {
                 String discountCode = scanner.nextLine();
                 manager.removeDiscountCode(discountCode);
             }
@@ -206,10 +220,11 @@ public class BossRolesMenu extends Menu {
             }
         };
     }
-    private Menu getViewRequests(){
-        return new Menu(this.parent,"view all requests") {
+
+    private Menu getViewRequests() {
+        return new Menu(this.parent, "view all requests") {
             @Override
-            public void show(){
+            public void show() {
                 manager.viewRequests();
             }
 
@@ -221,10 +236,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getRequestDetail(){
-        return new Menu(this.parent,"view request by Id") {
+    private Menu getRequestDetail() {
+        return new Menu(this.parent, "view request by Id") {
             @Override
-            public void show(){
+            public void show() {
                 String requestId = scanner.nextLine();
                 manager.viewRequestDetails(requestId);
             }
@@ -236,10 +251,11 @@ public class BossRolesMenu extends Menu {
             }
         };
     }
-    private Menu getAcceptRequest(){
-        return new Menu(this.parent,"accept request by Id") {
+
+    private Menu getAcceptRequest() {
+        return new Menu(this.parent, "accept request by Id") {
             @Override
-            public void show(){
+            public void show() {
                 String requestId = scanner.nextLine();
                 manager.acceptRequest(requestId);
             }
@@ -252,10 +268,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getDeclineRequest(){
-        return new Menu(this.parent,"decline request by Id") {
+    private Menu getDeclineRequest() {
+        return new Menu(this.parent, "decline request by Id") {
             @Override
-            public void show(){
+            public void show() {
                 String requestId = scanner.nextLine();
                 manager.declineRequest(requestId);
             }
@@ -268,10 +284,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewCategories(){
-        return new Menu(this.parent,"view all categories") {
+    private Menu getViewCategories() {
+        return new Menu(this.parent, "view all categories") {
             @Override
-            public void show(){
+            public void show() {
                 manager.viewCategories();
             }
 
@@ -283,10 +299,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getEditCategory(){
-        return new Menu(this.parent,"edit category by name") {
+    private Menu getEditCategory() {
+        return new Menu(this.parent, "edit category by name") {
             @Override
-            public void show(){
+            public void show() {
                 String categoryName = scanner.nextLine();
                 manager.editCategory(categoryName);
             }
@@ -299,10 +315,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getAddCategory(){
-        return new Menu(this.parent,"add category") {
+    private Menu getAddCategory() {
+        return new Menu(this.parent, "add category") {
             @Override
-            public void show(){
+            public void show() {
                 //field haye marboote ro begirim
                 manager.addCategory();
             }
@@ -315,10 +331,10 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getRemoveCategory(){
-        return new Menu(this.parent,"remove category by name") {
+    private Menu getRemoveCategory() {
+        return new Menu(this.parent, "remove category by name") {
             @Override
-            public void show(){
+            public void show() {
                 String categoryName = scanner.nextLine();
                 manager.removeCategory(categoryName);
             }

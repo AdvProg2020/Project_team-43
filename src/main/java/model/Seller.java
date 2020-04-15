@@ -29,14 +29,6 @@ public class Seller extends User {
 
     }
 
-    public void viewCompanyInfo() {
-
-    }
-
-    public void viewSalesHistory() {
-
-    }
-
     public void viewProduct(String productId) {
 
     }
@@ -53,19 +45,24 @@ public class Seller extends User {
 
     }
 
-    public void removeProduct(String productId) {
-
-    }
-
-    public void viewOffs() {
-
+    public void removeProduct(Product product) {
+        products.remove(product);
     }
 
     public void editOff(String offId) {
 
     }
 
-    public void addOff() {
+    public void addOff(Off off) {
+        offs.add(off);
+    }
 
+    public Off getOffById(String offId){
+
+        return null;
+    }
+
+    public ArrayList<Off> getOffs(){
+        return offs;
     }
 }

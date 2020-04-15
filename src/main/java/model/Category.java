@@ -8,17 +8,21 @@ public class Category {
 
 
     private String name;
-    //private Feature feature;
+    private ArrayList<String> features;
     private Category categorySuper;
     private ArrayList<Category> subcategories;
     private ArrayList<Product> products;
 
-    public Category(String name, Category categorySuper) {
+    public Category(String name, Category categorySuper, ArrayList<String> features) {
         this.name = name;
         this.categorySuper = categorySuper;
         products = new ArrayList<Product>();
         subcategories = new ArrayList<Category>();
         allCategories.add(this);
+    }
+
+    public ArrayList<String> getFeatures() {
+        return features;
     }
 
     public void addProduct(Product product) {

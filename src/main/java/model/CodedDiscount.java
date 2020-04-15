@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -10,7 +8,7 @@ public class CodedDiscount {
     private String discountCode;
     private Date startTime;
     private Date endTime;
-    private double discount;
+    private double discountAmount;
     private int repeat;
     private ArrayList<Buyer> users;
 
@@ -18,9 +16,10 @@ public class CodedDiscount {
         this.discountCode = discountCode;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.discount = discount;
+        this.discountAmount = discount;
         this.repeat = repeat;
         users = new ArrayList<Buyer>();
+        allCodedDiscount.add(this);
     }
 
     public void addUser(Buyer buyer) {

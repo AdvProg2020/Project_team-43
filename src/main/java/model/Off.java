@@ -10,19 +10,47 @@ public class Off {
     private Seller seller;
     private ArrayList<Product> products;
     private State.OffState offState;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private double discountAmount;
 
-    public Off(String offId, Date startTime, Date endTime, double discountAmount, Seller seller) {
+    public Off(String offId, String startTime, String endTime, double discountAmount, Seller seller, ArrayList<Product>products1) {
         this.offId = offId;
         this.offState = State.OffState.creatingProcess;
         this.startTime = startTime;
         this.endTime = endTime;
         this.discountAmount = discountAmount;
         this.seller = seller;
-        products = new ArrayList<Product>();
+        products = new ArrayList<Product>(products1);
         inQueueExpectionOffs.add(this);
+    }
+
+    public String getOffId() {
+        return offId;
+    }
+
+    public String getSellerName() {
+        return seller.getUsername();
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public State.OffState getOffState() {
+        return offState;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public double getDiscountAmount() {
+        return discountAmount;
     }
 
     public void addProduct(Product product) {
@@ -30,6 +58,7 @@ public class Off {
     }
 
     public static Off getOffById(String offId) {
+
         return null;
     }
 }

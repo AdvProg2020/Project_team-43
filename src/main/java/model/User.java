@@ -3,23 +3,25 @@ package model;
 import java.util.ArrayList;
 
 public abstract class User {
+     private static final int money = 100000;
     public static ArrayList<User> allUsers = new ArrayList<User>();
     protected String username;
 
-    public UserPersonalInfo getUserPersonalInfo() {
-        return userPersonalInfo;
-    }
+
 
     protected UserPersonalInfo userPersonalInfo;
     protected double credit;//hamoon etebare
     protected UserType userType;
 
+    public UserPersonalInfo getUserPersonalInfo() {
+        return userPersonalInfo;
+    }
 
     public User(String username, UserPersonalInfo userPersonalInfo) {
         this.username = username;
         this.userPersonalInfo = userPersonalInfo;
         setUserType();
-        credit = 0;
+        credit = money;
         allUsers.add(this);
     }
 
@@ -45,6 +47,10 @@ public abstract class User {
 
     public UserType getUserType() {
         return userType;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void viewPersonalInfo() {
