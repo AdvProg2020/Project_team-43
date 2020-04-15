@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 public class Product {
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
@@ -19,7 +18,7 @@ public class Product {
     private Seller seller;
     private String description;/////////tozihat
     private ProductScore score;
-    private ArrayList<Opinion> opinions;
+    private ArrayList<Comment> comments;
 
 
     public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {
@@ -32,10 +31,33 @@ public class Product {
         fillFeaturesMap(features);
         this.seller = seller;
         score = new ProductScore();
-        opinions = new ArrayList<Opinion>();
+        comments = new ArrayList<Comment>();
         allProductsInQueueExpect.add(this);
     }
 
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public Map<String, String> getFeaturesMap() {
+        return featuresMap;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public int getAvailableCount() {
+        return availableCount;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 
     public boolean isAvailable() {
         return availableCount>0;

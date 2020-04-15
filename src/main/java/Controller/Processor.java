@@ -8,6 +8,8 @@ import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static model.Category.getAllCategories;
+
 public class Processor {
     private BuyOrder buyOrder;
     private boolean isLogin;
@@ -21,9 +23,9 @@ public class Processor {
     public Processor() {
     }
 
-    public ArrayList<Category> viewCategories() {
-        return Category.getAllCategories();
-        //TODO : send to view //how?? (optional)
+    public void viewCategories() {
+        ArrayList<Category> categories = Category.getAllCategories();
+        viewManager.showCategories(categories);
     }
 
     public boolean loginProcess(String username, String password) {
@@ -61,6 +63,7 @@ public class Processor {
 
     public void showAttributes(String Id) {
         Product product = Product.getProductById(Id);
+        viewManager.showProductInfo(product);
 
     }
 
@@ -71,15 +74,15 @@ public class Processor {
 
     }
 
-    public void showComments(String Id) {
-        Product product = Product.getProductById(Id);
+    public void showComments(String productId) {
+        Product product = Product.getProductById(productId);
+        viewManager.showComments(product.getComments());
 
     }
 
     public void showOffs() {
         ArrayList<Off> offs = Off.acceptedOffs;
-
-
+        viewManager.showOffs(offs);
     }
 
     public void viewPersonalInfo(String userName) {

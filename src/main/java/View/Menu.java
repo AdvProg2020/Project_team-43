@@ -33,7 +33,7 @@ public abstract class Menu {
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
         }
-        if (manager.isUserLoggedIn()){
+        if (manager.isUserLoggedIn()){//////////////////////////////////////////////chi shode in error dare??
             System.out.println((submenus.size() + 1)+". logout");
         }
         else {

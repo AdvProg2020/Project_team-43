@@ -5,7 +5,6 @@ import model.Category;
 import java.util.ArrayList;
 
 public class ProductsPanel extends Menu {
-    private ArrayList<Category> categories = manager.viewCategories();
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
         submenus.put(1,viewCategory());
@@ -21,10 +20,7 @@ public class ProductsPanel extends Menu {
 
             @Override
             public void show() {
-                ArrayList<Category> categories = manager.viewCategories();
-                for (int i = 0; i < categories.size(); i++)
-                    System.out.println((i + 1) + ".  " + categories.get(i).getName());
-                System.out.println((categories.size() + 1) + " " + "back");
+                manager.viewCategories();
             }
 
             @Override

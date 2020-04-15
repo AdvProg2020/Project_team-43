@@ -1,6 +1,7 @@
 package View;
 
 import model.*;
+import sun.security.x509.CertAttrSet;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -109,7 +110,7 @@ public class ShowAndCatch {
         discountCodedInfo.add(repeat);
     }
 
-    public void getManagerInfo(ArrayList<String> managerInfo){
+    public void getManagerInfo(ArrayList<String> managerInfo) {
         System.out.print("user name : ");
         String userName = scanner.nextLine();
         managerInfo.add(userName);
@@ -129,11 +130,33 @@ public class ShowAndCatch {
         String password = scanner.nextLine();
         managerInfo.add(password);
     }
-    public void viewUser(User user){
-        System.out.println("user name : "+user.getUsername());
-        System.out.println("first name : "+ user.getUserPersonalInfo().getFirstName());
-        System.out.println("last name : "+user.getUserPersonalInfo().getLastName());
-        System.out.println("email : "+user.getUserPersonalInfo().getEmail());
-        System.out.println("phone number : "+user.getUserPersonalInfo().getPhoneNumber());
+
+    public void viewUser(User user) {
+        System.out.println("user name : " + user.getUsername());
+        System.out.println("first name : " + user.getUserPersonalInfo().getFirstName());
+        System.out.println("last name : " + user.getUserPersonalInfo().getLastName());
+        System.out.println("email : " + user.getUserPersonalInfo().getEmail());
+        System.out.println("phone number : " + user.getUserPersonalInfo().getPhoneNumber());
+    }
+
+    public void showCategories(ArrayList<Category> categories) {
+        // main -> sub
+    }
+
+    public void showComments(ArrayList<Comment> comments) {
+        for (int i = 1; i <= comments.size(); i++) {
+            System.out.println(i + " . " + comments.get(i - 1).getCommentText());
+        }
+    }
+
+    public void showProductInfo(Product product) {
+        System.out.println("name : " + product.getName());
+        System.out.println("category : " + product.getCategory().getName());
+        System.out.println("price : " + product.getPrice());
+        System.out.println("company : " + product.getCompany().getName());
+        System.out.println("available count : " + product.getAvailableCount());
+        for (String feature : product.getCategory().getFeatures()) {
+            System.out.println(feature + " : " + product.getFeaturesMap().get(feature));
+        }
     }
 }
