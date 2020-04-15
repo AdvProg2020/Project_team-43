@@ -2,7 +2,7 @@ package View;
 
 import java.util.HashMap;
 
-public class LoggedOutStatus extends Menu implements LoginStatus {
+public class LoggedOutStatus extends Menu  {
     public LoggedOutStatus(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer,Menu> submenus=new HashMap<Integer, Menu>();
@@ -11,17 +11,16 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
         this.setSubmenus(submenus);
     }
     private Menu getLoginMenu(){
-        return new Menu(this.parent,"login") {
+        return new Menu(this.parent,"Login") {
             @Override
             public void show(){
                 //TODO
             }
-
             @Override
             public void run() {
                 //TODO : login
                 //TODo : set user in loggedInStatus
-                ((UserPanelMenu)this.parent).changeStatus();
+
                 this.parent.show();
                 this.parent.run();
             }
@@ -40,10 +39,6 @@ public class LoggedOutStatus extends Menu implements LoginStatus {
                 this.parent.parent.run();
             }
         };
-    }
-    public void execute(){
-        this.show();
-        this.run();
     }
 
 }

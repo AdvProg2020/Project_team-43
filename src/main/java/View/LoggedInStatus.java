@@ -1,10 +1,11 @@
 package View;
 
 import model.User;
+import model.UserType;
 
 import java.util.HashMap;
-public class LoggedInStatus extends Menu implements LoginStatus {
-    private User user;
+public class LoggedInStatus extends Menu {
+
     public LoggedInStatus(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer,Menu> submenus= new HashMap<Integer,Menu>();
@@ -14,13 +15,25 @@ public class LoggedInStatus extends Menu implements LoginStatus {
         this.setSubmenus(submenus);
     }
     public void show(){
-        submenus.get(this.user.getUserType()).show();
+        if (manager.getUser().getUserType()== UserType.MANAGER) {
+            submenus.get(1).show();
+        }
+        else if (manager.getUser().getUserType()== UserType.BUYER){
+            submenus.get(2).show();
+        }
+        else {
+            submenus.get(3).show();
+        }
     }
     public void run(){
-        submenus.get(this.user.getUserType()).run();
-    }
-    public void execute(){
-        this.show();
-        this.run();
+        if (manager.getUser().getUserType()== UserType.MANAGER) {
+            submenus.get(1).run();
+        }
+        else if (manager.getUser().getUserType()== UserType.BUYER){
+            submenus.get(2).run();
+        }
+        else {
+            submenus.get(3).run();
+        }
     }
 }

@@ -5,7 +5,7 @@ public class ProductPanel extends Menu{
     private String Id;
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
-        this.Id = getId();
+        this.Id = getIdProductFromUser();
         submenus.put(1, getDigest());
         submenus.put(2, getAttributes());
         submenus.put(3, getCompare());
@@ -76,10 +76,9 @@ public class ProductPanel extends Menu{
             }
         };
     }
-    private String getId(){
+    private String getIdProductFromUser(){
         System.out.println("product's Id : ");
-        String Id = scanner.nextLine();
-        return Id;
+        return scanner.nextLine();
     }
     public void run(String productId){
         this.Id=productId;

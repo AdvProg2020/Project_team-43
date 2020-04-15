@@ -11,8 +11,6 @@ public abstract class Menu {
     protected Menu parent;
     protected static Scanner scanner;
     protected HashMap<Integer, Menu> submenus;
-    protected static LoginStatus status;
-
     public static void setScanner(Scanner scanner) {
         Menu.scanner = scanner;
     }
@@ -35,10 +33,16 @@ public abstract class Menu {
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
         }
+        if (manager.isUserLoggedIn()){
+            System.out.println((submenus.size() + 1)+". logout");
+        }
+        else {
+            System.out.println((submenus.size() + 1)+". login");
+        }
         if (this.parent != null)
-            System.out.println((submenus.size() + 1) + ". Back");
+            System.out.println((submenus.size() + 2) + ". Back");
         else
-            System.out.println((submenus.size() + 1) + ". Exit");
+            System.out.println((submenus.size() + 2) + ". Exit");
     }
 
     public void run() {
@@ -47,13 +51,36 @@ public abstract class Menu {
             submenus.get(input).show();
             submenus.get(input).run();
         } else {
-            if (this.parent == null)
-                System.exit(0);
-            else {
-                parent.show();
-                parent.run();
+            if (input==submenus.size()+2) {
+                if (this.parent == null)
+                    System.exit(0);
+                else {
+                    parent.show();
+                    parent.run();
+                }
             }
-
+            else {
+                if (manager.isUserLoggedIn()){
+                    new Menu(this,"logout"){
+                        @Override
+                        public void run() {
+                            //TODO : Logout
+                            this.parent.show();
+                            this.parent.run();
+                        }
+                    }.run();
+                }
+                else{
+                    new Menu(this,"login"){
+                        @Override
+                        public void run() {
+                            //TODO : Login
+                            this.parent.show();
+                            this.parent.run();
+                        }
+                    }.run();
+                }
+            }
         }
     }
 }
