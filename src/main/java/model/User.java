@@ -5,24 +5,25 @@ import java.util.ArrayList;
 public abstract class User {
     public static ArrayList<User> allUsers = new ArrayList<User>();
     protected String username;
-    protected PersonalInfo personalInfo;
+
+    public UserPersonalInfo getUserPersonalInfo() {
+        return userPersonalInfo;
+    }
+
+    protected UserPersonalInfo userPersonalInfo;
     protected double credit;//hamoon etebare
     protected UserType userType;
 
 
-    public User(String username, PersonalInfo personalInfo) {
+    public User(String username, UserPersonalInfo userPersonalInfo) {
         this.username = username;
-        this.personalInfo = personalInfo;
+        this.userPersonalInfo = userPersonalInfo;
         setUserType();
         credit = 0;
         allUsers.add(this);
     }
 
     public abstract void setUserType();
-
-    public PersonalInfo getPersonalInfo() {
-        return personalInfo;
-    }
 
     public static boolean hasUserWithUserName(String username) {
         for (User user : allUsers) {

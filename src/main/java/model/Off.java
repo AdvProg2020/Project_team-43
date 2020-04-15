@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Off {
     public static ArrayList<Off> acceptedOffs = new ArrayList<Off>();
@@ -9,11 +10,11 @@ public class Off {
     private Seller seller;
     private ArrayList<Product> products;
     private State.OffState offState;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private double discountAmount;
 
-    public Off(String offId, String startTime, String endTime, double discountAmount, Seller seller) {
+    public Off(String offId, Date startTime, Date endTime, double discountAmount, Seller seller) {
         this.offId = offId;
         this.offState = State.OffState.creatingProcess;
         this.startTime = startTime;
@@ -23,7 +24,12 @@ public class Off {
         products = new ArrayList<Product>();
         inQueueExpectionOffs.add(this);
     }
-    public static Off getOffById(String offId){
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public static Off getOffById(String offId) {
         return null;
     }
 }

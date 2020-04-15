@@ -8,12 +8,16 @@ public class ProductsPanel extends Menu {
     private ArrayList<Category> categories = manager.viewCategories();
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
-        submenus.put(1, new ProductsOfCategory(this,"productsInCategory"));
+        submenus.put(1,viewCategory());
+        submenus.put(2,getFiltering());
+        submenus.put(3,getSorting());
+        submenus.put(4,showProducts());
+        submenus.put(5,new ProductPanel(this,"show product with Id"));
     }
 
-    private Menu getCategory() {
+    private Menu viewCategory() {
 
-        return new Menu(this, "category") {
+        return new Menu(this, "view categories") {
 
             @Override
             public void show() {
@@ -25,10 +29,8 @@ public class ProductsPanel extends Menu {
 
             @Override
             public void run() {
-                int input = Integer.parseInt(scanner.nextLine());
-
-
-
+                this.parent.show();
+                this.parent.run();
             }
         };
     }
@@ -69,14 +71,13 @@ public class ProductsPanel extends Menu {
         };
     }
 
-    private Menu getProducts() {
+    private Menu showProducts() {
 
-        return new Menu(this, "products") {
+        return new Menu(this, "show products") {
             @Override
             public void show() {
                 manager.showProducts();
             }
-
             @Override
             public void run() {
                 this.parent.show();
@@ -85,23 +86,5 @@ public class ProductsPanel extends Menu {
         };
     }
 
-    public void show(){
-
-        for (int i = 0; i < categories.size(); i++)
-            System.out.println((i + 1) + ".  " + categories.get(i).getName());
-        System.out.println((categories.size() + 1) + " " + "back");
-    }
-    public void run(){
-        int input=scanner.nextInt();
-        if (categories.size()>=input){
-            ((ProductsOfCategory)submenus.get(1)).show(categories.get(input-1).getName());
-            ((ProductsOfCategory)submenus.get(1)).run(categories.get(input-1).getName());
-        }
-        else {
-            this.parent.show();
-            this.parent.run();
-        }
-
-    }
 }
 

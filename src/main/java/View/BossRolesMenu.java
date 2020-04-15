@@ -7,6 +7,10 @@ import java.util.HashMap;
 public class BossRolesMenu extends Menu {
     private String userName;
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
         submenus.put(1, getPersonalInfo());
@@ -29,10 +33,6 @@ public class BossRolesMenu extends Menu {
         submenus.put(18, getAddCategory());
         submenus.put(19, getRemoveCategory());
 
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
     private Menu getPersonalInfo(){
         return new Menu(this.parent,"view personal info") {

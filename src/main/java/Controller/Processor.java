@@ -1,11 +1,18 @@
 package Controller;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import model.*;
 
 import java.util.ArrayList;
 
 public class Processor {
     private BuyOrder buyOrder;
+    private boolean isLogin;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
 
     public Processor() {
     }
@@ -14,11 +21,14 @@ public class Processor {
         return Category.getAllCategories();
         //TODO : send to view //how?? (optional)
     }
-
     public boolean loginProcess(String username, String password) {
         if (User.hasUserWithUserName(username))
-            return User.getUserByUserName(username).getPersonalInfo().getPassword().equals(password);
+            return User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password);
         return false;
+    }
+
+    public boolean isUserLoggedIn() {
+        return isLogin;
     }
 
     public void filteringProcess(String command) {
@@ -113,18 +123,18 @@ public class Processor {
 
     }
 
-    public void viewDiscountCode(String code) {
-        Discount discount = Discount.getDiscountById(code);
+    public void viewDiscountCode(String discountCode) {
+        CodedDiscount discount =CodedDiscount.getDiscountById(discountCode);
 
     }
 
-    public void editDiscountCode(String code) {
-        Discount discount = Discount.getDiscountById(code);
+    public void editDiscountCode(String discountCode) {
+        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
 
     }
 
-    public void removeDiscountCode(String code) {
-        Discount discount = Discount.getDiscountById(code);
+    public void removeDiscountCode(String discountCode) {
+        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
 
     }
 
@@ -161,100 +171,6 @@ public class Processor {
     public void removeCategory(String categoryName) {
         Category category = Category.getCategoryByName(categoryName);
 
-
-    }
-
-    public void viewProductInCart(String userName) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void increaseProduct(String userName, String productId) {
-        User user = User.getUserByUserName(userName);
-        Product product = Product.getProductById(productId);
-
-    }
-
-    public void decreaseProduct(String userName, String productId) {
-        User user = User.getUserByUserName(userName);
-        Product product = Product.getProductById(productId);
-
-    }
-
-    public void showTotalPrice(String userName) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewBalance(String userName) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewOrders(String userName) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void showOrder(String userName, String orderId) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void rateProduct(String userName, String productId, int score) {
-        User user = User.getUserByUserName(userName);
-
-
-    }
-
-    public void viewDiscountCodes(String userName) {
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewCompanyInfo(String userName){
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewSalesHistory(String userName){
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewProducts(String userName){
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void addProduct(String userName){//gereftan field haye product
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void removeProduct(String userName, String productId){
-        User user = User.getUserByUserName(userName);
-        Product product = Product.getProductById(productId);
-
-    }
-
-    public void viewOffs(String userName){
-        User user = User.getUserByUserName(userName);
-        ArrayList<Off> offs = ((Seller)user).getAllOffs();
-    }
-
-    public void viewOff(String userName, String offId){
-        User user = User.getUserByUserName(userName);
-        Off off = ((Seller)user).getOffById(offId);
-
-    }
-    public void editOff(String userName, String offId){//be soorate darkhast
-        User user = User.getUserByUserName(userName);
-        Off off = ((Seller)user).getOffById(offId);
-    }
-
-    public void addOff(String userName){//vorodi : baghie field ha gerefte mishe // besoorate darkhast
-        User user = User.getUserByUserName(userName);
 
     }
 

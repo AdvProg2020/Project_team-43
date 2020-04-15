@@ -5,19 +5,18 @@ import java.util.ArrayList;
 public class Product {
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
+
     private String productId;
     private State.ProductState productState;
     private String name;
     private String companyName;
     private double price;
-    private boolean isAvailable;
+    private boolean available;
     private Category category;
-    ////////moshakhasate daste
-    private String explanation;/////////tozihat
-    private ArrayList<Double> score;
+    private String description;/////////tozihat
+    private ProductScore score;
     private ArrayList<Opinion> opinions;
-    public ArrayList<Buyer> buyers;
-    private ArrayList<Seller> sellers;
+
 
     public Product(String productId, String name, String companyName, double price, Category category) {
         this.productId = productId;
@@ -26,12 +25,29 @@ public class Product {
         this.companyName = companyName;
         this.price = price;
         this.category = category;
-        buyers = new ArrayList<Buyer>();
-        sellers = new ArrayList<Seller>();
-        score = new ArrayList<Double>();
+        score = new ProductScore();
         opinions = new ArrayList<Opinion>();
-        /////first isAvailable or not??
         allProductsInQueueExpect.add(this);
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ProductScore getScore() {
+        return score;
     }
 
     public static Product getProductById(String productId) {
