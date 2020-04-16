@@ -23,7 +23,7 @@ public class Product {
 
     public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {
         this.productId = productId;
-        this.productState = State.ProductState.creatingProcess;
+        this.productState = State.ProductState.CREATING_PROCESS;
         this.name = name;
         this.company = company;
         this.price = price;

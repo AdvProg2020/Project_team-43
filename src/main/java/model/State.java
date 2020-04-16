@@ -2,15 +2,15 @@ package model;
 
 public enum State {;
     public enum ProductState{
-        confirmed, creatingProcess, editingProcess
+        CONFIRMED, CREATING_PROCESS, EDITING_PROCESS
     }
     public enum OffState{
-        confirmed, creatingProcess, editingProcess
+        CONFIRMED, CREATING_PROCESS, EDITING_PROCESS
     }
     public enum OpinionState{
-        unconfirmed, confirmed, waitingConfirmation
+        UNCONFIRMED, CONFIRMED, WAITING_CONFIRMATION
     }
     public enum offRequestState{
-        edit, add
+        EDIT, ADD
     }
 }

@@ -156,7 +156,7 @@ public class BossRolesMenu extends Menu {
             public void show() {
                 manager.viewCategories();
                 System.out.println("1 . edit category");
-                System.out.println("2 . add category");
+                System.out.println("2 . ADD category");
                 System.out.println("3 . remove category");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();

@@ -14,7 +14,7 @@ public class Comment {
     public Comment(Product product, String opinionText, boolean isBuy) {
         this.product = product;
         this.commentText = opinionText;
-        this.opinionState = State.OpinionState.waitingConfirmation;
+        this.opinionState = State.OpinionState.WAITING_CONFIRMATION;
         this.isBuy = isBuy;
         inQueueExpection.add(this);
     }

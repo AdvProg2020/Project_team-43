@@ -22,7 +22,7 @@ public class ProductPanel extends Menu {
             @Override
             public void show() {
                 manager.showDigest(productId);
-                System.out.println("1 . add to cart");
+                System.out.println("1 . ADD to cart");
                 System.out.println("2 . select seller");
                 System.out.println("3 . back");
                 String command = scanner.nextLine();
@@ -76,7 +76,7 @@ public class ProductPanel extends Menu {
             @Override
             public void show() {
                 manager.showComments(productId);
-                System.out.println("1 . add comment");
+                System.out.println("1 . ADD comment");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
                 manager.manageComments(command);

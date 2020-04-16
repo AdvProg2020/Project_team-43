@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Off {
     public static ArrayList<Off> acceptedOffs = new ArrayList<Off>();
@@ -16,7 +15,7 @@ public class Off {
 
     public Off(String offId, String startTime, String endTime, double discountAmount, Seller seller, ArrayList<Product>products1) {
         this.offId = offId;
-        this.offState = State.OffState.creatingProcess;
+        this.offState = State.OffState.CREATING_PROCESS;
         this.startTime = startTime;
         this.endTime = endTime;
         this.discountAmount = discountAmount;

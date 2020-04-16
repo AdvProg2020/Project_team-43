@@ -10,7 +10,7 @@ public class SellerRolesMenu extends Menu {
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
-        //TODO : add roles of Seller
+        //TODO : ADD roles of Seller
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
         submenus.put(3, getViewCompanyInfo());
@@ -94,7 +94,7 @@ public class SellerRolesMenu extends Menu {
 
 
     private Menu getAddProduct() {
-        return new Menu(this, "add product") {
+        return new Menu(this, "ADD product") {
             @Override
             public void show() {
                 manager.addProduct(userName);//baghie field ha byd dade shavad
@@ -146,7 +146,7 @@ public class SellerRolesMenu extends Menu {
                 manager.viewOffs(userName);
                 System.out.println("1 . view off");
                 System.out.println("3 . edit off");
-                System.out.println("2 . add off");
+                System.out.println("2 . ADD off");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
                 manager.manageOffs(userName, command);
