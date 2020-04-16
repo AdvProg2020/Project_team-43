@@ -1,6 +1,7 @@
 package View;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
 
@@ -8,6 +9,7 @@ public class SellerRolesMenu extends Menu {
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
+        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
         //TODO : add roles of Seller
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
@@ -22,6 +24,7 @@ public class SellerRolesMenu extends Menu {
         submenus.put(11, getEditOff());
         submenus.put(12, getAddOff());
         submenus.put(13, getViewBalance());
+        this.setSubmenus(submenus);
     }
 
     public void setUserName(String userName) {
@@ -29,7 +32,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getPersonalInfo() {
-        return new Menu(this.parent, "view personal info") {
+        return new Menu(this, "view personal info") {
             @Override
             public void show() {
                 manager.viewPersonalInfo(userName);
@@ -44,7 +47,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getEdit() {
-        return new Menu(this.parent, "edit fields") {
+        return new Menu(this, "edit fields") {
             @Override
             public void show() {
                 String field = scanner.nextLine();
@@ -60,7 +63,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getViewCompanyInfo() {
-        return new Menu(this.parent, "view company information") {
+        return new Menu(this, "view company information") {
             @Override
             public void show() {
 
@@ -76,7 +79,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getViewSalesHistory() {
-        return new Menu(this.parent, "view sales history") {
+        return new Menu(this, "view sales history") {
             @Override
             public void show() {
                 manager.viewSalesHistory(userName);
@@ -94,7 +97,7 @@ public class SellerRolesMenu extends Menu {
 
 
     private Menu getAddProduct() {
-        return new Menu(this.parent, "add product") {
+        return new Menu(this, "add product") {
             @Override
             public void show() {
                 manager.addProduct(userName);//baghie field ha byd dade shavad
@@ -109,7 +112,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getRemoveProduct() {
-        return new Menu(this.parent, "remove product by Id") {
+        return new Menu(this, "remove product by Id") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -125,7 +128,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getShowCategories() {
-        return new Menu(this.parent, "show all categories") {
+        return new Menu(this, "show all categories") {
             @Override
             public void show() {
                 manager.viewCategories();
@@ -140,7 +143,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getViewOffs() {
-        return new Menu(this.parent, "view all offs") {
+        return new Menu(this, "view all offs") {
             @Override
             public void show() {
 
@@ -156,7 +159,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getViewOff() {
-        return new Menu(this.parent, "view off by Id") {
+        return new Menu(this, "view off by Id") {
             @Override
             public void show() {
                 String offId = scanner.nextLine();
@@ -172,7 +175,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getAddOff() {
-        return new Menu(this.parent, "add off") {
+        return new Menu(this, "add off") {
             @Override
             public void show() {
                 System.out.print("Off Id : ");
@@ -195,7 +198,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getEditOff() {
-        return new Menu(this.parent, "edit off by Id") {
+        return new Menu(this, "edit off by Id") {
             @Override
             public void show() {
                 String offId = scanner.nextLine();
@@ -211,7 +214,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getViewBalance() {
-        return new Menu(this.parent, "view balance") {
+        return new Menu(this, "view balance") {
             @Override
             public void show() {
                 manager.viewBalance(userName);

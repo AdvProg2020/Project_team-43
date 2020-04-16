@@ -22,7 +22,9 @@ public class Processor {
 
     public Processor() {
     }
-
+    public boolean isUserLoggedIn(){
+        return isLogin;
+    }
     public void viewCategories() {
         ArrayList<Category> categories = Category.getAllCategories();
         viewManager.showCategories(categories);

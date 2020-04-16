@@ -1,16 +1,21 @@
 package View;
 
 
-public class ProductPanel extends Menu{
+import java.util.HashMap;
+
+public class ProductPanel extends Menu {
     private String Id;
+
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
-        this.Id = getIdProductFromUser();
+        HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getDigest());
         submenus.put(2, getAttributes());
         submenus.put(3, getCompare());
         submenus.put(4, getComments());
+        this.setSubmenus(submenus);
     }
+
     private Menu getDigest() {
 
         return new Menu(this, "digest") {
@@ -27,6 +32,7 @@ public class ProductPanel extends Menu{
             }
         };
     }
+
     private Menu getAttributes() {
 
         return new Menu(this, "attributes") {
@@ -42,6 +48,7 @@ public class ProductPanel extends Menu{
             }
         };
     }
+
     private Menu getCompare() {
 
         return new Menu(this, "comparing") {
@@ -58,6 +65,7 @@ public class ProductPanel extends Menu{
             }
         };
     }
+
     private Menu getComments() {
 
         return new Menu(this, "comments") {
@@ -76,12 +84,14 @@ public class ProductPanel extends Menu{
             }
         };
     }
-    private String getIdProductFromUser(){
+
+    private void getIdProductFromUser() {
         System.out.println("product's Id : ");
-        return scanner.nextLine();
+        this.Id = scanner.nextLine();
     }
-    public void run(String productId){
-        this.Id=productId;
+
+    public void run(String productId) {
+        this.Id = productId;
     }
 }
 

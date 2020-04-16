@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Buyer extends User {
     //TODO
-    private ArrayList<Discount> discounts;
+    private ArrayList<CodedDiscount> discounts;
     private ArrayList<Product> cart;
     private ArrayList<BuyOrder> orders;
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
-        discounts = new ArrayList<Discount>();
+        discounts = new ArrayList<CodedDiscount>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
     }

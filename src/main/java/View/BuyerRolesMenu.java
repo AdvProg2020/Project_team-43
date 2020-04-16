@@ -1,11 +1,12 @@
 package View;
 
+import java.util.HashMap;
+
 public class BuyerRolesMenu extends Menu {
     private String userName;
-
-
     public BuyerRolesMenu(Menu parent, String name) {
         super(parent, name);
+        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
         submenus.put(3, getViewProductInCart());
@@ -13,12 +14,13 @@ public class BuyerRolesMenu extends Menu {
         submenus.put(5, getIncreaseProduct());
         submenus.put(6, getDecreaseProduct());
         submenus.put(7, getshowTotalPrice());
-        submenus.put(8, new Purchase(this, "purchase panel", userName));
+        submenus.put(8, new Purchase(this, "purchase panel"));
         submenus.put(9, getViewOrders());
         submenus.put(10, getShowOrder());
         submenus.put(11, getRateProduct());
         submenus.put(12, getViewBalance());
         submenus.put(13, getViewDiscountCodes());
+        this.setSubmenus(submenus);
     }
 
     public void setUserName(String userName) {
@@ -26,7 +28,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getPersonalInfo() {
-        return new Menu(this.parent, "view personal info") {
+        return new Menu(this, "view personal info") {
             @Override
             public void show() {
                 manager.viewPersonalInfo(userName);
@@ -41,7 +43,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getEdit() {
-        return new Menu(this.parent, "edit fields") {
+        return new Menu(this, "edit fields") {
             @Override
             public void show() {
                 String field = scanner.nextLine();
@@ -57,7 +59,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getViewProductInCart() {
-        return new Menu(this.parent, "view product in cart") {
+        return new Menu(this, "view product in cart") {
             @Override
             public void show() {
                 manager.viewProductInCart(userName);
@@ -72,7 +74,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getIncreaseProduct() {
-        return new Menu(this.parent, "increase one product in cart") {
+        return new Menu(this, "increase one product in cart") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -88,7 +90,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getDecreaseProduct() {
-        return new Menu(this.parent, "decrease one product in cart") {
+        return new Menu(this, "decrease one product in cart") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -104,7 +106,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getshowTotalPrice() {
-        return new Menu(this.parent, "show total price of cart") {
+        return new Menu(this, "show total price of cart") {
             @Override
             public void show() {
 
@@ -120,7 +122,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getViewOrders() {
-        return new Menu(this.parent, "view orders") {
+        return new Menu(this, "view orders") {
             @Override
             public void show() {
                 manager.viewOrders(userName);
@@ -135,7 +137,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getShowOrder() {
-        return new Menu(this.parent, "show order by orderId") {
+        return new Menu(this, "show order by orderId") {
             @Override
             public void show() {
                 String orderId = scanner.nextLine();
@@ -151,7 +153,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getRateProduct() {
-        return new Menu(this.parent, "rate product") {
+        return new Menu(this, "rate product") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -168,7 +170,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getViewBalance() {
-        return new Menu(this.parent, "view balance") {
+        return new Menu(this, "view balance") {
             @Override
             public void show() {
                 manager.viewBalance(userName);
@@ -183,7 +185,7 @@ public class BuyerRolesMenu extends Menu {
     }
 
     private Menu getViewDiscountCodes() {
-        return new Menu(this.parent, "view discount Codes") {
+        return new Menu(this, "view discount Codes") {
             @Override
             public void show() {
                 manager.viewBuyerDiscountCodes(userName);

@@ -13,6 +13,7 @@ public class BossRolesMenu extends Menu {
 
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
+        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
         submenus.put(3, getViewUser());
@@ -32,11 +33,12 @@ public class BossRolesMenu extends Menu {
         submenus.put(17, getEditCategory());
         submenus.put(18, getAddCategory());
         submenus.put(19, getRemoveCategory());
+        this.setSubmenus(submenus);
 
     }
 
     private Menu getPersonalInfo() {
-        return new Menu(this.parent, "view personal info") {
+        return new Menu(this, "view personal info") {
             @Override
             public void show() {
                 manager.viewPersonalInfo(userName);
@@ -51,7 +53,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getEdit() {
-        return new Menu(this.parent, "edit fields") {
+        return new Menu(this, "edit fields") {
             @Override
             public void show() {
                 String field = scanner.nextLine();
@@ -67,7 +69,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewUser() {
-        return new Menu(this.parent, "view user") {
+        return new Menu(this, "view user") {
             @Override
             public void show() {
                 String userNameToBeView = scanner.nextLine();
@@ -83,7 +85,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getDeleteUser() {
-        return new Menu(this.parent, "delete user") {
+        return new Menu(this, "delete user") {
             @Override
             public void show() {
                 String userNameToBeDelete = scanner.nextLine();
@@ -99,7 +101,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getCreateManagerProfile() {
-        return new Menu(this.parent, "create manager profile") {
+        return new Menu(this, "create manager profile") {
             @Override
             public void show() {
                 manager.createManagerProfile();
@@ -114,7 +116,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getRemoveProduct() {
-        return new Menu(this.parent, "remove product") {
+        return new Menu(this, "remove product") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -130,7 +132,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getCreateDiscountCode() {
-        return new Menu(this.parent, "create discount code") {
+        return new Menu(this, "create discount code") {
             @Override
             public void show() {
                 manager.createDiscountCode();
@@ -145,7 +147,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewDiscountCodes() {
-        return new Menu(this.parent, "view all discount codes") {
+        return new Menu(this, "view all discount codes") {
             @Override
             public void show() {
                 manager.viewBossDiscountCodes();
@@ -160,7 +162,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewDiscountCode() {
-        return new Menu(this.parent, "view discount code by Id") {
+        return new Menu(this, "view discount code by Id") {
             @Override
             public void show() {
                 String discountCode = scanner.nextLine();
@@ -176,7 +178,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getEditDiscountCode() {
-        return new Menu(this.parent, "edit discount code by Id") {
+        return new Menu(this, "edit discount code by Id") {
             @Override
             public void show() {
                 String discountCode = scanner.nextLine();
@@ -192,7 +194,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getRemoveDiscountCodes() {
-        return new Menu(this.parent, "remove discount code") {
+        return new Menu(this, "remove discount code") {
             @Override
             public void show() {
                 String discountCode = scanner.nextLine();
@@ -208,7 +210,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewRequests() {
-        return new Menu(this.parent, "view all requests") {
+        return new Menu(this, "view all requests") {
             @Override
             public void show() {
                 manager.viewRequests();
@@ -223,7 +225,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getRequestDetail() {
-        return new Menu(this.parent, "view request by Id") {
+        return new Menu(this, "view request by Id") {
             @Override
             public void show() {
                 String requestId = scanner.nextLine();
@@ -239,7 +241,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getAcceptRequest() {
-        return new Menu(this.parent, "accept request by Id") {
+        return new Menu(this, "accept request by Id") {
             @Override
             public void show() {
                 String requestId = scanner.nextLine();
@@ -255,7 +257,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getDeclineRequest() {
-        return new Menu(this.parent, "decline request by Id") {
+        return new Menu(this, "decline request by Id") {
             @Override
             public void show() {
                 String requestId = scanner.nextLine();
@@ -271,7 +273,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewCategories() {
-        return new Menu(this.parent, "view all categories") {
+        return new Menu(this, "view all categories") {
             @Override
             public void show() {
                 manager.viewCategories();
@@ -286,7 +288,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getEditCategory() {
-        return new Menu(this.parent, "edit category by name") {
+        return new Menu(this, "edit category by name") {
             @Override
             public void show() {
                 String categoryName = scanner.nextLine();
@@ -302,7 +304,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getAddCategory() {
-        return new Menu(this.parent, "add category") {
+        return new Menu(this, "add category") {
             @Override
             public void show() {
                 //field haye marboote ro begirim
@@ -318,7 +320,7 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getRemoveCategory() {
-        return new Menu(this.parent, "remove category by name") {
+        return new Menu(this, "remove category by name") {
             @Override
             public void show() {
                 String categoryName = scanner.nextLine();

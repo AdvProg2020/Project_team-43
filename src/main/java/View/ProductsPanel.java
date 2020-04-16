@@ -1,17 +1,21 @@
 package View;
 
 import model.Category;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductsPanel extends Menu {
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
+        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
         submenus.put(1,viewCategory());
         submenus.put(2,getFiltering());
         submenus.put(3,getSorting());
         submenus.put(4,showProducts());
         submenus.put(5,new ProductPanel(this,"show product with Id"));
+        this.setSubmenus(submenus);
     }
 
     private Menu viewCategory() {

@@ -3,9 +3,8 @@ package View;
 public class Purchase extends Menu {
     private String userName;
 
-    public Purchase(Menu parent, String name, String userName) {
+    public Purchase(Menu parent, String name) {
         super(parent, name);
-        this.userName = userName;
         doPurchase();
     }
 

@@ -1,11 +1,15 @@
 package View;
 
+import java.util.HashMap;
+
 public class OffPanel extends Menu {
     public OffPanel(Menu parent, String name) {
         super(parent, name);
+        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
         submenus.put(1, getOffs());
         submenus.put(2, new ProductPanel(this, "product Panel"));
         submenus.put(3, getFiltering());
+        setSubmenus(submenus);
     }
 
     private Menu getOffs() {
