@@ -7,6 +7,8 @@ import model.*;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static model.Category.getAllCategories;
 
@@ -22,10 +24,13 @@ public class Processor {
 
     public Processor() {
     }
-    public boolean isUserLoggedIn(){
+
+    public boolean isUserLoggedIn() {
         return isLogin;
     }
+
     public void viewCategories() {
+        //TODO : error handling
         ArrayList<Category> categories = Category.getAllCategories();
         viewManager.showCategories(categories);
     }
@@ -37,39 +42,46 @@ public class Processor {
     }
 
     public void filteringProcess(String command) {
+        //TODO : error handling
 
 
     }
 
     public void sortingProcess(String command) {
+        //TODO : error handling
 
 
     }
 
     public void showProducts() {
+        //TODO : error handling
         ArrayList<Product> products = Product.allProductsInList;
 
 
     }
 
     public void showProductById(String Id) {
+        //TODO : error handling
         Product product = Product.getProductById(Id);
 
 
     }
 
     public void showDigest(String command, String Id) {
+        //TODO : error handling
         Product product = Product.getProductById(Id);
 
     }
 
     public void showAttributes(String Id) {
+        //TODO : error handling
         Product product = Product.getProductById(Id);
         viewManager.showProductInfo(product);
 
     }
 
     public void compareProcess(String firstProductId, String secondProductId) {
+        //TODO : error handling
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
 
@@ -77,12 +89,14 @@ public class Processor {
     }
 
     public void showComments(String productId) {
+        //TODO : error handling
         Product product = Product.getProductById(productId);
         viewManager.showComments(product.getComments());
 
     }
 
     public void showOffs() {
+        //TODO : error handling
         ArrayList<Off> offs = Off.acceptedOffs;
         viewManager.showOffs(offs);
     }
@@ -95,8 +109,30 @@ public class Processor {
     }
 
     public void editField(String userName, String field) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
+
+    }
+
+    public void manageUsers(String command) {
+        //TODO : error handling
+        if (command.equals("back")){
+            return;
+        }
+        Pattern viewUserPattern = Pattern.compile("view (.+)");
+        Matcher viewUserMatcher = viewUserPattern.matcher(command);
+        Pattern deleteUserPattern = Pattern.compile("delete user (.+)");
+        Matcher deleteUserMatcher = deleteUserPattern.matcher(command);
+        Pattern createManagerPattern = Pattern.compile("create manager profile");
+        Matcher createManagerMatcher = createManagerPattern.matcher(command);
+        if(viewUserMatcher.matches()){
+            viewUser(viewUserMatcher.group(1));
+        } else if(deleteUserMatcher.matches()){
+            deleteUser(deleteUserMatcher.group(1));
+        } else if(createManagerMatcher.matches()){
+            createManagerProfile();
+        }
 
     }
 
@@ -116,7 +152,7 @@ public class Processor {
 
     public void createManagerProfile() {
         //TODO : error handling
-        ArrayList<String > managerInfo = new ArrayList<String>();
+        ArrayList<String> managerInfo = new ArrayList<String>();
         viewManager.getManagerInfo(managerInfo);
         String userName = managerInfo.get(0);
         String firstName = managerInfo.get(1);
@@ -129,6 +165,17 @@ public class Processor {
 
     }
 
+    public void manageAllProducts(String command){
+        //TODO : error handling
+        if(command.equals("back")){
+            return;
+        }
+        Pattern removeProductPattern = Pattern.compile("remove (.+)");
+        Matcher removeProductMatcher = removeProductPattern.matcher(command);
+        if(removeProductMatcher.matches()){
+            removeProduct(removeProductMatcher.group(1));
+        }
+    }
 
     public void removeProduct(String productId) {
         Product product = Product.getProductById(productId);
@@ -148,7 +195,25 @@ public class Processor {
         CodedDiscount newDiscount = new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
 
     }
-
+    public void manageDiscountCodes(String command){
+        //TODO : error handling
+        if(command.equals("back")){
+            return;
+        }
+        Pattern viewDiscountCodePattern = Pattern.compile("view discount code (.+)");
+        Matcher viewDiscountCodeMatcher = viewDiscountCodePattern.matcher(command);
+        Pattern editDiscountCodePattern = Pattern.compile("edit discount code (.+)");
+        Matcher editDiscountCodeMatcher = editDiscountCodePattern.matcher(command);
+        Pattern removeDiscountCodePattern = Pattern.compile("remove discount code (.+)");
+        Matcher removeDiscountCodeMatcher = removeDiscountCodePattern.matcher(command);
+        if(viewDiscountCodeMatcher.matches()){
+            viewDiscountCode(viewDiscountCodeMatcher.group(1));
+        } else if(editDiscountCodeMatcher.matches()){
+            editDiscountCode(editDiscountCodeMatcher.group(1));
+        } else if(removeDiscountCodeMatcher.matches()){
+            removeDiscountCode(removeDiscountCodeMatcher.group(1));
+        }
+    }
     public void viewBossDiscountCodes() {
         ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
 
@@ -172,8 +237,28 @@ public class Processor {
         }
     }
 
-    public void viewRequests() {
+    public void manageRequests(String command){
+        //TODO : error handling
+        if(command.equals("back")){
+            return;
+        }
+        Pattern detailsPattern = Pattern.compile("details (.+)");
+        Matcher detailsMatcher = detailsPattern.matcher(command);
+        Pattern acceptRequestPattern = Pattern.compile("accept (.+)");
+        Matcher acceptRequestMatcher = acceptRequestPattern.matcher(command);
+        Pattern declineRequestPattern = Pattern.compile("decline (.+)");
+        Matcher declineRequestMatcher = declineRequestPattern.matcher(command);
+        if(detailsMatcher.matches()){
+            viewRequestDetails(detailsMatcher.group(1));
+        } else if(acceptRequestMatcher.matches()){
+            acceptRequest(acceptRequestMatcher.group(1));
+        } else if(declineRequestMatcher.matches()){
+            declineRequest(declineRequestMatcher.group(1));
+        }
+    }
 
+    public void viewRequests() {
+        ArrayList<Request> requests = Manager.allRequest;
 
     }
 
@@ -192,87 +277,123 @@ public class Processor {
 
     }
 
+    public void manageCategories(String command){
+        //TODO : error handling
+        if(command.equals("back")){
+            return;
+        }
+        Pattern editCategoryPattern = Pattern.compile("edit (.+)");
+        Matcher editCategoryMatcher = editCategoryPattern.matcher(command);
+        Pattern addCategoryPattern = Pattern.compile("add (.+)");
+        Matcher addCategoryMatcher = addCategoryPattern.matcher(command);
+        Pattern removeCategoryPattern = Pattern.compile("remove (.+)");
+        Matcher removeCategoryMatcher = removeCategoryPattern.matcher(command);
+        if(editCategoryMatcher.matches()){
+            editCategory(editCategoryMatcher.group(1));
+        } else if(addCategoryMatcher.matches()){
+            addCategory(addCategoryMatcher.group(1));
+        } else if(removeCategoryMatcher.matches()){
+            removeCategory(removeCategoryMatcher.group(1));
+        }
+    }
 
     public void editCategory(String categoryName) {
+        //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
 
     }
 
-    public void addCategory() {//vorodi : field haye marboote
-
+    public void addCategory(String categoryName) {
+        //TODO : error handling
+        //in sub category o super category ro chejori begirim age khodesh super bashe ya khodesh sub bashe
+        viewManager.getCategoryInfo();
     }
 
     public void removeCategory(String categoryName) {
+        //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
+
 
 
     }
 
     public void viewProductInCart(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
     }
 
     public void increaseProduct(String userName, String productId) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
         Product product = Product.getProductById(productId);
 
     }
 
     public void decreaseProduct(String userName, String productId) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
         Product product = Product.getProductById(productId);
 
     }
 
     public void showTotalPrice(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
     }
 
     public void viewBalance(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
     }
 
     public void viewOrders(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
     }
 
     public void showOrder(String userName, String orderId) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
     }
 
     public void rateProduct(String userName, String productId, int score) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
 
     }
 
     public void viewBuyerDiscountCodes(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
 
 
     }
 
     public void viewCompanyInfo(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
-        Company company = ((Seller)user).getCompany();
+        Company company = ((Seller) user).getCompany();
         viewManager.showCompanyInfo(company);
 
     }
 
     public void viewSalesHistory(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
-        ArrayList<SellOrder> orders = ((Seller)user).getOrders();
+        ArrayList<SellOrder> orders = ((Seller) user).getOrders();
         viewManager.showSellOrders(orders);
     }
 
     public void viewSellerProducts(String userName) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
-        ArrayList<Product> products = ((Seller)user).getProducts();
+        ArrayList<Product> products = ((Seller) user).getProducts();
         viewManager.showProducts(products);
     }
 
@@ -288,7 +409,7 @@ public class Processor {
         double price = Double.parseDouble(productInfo.get(4));
         ArrayList<String> features = new ArrayList<String>();
         viewManager.getProductFeatures(category.getFeatures(), features);
-        ((Seller)user).addProduct(new Product(Id, name, company, price, category, (Seller)user, features));
+        ((Seller) user).addProduct(new Product(Id, name, company, price, category, (Seller) user, features));
     }
 
     public void removeProduct(String userName, String productId) {
@@ -296,7 +417,7 @@ public class Processor {
         User user = User.getUserByUserName(userName);
         Product product = Product.getProductById(productId);
         //Product.allProductsInList.remove(product);//agar bekhahim chand foroshande ro handle konim
-        ((Seller)user).removeProduct(product);
+        ((Seller) user).removeProduct(product);
 
     }
 
@@ -314,16 +435,18 @@ public class Processor {
     }
 
     public void editOff(String userName, String offId) {//be soorate darkhast
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
         Off off = ((Seller) user).getOffById(offId);
         //chegoone edit mishavad
     }
 
     public void addOff(String userName, String offId, String startTime, String endTime, double discountAmount) {
+        //TODO : error handling
         User user = User.getUserByUserName(userName);
         ArrayList<Product> products = new ArrayList<Product>();
         viewManager.getOffProducts(products);
-        Off off = new Off(offId, startTime, endTime, discountAmount, (Seller)user, products);
+        Off off = new Off(offId, startTime, endTime, discountAmount, (Seller) user, products);
         String requestId = "";//chegone taeen mishavad
         Request offRequest = new OffRequest(requestId, off);
         ((Seller) user).addOff(off);

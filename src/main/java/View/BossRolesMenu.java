@@ -1,7 +1,5 @@
 package View;
 
-import model.User;
-
 import java.util.HashMap;
 
 public class BossRolesMenu extends Menu {
@@ -13,26 +11,15 @@ public class BossRolesMenu extends Menu {
 
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
+        HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
-        submenus.put(3, getViewUser());
-        submenus.put(4, getDeleteUser());
-        submenus.put(5, getCreateManagerProfile());
-        submenus.put(6, getRemoveProduct());
-        submenus.put(7, getCreateDiscountCode());
-        submenus.put(8, getViewDiscountCodes());
-        submenus.put(9, getViewDiscountCode());
-        submenus.put(10, getEditDiscountCode());
-        submenus.put(11, getRemoveDiscountCodes());
-        submenus.put(12, getViewRequests());
-        submenus.put(13, getRequestDetail());
-        submenus.put(14, getAcceptRequest());
-        submenus.put(15, getDeclineRequest());
-        submenus.put(16, getViewCategories());
-        submenus.put(17, getEditCategory());
-        submenus.put(18, getAddCategory());
-        submenus.put(19, getRemoveCategory());
+        submenus.put(3, getManageUsers());
+        submenus.put(4, getManageAllProducts());
+        submenus.put(5, getCreateDiscountCode());
+        submenus.put(6, getViewDiscountCodes());
+        submenus.put(7, getManageRequests());
+        submenus.put(8, getManageCategories());
         this.setSubmenus(submenus);
 
     }
@@ -68,12 +55,16 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewUser() {
-        return new Menu(this, "view user") {
+    private Menu getManageUsers() {
+        return new Menu(this, "manage users") {
             @Override
             public void show() {
-                String userNameToBeView = scanner.nextLine();
-                manager.viewUser(userNameToBeView);
+                System.out.println("1 . view user");
+                System.out.println("2 . delete user");
+                System.out.println("3 . create manager profile");
+                System.out.println("4 . back");
+                String command = scanner.nextLine();
+                manager.manageUsers(command);
             }
 
             @Override
@@ -84,43 +75,14 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getDeleteUser() {
-        return new Menu(this, "delete user") {
+    private Menu getManageAllProducts() {
+        return new Menu(this, "manage all products") {
             @Override
             public void show() {
-                String userNameToBeDelete = scanner.nextLine();
-                manager.deleteUser(userNameToBeDelete);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getCreateManagerProfile() {
-        return new Menu(this, "create manager profile") {
-            @Override
-            public void show() {
-                manager.createManagerProfile();
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getRemoveProduct() {
-        return new Menu(this, "remove product") {
-            @Override
-            public void show() {
-                String productId = scanner.nextLine();
-                manager.removeProduct(productId);
+                System.out.println("1 . remove products");
+                System.out.println("2 . back");
+                String command = scanner.nextLine();
+                manager.manageAllProducts(command);
             }
 
             @Override
@@ -147,10 +109,16 @@ public class BossRolesMenu extends Menu {
     }
 
     private Menu getViewDiscountCodes() {
-        return new Menu(this, "view all discount codes") {
+        return new Menu(this, "view discount codes") {
             @Override
             public void show() {
                 manager.viewBossDiscountCodes();
+                System.out.println("1 . view discount code");
+                System.out.println("2 . edit discount code");
+                System.out.println("3 . remove discount code");
+                System.out.println("4 . back");
+                String command = scanner.nextLine();
+                manager.manageDiscountCodes(command);
             }
 
             @Override
@@ -161,59 +129,17 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewDiscountCode() {
-        return new Menu(this, "view discount code by Id") {
-            @Override
-            public void show() {
-                String discountCode = scanner.nextLine();
-                manager.viewDiscountCode(discountCode);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getEditDiscountCode() {
-        return new Menu(this, "edit discount code by Id") {
-            @Override
-            public void show() {
-                String discountCode = scanner.nextLine();
-                manager.editDiscountCode(discountCode);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getRemoveDiscountCodes() {
-        return new Menu(this, "remove discount code") {
-            @Override
-            public void show() {
-                String discountCode = scanner.nextLine();
-                manager.removeDiscountCode(discountCode);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getViewRequests() {
-        return new Menu(this, "view all requests") {
+    private Menu getManageRequests() {
+        return new Menu(this, "manage requests") {
             @Override
             public void show() {
                 manager.viewRequests();
+                System.out.println("1 . details of request");
+                System.out.println("2 . accept request");
+                System.out.println("3 . decline request");
+                System.out.println("4 . back");
+                String command = scanner.nextLine();
+                manager.manageRequests(command);
             }
 
             @Override
@@ -224,59 +150,17 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getRequestDetail() {
-        return new Menu(this, "view request by Id") {
-            @Override
-            public void show() {
-                String requestId = scanner.nextLine();
-                manager.viewRequestDetails(requestId);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getAcceptRequest() {
-        return new Menu(this, "accept request by Id") {
-            @Override
-            public void show() {
-                String requestId = scanner.nextLine();
-                manager.acceptRequest(requestId);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getDeclineRequest() {
-        return new Menu(this, "decline request by Id") {
-            @Override
-            public void show() {
-                String requestId = scanner.nextLine();
-                manager.declineRequest(requestId);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getViewCategories() {
-        return new Menu(this, "view all categories") {
+    private Menu getManageCategories() {
+        return new Menu(this, "manage categories") {
             @Override
             public void show() {
                 manager.viewCategories();
+                System.out.println("1 . edit category");
+                System.out.println("2 . add category");
+                System.out.println("3 . remove category");
+                System.out.println("4 . back");
+                String command = scanner.nextLine();
+                manager.manageCategories(command);
             }
 
             @Override
@@ -286,54 +170,4 @@ public class BossRolesMenu extends Menu {
             }
         };
     }
-
-    private Menu getEditCategory() {
-        return new Menu(this, "edit category by name") {
-            @Override
-            public void show() {
-                String categoryName = scanner.nextLine();
-                manager.editCategory(categoryName);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getAddCategory() {
-        return new Menu(this, "add category") {
-            @Override
-            public void show() {
-                //field haye marboote ro begirim
-                manager.addCategory();
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getRemoveCategory() {
-        return new Menu(this, "remove category by name") {
-            @Override
-            public void show() {
-                String categoryName = scanner.nextLine();
-                manager.removeCategory(categoryName);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-
 }

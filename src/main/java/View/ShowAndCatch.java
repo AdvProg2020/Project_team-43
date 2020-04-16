@@ -159,4 +159,8 @@ public class ShowAndCatch {
             System.out.println(feature + " : " + product.getFeaturesMap().get(feature));
         }
     }
+
+    public void getCategoryInfo(){
+
+    }
 }
