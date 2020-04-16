@@ -1,8 +1,7 @@
 package View;
 
 import model.Category;
-import org.omg.PortableInterceptor.INACTIVE;
-
+//import org.omg.PortableInterceptor.INACTIVE;
 import java.util.ArrayList;
 import java.util.HashMap;
 

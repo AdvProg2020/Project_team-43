@@ -1,8 +1,11 @@
 package View;
 
 import model.*;
+//import sun.security.x509.CertAttrSet;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
@@ -15,7 +18,7 @@ public class ShowAndCatch {
     private ShowAndCatch() {
     }
 
-    public void getOffProducts(ArrayList<String> products) {
+    public void getOffProducts(ArrayList<Product> products) {
         while (true) {
             //fill products
         }
@@ -159,33 +162,5 @@ public class ShowAndCatch {
 
     public void getCategoryInfo(){
 
-    }
-
-    public void getOffInfo(ArrayList<String> offInfo){
-        System.out.print("Off Id : ");
-        String offId = scanner.nextLine();
-        offInfo.add(offId);
-        System.out.print("Start time : ");
-        String startTime = scanner.nextLine();
-        offInfo.add(startTime);
-        System.out.print("End time : ");
-        String endTime = scanner.nextLine();
-        offInfo.add(endTime);
-        System.out.print("Off discount amount : ");
-        String offDiscountAmount= scanner.nextLine();
-        offInfo.add(offDiscountAmount);
-    }
-
-    public void showBalance(User user){
-        System.out.println("user balance : " + user.getBalance());
-    }
-
-    public void getCommentInfo(ArrayList<String> commentInfo){
-        System.out.print("Title : ");
-        String title = scanner.nextLine();
-        commentInfo.add(title);
-        System.out.println("Content : ");
-        String content = scanner.nextLine();
-        commentInfo.add(content);
     }
 }
