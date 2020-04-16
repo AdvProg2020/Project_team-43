@@ -40,9 +40,13 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "filtering") {
             @Override
             public void show() {
+                System.out.println("1 . show available filters");
+                System.out.println("2 . filter");
+                System.out.println("3 . current filters");
+                System.out.println("4 . disable filter");
+                System.out.println("5 . back");
                 String command = scanner.nextLine();
                 manager.filteringProcess(command);
-                //
             }
 
             @Override
@@ -58,6 +62,11 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "sorting") {
             @Override
             public void show() {
+                System.out.println("1 . show available sorts");
+                System.out.println("2 . sort");
+                System.out.println("3 . current sort");
+                System.out.println("4 . disable sort");
+                System.out.println("5 . back");
                 String command = scanner.nextLine();
                 manager.sortingProcess(command);
                 //

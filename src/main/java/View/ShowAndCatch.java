@@ -1,11 +1,8 @@
 package View;
 
 import model.*;
-import sun.security.x509.CertAttrSet;
-
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Set;
 
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
@@ -177,5 +174,18 @@ public class ShowAndCatch {
         System.out.print("Off discount amount : ");
         String offDiscountAmount= scanner.nextLine();
         offInfo.add(offDiscountAmount);
+    }
+
+    public void showBalance(User user){
+        System.out.println("user balance : " + user.getBalance());
+    }
+
+    public void getCommentInfo(ArrayList<String> commentInfo){
+        System.out.print("Title : ");
+        String title = scanner.nextLine();
+        commentInfo.add(title);
+        System.out.println("Content : ");
+        String content = scanner.nextLine();
+        commentInfo.add(content);
     }
 }

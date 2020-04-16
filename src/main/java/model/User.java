@@ -3,14 +3,11 @@ package model;
 import java.util.ArrayList;
 
 public abstract class User {
-     private static final int money = 100000;
+    private static final int money = 100000;
     public static ArrayList<User> allUsers = new ArrayList<User>();
     protected String username;
-
-
-
     protected UserPersonalInfo userPersonalInfo;
-    protected double credit;//hamoon etebare
+    protected double balance;//hamoon etebare
     protected UserType userType;
 
     public UserPersonalInfo getUserPersonalInfo() {
@@ -21,7 +18,7 @@ public abstract class User {
         this.username = username;
         this.userPersonalInfo = userPersonalInfo;
         setUserType();
-        credit = money;
+        balance = money;
         allUsers.add(this);
     }
 
@@ -51,6 +48,10 @@ public abstract class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 
     public void viewPersonalInfo() {

@@ -4,7 +4,7 @@ package View;
 import java.util.HashMap;
 
 public class ProductPanel extends Menu {
-    private String Id;
+    private String productId;
 
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
@@ -21,8 +21,12 @@ public class ProductPanel extends Menu {
         return new Menu(this, "digest") {
             @Override
             public void show() {
+                manager.showDigest(productId);
+                System.out.println("1 . add to cart");
+                System.out.println("2 . select seller");
+                System.out.println("3 . back");
                 String command = scanner.nextLine();
-                manager.showDigest(command, Id);
+                manager.manageDigest(command, productId);
             }
 
             @Override
@@ -38,7 +42,7 @@ public class ProductPanel extends Menu {
         return new Menu(this, "attributes") {
             @Override
             public void show() {
-                manager.showAttributes(Id);
+                manager.showAttributes(productId);
             }
 
             @Override
@@ -55,7 +59,7 @@ public class ProductPanel extends Menu {
             @Override
             public void show() {
                 String secondProductId = scanner.nextLine();
-                manager.compareProcess(Id, secondProductId);
+                manager.compareProcess(productId, secondProductId);
             }
 
             @Override
@@ -71,10 +75,11 @@ public class ProductPanel extends Menu {
         return new Menu(this, "comments") {
             @Override
             public void show() {
-                manager.showComments(Id);
-                /////////////////////////////
+                manager.showComments(productId);
+                System.out.println("1 . add comment");
+                System.out.println("2 . back");
                 String command = scanner.nextLine();
-                // vorodi gereftanesh dar che sooratie???
+                manager.manageComments(command);
             }
 
             @Override
@@ -87,11 +92,11 @@ public class ProductPanel extends Menu {
 
     private void getIdProductFromUser() {
         System.out.println("product's Id : ");
-        this.Id = scanner.nextLine();
+        this.productId = scanner.nextLine();
     }
 
     public void run(String productId) {
-        this.Id = productId;
+        this.productId = productId;
     }
 }
 

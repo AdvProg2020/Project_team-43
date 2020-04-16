@@ -44,13 +44,86 @@ public class Processor {
 
     public void filteringProcess(String command) {
         //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern showAvailableFiltersPattern = Pattern.compile("show available filters");
+        Matcher showAvailableFiltersMatcher = showAvailableFiltersPattern.matcher(command);
+        Pattern filterPattern = Pattern.compile("filter (.+)");
+        Matcher filterMatcher = filterPattern.matcher(command);
+        Pattern currentFiltersPattern = Pattern.compile("current filters");
+        Matcher currentFiltersMatcher = currentFiltersPattern.matcher(command);
+        Pattern disableFilterPattern = Pattern.compile("disable filter (.+)");
+        Matcher disableFilterMatcher = disableFilterPattern.matcher(command);
 
+        if (showAvailableFiltersMatcher.matches()) {
+            showAvailableFilter();
+        } else if (filterMatcher.matches()) {
+            filter(filterMatcher.group(1));
+        } else if (currentFiltersMatcher.matches()) {
+            currentFilter();
+        } else if (disableFilterMatcher.matches()) {
+            disableFilter(disableFilterMatcher.group(1));
+        }
+
+
+    }
+
+    public void showAvailableFilter() {
+
+    }
+
+    public void filter(String selectedFilter) {
+
+    }
+
+    public void currentFilter() {
+
+    }
+
+    public void disableFilter(String selectedFilter) {
 
     }
 
     public void sortingProcess(String command) {
         //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern showAvailableSortsPattern = Pattern.compile("show available sorts");
+        Matcher showAvailableSortsMatcher = showAvailableSortsPattern.matcher(command);
+        Pattern sortPattern = Pattern.compile("sort (.+)");
+        Matcher sortMatcher = sortPattern.matcher(command);
+        Pattern currentSortPattern = Pattern.compile("current sort");
+        Matcher currentSortMatcher = currentSortPattern.matcher(command);
+        Pattern disableSortPattern = Pattern.compile("disable sort");
+        Matcher disableSortMatcher = disableSortPattern.matcher(command);
 
+        if (showAvailableSortsMatcher.matches()) {
+            showAvailableSort();
+        } else if (sortMatcher.matches()) {
+            sort(sortMatcher.group(1));
+        } else if (currentSortMatcher.matches()) {
+            currentSort();
+        } else if (disableSortMatcher.matches()) {
+            disableSort();
+        }
+
+    }
+
+    public void showAvailableSort() {
+
+    }
+
+    public void sort(String selectedSort) {
+
+    }
+
+    public void currentSort() {
+
+    }
+
+    public void disableSort() {
 
     }
 
@@ -68,9 +141,32 @@ public class Processor {
 
     }
 
-    public void showDigest(String command, String Id) {
+    public void manageDigest(String command, String productId){
         //TODO : error handling
-        Product product = Product.getProductById(Id);
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern addToCartPattern = Pattern.compile("add to cart");
+        Matcher addToCartMatcher = addToCartPattern.matcher(command);
+        Pattern selectSellerPattern = Pattern.compile("select seller (.+)");
+        Matcher selectSellerMatcher = selectSellerPattern.matcher(command);
+
+        if(addToCartMatcher.matches()){
+            addToCart(productId);
+        } else if(selectSellerMatcher.matches()){
+            selectSeller(selectSellerMatcher.group(1));
+        }
+
+    }
+    public void showDigest(String productId) {
+        //TODO : error handling
+        Product product = Product.getProductById(productId);
+    }
+
+    public void addToCart(String productId){
+
+    }
+    public void selectSeller(String sellerUserName){
 
     }
 
@@ -88,12 +184,29 @@ public class Processor {
 
 
     }
+    public void manageComments(String command){
+        //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern addCommentPattern = Pattern.compile("add comment");
+        Matcher addCommentMatcher = addCommentPattern.matcher(command);
+        if(addCommentMatcher.matches()){
+            addComment();
+        }
 
+    }
+    public void addComment(){
+        //TODO : error handling
+        ArrayList<String> commentInfo = new ArrayList<String>();
+        viewManager.getCommentInfo(commentInfo);
+        //handle commente gerefte shode
+
+    }
     public void showComments(String productId) {
         //TODO : error handling
         Product product = Product.getProductById(productId);
         viewManager.showComments(product.getComments());
-
     }
 
     public void showOffs() {
@@ -319,6 +432,35 @@ public class Processor {
 
     }
 
+    public void manageCart(String userName, String command) {
+        //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern showProductsPattern = Pattern.compile("show products");
+        Matcher showProductsMatcher = showProductsPattern.matcher(command);
+        Pattern viewProductPattern = Pattern.compile("view (.+)");
+        Matcher viewProductMatcher = viewProductPattern.matcher(command);
+        Pattern increaseProductPattern = Pattern.compile("increase (.+)");
+        Matcher increaseProductMatcher = increaseProductPattern.matcher(command);
+        Pattern decreaseProductPattern = Pattern.compile("decrease (.+)");
+        Matcher decreaseProductMatcher = decreaseProductPattern.matcher(command);
+        Pattern showTotalPricePattern = Pattern.compile("show total price");
+        Matcher showTotalPriceMatcher = showTotalPricePattern.matcher(command);
+        if (showProductsMatcher.matches()) {
+            viewProductInCart(userName);
+        } else if (viewProductMatcher.matches()) {
+            // handle kardan raftan be safe mahsoolat
+        } else if (increaseProductMatcher.matches()) {
+            increaseProduct(userName, increaseProductMatcher.group(1));
+        } else if (decreaseProductMatcher.matches()) {
+            decreaseProduct(userName, decreaseProductMatcher.group(1));
+        } else if (showTotalPriceMatcher.matches()) {
+            showTotalPrice(userName);
+        }
+
+    }
+
     public void viewProductInCart(String userName) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
@@ -348,6 +490,24 @@ public class Processor {
     public void viewBalance(String userName) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
+        viewManager.showBalance(user);
+    }
+
+    public void manageOrders(String userName, String command) {
+        //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern showOrderPattern = Pattern.compile("show order (.+)");
+        Matcher showOrderMatcher = showOrderPattern.matcher(command);
+        Pattern rateProductPattern = Pattern.compile("rate (.+) (\\d)");
+        Matcher rateProductMatcher = rateProductPattern.matcher(command);
+        if (showOrderMatcher.matches()) {
+            showOrder(userName, showOrderMatcher.group(1));
+        } else if (rateProductMatcher.matches()) {
+            rateProduct(userName, rateProductMatcher.group(1), Integer.parseInt(rateProductMatcher.group(2)));
+        }
+
 
     }
 
@@ -482,7 +642,8 @@ public class Processor {
 
 
     }
-    public ArrayList<Product> castStringToProduct(ArrayList<String> productsInString){
+
+    public ArrayList<Product> castStringToProduct(ArrayList<String> productsInString) {
         //TODO : erro handling
         ArrayList<Product> products = new ArrayList<Product>();
         for (String productId : productsInString) {
