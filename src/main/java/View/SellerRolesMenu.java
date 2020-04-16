@@ -9,7 +9,7 @@ public class SellerRolesMenu extends Menu {
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
+        HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         //TODO : add roles of Seller
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
@@ -19,11 +19,8 @@ public class SellerRolesMenu extends Menu {
         submenus.put(6, getAddProduct());
         submenus.put(7, getRemoveProduct());
         submenus.put(8, getShowCategories());
-        submenus.put(9, getViewOffs());
-        submenus.put(10, getViewOff());
-        submenus.put(11, getEditOff());
-        submenus.put(12, getAddOff());
-        submenus.put(13, getViewBalance());
+        submenus.put(9, getManageOffs());
+        submenus.put(10, getViewBalance());
         this.setSubmenus(submenus);
     }
 
@@ -142,67 +139,17 @@ public class SellerRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewOffs() {
-        return new Menu(this, "view all offs") {
+    private Menu getManageOffs() {
+        return new Menu(this, "view offs") {
             @Override
             public void show() {
-
                 manager.viewOffs(userName);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getViewOff() {
-        return new Menu(this, "view off by Id") {
-            @Override
-            public void show() {
-                String offId = scanner.nextLine();
-                manager.viewOff(userName, offId);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getAddOff() {
-        return new Menu(this, "add off") {
-            @Override
-            public void show() {
-                System.out.print("Off Id : ");
-                String offId = scanner.nextLine();
-                System.out.print("Start time : ");
-                String startTime = scanner.nextLine();
-                System.out.print("End time : ");
-                String endTime = scanner.nextLine();
-                System.out.print("Discount amount : ");
-                double discountAmount= scanner.nextDouble();
-                manager.addOff(userName, offId, startTime, endTime, discountAmount);
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getEditOff() {
-        return new Menu(this, "edit off by Id") {
-            @Override
-            public void show() {
-                String offId = scanner.nextLine();
-                manager.editOff(userName, offId);
+                System.out.println("1 . view off");
+                System.out.println("3 . edit off");
+                System.out.println("2 . add off");
+                System.out.println("4 . back");
+                String command = scanner.nextLine();
+                manager.manageOffs(userName, command);
             }
 
             @Override

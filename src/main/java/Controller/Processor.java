@@ -4,6 +4,7 @@ import View.ShowAndCatch;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import model.*;
 
+import java.lang.reflect.Array;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Date;
@@ -117,7 +118,7 @@ public class Processor {
 
     public void manageUsers(String command) {
         //TODO : error handling
-        if (command.equals("back")){
+        if (command.equals("back")) {
             return;
         }
         Pattern viewUserPattern = Pattern.compile("view (.+)");
@@ -126,11 +127,11 @@ public class Processor {
         Matcher deleteUserMatcher = deleteUserPattern.matcher(command);
         Pattern createManagerPattern = Pattern.compile("create manager profile");
         Matcher createManagerMatcher = createManagerPattern.matcher(command);
-        if(viewUserMatcher.matches()){
+        if (viewUserMatcher.matches()) {
             viewUser(viewUserMatcher.group(1));
-        } else if(deleteUserMatcher.matches()){
+        } else if (deleteUserMatcher.matches()) {
             deleteUser(deleteUserMatcher.group(1));
-        } else if(createManagerMatcher.matches()){
+        } else if (createManagerMatcher.matches()) {
             createManagerProfile();
         }
 
@@ -165,14 +166,14 @@ public class Processor {
 
     }
 
-    public void manageAllProducts(String command){
+    public void manageAllProducts(String command) {
         //TODO : error handling
-        if(command.equals("back")){
+        if (command.equals("back")) {
             return;
         }
         Pattern removeProductPattern = Pattern.compile("remove (.+)");
         Matcher removeProductMatcher = removeProductPattern.matcher(command);
-        if(removeProductMatcher.matches()){
+        if (removeProductMatcher.matches()) {
             removeProduct(removeProductMatcher.group(1));
         }
     }
@@ -195,9 +196,10 @@ public class Processor {
         CodedDiscount newDiscount = new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
 
     }
-    public void manageDiscountCodes(String command){
+
+    public void manageDiscountCodes(String command) {
         //TODO : error handling
-        if(command.equals("back")){
+        if (command.equals("back")) {
             return;
         }
         Pattern viewDiscountCodePattern = Pattern.compile("view discount code (.+)");
@@ -206,14 +208,15 @@ public class Processor {
         Matcher editDiscountCodeMatcher = editDiscountCodePattern.matcher(command);
         Pattern removeDiscountCodePattern = Pattern.compile("remove discount code (.+)");
         Matcher removeDiscountCodeMatcher = removeDiscountCodePattern.matcher(command);
-        if(viewDiscountCodeMatcher.matches()){
+        if (viewDiscountCodeMatcher.matches()) {
             viewDiscountCode(viewDiscountCodeMatcher.group(1));
-        } else if(editDiscountCodeMatcher.matches()){
+        } else if (editDiscountCodeMatcher.matches()) {
             editDiscountCode(editDiscountCodeMatcher.group(1));
-        } else if(removeDiscountCodeMatcher.matches()){
+        } else if (removeDiscountCodeMatcher.matches()) {
             removeDiscountCode(removeDiscountCodeMatcher.group(1));
         }
     }
+
     public void viewBossDiscountCodes() {
         ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
 
@@ -237,9 +240,9 @@ public class Processor {
         }
     }
 
-    public void manageRequests(String command){
+    public void manageRequests(String command) {
         //TODO : error handling
-        if(command.equals("back")){
+        if (command.equals("back")) {
             return;
         }
         Pattern detailsPattern = Pattern.compile("details (.+)");
@@ -248,11 +251,11 @@ public class Processor {
         Matcher acceptRequestMatcher = acceptRequestPattern.matcher(command);
         Pattern declineRequestPattern = Pattern.compile("decline (.+)");
         Matcher declineRequestMatcher = declineRequestPattern.matcher(command);
-        if(detailsMatcher.matches()){
+        if (detailsMatcher.matches()) {
             viewRequestDetails(detailsMatcher.group(1));
-        } else if(acceptRequestMatcher.matches()){
+        } else if (acceptRequestMatcher.matches()) {
             acceptRequest(acceptRequestMatcher.group(1));
-        } else if(declineRequestMatcher.matches()){
+        } else if (declineRequestMatcher.matches()) {
             declineRequest(declineRequestMatcher.group(1));
         }
     }
@@ -277,9 +280,9 @@ public class Processor {
 
     }
 
-    public void manageCategories(String command){
+    public void manageCategories(String command) {
         //TODO : error handling
-        if(command.equals("back")){
+        if (command.equals("back")) {
             return;
         }
         Pattern editCategoryPattern = Pattern.compile("edit (.+)");
@@ -288,11 +291,11 @@ public class Processor {
         Matcher addCategoryMatcher = addCategoryPattern.matcher(command);
         Pattern removeCategoryPattern = Pattern.compile("remove (.+)");
         Matcher removeCategoryMatcher = removeCategoryPattern.matcher(command);
-        if(editCategoryMatcher.matches()){
+        if (editCategoryMatcher.matches()) {
             editCategory(editCategoryMatcher.group(1));
-        } else if(addCategoryMatcher.matches()){
+        } else if (addCategoryMatcher.matches()) {
             addCategory(addCategoryMatcher.group(1));
-        } else if(removeCategoryMatcher.matches()){
+        } else if (removeCategoryMatcher.matches()) {
             removeCategory(removeCategoryMatcher.group(1));
         }
     }
@@ -312,7 +315,6 @@ public class Processor {
     public void removeCategory(String categoryName) {
         //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
-
 
 
     }
@@ -421,6 +423,26 @@ public class Processor {
 
     }
 
+    public void manageOffs(String userName, String command) {
+        //TODO : error handling
+        if (command.equals("back")) {
+            return;
+        }
+        Pattern viewOffPattern = Pattern.compile("view (.+)");
+        Matcher viewOffMatcher = viewOffPattern.matcher(command);
+        Pattern editOffPattern = Pattern.compile("edit (.+)");
+        Matcher editOffMatcher = editOffPattern.matcher(command);
+        Pattern addOffPattern = Pattern.compile("add off");
+        Matcher addOffMatcher = addOffPattern.matcher(command);
+        if (editOffMatcher.matches()) {
+            editOff(userName, editOffMatcher.group(1));
+        } else if (addOffMatcher.matches()) {
+            addOff(userName);
+        } else if (viewOffMatcher.matches()) {
+            viewOff(userName, viewOffMatcher.group(1));
+        }
+    }
+
     public void viewOffs(String userName) {
         User user = User.getUserByUserName(userName);
         ArrayList<Off> offs = ((Seller) user).getOffs();
@@ -441,17 +463,33 @@ public class Processor {
         //chegoone edit mishavad
     }
 
-    public void addOff(String userName, String offId, String startTime, String endTime, double discountAmount) {
+    public void addOff(String userName) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
-        ArrayList<Product> products = new ArrayList<Product>();
-        viewManager.getOffProducts(products);
+        ArrayList<String> productsInString = new ArrayList<String>();
+        ArrayList<String> offInfo = new ArrayList<String>();
+        viewManager.getOffInfo(offInfo);
+        viewManager.getOffProducts(productsInString);
+        ArrayList<Product> products = castStringToProduct(productsInString);
+        String offId = offInfo.get(0);
+        String startTime = offInfo.get(1);
+        String endTime = offInfo.get(2);
+        double discountAmount = Double.parseDouble(offInfo.get(3));
         Off off = new Off(offId, startTime, endTime, discountAmount, (Seller) user, products);
         String requestId = "";//chegone taeen mishavad
         Request offRequest = new OffRequest(requestId, off);
         ((Seller) user).addOff(off);
 
 
+    }
+    public ArrayList<Product> castStringToProduct(ArrayList<String> productsInString){
+        //TODO : erro handling
+        ArrayList<Product> products = new ArrayList<Product>();
+        for (String productId : productsInString) {
+            Product product = Product.getProductById(productId);
+            products.add(product);
+        }
+        return products;
     }
 
 
