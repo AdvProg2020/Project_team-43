@@ -19,7 +19,6 @@ public abstract class User {
         this.userPersonalInfo = userPersonalInfo;
         setUserType();
         balance = money;
-        allUsers.add(this);
     }
 
     public abstract void setUserType();

@@ -20,6 +20,10 @@ public abstract class Menu {
         this.name = name;
     }
 
+    public static Scanner getScanner() {
+        return scanner;
+    }
+
     public void setParent(Menu parent) {
         this.parent = parent;
     }

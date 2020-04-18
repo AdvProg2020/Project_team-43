@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
-
 public class Seller extends User {
     private Company company;
     private ArrayList<Product> products;

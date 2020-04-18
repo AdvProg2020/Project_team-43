@@ -13,6 +13,7 @@ public class Buyer extends User {
         discounts = new ArrayList<CodedDiscount>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
+        allUsers.add(this);
     }
 
     @Override

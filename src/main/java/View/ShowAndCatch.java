@@ -1,12 +1,16 @@
 package View;
 
+import Controller.Processor;
 import model.*;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
-    private Scanner scanner = Menu.scanner;
+    private static Scanner scanner = Menu.getScanner();
 
     public static ShowAndCatch getInstance() {
         return ourInstance;
@@ -107,6 +111,24 @@ public class ShowAndCatch {
         discountCodedInfo.add(repeat);
     }
 
+    public void getPersonalInfo(UserPersonalInfo personalInfo) {
+        System.out.print("first name : ");
+        String firstName = Menu.getScanner().nextLine();
+        personalInfo.setFirstName(firstName);
+        System.out.print("last name : ");
+        String lastName = Menu.getScanner().nextLine();
+        personalInfo.setLastName(lastName);
+        System.out.print("email : ");
+        String email = Menu.getScanner().nextLine();
+        personalInfo.setEmail(email);
+        System.out.print("phone number : ");
+        String phoneNumber = Menu.getScanner().nextLine();
+        personalInfo.setPhoneNumber(phoneNumber);
+        System.out.print("password : ");
+        String password = Menu.getScanner().nextLine();
+        personalInfo.setPassword(password);
+    }
+
     public void getManagerInfo(ArrayList<String> managerInfo) {
         System.out.print("user name : ");
         String userName = scanner.nextLine();
@@ -127,6 +149,7 @@ public class ShowAndCatch {
         String password = scanner.nextLine();
         managerInfo.add(password);
     }
+
 
     public void viewUser(User user) {
         System.out.println("user name : " + user.getUsername());
@@ -157,11 +180,11 @@ public class ShowAndCatch {
         }
     }
 
-    public void getCategoryInfo(){
+    public void getCategoryInfo() {
 
     }
 
-    public void getOffInfo(ArrayList<String> offInfo){
+    public void getOffInfo(ArrayList<String> offInfo) {
         System.out.print("Off Id : ");
         String offId = scanner.nextLine();
         offInfo.add(offId);
@@ -172,20 +195,50 @@ public class ShowAndCatch {
         String endTime = scanner.nextLine();
         offInfo.add(endTime);
         System.out.print("Off discount amount : ");
-        String offDiscountAmount= scanner.nextLine();
+        String offDiscountAmount = scanner.nextLine();
         offInfo.add(offDiscountAmount);
     }
 
-    public void showBalance(User user){
+    public void showBalance(User user) {
         System.out.println("user balance : " + user.getBalance());
     }
 
-    public void getCommentInfo(ArrayList<String> commentInfo){
+    public void getCommentInfo(ArrayList<String> commentInfo) {
         System.out.print("Title : ");
         String title = scanner.nextLine();
         commentInfo.add(title);
         System.out.println("Content : ");
         String content = scanner.nextLine();
         commentInfo.add(content);
+    }
+
+    public boolean registerUser(String command, Processor processor) {
+        Pattern pattern = Pattern.compile("create account (\\S+) (\\S+)");
+        Matcher matcher = pattern.matcher(command);
+        if (matcher.find()) {
+            if (User.hasUserWithUserName(matcher.group(2))) {
+                System.out.println("there is a user with this username");
+                return false;
+            } else {
+                UserPersonalInfo personalInfo = new UserPersonalInfo();
+                getPersonalInfo(personalInfo);
+                if (matcher.group(1).equalsIgnoreCase("seller")) {
+                    System.out.println("company name : ");
+                    ;
+                    String companyName = Menu.getScanner().nextLine();
+                    processor.addSellerRequest(personalInfo, matcher.group(2), companyName);
+                    return true;
+                } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
+                    processor.addBuyer(personalInfo, matcher.group(2));
+                    return true;
+                } else {
+                    System.out.println("invalid type");
+                    return false;
+                }
+            }
+        } else {
+            System.out.println("invalid command");
+            return false;
+        }
     }
 }
