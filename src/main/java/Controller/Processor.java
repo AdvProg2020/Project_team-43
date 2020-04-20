@@ -6,6 +6,7 @@ import View.ShowAndCatch;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import model.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.lang.reflect.Array;
 import java.security.Permission;
 import java.time.Clock;
@@ -662,33 +663,42 @@ public class Processor {
     public void addSellerRequest(UserPersonalInfo personalInfo,String username, String companyName){
         new SellerRequest(UUID.randomUUID().toString(),personalInfo,companyName,username);
     }
-    public boolean registerUser(String command) {
+    public String registerUser(String command) {
         Pattern pattern = Pattern.compile("create account (\\S+) (\\S+)");
         Matcher matcher = pattern.matcher(command);
         if (matcher.find()) {
             if (User.hasUserWithUserName(matcher.group(2))) {
-                System.out.println("there is a user with this username");
-                return false;
+                return ("there is a user with this username");
             } else {
                 UserPersonalInfo personalInfo = new UserPersonalInfo();
                 viewManager.getPersonalInfo(personalInfo);
                 if (matcher.group(1).equalsIgnoreCase("seller")) {
-                    System.out.println("company name : ");
-                    ;
-                    String companyName = Menu.getScanner().nextLine();
+                    String companyName = viewManager.getCompanyNameMenuFromUser();
                     addSellerRequest(personalInfo, matcher.group(2), companyName);
-                    return true;
+                    return "done";
                 } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
                     addBuyer(personalInfo, matcher.group(2));
-                    return true;
+                    return "done";
                 } else {
-                    System.out.println("invalid type");
-                    return false;
+                    return ("invalid type");
                 }
             }
         } else {
-            System.out.println("invalid command");
-            return false;
+            return ("invalid command");
         }
+    }
+    public String login(String username, String password){
+        if (User.hasUserWithUserName(username)){
+            if (User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password)){
+                isLogin=true;
+                user=User.getUserByUserName(username);
+                return "logged in successful";
+            }
+            return "incorrect password";
+        }
+        else {
+            return "there is no user with this username";
+        }
+
     }
 }

@@ -79,6 +79,11 @@ public abstract class Menu {
                         @Override
                         public void run() {
                             //TODO : Login
+                            System.out.print("username : ");
+                            String username=scanner.nextLine();
+                            System.out.print("password : ");
+                            String password=scanner.nextLine();
+                            System.out.println(manager.login(username,password));
                             this.parent.show();
                             this.parent.run();
                         }

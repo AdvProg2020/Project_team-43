@@ -211,6 +211,8 @@ public class ShowAndCatch {
         String content = scanner.nextLine();
         commentInfo.add(content);
     }
-
-
+    public String getCompanyNameMenuFromUser(){
+        System.out.print("company name: ");
+        return Menu.getScanner().nextLine();
+    }
 }
