@@ -34,7 +34,7 @@ public class LoggedOutStatus extends Menu  {
             public void run() {
                 //TODO : register
                 String command=scanner.nextLine();
-                ShowAndCatch.getInstance().registerUser(command,manager);
+                manager.registerUser(command);
                 this.parent.parent.show();
                 this.parent.parent.run();
             }

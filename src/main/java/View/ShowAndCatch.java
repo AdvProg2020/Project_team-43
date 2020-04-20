@@ -212,33 +212,5 @@ public class ShowAndCatch {
         commentInfo.add(content);
     }
 
-    public boolean registerUser(String command, Processor processor) {
-        Pattern pattern = Pattern.compile("create account (\\S+) (\\S+)");
-        Matcher matcher = pattern.matcher(command);
-        if (matcher.find()) {
-            if (User.hasUserWithUserName(matcher.group(2))) {
-                System.out.println("there is a user with this username");
-                return false;
-            } else {
-                UserPersonalInfo personalInfo = new UserPersonalInfo();
-                getPersonalInfo(personalInfo);
-                if (matcher.group(1).equalsIgnoreCase("seller")) {
-                    System.out.println("company name : ");
-                    ;
-                    String companyName = Menu.getScanner().nextLine();
-                    processor.addSellerRequest(personalInfo, matcher.group(2), companyName);
-                    return true;
-                } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
-                    processor.addBuyer(personalInfo, matcher.group(2));
-                    return true;
-                } else {
-                    System.out.println("invalid type");
-                    return false;
-                }
-            }
-        } else {
-            System.out.println("invalid command");
-            return false;
-        }
-    }
+
 }
