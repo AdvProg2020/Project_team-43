@@ -94,7 +94,6 @@ public class ProductPanel extends Menu {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
     }
-
     public void run(String productId) {
         this.productId = productId;
     }

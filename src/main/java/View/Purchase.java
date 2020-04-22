@@ -2,7 +2,6 @@ package View;
 
 public class Purchase extends Menu {
     private String userName;
-
     public Purchase(Menu parent, String name) {
         super(parent, name);
         doPurchase();

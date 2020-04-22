@@ -1,5 +1,6 @@
 package View;
 
+import Controller.BuyerProcessor;
 import Controller.Processor;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 
 public abstract class Menu {
     public static Processor manager = new Processor();
+    public static BuyerProcessor buyerProcessor= new BuyerProcessor();
     String name;
     protected Menu parent;
     protected static Scanner scanner;

@@ -1,8 +1,5 @@
 package View;
 
-import model.Category;
-//import org.omg.PortableInterceptor.INACTIVE;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductsPanel extends Menu {
@@ -80,7 +77,6 @@ public class ProductsPanel extends Menu {
     }
 
     private Menu showProducts() {
-
         return new Menu(this, "show products") {
             @Override
             public void show() {
@@ -93,6 +89,5 @@ public class ProductsPanel extends Menu {
             }
         };
     }
-
 }
 
