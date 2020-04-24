@@ -222,10 +222,6 @@ public class Processor {
         viewManager.viewUser(user);
     }
 
-    public void editField(String field) {
-        //TODO : error handling
-
-    }
 
     public void manageUsers(String command) {
         //TODO : error handling

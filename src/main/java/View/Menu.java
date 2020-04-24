@@ -10,6 +10,7 @@ import java.util.Scanner;
 public abstract class Menu {
     public static Processor manager = new Processor();
     public static BuyerProcessor buyerProcessor= new BuyerProcessor();
+    protected static SellerProcessor sellerProcessor = new SellerProcessor();
     String name;
     protected Menu parent;
     protected static Scanner scanner = new Scanner(System.in);

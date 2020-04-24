@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+
 public class Seller extends User {
     private Company company;
     private ArrayList<Product> products;
@@ -26,6 +27,24 @@ public class Seller extends User {
 
     public void editFields(String field) {
 
+    }
+
+    public boolean hasProductWithId(String productId) {
+        for (Product product : products) {
+            if (product.getProductId().equals(productId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Product getProductById(String productId) {
+        for (Product product : products) {
+            if (product.getProductId().equals(productId)) {
+                return product;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Product> getProducts() {
@@ -68,12 +87,12 @@ public class Seller extends User {
         offs.add(off);
     }
 
-    public Off getOffById(String offId){
+    public Off getOffById(String offId) {
 
         return null;
     }
 
-    public ArrayList<Off> getOffs(){
+    public ArrayList<Off> getOffs() {
         return offs;
     }
 }

@@ -14,7 +14,7 @@ public class Product {
     private double price;
     private int availableCount;
     private Category category;
-    private Map<String, String >featuresMap;
+    private Map<String, String> featuresMap;
     private Seller seller;
 
     public Seller getSeller() {
@@ -25,6 +25,19 @@ public class Product {
     private ProductScore score;
     private ArrayList<Comment> comments;
 
+
+    public Product(String productId, String name, Company company, double price, Category category, Seller seller) {
+        this.productId = productId;
+        this.productState = State.ProductState.CREATING_PROCESS;
+        this.name = name;
+        this.company = company;
+        this.price = price;
+        this.category = category;
+        this.seller = seller;
+        score = new ProductScore();
+        comments = new ArrayList<Comment>();
+        allProductsInQueueExpect.add(this);
+    }
 
     public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {
         this.productId = productId;
@@ -65,7 +78,7 @@ public class Product {
     }
 
     public boolean isAvailable() {
-        return availableCount>0;
+        return availableCount > 0;
     }
 
     public String getDescription() {
@@ -80,14 +93,27 @@ public class Product {
         return score;
     }
 
-    public static Product getProductById(String productId) {
+    public static boolean hasProductWithId(String productId) {
+        for (Product product : allProductsInList) {
+            if (product.getProductId().equals(productId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static Product getProductById(String productId) {
+        for (Product product : allProductsInList) {
+            if (product.getProductId().equals(productId)) {
+                return product;
+            }
+        }
         return null;
     }
 
-    private void fillFeaturesMap(ArrayList<String> features2){
-        ArrayList<String>features1 = this.category.getFeatures();
-        for(int i=0;i<features1.size();i++){
+    private void fillFeaturesMap(ArrayList<String> features2) {
+        ArrayList<String> features1 = this.category.getFeatures();
+        for (int i = 0; i < features1.size(); i++) {
             featuresMap.put(features1.get(i), features2.get(i));
         }
     }

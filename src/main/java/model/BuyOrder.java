@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class BuyOrder extends Order {
     private double payment;
-    private double codedDiscountAmount;///////object auction ham mitoone bashe
+    private double codedDiscountAmount;//object ham mitone bashe
     private HashMap<Product,Integer> products;
     private ArrayList<Seller> sellers;
     private DeliveryStatus deliveryStatus;
