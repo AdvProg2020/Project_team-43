@@ -220,15 +220,4 @@ public class ShowAndCatch {
             System.out.println(order);
         }
     }
-    public void showProductsInCart(HashMap<Product,Integer> products){
-        for (Product product : products.keySet()) {
-            System.out.println(product+" "+products.get(product));
-        }
-    }
-    public void viewDiscountCodes(ArrayList<CodedDiscount> discounts){
-        System.out.println(discounts);
-    }
-    public void showBuyOrder(BuyOrder order){
-        System.out.println(order);
-    }
 }
