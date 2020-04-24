@@ -5,6 +5,9 @@ public class SellerRequest extends Request {
     public SellerRequest(String requestId,UserPersonalInfo personalInfo,String companyName,String username) {
         super(requestId,"sellerType");
         seller=new Seller(username,personalInfo,companyName);
-        allRequests.add(this);
+    }
+
+    public Seller getSeller() {
+        return seller;
     }
 }

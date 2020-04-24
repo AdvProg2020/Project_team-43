@@ -4,9 +4,12 @@ public class ProductRequest extends Request {
     private Product product;
 
     public ProductRequest(String requestId, Product product) {
-        super(requestId,"product");
-        Manager.allRequest.add(this);
+        super(requestId,"productType");
         this.product = product;
         this.requestType = "product";
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }

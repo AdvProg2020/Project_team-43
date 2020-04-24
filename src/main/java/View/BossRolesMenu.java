@@ -17,8 +17,8 @@ public class BossRolesMenu extends Menu {
         submenus.put(3, getManageUsers());//complete
         submenus.put(4, getManageAllProducts());//complete
         submenus.put(5, getCreateCodedDiscount());//complete
-        submenus.put(6, getViewCodedDiscounts());
-        submenus.put(7, getManageRequests());
+        submenus.put(6, getViewCodedDiscounts());//complete
+        submenus.put(7, getManageRequests());//complete
         submenus.put(8, getManageCategories());
         this.setSubmenus(submenus);
 
@@ -121,7 +121,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "view discount codes") {
             @Override
             public void show() {
-                bossManager.viewBossDiscountCodes();
+                bossManager.getBossViewManager().viewCodedDiscounts();
                 System.out.println("1 . view discount code [code]");
                 System.out.println("2 . edit discount code [code]");
                 System.out.println("3 . remove discount code [code]");
@@ -142,13 +142,13 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage requests") {
             @Override
             public void show() {
-                bossManager.viewRequests();
-                System.out.println("1 . details of request");
-                System.out.println("2 . accept request");
-                System.out.println("3 . decline request");
+                bossManager.getBossViewManager().viewAllRequests();
+                System.out.println("1 . details [requestId]");
+                System.out.println("2 . accept request [requestId]");
+                System.out.println("3 . decline request [requestId]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageRequests(command);
+                bossManager.manageRequests(command);
             }
 
             @Override

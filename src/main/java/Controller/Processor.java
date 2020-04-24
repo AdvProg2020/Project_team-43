@@ -336,11 +336,6 @@ public class Processor {
         }
     }
 
-    public void viewBossDiscountCodes() {
-        ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
-
-
-    }
 
     public void viewDiscountCode(String discountCode) {
         CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);

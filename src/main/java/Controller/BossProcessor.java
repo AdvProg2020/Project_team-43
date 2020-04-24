@@ -3,7 +3,6 @@ package Controller;
 import View.BossView;
 import model.*;
 
-import javax.print.attribute.standard.MediaName;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,7 +133,7 @@ public class BossProcessor extends Processor {
         if (viewCodedDiscountMatcher.matches()) {
             processViewCodedDiscount(viewCodedDiscountMatcher.group(1));
         } else if (editCodedDiscountMatcher.matches()) {
-            processEditCodedDiscount(editCodedDiscountMatcher.group(1));
+            processEditCodedDiscountFirst(editCodedDiscountMatcher.group(1));
         } else if (removeCodedDiscountMatcher.matches()) {
             processRemoveCodedDiscount(removeCodedDiscountMatcher.group(1));
         }
@@ -142,22 +141,52 @@ public class BossProcessor extends Processor {
 
     public void processViewCodedDiscount(String discountCode) {
         //TODO : error handling
-        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
+        bossViewManager.viewCodedDiscount(codedDiscount);
 
     }
 
-    public void processEditCodedDiscount(String discountCode) {
+    public void processEditCodedDiscountFirst(String discountCode) {
         //TODO : error handling
-        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
+        ArrayList<String> discountInfo = new ArrayList<>();
+        bossViewManager.getEditCodedDiscountInfo(discountInfo);
+        for (int i = 0; i < discountInfo.size(); i += 2) {
+            processEditCodedDiscountSecond(discountInfo.get(i), discountInfo.get(i + 1), discountCode);
+        }
+    }
+
+    public void processEditCodedDiscountSecond(String field, String changeField, String discountCode) {
+        //TODO : error handling
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
+        Pattern discountCodePattern = Pattern.compile("^(?i)discount code$");
+        Matcher discountCodeMatcher = discountCodePattern.matcher(field);
+        Pattern startTimePattern = Pattern.compile("^(?i)start time$");
+        Matcher startTimeMatcher = startTimePattern.matcher(field);
+        Pattern endTimePattern = Pattern.compile("^(?i)end time$");
+        Matcher endTimeMatcher = endTimePattern.matcher(field);
+        Pattern amountPattern = Pattern.compile("^(?i)discount amount$");
+        Matcher amountMatcher = amountPattern.matcher(field);
+        Pattern remainingPattern = Pattern.compile("^(?i)remaining time$");
+        Matcher remainingMatcher = remainingPattern.matcher(field);
+        if (discountCodeMatcher.matches()) {
+            codedDiscount.setDiscountCode(changeField);
+        } else if(startTimeMatcher.matches()){
+            codedDiscount.setStartTime(changeField);
+        } else if(endTimeMatcher.matches()){
+            codedDiscount.setEndTime(changeField);
+        } else if(amountMatcher.matches()){
+            codedDiscount.setDiscountAmount(changeField);
+        } else if(remainingMatcher.matches()){
+            codedDiscount.setRepeat(changeField);
+        }
+
 
     }
 
     public void processRemoveCodedDiscount(String discountCode) {
         //TODO : error handling
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        if (codedDiscount != null) {
-            CodedDiscount.allCodedDiscount.remove(codedDiscount);
-        }
+        ((Manager)user).removeCodedDiscount(codedDiscount);
     }
 
     public void manageRequests(String command) {
@@ -180,23 +209,23 @@ public class BossProcessor extends Processor {
         }
     }
 
-    public void viewRequests() {
-        ArrayList<Request> requests = Manager.allRequest;
-
-    }
-
     public void viewRequestDetails(String requestId) {
+        //TODO : error handling
         Request request = Manager.getRequestById(requestId);
+        bossViewManager.viewRequestDetails(request);
 
     }
 
     public void acceptRequest(String requestId) {
+        //TODO : error handling
         Request request = Manager.getRequestById(requestId);
-
+        ((Manager)user).acceptRequest(request);
     }
 
     public void declineRequest(String requestId) {
+        //TODO : error handling
         Request request = Manager.getRequestById(requestId);
+        ((Manager)user).declineRequest(request);
 
     }
 

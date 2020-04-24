@@ -1,5 +1,6 @@
 package model;
 
+
 import java.util.ArrayList;
 
 public class Manager extends User {
@@ -7,6 +8,7 @@ public class Manager extends User {
 
     public Manager(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
+        allUsers.add(this);
     }
 
     @Override
@@ -52,28 +54,29 @@ public class Manager extends User {
 
     }
 
-    public void viewDiscountCode(String discountId) {
-
+    public void removeCodedDiscount(CodedDiscount codedDiscount) {
+        CodedDiscount.allCodedDiscount.remove(codedDiscount);
     }
 
-    public void editDiscount(String discountId) {
 
+    public void acceptRequest(Request request) {
+        if(request.getRequestType().equals("sellerType")){
+            Seller seller = ((SellerRequest)request).getSeller();
+            User.allUsers.add(seller);
+            allRequest.remove(request);
+        } else if(request.getRequestType().equals("offType")){
+            Off off = ((OffRequest)request).getOff();
+            Off.acceptedOffs.add(off);
+            Off.inQueueExpectionOffs.remove(off);
+        } else if(request.getRequestType().equals("productType")){
+            Product product = ((ProductRequest)request).getProduct();
+            Product.allProductsInList.add(product);
+            Product.allProductsInQueueExpect.remove(product);
+        }
     }
 
-    public void deleteDiscount(String discountId) {
-
-    }
-
-    public void detailRequest(String requestId) {
-
-    }
-
-    public void acceptRequest(String requestId) {
-
-    }
-
-    public void declineRequest(String requestId) {
-
+    public void declineRequest(Request request) {
+       allRequest.remove(request);
     }
 
     public void editCategory(Category category) {

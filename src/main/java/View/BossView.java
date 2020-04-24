@@ -1,7 +1,6 @@
 package View;
 
-import model.Category;
-import model.User;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,18 +12,14 @@ public class BossView {
         scanner = Menu.scanner;
     }
 
-    public void viewAllUsers(){
+    public void viewAllUsers() {
         for (User user : User.allUsers) {
             System.out.println(user.getUsername());
         }
     }
 
     public void viewUser(User user) {
-        System.out.println("user name : " + user.getUsername());
-        System.out.println("first name : " + user.getUserPersonalInfo().getFirstName());
-        System.out.println("last name : " + user.getUserPersonalInfo().getLastName());
-        System.out.println("email : " + user.getUserPersonalInfo().getEmail());
-        System.out.println("phone number : " + user.getUserPersonalInfo().getPhoneNumber());
+        System.out.println(user);
     }
 
     public void getManagerInfo(ArrayList<String> managerInfo) {
@@ -66,9 +61,55 @@ public class BossView {
         discountCodedInfo.add(repeat);
     }
 
-    public void viewDiscountCodes(){
+    public void viewCodedDiscounts() {
+        int counter = 1;
+        for (CodedDiscount codedDiscount : CodedDiscount.allCodedDiscount) {
+            System.out.println(counter + " . ");
+            System.out.println(codedDiscount);
+            counter += 1;
+        }
 
     }
+
+    public void viewCodedDiscount(CodedDiscount codedDiscount) {
+        System.out.println(codedDiscount);
+    }
+
+    public void getEditCodedDiscountInfo(ArrayList<String> codedDiscountInfo) {
+        System.out.println("FIELDS : ");
+        System.out.println("1 . discount code");
+        System.out.println("2 . start time");
+        System.out.println("3 . end time");
+        System.out.println("4 . discount amount");
+        System.out.println("5 . remaining time");
+        while (true) {
+            System.out.println("enter the field's name or enter finish: ");
+            String command = scanner.nextLine();
+            command = command.trim();
+            if (command.equalsIgnoreCase("finish")) {
+                break;
+            } else {
+                System.out.println("change to : ");
+                String changeTo = scanner.nextLine();
+                codedDiscountInfo.add(command);
+                codedDiscountInfo.add(changeTo);
+            }
+        }
+    }
+
+    public void viewAllRequests() {
+        int counter = 1;
+        for (Request request : Manager.allRequest) {
+            System.out.print(counter + " . ");
+            System.out.println(request);
+            counter += 1;
+        }
+    }
+
+    public void viewRequestDetails(Request request){
+        System.out.println(request);
+    }
+
     public void getCategoryInfo() {
 
     }
