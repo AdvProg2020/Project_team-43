@@ -53,13 +53,6 @@ public abstract class User {
         return balance;
     }
 
-    public void viewPersonalInfo() {
-
-    }
-
-    public void editFields(String field) {
-
-    }
 
     public void viewCredit() {
 

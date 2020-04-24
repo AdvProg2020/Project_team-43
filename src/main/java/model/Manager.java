@@ -19,20 +19,36 @@ public class Manager extends User {
         return null;
     }
 
-    public void viewPersonalInfo() {
-
+    public UserPersonalInfo getUserPersonalInfo() {
+        return userPersonalInfo;
     }
 
-    public void editFields(String field) {
-
+    public void deleteUser(User user) {
+        User.allUsers.remove(user);
     }
 
-
-    public void createDiscountCode() {
-
+    public void createManagerProfile(ArrayList<String> managerInfo) {
+        String userName = managerInfo.get(0);
+        String firstName = managerInfo.get(1);
+        String lastName = managerInfo.get(2);
+        String email = managerInfo.get(3);
+        String phoneNumber = managerInfo.get(4);
+        String password = managerInfo.get(5);
+        UserPersonalInfo newPersonalInfo = new UserPersonalInfo(firstName, lastName, email, phoneNumber, password);
+        new Manager(userName, newPersonalInfo);
     }
 
-    public void viewDiscountCodes() {
+    public void removeProduct(Product product) {
+        Product.allProductsInList.remove(product);
+    }
+
+    public void createDiscountCoded(ArrayList<String> discountCodedInfo) {
+        String discountCode = discountCodedInfo.get(0);
+        String startTime = discountCodedInfo.get(1);
+        String endTime = discountCodedInfo.get(2);
+        double discountAmount = Double.parseDouble(discountCodedInfo.get(3));
+        int repeat = Integer.parseInt(discountCodedInfo.get(4));
+        new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
 
     }
 
@@ -71,7 +87,6 @@ public class Manager extends User {
     public void removeCategory(Category category) {
 
     }
-
 
 
 }

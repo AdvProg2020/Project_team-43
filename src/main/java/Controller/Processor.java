@@ -2,6 +2,7 @@ package Controller;
 
 import View.MainMenu;
 import View.Menu;
+import View.ProductPanel;
 import View.ShowAndCatch;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import model.*;
@@ -21,7 +22,7 @@ import static model.Category.getAllCategories;
 public class Processor {
     private BuyOrder buyOrder;
     private boolean isLogin;
-    private User user;
+    protected User user;
     private ShowAndCatch viewManager = ShowAndCatch.getInstance();
 
     public User getUser() {
@@ -437,7 +438,7 @@ public class Processor {
 
     }
 
-    public void manageCart(String userName, String command) {
+    public void manageCart(Menu menu, String userName, String command) {
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -455,7 +456,7 @@ public class Processor {
         if (showProductsMatcher.matches()) {
             viewProductInCart(userName);
         } else if (viewProductMatcher.matches()) {
-            // handle kardan raftan be safe mahsoolat
+            // handle kardan raftan be safe mahsool
         } else if (increaseProductMatcher.matches()) {
             increaseProduct(userName, increaseProductMatcher.group(1));
         } else if (decreaseProductMatcher.matches()) {

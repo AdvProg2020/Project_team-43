@@ -1,8 +1,5 @@
 package View;
 
-import model.Category;
-//import org.omg.PortableInterceptor.INACTIVE;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProductsPanel extends Menu {
