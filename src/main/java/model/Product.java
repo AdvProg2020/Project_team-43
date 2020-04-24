@@ -16,6 +16,11 @@ public class Product {
     private Category category;
     private Map<String, String >featuresMap;
     private Seller seller;
+
+    public Seller getSeller() {
+        return seller;
+    }
+
     private String description;/////////tozihat
     private ProductScore score;
     private ArrayList<Comment> comments;

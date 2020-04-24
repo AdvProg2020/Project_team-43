@@ -64,7 +64,18 @@ public class BuyerProcessor extends Processor {
     public void decreaseProduct(String productId){
         ((Buyer)user).decreaseCart(productId);
     }
-    public int showTotalPrice(){
+    public double showTotalPrice(){
         return ((Buyer)user).getCartPrice();
+    }
+    public boolean checkDiscountCode(String code){
+        if (!CodedDiscount.isCodedDiscountWithThisCode(code))
+            return false;
+        return ((Buyer)user).checkDiscountCode(CodedDiscount.getDiscountById(code));
+    }
+    public String payment(String address, String phoneNumber,double discount ){
+        if (user.getBalance()<((Buyer)user).getCartPrice())
+            return "insufficient money";
+        ((Buyer)user).purchase();
+        return "payment done";
     }
 }
