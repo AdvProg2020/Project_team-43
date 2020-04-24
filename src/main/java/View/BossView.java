@@ -106,16 +106,45 @@ public class BossView {
         }
     }
 
-    public void viewRequestDetails(Request request){
+    public void viewRequestDetails(Request request) {
         System.out.println(request);
     }
 
-    public void getCategoryInfo() {
+    public void viewAllCategories() {
+        int counter = 1;
+        for (Category category : Category.getAllCategories()) {
+            System.out.print(counter + " . ");
+            System.out.print(category);
+        }
+    }
+
+    public void getEditCategoryField() {
+        //TODO : fill
 
     }
 
-    public void showCategories(ArrayList<Category> categories) {
-        // main -> sub
+    public ArrayList<String> getCategoryInfo(ArrayList<String> categoryInfo) {
+        ArrayList<String> features = new ArrayList<>();
+        System.out.print("category name : ");
+        String categoryName = scanner.nextLine();
+        categoryInfo.add(categoryName);
+        System.out.println("features : [feature's name/finish]");
+        while (true) {
+            String command = scanner.nextLine();
+            command = command.trim();
+            if (command.equalsIgnoreCase("finish")) {
+                break;
+            }
+            features.add(command);
+        }
+        System.out.println("does it have a super category ? [yes/no]");
+        String command = scanner.nextLine();
+        if (command.equalsIgnoreCase("yes")) {
+            System.out.print("super category's name : ");
+            String superCategoryName = scanner.next();
+            categoryInfo.add(superCategoryName);
+        }
+        return features;
     }
 
 }

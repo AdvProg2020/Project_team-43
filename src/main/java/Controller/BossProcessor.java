@@ -170,13 +170,13 @@ public class BossProcessor extends Processor {
         Matcher remainingMatcher = remainingPattern.matcher(field);
         if (discountCodeMatcher.matches()) {
             codedDiscount.setDiscountCode(changeField);
-        } else if(startTimeMatcher.matches()){
+        } else if (startTimeMatcher.matches()) {
             codedDiscount.setStartTime(changeField);
-        } else if(endTimeMatcher.matches()){
+        } else if (endTimeMatcher.matches()) {
             codedDiscount.setEndTime(changeField);
-        } else if(amountMatcher.matches()){
+        } else if (amountMatcher.matches()) {
             codedDiscount.setDiscountAmount(changeField);
-        } else if(remainingMatcher.matches()){
+        } else if (remainingMatcher.matches()) {
             codedDiscount.setRepeat(changeField);
         }
 
@@ -186,7 +186,7 @@ public class BossProcessor extends Processor {
     public void processRemoveCodedDiscount(String discountCode) {
         //TODO : error handling
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        ((Manager)user).removeCodedDiscount(codedDiscount);
+        ((Manager) user).removeCodedDiscount(codedDiscount);
     }
 
     public void manageRequests(String command) {
@@ -219,21 +219,16 @@ public class BossProcessor extends Processor {
     public void acceptRequest(String requestId) {
         //TODO : error handling
         Request request = Manager.getRequestById(requestId);
-        ((Manager)user).acceptRequest(request);
+        ((Manager) user).acceptRequest(request);
     }
 
     public void declineRequest(String requestId) {
         //TODO : error handling
         Request request = Manager.getRequestById(requestId);
-        ((Manager)user).declineRequest(request);
+        ((Manager) user).declineRequest(request);
 
     }
 
-    public void viewCategories() {
-        //TODO : error handling
-        ArrayList<Category> categories = Category.getAllCategories();
-        bossViewManager.showCategories(categories);
-    }
 
     public void manageCategories(String command) {
         //TODO : error handling
@@ -259,18 +254,25 @@ public class BossProcessor extends Processor {
         //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
 
+        ///////////////////////////////////
     }
 
     public void addCategory(String categoryName) {
         //TODO : error handling
-        //in sub category o super category ro chejori begirim age khodesh super bashe ya khodesh sub bashe
-        bossViewManager.getCategoryInfo();
+        ArrayList<String> categoryInfo = new ArrayList<>();
+        ArrayList<String>features = bossViewManager.getCategoryInfo(categoryInfo);
+        if(categoryInfo.size()==2){
+            Category superCategory = Category.getCategoryByName(categoryInfo.get(1));
+            new Category(categoryInfo.get(0), superCategory, features);
+        } else {
+            new Category(categoryInfo.get(0), null, features);
+        }
     }
 
     public void removeCategory(String categoryName) {
         //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
-
+        ((Manager)user).removeCategory(category);
 
     }
 
