@@ -12,10 +12,9 @@ import java.util.regex.Pattern;
 
 
 public class Processor {
-    protected boolean isLogin;
-    protected User user;
-    protected ShowAndCatch viewManager = ShowAndCatch.getInstance();
-
+    protected static boolean isLogin;
+    protected static User user;
+    protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
     public User getUser() {
         return user;
     }
@@ -681,6 +680,7 @@ public class Processor {
             return "incorrect password";
         isLogin = true;
         user = User.getUserByUserName(username);
+        BuyerProcessor.setBuyerCart();
         return "logged in successful";
     }
 

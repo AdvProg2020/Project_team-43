@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
     private static Scanner scanner = Menu.getScanner();
-
     public static ShowAndCatch getInstance() {
         return ourInstance;
     }
@@ -225,5 +224,11 @@ public class ShowAndCatch {
         for (Product product : products.keySet()) {
             System.out.println(product+" "+products.get(product));
         }
+    }
+    public void viewDiscountCodes(ArrayList<CodedDiscount> discounts){
+        System.out.println(discounts);
+    }
+    public void showBuyOrder(BuyOrder order){
+        System.out.println(order);
     }
 }

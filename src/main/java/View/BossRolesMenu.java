@@ -44,7 +44,7 @@ public class BossRolesMenu extends Menu {
             @Override
             public void show() {
                 String field = scanner.nextLine();
-                manager.editField(userName, field);
+                manager.editField( field);
             }
 
             @Override

@@ -1,16 +1,20 @@
 package Controller;
 
+import View.BuyerShowAndCatch;
+import View.ShowAndCatch;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerProcessor extends Processor {
+    private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
+    private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
     public void viewPersonalInfo() {
-        viewManager.viewPersonalInfo(User.getUserByUserName(user.getUsername()).getUserPersonalInfo());
+        buyerViewManager.viewPersonalInfo(User.getUserByUserName(user.getUsername()).getUserPersonalInfo());
     }
-
     public void editField(String field) {
         //TODO : error handling
 
@@ -18,7 +22,7 @@ public class BuyerProcessor extends Processor {
 
     public void viewOrders() {
         ArrayList<BuyOrder> orders = ((Buyer) user).getOrders();
-        viewManager.viewBuyerOrders(orders);
+        buyerViewManager.viewBuyerOrders(orders);
     }
 
     public void manageOrders(String command) {
@@ -38,6 +42,7 @@ public class BuyerProcessor extends Processor {
     }
 
     public void showOrder(String orderId) {
+        buyerViewManager.showBuyOrder((BuyOrder)Order.getOrderById(orderId));
         //TODO : error handling
     }
 
@@ -52,9 +57,10 @@ public class BuyerProcessor extends Processor {
 
     public void viewBuyerDiscountCodes() {
         //TODO : error handling
+        buyerViewManager.viewDiscountCodes(((Buyer)user).getDiscounts());
     }
     public void showProductsInCart(){
-        viewManager.showProductsInCart(((Buyer)user).getBuyerCart());
+        buyerViewManager.showProductsInCart(((Buyer)user).getBuyerCart());
     }
     public void increaseProduct(String productId) {
         //TODO : error handling
@@ -76,6 +82,10 @@ public class BuyerProcessor extends Processor {
         if (user.getBalance()<((Buyer)user).getCartPrice())
             return "insufficient money";
         ((Buyer)user).purchase();
+        buyerCart.clear();
         return "payment done";
+    }
+    public static void setBuyerCart(){
+        ((Buyer)user).setBuyerCart(buyerCart);
     }
 }

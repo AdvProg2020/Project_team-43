@@ -1,8 +1,5 @@
 package model;
 
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -98,6 +95,14 @@ public class Buyer extends User {
 
     public void showOrder(String orderId) {
 
+    }
+
+    public ArrayList<CodedDiscount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setBuyerCart(HashMap<Product, Integer> buyerCart) {
+        this.buyerCart = buyerCart;
     }
 
     public void rateProduct(String productId, int score) {
