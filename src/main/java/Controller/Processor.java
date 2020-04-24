@@ -222,6 +222,10 @@ public class Processor {
         viewManager.viewUser(user);
     }
 
+    public void editField(String field) {
+        //TODO : error handling
+
+    }
 
     public void manageUsers(String command) {
         //TODO : error handling
@@ -531,6 +535,20 @@ public class Processor {
 
     }
 
+    public void viewCompanyInfo(String userName) {
+        //TODO : error handling
+        User user = User.getUserByUserName(userName);
+        Company company = ((Seller) user).getCompany();
+        viewManager.showCompanyInfo(company);
+
+    }
+
+    public void viewSalesHistory(String userName) {
+        //TODO : error handling
+        User user = User.getUserByUserName(userName);
+        ArrayList<SellOrder> orders = ((Seller) user).getOrders();
+        viewManager.showSellOrders(orders);
+    }
 
     public void viewSellerProducts(String userName) {
         //TODO : error handling
