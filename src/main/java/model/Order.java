@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
-
 import java.util.Date;
 import java.util.ArrayList;
 

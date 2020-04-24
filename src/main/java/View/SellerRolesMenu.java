@@ -1,10 +1,12 @@
 package View;
 
+import Controller.SellerProcessor;
+
 import java.util.Date;
 import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
-
+    private SellerProcessor sellerProcessor = new SellerProcessor();
     private String userName;
 
     public SellerRolesMenu(Menu parent, String name) {
@@ -15,7 +17,7 @@ public class SellerRolesMenu extends Menu {
         submenus.put(2, getEdit());
         submenus.put(3, getViewCompanyInfo());
         submenus.put(4, getViewSalesHistory());
-        ///handle kardan products
+        submenus.put(5, new ManageProductMenu(this, "Manage Product Menu"));
         submenus.put(6, getAddProduct());
         submenus.put(7, getRemoveProduct());
         submenus.put(8, getShowCategories());
@@ -32,7 +34,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                manager.viewPersonalInfo(userName);
+                sellerProcessor.viewPersonalInfo();
             }
 
             @Override
@@ -48,7 +50,7 @@ public class SellerRolesMenu extends Menu {
             @Override
             public void show() {
                 String field = scanner.nextLine();
-                manager.editField(field);
+                sellerProcessor.editField(field);
             }
 
             @Override
@@ -64,7 +66,7 @@ public class SellerRolesMenu extends Menu {
             @Override
             public void show() {
 
-                manager.viewCompanyInfo(userName);
+                sellerProcessor.viewCompanyInfo();
             }
 
             @Override
@@ -79,7 +81,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view sales history") {
             @Override
             public void show() {
-                manager.viewSalesHistory(userName);
+                sellerProcessor.viewSalesHistory();
             }
 
             @Override
@@ -97,7 +99,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "ADD product") {
             @Override
             public void show() {
-                manager.addProduct(userName);//baghie field ha byd dade shavad
+                sellerProcessor.addProduct(userName);//baghie field ha byd dade shavad
             }
 
             @Override
@@ -113,7 +115,7 @@ public class SellerRolesMenu extends Menu {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
-                manager.removeProduct(userName, productId);
+                sellerProcessor.removeProduct(userName, productId);
             }
 
             @Override
@@ -128,7 +130,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "show all categories") {
             @Override
             public void show() {
-                manager.viewCategories();
+                sellerProcessor.viewCategories();
             }
 
             @Override
@@ -143,13 +145,13 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view offs") {
             @Override
             public void show() {
-                manager.viewOffs(userName);
+                sellerProcessor.viewOffs(userName);
                 System.out.println("1 . view off");
                 System.out.println("3 . edit off");
                 System.out.println("2 . ADD off");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageOffs(userName, command);
+                sellerProcessor.manageOffs(userName, command);
             }
 
             @Override
@@ -164,7 +166,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view balance") {
             @Override
             public void show() {
-                manager.viewBalance(userName);
+                sellerProcessor.viewBalance(userName);
             }
 
             @Override

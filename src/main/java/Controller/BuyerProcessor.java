@@ -13,7 +13,7 @@ public class BuyerProcessor extends Processor {
     private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
     public void viewPersonalInfo() {
-        buyerViewManager.viewPersonalInfo(User.getUserByUserName(user.getUsername()).getUserPersonalInfo());
+        buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
     public void editField(String field) {
         //TODO : error handling
