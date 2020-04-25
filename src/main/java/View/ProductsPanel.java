@@ -77,7 +77,6 @@ public class ProductsPanel extends Menu {
     }
 
     private Menu showProducts() {
-
         return new Menu(this, "show products") {
             @Override
             public void show() {
@@ -90,6 +89,5 @@ public class ProductsPanel extends Menu {
             }
         };
     }
-
 }
 

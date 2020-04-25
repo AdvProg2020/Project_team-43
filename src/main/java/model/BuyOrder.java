@@ -2,23 +2,23 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class BuyOrder extends Order {
     private double payment;
-    private double codedDiscountAmount;///////object auction ham mitoone bashe
-    private ArrayList<Product> products;
-    private Seller seller;
+    private double codedDiscountAmount;//object ham mitone bashe
+    private HashMap<Product,Integer> products;
+    private ArrayList<Seller> sellers;
     private DeliveryStatus deliveryStatus;
 
-
-    public BuyOrder(String orderId, Date date, double payment, ArrayList<Product> products, Seller seller) {
+    public BuyOrder(String orderId, Date date, double payment, HashMap<Product,Integer> products, ArrayList<Seller> sellers) {
         super(orderId, date);
         this.payment = payment;
         this.products = products;
-        this.seller = seller;
+        this.sellers = sellers;
     }
 
-    public ArrayList<Product> getProducts() {
+    public HashMap<Product, Integer> getProducts() {
         return products;
     }
 }

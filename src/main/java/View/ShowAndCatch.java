@@ -1,17 +1,14 @@
 package View;
 
-import Controller.Processor;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
     private static Scanner scanner = Menu.getScanner();
-
     public static ShowAndCatch getInstance() {
         return ourInstance;
     }
@@ -214,5 +211,13 @@ public class ShowAndCatch {
     public String getCompanyNameMenuFromUser(){
         System.out.print("company name: ");
         return Menu.getScanner().nextLine();
+    }
+    public void viewPersonalInfo(UserPersonalInfo personalInfo){
+        System.out.println(personalInfo);
+    }
+    public void viewBuyerOrders(ArrayList<BuyOrder> buyOrders){
+        for (BuyOrder order : buyOrders) {
+            System.out.println(order);
+        }
     }
 }

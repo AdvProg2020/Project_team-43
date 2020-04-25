@@ -17,4 +17,11 @@ public abstract class Order {
     public String getOrderId() {
         return orderId;
     }
+    public static Order getOrderById(String orderId){
+        for (Order order : allOrders) {
+            if (order.getOrderId().equals(orderId))
+                return order;
+        }
+        return null;
+    }
 }

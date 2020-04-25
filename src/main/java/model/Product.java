@@ -14,13 +14,6 @@ public class Product {
     private double price;
     private int availableCount;
     private Category category;
-
-
-
-    public Seller getSeller() {
-        return seller;
-    }
-
     private Map<String, String >featuresMap;
     private Seller seller;
     private String description;/////////tozihat
@@ -72,10 +65,6 @@ public class Product {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setProductState(State.ProductState productState) {
-        this.productState = productState;
     }
 
     public void setDescription(String description) {

@@ -18,5 +18,16 @@ public class SellOrder extends Order {
         this.buyer = buyer;
     }
 
+    public boolean hasProductWithId(String productId) {
+        for (Product product : products) {
+            if (product.getProductId().equals(productId)){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public Buyer getBuyer() {
+        return buyer;
+    }
 }

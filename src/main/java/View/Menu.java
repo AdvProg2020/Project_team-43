@@ -1,14 +1,12 @@
 package View;
 
 import Controller.Processor;
-import Controller.BossProcessor;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
 public abstract class Menu {
     public static Processor manager = new Processor();
-    public static BossProcessor bossManager = new BossProcessor();
     String name;
     protected Menu parent;
     protected static Scanner scanner;

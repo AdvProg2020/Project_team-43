@@ -14,7 +14,6 @@ public class ProductPanel extends Menu {
         submenus.put(3, getCompare());
         submenus.put(4, getComments());
         this.setSubmenus(submenus);
-
     }
 
     private Menu getDigest() {
@@ -96,12 +95,9 @@ public class ProductPanel extends Menu {
         this.productId = scanner.nextLine();
     }
 
-    @Override
-    public void show() {
-        getIdProductFromUser();
-        super.show();
+    public void run(String productId) {
+        this.productId = productId;
     }
-
 }
 
 
