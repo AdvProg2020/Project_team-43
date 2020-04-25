@@ -14,6 +14,13 @@ public class Product {
     private double price;
     private int availableCount;
     private Category category;
+
+
+
+    public Seller getSeller() {
+        return seller;
+    }
+
     private Map<String, String >featuresMap;
     private Seller seller;
     private String description;/////////tozihat
@@ -33,10 +40,6 @@ public class Product {
         score = new ProductScore();
         comments = new ArrayList<Comment>();
         allProductsInQueueExpect.add(this);
-    }
-
-    public Seller getSeller() {
-        return seller;
     }
 
     public ArrayList<Comment> getComments() {
@@ -71,6 +74,10 @@ public class Product {
         return description;
     }
 
+    public void setProductState(State.ProductState productState) {
+        this.productState = productState;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -99,7 +106,4 @@ public class Product {
         return productId;
     }
 
-    public void setProductState(State.ProductState productState) {
-        this.productState = productState;
-    }
 }

@@ -9,12 +9,16 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static model.CodedDiscount.allCodedDiscount;
+
 public class BuyerProcessor extends Processor {
-    private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
+    private static HashMap<Product, Integer> buyerCart = new HashMap<Product, Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
+
     public void viewPersonalInfo() {
         buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
+
     public void editField(String field) {
         //TODO : error handling
 
@@ -42,7 +46,7 @@ public class BuyerProcessor extends Processor {
     }
 
     public void showOrder(String orderId) {
-        buyerViewManager.showBuyOrder((BuyOrder)Order.getOrderById(orderId));
+        buyerViewManager.showBuyOrder((BuyOrder) Order.getOrderById(orderId));
         //TODO : error handling
     }
 
@@ -57,35 +61,50 @@ public class BuyerProcessor extends Processor {
 
     public void viewBuyerDiscountCodes() {
         //TODO : error handling
-        buyerViewManager.viewDiscountCodes(((Buyer)user).getDiscounts());
+        buyerViewManager.viewDiscountCodes(((Buyer) user).getDiscounts());
     }
-    public void showProductsInCart(){
-        buyerViewManager.showProductsInCart(((Buyer)user).getBuyerCart());
+
+    public void showProductsInCart() {
+        buyerViewManager.showProductsInCart(((Buyer) user).getBuyerCart());
     }
+
     public void increaseProduct(String productId) {
         //TODO : error handling
-        ((Buyer)user).increaseCart(productId);
+        ((Buyer) user).increaseCart(productId);
 
     }
-    public void decreaseProduct(String productId){
-        ((Buyer)user).decreaseCart(productId);
+
+    public static boolean isCodedDiscountWithThisCode(String discountCode){
+        for (CodedDiscount discount : allCodedDiscount) {
+            if(discount.getDiscountCode().equals(discountCode))
+                return true;
+        }
+        return false;
     }
-    public double showTotalPrice(){
-        return ((Buyer)user).getCartPrice();
+
+    public void decreaseProduct(String productId) {
+        ((Buyer) user).decreaseCart(productId);
     }
-    public boolean checkDiscountCode(String code){
-        if (!CodedDiscount.isCodedDiscountWithThisCode(code))
+
+    public double showTotalPrice() {
+        return ((Buyer) user).getCartPrice();
+    }
+
+    public boolean checkDiscountCode(String code) {
+        if (!isCodedDiscountWithThisCode(code))
             return false;
-        return ((Buyer)user).checkDiscountCode(CodedDiscount.getDiscountById(code));
+        return ((Buyer) user).checkDiscountCode(CodedDiscount.getDiscountById(code));
     }
-    public String payment(String address, String phoneNumber,double discount ){
-        if (user.getBalance()<((Buyer)user).getCartPrice())
+
+    public String payment(String address, String phoneNumber, double discount) {
+        if (user.getBalance() < ((Buyer) user).getCartPrice())
             return "insufficient money";
-        ((Buyer)user).purchase();
+        ((Buyer) user).purchase();
         buyerCart.clear();
         return "payment done";
     }
-    public static void setBuyerCart(){
-        ((Buyer)user).setBuyerCart(buyerCart);
+
+    public static void setBuyerCart() {
+        ((Buyer) user).setBuyerCart(buyerCart);
     }
 }

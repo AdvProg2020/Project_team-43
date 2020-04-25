@@ -22,12 +22,73 @@ public class CodedDiscount {
         allCodedDiscount.add(this);
     }
 
+    public String getDiscountCode() {
+        return discountCode;
+    }
+
+    public double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public int getRepeat() {
+        return repeat;
+    }
+
+    //setter ha bayad TODO : error handling
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setDiscountAmount(String discountAmountString) {
+        this.discountAmount = Double.parseDouble(discountAmountString);
+    }
+
+    public void setRepeat(String repeat) {
+
+        this.repeat = Integer.parseInt(repeat);
+    }
+
+
     public void addUser(Buyer buyer) {
         users.add(buyer);
     }
 
-    public static CodedDiscount getDiscountById(String discountCode){
+    public static CodedDiscount getDiscountById(String discountCode) {
 
         return null;
+    }
+
+    public boolean hasUser(Buyer buyer){
+        return this.users.contains(buyer);
+    }
+
+    public boolean checkTime(){
+        //ToDo: check if code is valid in that time
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "discount code : " + discountCode + "\n"
+                + "start time : " + startTime + "\n"
+                + "end time : " + endTime + "\n"
+                + "discount amount : " + discountAmount + "\n"
+                + "remaining time : " + repeat;
     }
 }

@@ -1,33 +1,70 @@
 package View;
 
-import Controller.SellerProcessor;
-
 import java.util.Date;
 import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
+
     private String userName;
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
-        submenus.put(1, new SellerPersonalInfoMenu(this, "Personal Info Menu"));
-        submenus.put(2, getViewCompanyInfo());
-        submenus.put(3, getViewSalesHistory());
-        submenus.put(4, new ManageProductMenu(this, "Manage Product Menu"));
-        submenus.put(5, getAddProduct());
-        submenus.put(6, getRemoveProduct());
-        submenus.put(7, getShowCategories());
-        submenus.put(8, getManageOffs());
-        submenus.put(9, getViewBalance());
+        //TODO : ADD roles of Seller
+        submenus.put(1, getPersonalInfo());
+        submenus.put(2, getEdit());
+        submenus.put(3, getViewCompanyInfo());
+        submenus.put(4, getViewSalesHistory());
+        ///handle kardan products
+        submenus.put(6, getAddProduct());
+        submenus.put(7, getRemoveProduct());
+        submenus.put(8, getShowCategories());
+        submenus.put(9, getManageOffs());
+        submenus.put(10, getViewBalance());
         this.setSubmenus(submenus);
     }
 
-    private Menu getViewCompanyInfo() {
-        return new Menu(this, "View company information") {
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private Menu getPersonalInfo() {
+        return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                sellerProcessor.viewCompanyInfo();
+                manager.viewPersonalInfo(userName);
+            }
+
+            @Override
+            public void run() {
+                this.parent.show();
+                this.parent.run();
+            }
+        };
+    }
+
+    private Menu getEdit() {
+        return new Menu(this, "edit fields") {
+            @Override
+            public void show() {
+                String field = scanner.nextLine();
+                manager.editField(userName, field);
+            }
+
+            @Override
+            public void run() {
+                this.parent.show();
+                this.parent.run();
+            }
+        };
+    }
+
+    private Menu getViewCompanyInfo() {
+        return new Menu(this, "view company information") {
+            @Override
+            public void show() {
+
+                manager.viewCompanyInfo(userName);
             }
 
             @Override
@@ -42,7 +79,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view sales history") {
             @Override
             public void show() {
-                sellerProcessor.viewSalesHistory();
+                manager.viewSalesHistory(userName);
             }
 
             @Override
@@ -53,11 +90,14 @@ public class SellerRolesMenu extends Menu {
         };
     }
 
+//////TODO : ghesmate porducts bayad zade she
+
+
     private Menu getAddProduct() {
         return new Menu(this, "ADD product") {
             @Override
             public void show() {
-                sellerProcessor.addProduct();
+                manager.addProduct(userName);//baghie field ha byd dade shavad
             }
 
             @Override
@@ -73,7 +113,7 @@ public class SellerRolesMenu extends Menu {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
-                sellerProcessor.removeProduct(productId);
+                manager.removeProduct(userName, productId);
             }
 
             @Override
@@ -88,7 +128,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "show all categories") {
             @Override
             public void show() {
-                sellerProcessor.viewCategories();
+                manager.viewCategories();
             }
 
             @Override
@@ -103,13 +143,13 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view offs") {
             @Override
             public void show() {
-                sellerProcessor.viewOffs(userName);
+                manager.viewOffs(userName);
                 System.out.println("1 . view off");
                 System.out.println("3 . edit off");
                 System.out.println("2 . ADD off");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                sellerProcessor.manageOffs(userName, command);
+                manager.manageOffs(userName, command);
             }
 
             @Override
@@ -124,7 +164,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view balance") {
             @Override
             public void show() {
-                sellerProcessor.viewBalance(userName);
+                manager.viewBalance(userName);
             }
 
             @Override
@@ -134,56 +174,6 @@ public class SellerRolesMenu extends Menu {
             }
         };
     }
-
-    @Override
-    public void run() {
-        int input = Integer.parseInt(scanner.nextLine());
-        if (input == 1) {
-            sellerProcessor.viewPersonalInfo();
-        }
-        if (input == 4) {
-            sellerProcessor.viewProductList();
-        }
-        if (input <= submenus.size()) {
-            submenus.get(input).show();
-            submenus.get(input).run();
-        } else {
-            if (input == submenus.size() + 2) {
-                if (this.parent == null)
-                    System.exit(0);
-                else {
-                    parent.show();
-                    parent.run();
-                }
-            } else {
-                if (manager.isUserLoggedIn()) {
-                    new Menu(this, "logout") {
-                        @Override
-                        public void run() {
-                            //TODO : Logout
-                            this.parent.show();
-                            this.parent.run();
-                        }
-                    }.run();
-                } else {
-                    new Menu(this, "login") {
-                        @Override
-                        public void run() {
-                            //TODO : Login
-                            System.out.print("username : ");
-                            String username = scanner.nextLine();
-                            System.out.print("password : ");
-                            String password = scanner.nextLine();
-                            System.out.println(manager.login(username, password));
-                            this.parent.show();
-                            this.parent.run();
-                        }
-                    }.run();
-                }
-            }
-        }
-    }
-
 }
 
 

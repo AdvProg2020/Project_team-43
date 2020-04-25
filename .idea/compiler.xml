@@ -13,5 +13,6 @@
         <module name="Project_team-43" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>
