@@ -10,23 +10,18 @@ public class BuyerRolesMenu extends Menu {
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getPersonalInfo());
         submenus.put(2, getEdit());
-        submenus.put(3, getManageCart());//vared shodan be safe mahsool  morede nazar
-        submenus.put(4, new Purchase(this, "purchase panel"));
-        submenus.put(5, getManageOrders());
-        submenus.put(12, getViewBalance());
-        submenus.put(13, getViewDiscountCodes());
+        submenus.put(3, new ManageCartMenu(this,"Cart"));//vared shodan be safe mahsool  morede nazar
+        //submenus.put(4, new Purchase(this, "purchase panel"));
+        submenus.put(4, getManageOrders());
+        submenus.put(5, getViewBalance());
+        submenus.put(6, getViewDiscountCodes());
         this.setSubmenus(submenus);
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     private Menu getPersonalInfo() {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                manager.viewPersonalInfo(userName);
+                buyerProcessor.viewPersonalInfo();
             }
 
             @Override
@@ -42,7 +37,7 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
                 String field = scanner.nextLine();
-                manager.editField(userName, field);
+                buyerProcessor.editField(field);
             }
 
             @Override
@@ -66,7 +61,7 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("5 . show total price");
                 System.out.println("6 . back");
                 String command = scanner.nextLine();
-                manager.manageCart(this, userName, command);
+                manager.manageCart(userName, command);
             }
 
             @Override
@@ -81,11 +76,11 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this, "view orders") {
             @Override
             public void show() {
-                manager.viewOrders(userName);
+                buyerProcessor.viewOrders();
                 System.out.println("1 . show Order");
                 System.out.println("2 . rate product");
                 String command = scanner.nextLine();
-                manager.manageOrders(userName, command);
+                buyerProcessor.manageOrders(command);
             }
 
             @Override
@@ -101,7 +96,7 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this, "view balance") {
             @Override
             public void show() {
-                manager.viewBalance(userName);
+                buyerProcessor.viewBalance();
             }
 
             @Override
@@ -116,7 +111,7 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this, "view discount Codes") {
             @Override
             public void show() {
-                manager.viewBuyerDiscountCodes(userName);
+                buyerProcessor.viewBuyerDiscountCodes();
             }
 
             @Override

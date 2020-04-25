@@ -28,10 +28,6 @@ public class Off {
         return offId;
     }
 
-    public Seller getSeller() {
-        return seller;
-    }
-
     public String getSellerName() {
         return seller.getUsername();
     }
@@ -56,12 +52,16 @@ public class Off {
         return discountAmount;
     }
 
-    public void setOffState(State.OffState offState) {
-        this.offState = offState;
+    public Seller getSeller() {
+        return seller;
     }
 
     public void addProduct(Product product) {
         products.add(product);
+    }
+
+    public void setOffState(State.OffState offState) {
+        this.offState = offState;
     }
 
     public static Off getOffById(String offId) {

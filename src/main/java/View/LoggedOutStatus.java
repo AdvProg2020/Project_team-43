@@ -29,12 +29,12 @@ public class LoggedOutStatus extends Menu  {
             @Override
             public void show(){
                 System.out.println("register : " +"\n"+ "create account [type] [username]");
-                String command=scanner.nextLine();
-                System.out.println(manager.registerUser(command));
             }
             @Override
             public void run() {
                 //TODO : register
+                String command=scanner.nextLine();
+                System.out.println(manager.registerUser(command));
                 this.parent.parent.show();
                 this.parent.parent.run();
             }

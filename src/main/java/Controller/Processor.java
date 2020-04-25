@@ -1,30 +1,20 @@
 package Controller;
 
-import View.MainMenu;
-import View.Menu;
-import View.ProductPanel;
 import View.ShowAndCatch;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import model.*;
 
-import javax.jws.soap.SOAPBinding;
-import java.lang.reflect.Array;
-import java.security.Permission;
-import java.time.Clock;
+
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static model.Category.getAllCategories;
+
 
 public class Processor {
-    private BuyOrder buyOrder;
-    private boolean isLogin;
-    protected User user;
-    protected ShowAndCatch viewManager = ShowAndCatch.getInstance();
-
+    protected static boolean isLogin;
+    protected static User user;
+    protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
     public User getUser() {
         return user;
     }
@@ -147,7 +137,7 @@ public class Processor {
 
     }
 
-    public void manageDigest(String command, String productId){
+    public void manageDigest(String command, String productId) {
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -157,22 +147,24 @@ public class Processor {
         Pattern selectSellerPattern = Pattern.compile("select seller (.+)");
         Matcher selectSellerMatcher = selectSellerPattern.matcher(command);
 
-        if(addToCartMatcher.matches()){
+        if (addToCartMatcher.matches()) {
             addToCart(productId);
-        } else if(selectSellerMatcher.matches()){
+        } else if (selectSellerMatcher.matches()) {
             selectSeller(selectSellerMatcher.group(1));
         }
 
     }
+
     public void showDigest(String productId) {
         //TODO : error handling
         Product product = Product.getProductById(productId);
     }
 
-    public void addToCart(String productId){
+    public void addToCart(String productId) {
 
     }
-    public void selectSeller(String sellerUserName){
+
+    public void selectSeller(String sellerUserName) {
 
     }
 
@@ -190,25 +182,28 @@ public class Processor {
 
 
     }
-    public void manageComments(String command){
+
+    public void manageComments(String command) {
         //TODO : error handling
         if (command.equals("back")) {
             return;
         }
         Pattern addCommentPattern = Pattern.compile("add comment");
         Matcher addCommentMatcher = addCommentPattern.matcher(command);
-        if(addCommentMatcher.matches()){
+        if (addCommentMatcher.matches()) {
             addComment();
         }
 
     }
-    public void addComment(){
+
+    public void addComment() {
         //TODO : error handling
         ArrayList<String> commentInfo = new ArrayList<String>();
         viewManager.getCommentInfo(commentInfo);
         //handle commente gerefte shode
 
     }
+
     public void showComments(String productId) {
         //TODO : error handling
         Product product = Product.getProductById(productId);
@@ -225,13 +220,10 @@ public class Processor {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
         viewManager.viewUser(user);
-
     }
 
-    public void editField(String userName, String field) {
+    public void editField(String field) {
         //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
 
     }
 
@@ -336,6 +328,11 @@ public class Processor {
         }
     }
 
+    public void viewBossDiscountCodes() {
+        ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
+
+
+    }
 
     public void viewDiscountCode(String discountCode) {
         CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
@@ -433,7 +430,7 @@ public class Processor {
 
     }
 
-    public void manageCart(Menu menu, String userName, String command) {
+    public void manageCart(String userName, String command) {
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -451,7 +448,7 @@ public class Processor {
         if (showProductsMatcher.matches()) {
             viewProductInCart(userName);
         } else if (viewProductMatcher.matches()) {
-            // handle kardan raftan be safe mahsool
+            // handle kardan raftan be safe mahsoolat
         } else if (increaseProductMatcher.matches()) {
             increaseProduct(userName, increaseProductMatcher.group(1));
         } else if (decreaseProductMatcher.matches()) {
@@ -653,48 +650,39 @@ public class Processor {
         }
         return products;
     }
-    public void addBuyer(UserPersonalInfo personalInfo,String username){
-        new Buyer(username,personalInfo);
-    }
-    public void addSellerRequest(UserPersonalInfo personalInfo,String username, String companyName){
-        new SellerRequest(UUID.randomUUID().toString(),personalInfo,companyName,username);
-    }
+
     public String registerUser(String command) {
         Pattern pattern = Pattern.compile("create account (\\S+) (\\S+)");
         Matcher matcher = pattern.matcher(command);
-        if (matcher.find()) {
-            if (User.hasUserWithUserName(matcher.group(2))) {
-                return ("there is a user with this username");
-            } else {
-                UserPersonalInfo personalInfo = new UserPersonalInfo();
-                viewManager.getPersonalInfo(personalInfo);
-                if (matcher.group(1).equalsIgnoreCase("seller")) {
-                    String companyName = viewManager.getCompanyNameMenuFromUser();
-                    addSellerRequest(personalInfo, matcher.group(2), companyName);
-                    return "done";
-                } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
-                    addBuyer(personalInfo, matcher.group(2));
-                    return "done";
-                } else {
-                    return ("invalid type");
-                }
-            }
-        } else {
+        if (!matcher.find())
             return ("invalid command");
-        }
-    }
-    public String login(String username, String password){
-        if (User.hasUserWithUserName(username)){
-            if (User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password)){
-                isLogin=true;
-                user=User.getUserByUserName(username);
-                return "logged in successful";
-            }
-            return "incorrect password";
-        }
-        else {
-            return "there is no user with this username";
+        if (User.hasUserWithUserName(matcher.group(2)))
+            return ("there is a user with this username");
+        UserPersonalInfo personalInfo = new UserPersonalInfo();
+        viewManager.getPersonalInfo(personalInfo);
+        if (matcher.group(1).equalsIgnoreCase("seller")) {
+            String companyName = viewManager.getCompanyNameMenuFromUser();
+            SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
+            return "done";
+        } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
+            Buyer.addBuyer(personalInfo, matcher.group(2));
+            return "done";
+        } else {
+            return ("invalid type");
         }
 
     }
+
+    public String login(String username, String password) {
+        if (!User.hasUserWithUserName(username))
+            return "there is no user with this username";
+        if (!User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password))
+            return "incorrect password";
+        isLogin = true;
+        user = User.getUserByUserName(username);
+        if (user.getUserType()==UserType.BUYER)
+            BuyerProcessor.getInstance().setBuyerCart();
+        return "logged in successful";
+    }
+
 }

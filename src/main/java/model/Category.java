@@ -10,8 +10,6 @@ public class Category {
     private String name;
     private ArrayList<String> features;
     private Category categorySuper;
-
-
     private ArrayList<Category> subcategories;
     private ArrayList<Product> products;
 
@@ -51,6 +49,10 @@ public class Category {
         subcategories.remove(category);
     }
 
+    public ArrayList<Category> getSubcategories() {
+        return subcategories;
+    }
+
     //TODO: else
     public String getName() {
         return name;
@@ -66,29 +68,10 @@ public class Category {
 
     public static Category getCategoryByName(String categoryName) {
         for (Category category : allCategories) {
-            if (category.name.equals(categoryName)) {
+            if (category.name.equals(categoryName)){
                 return category;
             }
         }
         return null;
-    }
-
-    public ArrayList<Category> getSubcategories() {
-        return subcategories;
-    }
-
-    @Override
-    public String toString() {
-        String all = "";
-        if (subcategories.size() != 0) {
-            all += name + "\n";
-            int counter = 1;
-            for (Category subcategory : subcategories) {
-                all += "    "+counter + " . " + subcategory.name + "\n";
-            }
-            return all;
-        } else {
-            return "";
-        }
     }
 }

@@ -12,6 +12,10 @@ public class CodedDiscount {
     private int repeat;
     private ArrayList<Buyer> users;
 
+    public int getRepeat() {
+        return repeat;
+    }
+
     public CodedDiscount(String discountCode, String startTime, String endTime, double discount, int repeat) {
         this.discountCode = discountCode;
         this.startTime = startTime;
@@ -22,27 +26,38 @@ public class CodedDiscount {
         allCodedDiscount.add(this);
     }
 
+    public void addUser(Buyer buyer) {
+        users.add(buyer);
+        buyer.addDiscountCode(this);
+    }
+    public static boolean isCodedDiscountWithThisCode(String discountCode){
+        for (CodedDiscount discount : allCodedDiscount) {
+            if(discount.getDiscountCode().equals(discountCode))
+                return true;
+        }
+        return false;
+    }
+
     public String getDiscountCode() {
         return discountCode;
+    }
+
+    public static CodedDiscount getDiscountById(String discountCode){
+        return null;
+    }
+    public boolean hasUser(Buyer buyer){
+        return this.users.contains(buyer);
     }
 
     public double getDiscountAmount() {
         return discountAmount;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public boolean checkTime(){
+        //ToDo: check if code is valid in that time
+        return true;
     }
 
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public int getRepeat() {
-        return repeat;
-    }
-
-    //setter ha bayad TODO : error handling
     public void setDiscountCode(String discountCode) {
         this.discountCode = discountCode;
     }
@@ -55,40 +70,11 @@ public class CodedDiscount {
         this.endTime = endTime;
     }
 
-    public void setDiscountAmount(String discountAmountString) {
-        this.discountAmount = Double.parseDouble(discountAmountString);
+    public void setDiscountAmount(String discountAmount) {
+        this.discountAmount = Double.parseDouble(discountAmount);
     }
 
     public void setRepeat(String repeat) {
-
         this.repeat = Integer.parseInt(repeat);
-    }
-
-
-    public void addUser(Buyer buyer) {
-        users.add(buyer);
-    }
-
-    public static CodedDiscount getDiscountById(String discountCode) {
-
-        return null;
-    }
-
-    public boolean hasUser(Buyer buyer){
-        return this.users.contains(buyer);
-    }
-
-    public boolean checkTime(){
-        //ToDo: check if code is valid in that time
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "discount code : " + discountCode + "\n"
-                + "start time : " + startTime + "\n"
-                + "end time : " + endTime + "\n"
-                + "discount amount : " + discountAmount + "\n"
-                + "remaining time : " + repeat;
     }
 }
