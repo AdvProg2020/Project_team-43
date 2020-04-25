@@ -35,6 +35,10 @@ public class Product {
         allProductsInQueueExpect.add(this);
     }
 
+    public Seller getSeller() {
+        return seller;
+    }
+
     public ArrayList<Comment> getComments() {
         return comments;
     }
@@ -95,4 +99,7 @@ public class Product {
         return productId;
     }
 
+    public void setProductState(State.ProductState productState) {
+        this.productState = productState;
+    }
 }
