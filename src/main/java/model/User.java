@@ -53,15 +53,17 @@ public abstract class User {
         return balance;
     }
 
-    @Override
-    public String toString() {
-        return "user type : " + userType + "\n"
-                + "user name : " + username + "\n"
-                + "first name : " + userPersonalInfo.getFirstName() + "\n"
-                + "last name : " + userPersonalInfo.getLastName() + "\n"
-                + "email : " + userPersonalInfo.getEmail() + "\n"
-                + "phone number : " + userPersonalInfo.getPhoneNumber() + "\n"
-                + "balance : " + balance;
+    public void viewPersonalInfo() {
 
     }
+
+    public void editFields(String field) {
+
+    }
+
+    public void viewCredit() {
+
+    }
+
+
 }

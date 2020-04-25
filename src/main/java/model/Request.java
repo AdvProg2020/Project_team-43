@@ -1,17 +1,21 @@
 package model;
 
+
+
+import java.util.ArrayList;
+
 public abstract class Request {
+    protected static ArrayList<Request> allRequests=new ArrayList<Request>();
     protected String requestId;
     protected String requestType;
 
-    public Request(String requestId, String requestType) {
+    public Request(String requestId,String requestType) {
         this.requestId = requestId;
-        this.requestType = requestType;
-        Manager.allRequest.add(this);
+        this.requestType=requestType;
     }
 
-    public String getRequestId() {
-        return requestId;
+    public static ArrayList<Request> getAllRequests() {
+        return allRequests;
     }
 
     public String getRequestType() {
@@ -20,7 +24,9 @@ public abstract class Request {
 
     @Override
     public String toString() {
-        return "request type : " + requestType + "\n"
-                + "request Id : " + requestId;
+        return "Request{" +
+                "requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }

@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="code" />
         <module name="porojectAP" />
-        <module name="newPro" />
         <module name="project" />
         <module name="Project_team-43" />
       </profile>

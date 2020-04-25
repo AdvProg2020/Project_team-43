@@ -12,13 +12,13 @@ public class BossRolesMenu extends Menu {
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
-        submenus.put(1, getPersonalInfo());
-        submenus.put(2, getEdit());
-        submenus.put(3, getManageUsers());
-        submenus.put(4, getManageAllProducts());
-        submenus.put(5, getCreateDiscountCode());
-        submenus.put(6, getViewDiscountCodes());
-        submenus.put(7, getManageRequests());
+        submenus.put(1, getPersonalInfo());//complete
+        submenus.put(2, getEdit());//complete
+        submenus.put(3, getManageUsers());//complete
+        submenus.put(4, getManageAllProducts());//complete
+        submenus.put(5, getCreateCodedDiscount());//complete
+        submenus.put(6, getViewCodedDiscounts());//complete
+        submenus.put(7, getManageRequests());//complete
         submenus.put(8, getManageCategories());
         this.setSubmenus(submenus);
 
@@ -28,7 +28,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                manager.viewPersonalInfo(userName);
+                bossProcessor.viewPersonalInfo(userName);
             }
 
             @Override
@@ -43,8 +43,16 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "edit fields") {
             @Override
             public void show() {
+                System.out.println("FIELDS : ");
+                System.out.println("1 . first name");
+                System.out.println("2 . last name");
+                System.out.println("3 . email");
+                System.out.println("4 . phone number");
+                System.out.println("5 . password");
                 String field = scanner.nextLine();
-                manager.editField(userName, field);
+                System.out.println("change to :");
+                String changeField = scanner.nextLine();
+                bossProcessor.editField(userName, field, changeField);
             }
 
             @Override
@@ -59,12 +67,13 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage users") {
             @Override
             public void show() {
-                System.out.println("1 . view user");
-                System.out.println("2 . delete user");
+                bossProcessor.getBossViewManager().viewAllUsers();
+                System.out.println("1 . view user [username]");
+                System.out.println("2 . delete user [username]");
                 System.out.println("3 . create manager profile");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageUsers(command);
+                bossProcessor.manageUsers(command);
             }
 
             @Override
@@ -79,10 +88,10 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage all products") {
             @Override
             public void show() {
-                System.out.println("1 . remove products");
+                System.out.println("1 . remove products [productId]");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
-                manager.manageAllProducts(command);
+                bossProcessor.manageAllProducts(command);
             }
 
             @Override
@@ -93,11 +102,11 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getCreateDiscountCode() {
-        return new Menu(this, "create discount code") {
+    private Menu getCreateCodedDiscount() {
+        return new Menu(this, "create coded discount") {
             @Override
             public void show() {
-                manager.createDiscountCode();
+                bossProcessor.processCreateCodedDiscount();
             }
 
             @Override
@@ -108,17 +117,17 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getViewDiscountCodes() {
+    private Menu getViewCodedDiscounts() {
         return new Menu(this, "view discount codes") {
             @Override
             public void show() {
-                manager.viewBossDiscountCodes();
-                System.out.println("1 . view discount code");
-                System.out.println("2 . edit discount code");
-                System.out.println("3 . remove discount code");
+                bossProcessor.getBossViewManager().viewCodedDiscounts();
+                System.out.println("1 . view discount code [code]");
+                System.out.println("2 . edit discount code [code]");
+                System.out.println("3 . remove discount code [code]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageDiscountCodes(command);
+                bossProcessor.manageCodedDiscounts(command);
             }
 
             @Override
@@ -133,13 +142,13 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage requests") {
             @Override
             public void show() {
-                manager.viewRequests();
-                System.out.println("1 . details of request");
-                System.out.println("2 . accept request");
-                System.out.println("3 . decline request");
+                bossProcessor.getBossViewManager().viewAllRequests();
+                System.out.println("1 . details [requestId]");
+                System.out.println("2 . accept request [requestId]");
+                System.out.println("3 . decline request [requestId]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageRequests(command);
+                bossProcessor.manageRequests(command);
             }
 
             @Override
@@ -154,13 +163,13 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage categories") {
             @Override
             public void show() {
-                manager.viewCategories();
+                bossProcessor.getBossViewManager().viewAllCategories();
                 System.out.println("1 . edit category");
-                System.out.println("2 . ADD category");
+                System.out.println("2 . add category");
                 System.out.println("3 . remove category");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                manager.manageCategories(command);
+                bossProcessor.manageCategories(command);
             }
 
             @Override

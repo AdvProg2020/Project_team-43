@@ -61,7 +61,7 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("5 . show total price");
                 System.out.println("6 . back");
                 String command = scanner.nextLine();
-                manager.manageCart(this, userName, command);
+                manager.manageCart(userName, command);
             }
 
             @Override
