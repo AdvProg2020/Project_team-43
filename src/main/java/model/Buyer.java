@@ -11,6 +11,7 @@ public class Buyer extends User {
     private ArrayList<Integer> repeatOfDiscountCode;
     private ArrayList<Product> cart;
     private HashMap<Product, Integer> buyerCart;
+
     public HashMap<Product, Integer> getBuyerCart() {
         return buyerCart;
     }
@@ -24,7 +25,7 @@ public class Buyer extends User {
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
         discounts = new ArrayList<CodedDiscount>();
-        repeatOfDiscountCode= new ArrayList<Integer>();
+        repeatOfDiscountCode = new ArrayList<Integer>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
         buyerCart = new HashMap<>();
@@ -40,8 +41,18 @@ public class Buyer extends User {
 
     }
 
-    public void editFields(String field) {
-
+    public void editFields(String field, String newField) {
+        if (field.equalsIgnoreCase("password")) {
+            this.getUserPersonalInfo().setPassword(newField);
+        } else if (field.equalsIgnoreCase("lastName")) {
+            this.getUserPersonalInfo().setLastName(newField);
+        } else if (field.equalsIgnoreCase("firstName")) {
+            this.getUserPersonalInfo().setFirstName(newField);
+        } else if (field.equalsIgnoreCase("email")) {
+            this.getUserPersonalInfo().setEmail(newField);
+        } else if (field.equalsIgnoreCase("phoneNumber")) {
+            this.getUserPersonalInfo().setPhoneNumber(newField);
+        }
     }
 
     //////////viewCart??????
@@ -76,19 +87,20 @@ public class Buyer extends User {
     }
 
     public double getCartPrice() {
-        double price=0;
-        for (Product product : buyerCart.keySet()){
-            price+=buyerCart.get(product)*product.getPrice();
+        double price = 0;
+        for (Product product : buyerCart.keySet()) {
+            price += buyerCart.get(product) * product.getPrice();
         }
         return price;
     }
 
     public void purchase() {
-        BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(),new Date(),
-                this.getCartPrice(),buyerCart,this.getSellerOfCartProducts());
+        BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
+                this.getCartPrice(), buyerCart, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
         this.buyerCart.clear();
     }
+
     public void viewOrders() {
 
     }//////View logs
@@ -120,26 +132,29 @@ public class Buyer extends User {
     public static void addBuyer(UserPersonalInfo personalInfo, String username) {
         new Buyer(username, personalInfo);
     }
-    public boolean checkDiscountCode(CodedDiscount discount){
+
+    public boolean checkDiscountCode(CodedDiscount discount) {
         if (!this.discounts.contains(discount))
             return false;
         if (!discount.checkTime())
             return false;
         this.repeatOfDiscountCode.set(discounts.indexOf(discount),
-                this.repeatOfDiscountCode.get(discounts.indexOf(discount))-1);
-        if (this.repeatOfDiscountCode.get(discounts.indexOf(discount))==discount.getRepeat()){
+                this.repeatOfDiscountCode.get(discounts.indexOf(discount)) - 1);
+        if (this.repeatOfDiscountCode.get(discounts.indexOf(discount)) == discount.getRepeat()) {
             this.repeatOfDiscountCode.remove(discounts.indexOf(discount));
             this.discounts.remove(discount);
         }
         return true;
 
     }
-    public void addDiscountCode(CodedDiscount discount){
+
+    public void addDiscountCode(CodedDiscount discount) {
         this.discounts.add(discount);
         this.repeatOfDiscountCode.add(0);
     }
-    public ArrayList<Seller> getSellerOfCartProducts(){
-        ArrayList<Seller> sellers= new ArrayList<>();
+
+    public ArrayList<Seller> getSellerOfCartProducts() {
+        ArrayList<Seller> sellers = new ArrayList<>();
         for (Product product : buyerCart.keySet()) {
             sellers.add(product.getSeller());
         }

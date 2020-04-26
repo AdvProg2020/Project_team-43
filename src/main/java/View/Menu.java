@@ -72,6 +72,7 @@ public abstract class Menu {
                         @Override
                         public void run() {
                             //TODO : Logout
+                            manager.logout();
                             this.parent.show();
                             this.parent.run();
                         }

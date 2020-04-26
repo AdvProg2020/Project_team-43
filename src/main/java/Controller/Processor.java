@@ -685,4 +685,9 @@ public class Processor {
         return "logged in successful";
     }
 
+    public void logout(){
+        user=null;
+        isLogin=false;
+    }
+
 }

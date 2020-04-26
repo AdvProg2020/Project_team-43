@@ -9,19 +9,22 @@ public class BuyerRolesMenu extends Menu {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getPersonalInfo());
-        submenus.put(2, getEdit());
-        submenus.put(3, new ManageCartMenu(this,"Cart"));//vared shodan be safe mahsool  morede nazar
-        //submenus.put(4, new Purchase(this, "purchase panel"));
-        submenus.put(4, getManageOrders());
-        submenus.put(5, getViewBalance());
-        submenus.put(6, getViewDiscountCodes());
+        submenus.put(2, new ManageCartMenu(this, "Cart"));
+        submenus.put(3, getManageOrders());
+        submenus.put(4, getViewBalance());
+        submenus.put(5, getViewDiscountCodes());
         this.setSubmenus(submenus);
     }
+
     private Menu getPersonalInfo() {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
                 buyerProcessor.viewPersonalInfo();
+                System.out.println("1 . edit [field]");
+                System.out.println("2 . back");
+                String command = scanner.nextLine();
+                System.out.println(buyerProcessor.editBuyerField(command));
             }
 
             @Override
@@ -122,4 +125,31 @@ public class BuyerRolesMenu extends Menu {
         };
     }
 
+    public void run() {
+        int input = Integer.parseInt(scanner.nextLine());
+        if (input <= submenus.size()) {
+            submenus.get(input).show();
+            submenus.get(input).run();
+        } else {
+            if (input == submenus.size() + 2) {
+                if (this.parent == null)
+                    System.exit(0);
+                else {
+                    parent.show();
+                    parent.run();
+                }
+            } else {
+                new Menu(this, "logout") {
+                    @Override
+                    public void run() {
+                        //TODO : Logout
+                        manager.logout();
+                        this.parent.parent.show();
+                        this.parent.parent.run();
+                    }
+                }.run();
+            }
+        }
+    }
 }
+

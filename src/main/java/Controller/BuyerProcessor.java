@@ -1,7 +1,6 @@
 package Controller;
 
 import View.BuyerShowAndCatch;
-import View.ShowAndCatch;
 import model.*;
 
 import java.util.ArrayList;
@@ -20,7 +19,17 @@ public class BuyerProcessor extends Processor {
     public void viewPersonalInfo() {
         buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
-    public void editField(String field) {
+    public String editBuyerField(String command) {
+        Pattern pattern=Pattern.compile("edit (\\S+)");
+        Matcher matcher = pattern.matcher(command);
+        if (command.equalsIgnoreCase("back"))
+            return null;
+        if (!matcher.find())
+            return "invalid field";
+        String field=matcher.group(1);
+        String newField=buyerViewManager.getNewField(field);
+        ((Buyer)user).editFields(field,newField);
+        return (field+" successfully changed to "+newField);
         //TODO : error handling
 
     }
@@ -53,6 +62,7 @@ public class BuyerProcessor extends Processor {
 
     public void rateProduct(String productId, int score) {
         //TODO : error handling
+        Product.getProductById(productId).rateProduct(score);
     }
 
     public void viewBalance() {
@@ -92,5 +102,10 @@ public class BuyerProcessor extends Processor {
     }
     public void setBuyerCart(){
         ((Buyer)user).setBuyerCart(buyerCart);
+    }
+    public void logout(){
+        user=null;
+        isLogin=false;
+        buyerCart.clear();
     }
 }
