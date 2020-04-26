@@ -130,4 +130,9 @@ public class Product {
         return productId;
     }
 
+    public void rateProduct(int score) {
+        this.getScore().addBuyer(score);
+    }
+
+
 }

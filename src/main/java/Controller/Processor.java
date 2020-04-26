@@ -10,11 +10,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class Processor {
     protected static boolean isLogin;
     protected static User user;
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
+
     public User getUser() {
         return user;
     }
@@ -224,209 +224,6 @@ public class Processor {
 
     public void editField(String field) {
         //TODO : error handling
-
-    }
-
-    public void manageUsers(String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern viewUserPattern = Pattern.compile("view (.+)");
-        Matcher viewUserMatcher = viewUserPattern.matcher(command);
-        Pattern deleteUserPattern = Pattern.compile("delete user (.+)");
-        Matcher deleteUserMatcher = deleteUserPattern.matcher(command);
-        Pattern createManagerPattern = Pattern.compile("create manager profile");
-        Matcher createManagerMatcher = createManagerPattern.matcher(command);
-        if (viewUserMatcher.matches()) {
-            viewUser(viewUserMatcher.group(1));
-        } else if (deleteUserMatcher.matches()) {
-            deleteUser(deleteUserMatcher.group(1));
-        } else if (createManagerMatcher.matches()) {
-            createManagerProfile();
-        }
-
-    }
-
-    public void viewUser(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        viewManager.viewUser(user);
-
-    }
-
-    public void deleteUser(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        User.allUsers.remove(user);
-
-    }
-
-    public void createManagerProfile() {
-        //TODO : error handling
-        ArrayList<String> managerInfo = new ArrayList<String>();
-        viewManager.getManagerInfo(managerInfo);
-        String userName = managerInfo.get(0);
-        String firstName = managerInfo.get(1);
-        String lastName = managerInfo.get(2);
-        String email = managerInfo.get(3);
-        String phoneNumber = managerInfo.get(4);
-        String password = managerInfo.get(5);
-        UserPersonalInfo newPersonalInfo = new UserPersonalInfo(firstName, lastName, email, phoneNumber, password);
-        User newManager = new Manager(userName, newPersonalInfo);
-
-    }
-
-    public void manageAllProducts(String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern removeProductPattern = Pattern.compile("remove (.+)");
-        Matcher removeProductMatcher = removeProductPattern.matcher(command);
-        if (removeProductMatcher.matches()) {
-            removeProduct(removeProductMatcher.group(1));
-        }
-    }
-
-    public void removeProduct(String productId) {
-        Product product = Product.getProductById(productId);
-        Product.allProductsInList.remove(product);
-
-    }
-
-    public void createDiscountCode() {
-        //TODO : error handling
-        ArrayList<String> discountCodedInfo = new ArrayList<String>();
-        viewManager.getDiscountCodedInfo(discountCodedInfo);
-        String discountCode = discountCodedInfo.get(0);
-        String startTime = discountCodedInfo.get(1);
-        String endTime = discountCodedInfo.get(2);
-        double discountAmount = Double.parseDouble(discountCodedInfo.get(3));
-        int repeat = Integer.parseInt(discountCodedInfo.get(4));
-        CodedDiscount newDiscount = new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
-
-    }
-
-    public void manageDiscountCodes(String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern viewDiscountCodePattern = Pattern.compile("view discount code (.+)");
-        Matcher viewDiscountCodeMatcher = viewDiscountCodePattern.matcher(command);
-        Pattern editDiscountCodePattern = Pattern.compile("edit discount code (.+)");
-        Matcher editDiscountCodeMatcher = editDiscountCodePattern.matcher(command);
-        Pattern removeDiscountCodePattern = Pattern.compile("remove discount code (.+)");
-        Matcher removeDiscountCodeMatcher = removeDiscountCodePattern.matcher(command);
-        if (viewDiscountCodeMatcher.matches()) {
-            viewDiscountCode(viewDiscountCodeMatcher.group(1));
-        } else if (editDiscountCodeMatcher.matches()) {
-            editDiscountCode(editDiscountCodeMatcher.group(1));
-        } else if (removeDiscountCodeMatcher.matches()) {
-            removeDiscountCode(removeDiscountCodeMatcher.group(1));
-        }
-    }
-
-    public void viewBossDiscountCodes() {
-        ArrayList<CodedDiscount> allCodedDiscount = CodedDiscount.allCodedDiscount;
-
-
-    }
-
-    public void viewDiscountCode(String discountCode) {
-        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
-
-    }
-
-    public void editDiscountCode(String discountCode) {
-        CodedDiscount discount = CodedDiscount.getDiscountById(discountCode);
-
-    }
-
-    public void removeDiscountCode(String discountCode) {
-        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        if (codedDiscount != null) {
-            CodedDiscount.allCodedDiscount.remove(codedDiscount);
-        }
-    }
-
-    public void manageRequests(String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern detailsPattern = Pattern.compile("details (.+)");
-        Matcher detailsMatcher = detailsPattern.matcher(command);
-        Pattern acceptRequestPattern = Pattern.compile("accept (.+)");
-        Matcher acceptRequestMatcher = acceptRequestPattern.matcher(command);
-        Pattern declineRequestPattern = Pattern.compile("decline (.+)");
-        Matcher declineRequestMatcher = declineRequestPattern.matcher(command);
-        if (detailsMatcher.matches()) {
-            viewRequestDetails(detailsMatcher.group(1));
-        } else if (acceptRequestMatcher.matches()) {
-            acceptRequest(acceptRequestMatcher.group(1));
-        } else if (declineRequestMatcher.matches()) {
-            declineRequest(declineRequestMatcher.group(1));
-        }
-    }
-
-    public void viewRequests() {
-        ArrayList<Request> requests = Manager.allRequest;
-
-    }
-
-    public void viewRequestDetails(String requestId) {
-        Request request = Manager.getRequestById(requestId);
-
-    }
-
-    public void acceptRequest(String requestId) {
-        Request request = Manager.getRequestById(requestId);
-
-    }
-
-    public void declineRequest(String requestId) {
-        Request request = Manager.getRequestById(requestId);
-
-    }
-
-    public void manageCategories(String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern editCategoryPattern = Pattern.compile("edit (.+)");
-        Matcher editCategoryMatcher = editCategoryPattern.matcher(command);
-        Pattern addCategoryPattern = Pattern.compile("add (.+)");
-        Matcher addCategoryMatcher = addCategoryPattern.matcher(command);
-        Pattern removeCategoryPattern = Pattern.compile("remove (.+)");
-        Matcher removeCategoryMatcher = removeCategoryPattern.matcher(command);
-        if (editCategoryMatcher.matches()) {
-            editCategory(editCategoryMatcher.group(1));
-        } else if (addCategoryMatcher.matches()) {
-            addCategory(addCategoryMatcher.group(1));
-        } else if (removeCategoryMatcher.matches()) {
-            removeCategory(removeCategoryMatcher.group(1));
-        }
-    }
-
-    public void editCategory(String categoryName) {
-        //TODO : error handling
-        Category category = Category.getCategoryByName(categoryName);
-
-    }
-
-    public void addCategory(String categoryName) {
-        //TODO : error handling
-        //in sub category o super category ro chejori begirim age khodesh super bashe ya khodesh sub bashe
-        viewManager.getCategoryInfo();
-    }
-
-    public void removeCategory(String categoryName) {
-        //TODO : error handling
-        Category category = Category.getCategoryByName(categoryName);
-
 
     }
 
@@ -680,8 +477,14 @@ public class Processor {
             return "incorrect password";
         isLogin = true;
         user = User.getUserByUserName(username);
-        BuyerProcessor.setBuyerCart();
+        if (user.getUserType() == UserType.BUYER)
+            BuyerProcessor.getInstance().setBuyerCart();
         return "logged in successful";
+    }
+
+    public void logout() {
+        user = null;
+        isLogin = false;
     }
 
 }

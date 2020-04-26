@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public abstract class Menu {
     public static Processor manager = new Processor();
-    public static BuyerProcessor buyerProcessor= new BuyerProcessor();
+    public static BuyerProcessor buyerProcessor= BuyerProcessor.getInstance();
     public static SellerProcessor sellerProcessor = new SellerProcessor();
     public static BossProcessor bossProcessor = new BossProcessor();
     String name;
@@ -72,6 +72,7 @@ public abstract class Menu {
                         @Override
                         public void run() {
                             //TODO : Logout
+                            manager.logout();
                             this.parent.show();
                             this.parent.run();
                         }

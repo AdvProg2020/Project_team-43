@@ -9,15 +9,11 @@ public class Category {
 
     private String name;
     private ArrayList<String> features;
-    private Category categorySuper;
-    private ArrayList<Category> subcategories;
     private ArrayList<Product> products;
 
-    public Category(String name, Category categorySuper, ArrayList<String> features) {
+    public Category(String name, ArrayList<String> features) {
         this.name = name;
-        this.categorySuper = categorySuper;
         products = new ArrayList<Product>();
-        subcategories = new ArrayList<Category>();
         allCategories.add(this);
     }
 
@@ -37,20 +33,39 @@ public class Category {
         products.remove(product);
     }
 
-    public void addSubCategory(Category category) {
-        subcategories.add(category);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public boolean hasSubCategory(Category category) {
-        return subcategories.contains(category);
+    public void addFeatures(String newFeature) {
+        this.features.add(newFeature);
+        for (Product product : this.products) {
+            product.getFeaturesMap().put(newFeature, "");
+        }
     }
 
-    public void removeSubCategory(Category category) {
-        subcategories.remove(category);
+    public boolean hasFeature(String feature) {
+        for (String existsFeature : this.features) {
+            if (existsFeature.equalsIgnoreCase(feature)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public ArrayList<Category> getSubcategories() {
-        return subcategories;
+    public void changeFeatureName(String oldName, String newName){
+        for (Product product : this.products) {
+            String featureValue = product.getFeaturesMap().get(oldName);
+            product.getFeaturesMap().remove(oldName);
+            product.getFeaturesMap().put(newName, featureValue);
+        }
+    }
+
+    public void removeFeature(String featureName){
+        this.getFeatures().remove(featureName);
+        for (Product product : this.products) {
+            product.getFeaturesMap().remove(featureName);
+        }
     }
 
     //TODO: else
@@ -68,7 +83,7 @@ public class Category {
 
     public static Category getCategoryByName(String categoryName) {
         for (Category category : allCategories) {
-            if (category.name.equals(categoryName)){
+            if (category.name.equals(categoryName)) {
                 return category;
             }
         }

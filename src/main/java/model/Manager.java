@@ -94,64 +94,59 @@ public class Manager extends User {
     }
 
     public void declineRequest(Request request) {
-        if(request.getRequestType().equalsIgnoreCase("offType")){
-            Off off = ((OffRequest)request).getOff();
+        if (request.getRequestType().equalsIgnoreCase("offType")) {
+            Off off = ((OffRequest) request).getOff();
             declineOffRequest(off);
-        } else if(request.getRequestType().equalsIgnoreCase("productType")){
-            Product product = ((ProductRequest)request).getProduct();
+        } else if (request.getRequestType().equalsIgnoreCase("productType")) {
+            Product product = ((ProductRequest) request).getProduct();
             declineProductRequest(product);
 
         }
         allRequest.remove(request);
     }
 
-    public void declineProductRequest(Product product){
+    public void declineProductRequest(Product product) {
         Seller seller = product.getSeller();
         seller.getProducts().remove(product);
         Product.allProductsInQueueExpect.remove(product);
     }
 
-    public void declineOffRequest(Off off){
+    public void declineOffRequest(Off off) {
         Off.inQueueExpectionOffs.remove(off);
         Seller seller = off.getSeller();
         seller.getOffs().remove(off);
         // TODO : remove from product.off
     }
 
-    public void editCategory(Category category) {
-
+    public void editCategoryName(Category category, String newName) {
+        category.setName(newName);
     }
 
-    public void removeCategory(Category category){
-        ArrayList<Category>categoriesToBeRemoved = new ArrayList<>();
-        removeSuperCategory(category, categoriesToBeRemoved);
-        for (Category categoryToBeRemoved : categoriesToBeRemoved) {
-            Category.getAllCategories().remove(categoryToBeRemoved);
-        }
-
-    }
-    public void removeSuperCategory(Category category, ArrayList<Category> categoriesToBeRemoved) {
-        if(category.getSubcategories().size()!=0){
-            for (Category subcategory : category.getSubcategories()) {
-                removeSuperCategory(subcategory, categoriesToBeRemoved);
-            }
+    public void addCategoryFeature(Category category, String newFeature) {
+        //TODO : error handling
+        if (!category.hasFeature(newFeature)) {
+            category.addFeatures(newFeature);
         } else {
-            removeLeafCategory(category);
+
         }
-        categoriesToBeRemoved.add(category);
     }
 
-    public void removeLeafCategory(Category category) {
-        for (Product product : category.getProducts()) {
-            if (Product.allProductsInList.contains(product)) {
-                Product.allProductsInList.remove(product);
-            } else {
-                Product.allProductsInQueueExpect.remove(product);
-                removeProductRequest(product);
-            }
-            removeFromSellerProducts(product);
-
+    public void editFeatureName(Category category, String oldFeatureName, String newFeatureName) {
+        //TODO : error handling
+        if (category.hasFeature(oldFeatureName)) {
+            category.changeFeatureName(oldFeatureName, newFeatureName);
         }
+    }
+
+    public void deleteFeature(Category category, String featureName) {
+        category.removeFeature(featureName);
+    }
+
+    public void removeCategory(Category category) {
+        for (Product product : category.getProducts()) {
+            removeProduct(product);
+        }
+        Category.getAllCategories().remove(category);
     }
 
     public void removeFromSellerProducts(Product product) {

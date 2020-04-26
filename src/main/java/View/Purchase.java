@@ -10,9 +10,11 @@ public class Purchase extends Menu {
     private boolean isDiscountCodeValid=false;
     public Purchase(Menu parent, String name) {
         super(parent, name);
+    }
+    public void show(){}
+    public void run(){
         doPurchase();
     }
-
     private void doPurchase(){
         receiveInformation();
     }

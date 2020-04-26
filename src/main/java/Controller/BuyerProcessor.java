@@ -1,7 +1,6 @@
 package Controller;
 
 import View.BuyerShowAndCatch;
-import View.ShowAndCatch;
 import model.*;
 
 import java.util.ArrayList;
@@ -10,12 +9,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerProcessor extends Processor {
+    private static BuyerProcessor instance = new BuyerProcessor();
+    public static BuyerProcessor getInstance() {
+        return instance;
+    }
     private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
+    private BuyerProcessor(){}
     public void viewPersonalInfo() {
         buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
-    public void editField(String field) {
+    public String editBuyerField(String command) {
+        Pattern pattern=Pattern.compile("edit (\\S+)");
+        Matcher matcher = pattern.matcher(command);
+        if (command.equalsIgnoreCase("back"))
+            return null;
+        if (!matcher.find())
+            return "invalid field";
+        String field=matcher.group(1);
+        String newField=buyerViewManager.getNewField(field);
+        ((Buyer)user).editFields(field,newField);
+        return (field+" successfully changed to "+newField);
         //TODO : error handling
 
     }
@@ -48,6 +62,7 @@ public class BuyerProcessor extends Processor {
 
     public void rateProduct(String productId, int score) {
         //TODO : error handling
+        Product.getProductById(productId).rateProduct(score);
     }
 
     public void viewBalance() {
@@ -85,7 +100,12 @@ public class BuyerProcessor extends Processor {
         buyerCart.clear();
         return "payment done";
     }
-    public static void setBuyerCart(){
+    public void setBuyerCart(){
         ((Buyer)user).setBuyerCart(buyerCart);
+    }
+    public void logout(){
+        user=null;
+        isLogin=false;
+        buyerCart.clear();
     }
 }
