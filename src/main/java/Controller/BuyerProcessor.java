@@ -16,9 +16,6 @@ public class BuyerProcessor extends Processor {
     private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
     private BuyerProcessor(){}
-    public void viewPersonalInfo() {
-        buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
-    }
     public String editBuyerField(String command) {
         Pattern pattern=Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
@@ -33,7 +30,9 @@ public class BuyerProcessor extends Processor {
         //TODO : error handling
 
     }
-
+    public void addToBuyerCart(Product product){
+        buyerCart.put(product,1);
+    }
     public void viewOrders() {
         ArrayList<BuyOrder> orders = ((Buyer) user).getOrders();
         buyerViewManager.viewBuyerOrders(orders);
@@ -80,7 +79,6 @@ public class BuyerProcessor extends Processor {
     public void increaseProduct(String productId) {
         //TODO : error handling
         ((Buyer)user).increaseCart(productId);
-
     }
     public void decreaseProduct(String productId){
         ((Buyer)user).decreaseCart(productId);

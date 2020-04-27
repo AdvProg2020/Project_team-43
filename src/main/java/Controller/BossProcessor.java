@@ -18,13 +18,6 @@ public class BossProcessor extends Processor {
         return bossViewManager;
     }
 
-    public void viewPersonalInfo(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        bossViewManager.viewUser(user);
-
-    }
-
     public void editField(String userName, String field, String changeField) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
@@ -253,26 +246,34 @@ public class BossProcessor extends Processor {
     public void editCategory(String categoryName) {
         //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
+        String editTask = bossViewManager.editCategoryTask();
+        if (editTask.equalsIgnoreCase("1")) {
+            String newName = bossViewManager.getCategoryNewName();
+            ((Manager) user).editCategoryName(category, newName);
+        } else if (editTask.equalsIgnoreCase("2")) {
+            String oldFeatureName = bossViewManager.getFeatureNameForChangeOrDelete(category);
+            String newFeatureName = bossViewManager.getFeatureNameForAddOrChange();
+            ((Manager) user).editFeatureName(category, oldFeatureName, newFeatureName);
+        } else if (editTask.equalsIgnoreCase("3")) {
+            String featureName = bossViewManager.getFeatureNameForChangeOrDelete(category);
+            ((Manager) user).deleteFeature(category, featureName);
+        } else if (editTask.equalsIgnoreCase("4")) {
+            String featureName = bossViewManager.getFeatureNameForAddOrChange();
+            ((Manager) user).addCategoryFeature(category, featureName);
+        }
 
-        ///////////////////////////////////
     }
 
     public void addCategory(String categoryName) {
         //TODO : error handling
-        ArrayList<String> categoryInfo = new ArrayList<>();
-        ArrayList<String>features = bossViewManager.getCategoryInfo(categoryInfo);
-        if(categoryInfo.size()==2){
-            Category superCategory = Category.getCategoryByName(categoryInfo.get(1));
-            new Category(categoryInfo.get(0), superCategory, features);
-        } else {
-            new Category(categoryInfo.get(0), null, features);
-        }
+        ArrayList<String> features = bossViewManager.getCategoryFeatures();
+        new Category(categoryName, features);
     }
 
     public void removeCategory(String categoryName) {
         //TODO : error handling
         Category category = Category.getCategoryByName(categoryName);
-        ((Manager)user).removeCategory(category);
+        ((Manager) user).removeCategory(category);
 
     }
 

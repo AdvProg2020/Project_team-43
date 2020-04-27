@@ -20,7 +20,7 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                buyerProcessor.viewPersonalInfo();
+                processor.viewPersonalInfo();
                 System.out.println("1 . edit [field]");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
@@ -56,7 +56,7 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
 
-                manager.viewProductInCart(userName);
+                processor.viewProductInCart(userName);
                 System.out.println("1 . show products");
                 System.out.println("2 . view product panel");
                 System.out.println("3 . increase product");
@@ -64,7 +64,7 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("5 . show total price");
                 System.out.println("6 . back");
                 String command = scanner.nextLine();
-                manager.manageCart(userName, command);
+                processor.manageCart(userName, command);
             }
 
             @Override
@@ -143,7 +143,7 @@ public class BuyerRolesMenu extends Menu {
                     @Override
                     public void run() {
                         //TODO : Logout
-                        manager.logout();
+                        processor.logout();
                         this.parent.parent.show();
                         this.parent.parent.run();
                     }

@@ -90,23 +90,6 @@ public class ShowAndCatch {
         System.out.println("company information : " + company.getInfo());
     }
 
-    public void getDiscountCodedInfo(ArrayList<String> discountCodedInfo) {
-        System.out.print("Discount code : ");
-        String discountCode = scanner.nextLine();
-        discountCodedInfo.add(discountCode);
-        System.out.print("Start time : ");
-        String startTime = scanner.nextLine();
-        discountCodedInfo.add(startTime);
-        System.out.print("End time : ");
-        String endTime = scanner.nextLine();
-        discountCodedInfo.add(endTime);
-        System.out.print("Discount amount : ");
-        String discountAmount = scanner.nextLine();
-        discountCodedInfo.add(discountAmount);
-        System.out.print("repeat : ");
-        String repeat = scanner.nextLine();
-        discountCodedInfo.add(repeat);
-    }
 
     public void getPersonalInfo(UserPersonalInfo personalInfo) {
         System.out.print("first name : ");
@@ -126,39 +109,6 @@ public class ShowAndCatch {
         personalInfo.setPassword(password);
     }
 
-    public void getManagerInfo(ArrayList<String> managerInfo) {
-        System.out.print("user name : ");
-        String userName = scanner.nextLine();
-        managerInfo.add(userName);
-        System.out.print("first name : ");
-        String firstName = scanner.nextLine();
-        managerInfo.add(firstName);
-        System.out.print("last name : ");
-        String lastName = scanner.nextLine();
-        managerInfo.add(lastName);
-        System.out.print("email : ");
-        String email = scanner.nextLine();
-        managerInfo.add(email);
-        System.out.print("phone number : ");
-        String phoneNumber = scanner.nextLine();
-        managerInfo.add(phoneNumber);
-        System.out.print("password : ");
-        String password = scanner.nextLine();
-        managerInfo.add(password);
-    }
-
-
-    public void viewUser(User user) {
-        System.out.println("user name : " + user.getUsername());
-        System.out.println("first name : " + user.getUserPersonalInfo().getFirstName());
-        System.out.println("last name : " + user.getUserPersonalInfo().getLastName());
-        System.out.println("email : " + user.getUserPersonalInfo().getEmail());
-        System.out.println("phone number : " + user.getUserPersonalInfo().getPhoneNumber());
-    }
-
-    public void showCategories(ArrayList<Category> categories) {
-        // main -> sub
-    }
 
     public void showComments(ArrayList<Comment> comments) {
         for (int i = 1; i <= comments.size(); i++) {
@@ -176,10 +126,16 @@ public class ShowAndCatch {
             System.out.println(feature + " : " + product.getFeaturesMap().get(feature));
         }
     }
-
-    public void getCategoryInfo() {
-
+    public void showDigest(Product product){
+        System.out.println("name: "+product.getName());
+        System.out.println("price: "+product.getPrice());
+        System.out.println("category: "+product.getCategory());
+        System.out.println("sellers: "+product.getSeller());
+        System.out.println("score:"+product.getScore());
+        System.out.println("description: "+product.getDescription());
+        System.out.println("sale: "+Off.isProductInOff(product));
     }
+
 
     public void getOffInfo(ArrayList<String> offInfo) {
         System.out.print("Off Id : ");
@@ -218,6 +174,11 @@ public class ShowAndCatch {
     public void viewBuyerOrders(ArrayList<BuyOrder> buyOrders){
         for (BuyOrder order : buyOrders) {
             System.out.println(order);
+        }
+    }
+    public void showCategories(ArrayList<Category> categories){
+        for (Category category : categories) {
+            System.out.println(category.getName());
         }
     }
 }

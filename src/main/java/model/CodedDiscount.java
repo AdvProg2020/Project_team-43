@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class CodedDiscount {
+    public static int constructId = 0;
     public static ArrayList<CodedDiscount> allCodedDiscount = new ArrayList<CodedDiscount>();
     private String discountCode;
     private String startTime;
@@ -16,23 +17,25 @@ public class CodedDiscount {
         return repeat;
     }
 
-    public CodedDiscount(String discountCode, String startTime, String endTime, double discount, int repeat) {
-        this.discountCode = discountCode;
+    public CodedDiscount(String startTime, String endTime, double discount, int repeat) {
+        this.discountCode = "" + constructId;
         this.startTime = startTime;
         this.endTime = endTime;
         this.discountAmount = discount;
         this.repeat = repeat;
         users = new ArrayList<Buyer>();
         allCodedDiscount.add(this);
+        constructId += 1;
     }
 
     public void addUser(Buyer buyer) {
         users.add(buyer);
         buyer.addDiscountCode(this);
     }
-    public static boolean isCodedDiscountWithThisCode(String discountCode){
+
+    public static boolean isCodedDiscountWithThisCode(String discountCode) {
         for (CodedDiscount discount : allCodedDiscount) {
-            if(discount.getDiscountCode().equals(discountCode))
+            if (discount.getDiscountCode().equals(discountCode))
                 return true;
         }
         return false;
@@ -42,10 +45,11 @@ public class CodedDiscount {
         return discountCode;
     }
 
-    public static CodedDiscount getDiscountById(String discountCode){
+    public static CodedDiscount getDiscountById(String discountCode) {
         return null;
     }
-    public boolean hasUser(Buyer buyer){
+
+    public boolean hasUser(Buyer buyer) {
         return this.users.contains(buyer);
     }
 
@@ -53,7 +57,7 @@ public class CodedDiscount {
         return discountAmount;
     }
 
-    public boolean checkTime(){
+    public boolean checkTime() {
         //ToDo: check if code is valid in that time
         return true;
     }

@@ -8,10 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="code" />
         <module name="porojectAP" />
+        <module name="Project_team-43New" />
         <module name="project" />
         <module name="maven" />
         <module name="Project_team-43" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>

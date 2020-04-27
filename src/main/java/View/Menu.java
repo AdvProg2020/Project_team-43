@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public abstract class Menu {
-    public static Processor manager = new Processor();
+    public static Processor processor = new Processor();
     public static BuyerProcessor buyerProcessor= BuyerProcessor.getInstance();
     public static SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public static BossProcessor bossProcessor = new BossProcessor();
@@ -40,7 +40,7 @@ public abstract class Menu {
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
         }
-        if (manager.isUserLoggedIn()){//////////////////////////////////////////////chi shode in error dare??
+        if (processor.isUserLoggedIn()){//////////////////////////////////////////////chi shode in error dare??
             System.out.println((submenus.size() + 1)+". logout");
         }
         else {
@@ -67,12 +67,12 @@ public abstract class Menu {
                 }
             }
             else {
-                if (manager.isUserLoggedIn()){
+                if (processor.isUserLoggedIn()){
                     new Menu(this,"logout"){
                         @Override
                         public void run() {
                             //TODO : Logout
-                            manager.logout();
+                            processor.logout();
                             this.parent.show();
                             this.parent.run();
                         }
@@ -87,7 +87,7 @@ public abstract class Menu {
                             String username=scanner.nextLine();
                             System.out.print("password : ");
                             String password=scanner.nextLine();
-                            System.out.println(manager.login(username,password));
+                            System.out.println(processor.login(username,password));
                             this.parent.show();
                             this.parent.run();
                         }

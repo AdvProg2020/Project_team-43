@@ -24,7 +24,7 @@ public class LoggedOutStatus extends Menu {
                 String username = scanner.nextLine();
                 System.out.print("password : ");
                 String password = scanner.nextLine();
-                System.out.println(manager.login(username, password));
+                System.out.println(processor.login(username, password));
                 this.parent.parent.submenus.get(1).show();
                 this.parent.parent.submenus.get(1).run();
             }
@@ -42,7 +42,7 @@ public class LoggedOutStatus extends Menu {
             public void run() {
                 //TODO : register
                 String command = scanner.nextLine();
-                System.out.println(manager.registerUser(command));
+                System.out.println(processor.registerUser(command));
                 this.parent.parent.show();
                 this.parent.parent.run();
             }
