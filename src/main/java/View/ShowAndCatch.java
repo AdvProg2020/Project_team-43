@@ -176,4 +176,9 @@ public class ShowAndCatch {
             System.out.println(order);
         }
     }
+    public void showCategories(ArrayList<Category> categories){
+        for (Category category : categories) {
+            System.out.println(category.getName());
+        }
+    }
 }
