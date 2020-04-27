@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Product {
+    public static int constructId = 0;
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
 
@@ -26,8 +27,8 @@ public class Product {
     private ArrayList<Comment> comments;
 
 
-    public Product(String productId, String name, Company company, double price, Category category, Seller seller) {
-        this.productId = productId;
+    public Product(String name, Company company, double price, Category category, Seller seller) {
+        this.productId = "" + Product.constructId;
         this.productState = State.ProductState.CREATING_PROCESS;
         this.name = name;
         this.company = company;
@@ -37,6 +38,7 @@ public class Product {
         score = new ProductScore();
         comments = new ArrayList<Comment>();
         allProductsInQueueExpect.add(this);
+        constructId += 1;
     }
 
     public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {

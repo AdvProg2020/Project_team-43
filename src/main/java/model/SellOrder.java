@@ -11,8 +11,8 @@ public class SellOrder extends Order {
     private DeliveryStatus deliveryStatus;
 
 
-    public SellOrder(String orderId, Date date, double payment, ArrayList<Product> products, Buyer buyer) {
-        super(orderId, date);
+    public SellOrder(Date date, double payment, ArrayList<Product> products, Buyer buyer) {
+        super(date);
         this.payment = payment;
         this.products = products;
         this.buyer = buyer;

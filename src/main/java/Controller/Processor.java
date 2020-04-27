@@ -426,13 +426,11 @@ public class Processor {
         viewManager.getOffInfo(offInfo);
         viewManager.getOffProducts(productsInString);
         ArrayList<Product> products = castStringToProduct(productsInString);
-        String offId = offInfo.get(0);
-        String startTime = offInfo.get(1);
-        String endTime = offInfo.get(2);
-        double discountAmount = Double.parseDouble(offInfo.get(3));
-        Off off = new Off(offId, startTime, endTime, discountAmount, (Seller) user, products);
-        String requestId = "";//chegone taeen mishavad
-        Request offRequest = new OffRequest(requestId, off);
+        String startTime = offInfo.get(0);
+        String endTime = offInfo.get(1);
+        double discountAmount = Double.parseDouble(offInfo.get(2));
+        Off off = new Off(startTime, endTime, discountAmount, (Seller) user, products);
+        Request offRequest = new OffRequest(off);
         ((Seller) user).addOff(off);
 
 
@@ -487,4 +485,7 @@ public class Processor {
         isLogin = false;
     }
 
+    public void viewPersonalInfo() {
+        viewManager.viewPersonalInfo(user.getUserPersonalInfo());
+    }
 }

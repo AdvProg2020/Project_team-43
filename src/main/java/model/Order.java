@@ -4,14 +4,16 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public abstract class Order {
+    public static int constructId = 0;
     private static ArrayList<Order> allOrders = new ArrayList<Order>();
     private String orderId;
     private Date date;
 
-    public Order(String orderId, Date date) {
-        this.orderId = orderId;
+    public Order(Date date) {
+        this.orderId = "" + Order.constructId;
         this.date = date;
         allOrders.add(this);
+        constructId += 1;
     }
 
     public String getOrderId() {

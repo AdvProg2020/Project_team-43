@@ -11,8 +11,8 @@ public class BuyOrder extends Order {
     private ArrayList<Seller> sellers;
     private DeliveryStatus deliveryStatus;
 
-    public BuyOrder(String orderId, Date date, double payment, HashMap<Product,Integer> products, ArrayList<Seller> sellers) {
-        super(orderId, date);
+    public BuyOrder(Date date, double payment, HashMap<Product,Integer> products, ArrayList<Seller> sellers) {
+        super(date);
         this.payment = payment;
         this.products = products;
         this.sellers = sellers;

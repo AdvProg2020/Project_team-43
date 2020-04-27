@@ -90,24 +90,6 @@ public class ShowAndCatch {
         System.out.println("company information : " + company.getInfo());
     }
 
-    public void getDiscountCodedInfo(ArrayList<String> discountCodedInfo) {
-        System.out.print("Discount code : ");
-        String discountCode = scanner.nextLine();
-        discountCodedInfo.add(discountCode);
-        System.out.print("Start time : ");
-        String startTime = scanner.nextLine();
-        discountCodedInfo.add(startTime);
-        System.out.print("End time : ");
-        String endTime = scanner.nextLine();
-        discountCodedInfo.add(endTime);
-        System.out.print("Discount amount : ");
-        String discountAmount = scanner.nextLine();
-        discountCodedInfo.add(discountAmount);
-        System.out.print("repeat : ");
-        String repeat = scanner.nextLine();
-        discountCodedInfo.add(repeat);
-    }
-
     public void getPersonalInfo(UserPersonalInfo personalInfo) {
         System.out.print("first name : ");
         String firstName = Menu.getScanner().nextLine();
@@ -124,27 +106,6 @@ public class ShowAndCatch {
         System.out.print("password : ");
         String password = Menu.getScanner().nextLine();
         personalInfo.setPassword(password);
-    }
-
-    public void getManagerInfo(ArrayList<String> managerInfo) {
-        System.out.print("user name : ");
-        String userName = scanner.nextLine();
-        managerInfo.add(userName);
-        System.out.print("first name : ");
-        String firstName = scanner.nextLine();
-        managerInfo.add(firstName);
-        System.out.print("last name : ");
-        String lastName = scanner.nextLine();
-        managerInfo.add(lastName);
-        System.out.print("email : ");
-        String email = scanner.nextLine();
-        managerInfo.add(email);
-        System.out.print("phone number : ");
-        String phoneNumber = scanner.nextLine();
-        managerInfo.add(phoneNumber);
-        System.out.print("password : ");
-        String password = scanner.nextLine();
-        managerInfo.add(password);
     }
 
 
@@ -177,9 +138,6 @@ public class ShowAndCatch {
         }
     }
 
-    public void getCategoryInfo() {
-
-    }
 
     public void getOffInfo(ArrayList<String> offInfo) {
         System.out.print("Off Id : ");

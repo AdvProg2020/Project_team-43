@@ -95,7 +95,7 @@ public class Buyer extends User {
     }
 
     public void purchase() {
-        BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
+        BuyOrder buyOrder = new BuyOrder(new Date(),
                 this.getCartPrice(), buyerCart, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
         this.buyerCart.clear();

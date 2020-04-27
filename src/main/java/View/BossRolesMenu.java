@@ -28,7 +28,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                bossProcessor.viewPersonalInfo(userName);
+                processor.viewPersonalInfo(userName);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class BossRolesMenu extends Menu {
                 bossProcessor.getBossViewManager().viewAllUsers();
                 System.out.println("1 . view user [username]");
                 System.out.println("2 . delete user [username]");
-                System.out.println("3 . create manager profile");
+                System.out.println("3 . create processor profile");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
                 bossProcessor.manageUsers(command);

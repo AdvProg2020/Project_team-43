@@ -1,8 +1,5 @@
 package View;
 
-import Controller.SellerProcessor;
-
-import java.util.Date;
 import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
@@ -156,7 +153,7 @@ public class SellerRolesMenu extends Menu {
                     parent.run();
                 }
             } else {
-                if (manager.isUserLoggedIn()) {
+                if (processor.isUserLoggedIn()) {
                     new Menu(this, "logout") {
                         @Override
                         public void run() {
@@ -174,7 +171,7 @@ public class SellerRolesMenu extends Menu {
                             String username = scanner.nextLine();
                             System.out.print("password : ");
                             String password = scanner.nextLine();
-                            System.out.println(manager.login(username, password));
+                            System.out.println(processor.login(username, password));
                             this.parent.show();
                             this.parent.run();
                         }

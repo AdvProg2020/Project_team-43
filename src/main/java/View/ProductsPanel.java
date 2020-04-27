@@ -20,7 +20,7 @@ public class ProductsPanel extends Menu {
 
             @Override
             public void show() {
-                manager.viewCategories();
+                processor.viewCategories();
             }
 
             @Override
@@ -42,7 +42,7 @@ public class ProductsPanel extends Menu {
                 System.out.println("4 . disable filter");
                 System.out.println("5 . back");
                 String command = scanner.nextLine();
-                manager.filteringProcess(command);
+                processor.filteringProcess(command);
             }
 
             @Override
@@ -64,7 +64,7 @@ public class ProductsPanel extends Menu {
                 System.out.println("4 . disable sort");
                 System.out.println("5 . back");
                 String command = scanner.nextLine();
-                manager.sortingProcess(command);
+                processor.sortingProcess(command);
                 //
             }
 
@@ -80,7 +80,7 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "show products") {
             @Override
             public void show() {
-                manager.showProducts();
+                processor.showProducts();
             }
             @Override
             public void run() {

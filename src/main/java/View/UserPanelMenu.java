@@ -13,7 +13,7 @@ public class UserPanelMenu extends Menu {
 
     public void show(){}
     public void run() {
-        if (manager.isUserLoggedIn()){
+        if (processor.isUserLoggedIn()){
             this.submenus.get(1).show();
             this.submenus.get(1).run();
         }

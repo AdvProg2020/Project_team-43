@@ -21,7 +21,7 @@ public class BossProcessor extends Processor {
     public void viewPersonalInfo(String userName) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
-        bossViewManager.viewUser(user);
+        viewManager.viewUser(user);
 
     }
 
@@ -158,8 +158,6 @@ public class BossProcessor extends Processor {
     public void processEditCodedDiscountSecond(String field, String changeField, String discountCode) {
         //TODO : error handling
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        Pattern discountCodePattern = Pattern.compile("^(?i)discount code$");
-        Matcher discountCodeMatcher = discountCodePattern.matcher(field);
         Pattern startTimePattern = Pattern.compile("^(?i)start time$");
         Matcher startTimeMatcher = startTimePattern.matcher(field);
         Pattern endTimePattern = Pattern.compile("^(?i)end time$");
@@ -168,9 +166,7 @@ public class BossProcessor extends Processor {
         Matcher amountMatcher = amountPattern.matcher(field);
         Pattern remainingPattern = Pattern.compile("^(?i)remaining time$");
         Matcher remainingMatcher = remainingPattern.matcher(field);
-        if (discountCodeMatcher.matches()) {
-            codedDiscount.setDiscountCode(changeField);
-        } else if (startTimeMatcher.matches()) {
+        if (startTimeMatcher.matches()) {
             codedDiscount.setStartTime(changeField);
         } else if (endTimeMatcher.matches()) {
             codedDiscount.setEndTime(changeField);

@@ -17,7 +17,7 @@ public class BuyerProcessor extends Processor {
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
     private BuyerProcessor(){}
     public void viewPersonalInfo() {
-        buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
+        viewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
     public String editBuyerField(String command) {
         Pattern pattern=Pattern.compile("edit (\\S+)");
