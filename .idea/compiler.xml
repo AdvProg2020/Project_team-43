@@ -9,6 +9,7 @@
         <module name="code" />
         <module name="porojectAP" />
         <module name="project" />
+        <module name="maven" />
         <module name="Project_team-43" />
       </profile>
     </annotationProcessing>

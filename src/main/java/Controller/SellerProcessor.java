@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SellerProcessor extends Processor {
+    private static SellerProcessor instance = new SellerProcessor();
+
+    public static SellerProcessor getInstance() {
+        return instance;
+    }
+
     private static SellerShowAndCatch sellerShowAndCatch = SellerShowAndCatch.getInstance();
 
     public void viewPersonalInfo() {
@@ -34,7 +40,15 @@ public class SellerProcessor extends Processor {
     }
 
     public void viewBuyers(String productId) {
-        sellerShowAndCatch.showBuyers((Seller) user, productId);
+        Seller seller = (Seller) user;
+        ArrayList<Buyer> buyers = new ArrayList<>();
+        ArrayList<SellOrder> sellOrders = seller.getOrders();
+        for (SellOrder order : sellOrders) {
+            if (order.hasProductWithId(productId)) {
+                buyers.add(order.getBuyer());
+            }
+        }
+        sellerShowAndCatch.showBuyers(buyers, seller.hasProductWithId(productId));
     }
 
     public void editProductInfo(String productId) {

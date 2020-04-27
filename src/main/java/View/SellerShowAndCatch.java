@@ -39,7 +39,7 @@ public class SellerShowAndCatch {
     }
 
     public void showProductInfo(Seller user, String productId) {
-        if (user.hasProductWithId(productId) == false) {
+        if (!user.hasProductWithId(productId)) {
             System.out.println("Invalid id");
         } else {
             System.out.println(user.getProductById(productId).toString());
@@ -58,19 +58,11 @@ public class SellerShowAndCatch {
         }
     }
 
-    public void showBuyers(Seller user, String productId) {
-        if (user.hasProductWithId(productId)) {
-            ArrayList<SellOrder> sellOrders = user.getOrders();
+    public void showBuyers(ArrayList<Buyer> buyers, boolean validId) {
+        if (validId) {
             System.out.println("Buyers of this product(Shown by username)");
-            boolean thereIsNoOne = true;
-            for (SellOrder order : sellOrders) {
-                if (order.hasProductWithId(productId)) {
-                    System.out.println(order.getBuyer().getUsername());
-                    thereIsNoOne = false;
-                }
-            }
-            if (thereIsNoOne) {
-                System.out.println("Nobody has bought this fucking shit yet");
+            for (Buyer buyer : buyers) {
+                System.out.println(buyer.getUsername());
             }
         } else {
             System.out.println("Invalid id");

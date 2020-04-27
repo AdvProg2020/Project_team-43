@@ -1,17 +1,16 @@
 package model;
 
 
-
 import java.util.ArrayList;
 
 public abstract class Request {
-    protected static ArrayList<Request> allRequests=new ArrayList<Request>();
+    protected static ArrayList<Request> allRequests = new ArrayList<>();
     protected String requestId;
     protected String requestType;
 
-    public Request(String requestId,String requestType) {
+    public Request(String requestId, String requestType) {
         this.requestId = requestId;
-        this.requestType=requestType;
+        this.requestType = requestType;
     }
 
     public static ArrayList<Request> getAllRequests() {

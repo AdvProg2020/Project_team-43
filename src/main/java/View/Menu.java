@@ -11,7 +11,7 @@ import java.util.Scanner;
 public abstract class Menu {
     public static Processor manager = new Processor();
     public static BuyerProcessor buyerProcessor= BuyerProcessor.getInstance();
-    public static SellerProcessor sellerProcessor = new SellerProcessor();
+    public static SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public static BossProcessor bossProcessor = new BossProcessor();
     String name;
     protected Menu parent;
