@@ -134,5 +134,4 @@ public class Product {
         this.getScore().addBuyer(score);
     }
 
-
 }

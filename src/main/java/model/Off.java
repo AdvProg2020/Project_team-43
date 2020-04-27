@@ -72,4 +72,11 @@ public class Off {
         }
         return null;
     }
+    public static double isProductInOff(Product product){
+        for (Off off : acceptedOffs) {
+            if (off.getProducts().contains(product))
+                return off.getDiscountAmount();
+        }
+        return 0;
+    }
 }

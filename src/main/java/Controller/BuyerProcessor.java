@@ -33,7 +33,9 @@ public class BuyerProcessor extends Processor {
         //TODO : error handling
 
     }
-
+    public void addToBuyerCart(Product product){
+        buyerCart.put(product,1);
+    }
     public void viewOrders() {
         ArrayList<BuyOrder> orders = ((Buyer) user).getOrders();
         buyerViewManager.viewBuyerOrders(orders);
@@ -80,7 +82,6 @@ public class BuyerProcessor extends Processor {
     public void increaseProduct(String productId) {
         //TODO : error handling
         ((Buyer)user).increaseCart(productId);
-
     }
     public void decreaseProduct(String productId){
         ((Buyer)user).decreaseCart(productId);
