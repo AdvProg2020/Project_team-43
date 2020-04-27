@@ -118,11 +118,6 @@ public class BossView {
         }
     }
 
-    public void getEditCategoryField() {
-        //TODO : fill
-
-    }
-
     public ArrayList<String> getCategoryFeatures() {
         ArrayList<String> features = new ArrayList<>();
         System.out.println("features : [feature's name]/[finish]");

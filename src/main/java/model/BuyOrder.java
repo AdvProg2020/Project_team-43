@@ -12,7 +12,7 @@ public class BuyOrder extends Order {
     private DeliveryStatus deliveryStatus;
 
     public BuyOrder(String orderId, Date date, double payment, HashMap<Product,Integer> products, ArrayList<Seller> sellers) {
-        super(orderId, date);
+        super(date);
         this.payment = payment;
         this.products = products;
         this.sellers = sellers;

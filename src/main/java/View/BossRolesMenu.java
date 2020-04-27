@@ -28,7 +28,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                bossProcessor.viewPersonalInfo(userName);
+                processor.viewPersonalInfo();
             }
 
             @Override

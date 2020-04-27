@@ -20,7 +20,7 @@ public class BuyerRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                buyerProcessor.viewPersonalInfo();
+                processor.viewPersonalInfo();
                 System.out.println("1 . edit [field]");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();

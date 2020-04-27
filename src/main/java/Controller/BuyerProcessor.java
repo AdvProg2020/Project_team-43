@@ -16,9 +16,6 @@ public class BuyerProcessor extends Processor {
     private static HashMap<Product,Integer> buyerCart=new HashMap<Product,Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
     private BuyerProcessor(){}
-    public void viewPersonalInfo() {
-        buyerViewManager.viewPersonalInfo(user.getUserPersonalInfo());
-    }
     public String editBuyerField(String command) {
         Pattern pattern=Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);

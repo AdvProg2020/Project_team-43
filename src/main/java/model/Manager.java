@@ -48,13 +48,11 @@ public class Manager extends User {
     }
 
     public void createDiscountCoded(ArrayList<String> discountCodedInfo) {
-        String discountCode = discountCodedInfo.get(0);
-        String startTime = discountCodedInfo.get(1);
-        String endTime = discountCodedInfo.get(2);
-        double discountAmount = Double.parseDouble(discountCodedInfo.get(3));
-        int repeat = Integer.parseInt(discountCodedInfo.get(4));
-        new CodedDiscount(discountCode, startTime, endTime, discountAmount, repeat);
-
+        String startTime = discountCodedInfo.get(0);
+        String endTime = discountCodedInfo.get(1);
+        double discountAmount = Double.parseDouble(discountCodedInfo.get(2));
+        int repeat = Integer.parseInt(discountCodedInfo.get(3));
+        new CodedDiscount(startTime, endTime, discountAmount, repeat);
     }
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {

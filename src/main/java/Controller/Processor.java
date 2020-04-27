@@ -217,10 +217,8 @@ public class Processor {
         viewManager.showOffs(offs);
     }
 
-    public void viewPersonalInfo(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        viewManager.viewUser(user);
+    public void viewPersonalInfo() {
+        viewManager.viewPersonalInfo(user.getUserPersonalInfo());
     }
 
     public void editField(String field) {
@@ -431,7 +429,7 @@ public class Processor {
         String startTime = offInfo.get(1);
         String endTime = offInfo.get(2);
         double discountAmount = Double.parseDouble(offInfo.get(3));
-        Off off = new Off(offId, startTime, endTime, discountAmount, (Seller) user, products);
+        Off off = new Off(startTime, endTime, discountAmount, (Seller) user, products);
         String requestId = "";//chegone taeen mishavad
         Request offRequest = new OffRequest(requestId, off);
         ((Seller) user).addOff(off);

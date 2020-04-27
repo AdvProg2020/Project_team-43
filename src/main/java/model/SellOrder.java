@@ -12,7 +12,7 @@ public class SellOrder extends Order {
 
 
     public SellOrder(String orderId, Date date, double payment, ArrayList<Product> products, Buyer buyer) {
-        super(orderId, date);
+        super(date);
         this.payment = payment;
         this.products = products;
         this.buyer = buyer;

@@ -18,13 +18,6 @@ public class BossProcessor extends Processor {
         return bossViewManager;
     }
 
-    public void viewPersonalInfo(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        bossViewManager.viewUser(user);
-
-    }
-
     public void editField(String userName, String field, String changeField) {
         //TODO : error handling
         User user = User.getUserByUserName(userName);
