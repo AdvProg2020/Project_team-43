@@ -21,12 +21,12 @@ public class ProductPanel extends Menu {
         return new Menu(this, "digest") {
             @Override
             public void show() {
-                manager.showDigest(productId);
+                processor.showDigest(productId);
                 System.out.println("1 . ADD to cart");
                 System.out.println("2 . select seller");
                 System.out.println("3 . back");
                 String command = scanner.nextLine();
-                manager.manageDigest(command, productId);
+                processor.manageDigest(command, productId);
             }
 
             @Override
@@ -42,7 +42,7 @@ public class ProductPanel extends Menu {
         return new Menu(this, "attributes") {
             @Override
             public void show() {
-                manager.showAttributes(productId);
+                processor.showAttributes(productId);
             }
 
             @Override
@@ -59,7 +59,7 @@ public class ProductPanel extends Menu {
             @Override
             public void show() {
                 String secondProductId = scanner.nextLine();
-                manager.compareProcess(productId, secondProductId);
+                processor.compareProcess(productId, secondProductId);
             }
 
             @Override
@@ -75,11 +75,11 @@ public class ProductPanel extends Menu {
         return new Menu(this, "comments") {
             @Override
             public void show() {
-                manager.showComments(productId);
+                processor.showComments(productId);
                 System.out.println("1 . ADD comment");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
-                manager.manageComments(command);
+                processor.manageComments(command);
             }
 
             @Override

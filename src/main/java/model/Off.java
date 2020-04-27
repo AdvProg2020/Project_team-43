@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Off {
+    public static int constructId = 0;
     public static ArrayList<Off> acceptedOffs = new ArrayList<Off>();
     public static ArrayList<Off> inQueueExpectionOffs = new ArrayList<Off>();
     private String offId;
@@ -13,8 +14,8 @@ public class Off {
     private String endTime;
     private double discountAmount;
 
-    public Off(String offId, String startTime, String endTime, double discountAmount, Seller seller, ArrayList<Product>products1) {
-        this.offId = offId;
+    public Off(String startTime, String endTime, double discountAmount, Seller seller, ArrayList<Product> products1) {
+        this.offId = "" + constructId;
         this.offState = State.OffState.CREATING_PROCESS;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -22,6 +23,7 @@ public class Off {
         this.seller = seller;
         products = new ArrayList<Product>(products1);
         inQueueExpectionOffs.add(this);
+        constructId += 1;
     }
 
     public String getOffId() {
@@ -66,13 +68,14 @@ public class Off {
 
     public static Off getOffById(String offId) {
         for (Off off : acceptedOffs) {
-            if (off.getOffId().equals(offId)){
+            if (off.getOffId().equals(offId)) {
                 return off;
             }
         }
         return null;
     }
-    public static double isProductInOff(Product product){
+
+    public static double isProductInOff(Product product) {
         for (Off off : acceptedOffs) {
             if (off.getProducts().contains(product))
                 return off.getDiscountAmount();

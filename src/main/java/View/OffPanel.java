@@ -17,7 +17,7 @@ public class OffPanel extends Menu {
         return new Menu(this, "Offs") {
             @Override
             public void show() {
-                manager.showOffs();
+                processor.showOffs();
 
             }
 
@@ -36,7 +36,7 @@ public class OffPanel extends Menu {
             @Override
             public void show() {
                 String command = scanner.nextLine();
-                manager.filteringProcess(command);
+                processor.filteringProcess(command);
                 //
             }
 
