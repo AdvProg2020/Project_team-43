@@ -73,8 +73,6 @@ public class SellerShowAndCatch {
         HashMap<String, String> productInfo = new HashMap<>();
         System.out.println("Please enter product information");
 
-        //System.out.println("Id : ");
-        //productInfo.put("id", scanner.nextLine());
         System.out.print("name : ");
         productInfo.put("name", scanner.nextLine());
         System.out.print("company : ");
@@ -92,6 +90,16 @@ public class SellerShowAndCatch {
         } else {
             System.out.println("Invalid id");
         }
+    }
+
+    public void showCategories(ArrayList<Category> categories) {
+        for (Category category : categories) {
+            System.out.println(category.getName());
+        }
+    }
+
+    public void showBalance(double balance) {
+        System.out.println(balance);
     }
 
 }

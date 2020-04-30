@@ -89,4 +89,13 @@ public class Category {
         }
         return null;
     }
+
+    public static boolean hasCategoryWithName(String categoryName) {
+        for (Category category : allCategories) {
+            if (category.name.equals(categoryName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

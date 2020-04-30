@@ -54,7 +54,18 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "ADD product") {
             @Override
             public void show() {
-                sellerProcessor.addProduct();
+
+                System.out.println("Please enter product information");
+
+                System.out.print("name : ");
+                String name = scanner.nextLine();
+                System.out.print("company : ");
+                String company = scanner.nextLine();
+                System.out.print("category : ");
+                String category = scanner.nextLine();
+                System.out.print("price : ");
+                String price = scanner.nextLine();
+                System.out.println(sellerProcessor.addProduct(name, company, category, price));
             }
 
             @Override
@@ -121,7 +132,7 @@ public class SellerRolesMenu extends Menu {
         return new Menu(this, "view balance") {
             @Override
             public void show() {
-                sellerProcessor.viewBalance(userName);
+                sellerProcessor.viewBalance();
             }
 
             @Override

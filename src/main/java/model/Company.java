@@ -30,4 +30,14 @@ public class Company {
         return null;
     }
 
+    public static boolean hasCompanyWithName(String name) {
+
+        for (Company company : allCompanies) {
+            if (company.name.equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

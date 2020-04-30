@@ -26,7 +26,7 @@ public class Processor {
         return isLogin;
     }
 
-    public void viewCategories() {
+    public void viewCategories(String username) {
         //TODO : error handling
         ArrayList<Category> categories = Category.getAllCategories();
         viewManager.showCategories(categories);
