@@ -3,7 +3,6 @@ package View;
 import model.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class SellerShowAndCatch {
@@ -38,12 +37,8 @@ public class SellerShowAndCatch {
         }
     }
 
-    public void showProductInfo(Seller user, String productId) {
-        if (!user.hasProductWithId(productId)) {
-            System.out.println("Invalid id");
-        } else {
-            System.out.println(user.getProductById(productId).toString());
-        }
+    public void showProductInfo(Product product) {
+        System.out.println(product.toString());
     }
 
     public void showProductList(Seller user) {
@@ -58,38 +53,16 @@ public class SellerShowAndCatch {
         }
     }
 
-    public void showBuyers(ArrayList<Buyer> buyers, boolean validId) {
-        if (validId) {
-            System.out.println("Buyers of this product(Shown by username)");
-            for (Buyer buyer : buyers) {
-                System.out.println(buyer.getUsername());
-            }
-        } else {
-            System.out.println("Invalid id");
+    public void showBuyers(ArrayList<Buyer> buyers) {
+        System.out.println("Buyers of this product(Shown by username)");
+        for (Buyer buyer : buyers) {
+            System.out.println(buyer.getUsername());
         }
+
     }
 
-    public HashMap<String, String> getProductInfo() {
-        HashMap<String, String> productInfo = new HashMap<>();
-        System.out.println("Please enter product information");
-
-        System.out.print("name : ");
-        productInfo.put("name", scanner.nextLine());
-        System.out.print("company : ");
-        productInfo.put("company", scanner.nextLine());
-        System.out.print("category : ");
-        productInfo.put("category", scanner.nextLine());
-        System.out.print("price : ");
-        productInfo.put("price", scanner.nextLine());
-        return productInfo;
-    }
-
-    public void removeProduct(boolean hasProduct) {
-        if (hasProduct) {
-            System.out.println("Product removes successfully");
-        } else {
-            System.out.println("Invalid id");
-        }
+    public void showRemoveProductDone() {
+        System.out.println("Product removes successfully");
     }
 
     public void showCategories(ArrayList<Category> categories) {
@@ -100,6 +73,20 @@ public class SellerShowAndCatch {
 
     public void showBalance(double balance) {
         System.out.println(balance);
+    }
+
+    public void showOffs(ArrayList<Off> offs) {
+        for (Off off : offs) {
+            showOff(off);
+        }
+    }
+
+    public void showOff(Off off) {
+        System.out.println(off.toString());
+    }
+
+    public void showInvalidId() {
+        System.out.println("Invalid Id");
     }
 
 }

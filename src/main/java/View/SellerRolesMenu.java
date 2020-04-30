@@ -7,7 +7,7 @@ public class SellerRolesMenu extends Menu {
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
+        HashMap<Integer, Menu> submenus = new HashMap<>();
         submenus.put(1, new SellerPersonalInfoMenu(this, "Personal Info Menu"));
         submenus.put(2, getViewCompanyInfo());
         submenus.put(3, getViewSalesHistory());
@@ -15,7 +15,7 @@ public class SellerRolesMenu extends Menu {
         submenus.put(5, getAddProduct());
         submenus.put(6, getRemoveProduct());
         submenus.put(7, getShowCategories());
-        submenus.put(8, getManageOffs());
+        submenus.put(8, new ManageOffMenu(this, "Manage Off Menu"));
         submenus.put(9, getViewBalance());
         this.setSubmenus(submenus);
     }
@@ -51,7 +51,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getAddProduct() {
-        return new Menu(this, "ADD product") {
+        return new Menu(this, "Add product") {
             @Override
             public void show() {
 
@@ -77,7 +77,7 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getRemoveProduct() {
-        return new Menu(this, "remove product by Id") {
+        return new Menu(this, "Remove product by Id") {
             @Override
             public void show() {
                 String productId = scanner.nextLine();
@@ -93,31 +93,10 @@ public class SellerRolesMenu extends Menu {
     }
 
     private Menu getShowCategories() {
-        return new Menu(this, "show all categories") {
+        return new Menu(this, "Show all categories") {
             @Override
             public void show() {
                 sellerProcessor.viewCategories();
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getManageOffs() {
-        return new Menu(this, "view offs") {
-            @Override
-            public void show() {
-                sellerProcessor.viewOffs(userName);
-                System.out.println("1 . view off");
-                System.out.println("3 . edit off");
-                System.out.println("2 . ADD off");
-                System.out.println("4 . back");
-                String command = scanner.nextLine();
-                sellerProcessor.manageOffs(userName, command);
             }
 
             @Override
@@ -151,6 +130,9 @@ public class SellerRolesMenu extends Menu {
         }
         if (input == 4) {
             sellerProcessor.viewProductList();
+        }
+        if (input == 8) {
+            sellerProcessor.viewOffs();
         }
         if (input <= submenus.size()) {
             submenus.get(input).show();

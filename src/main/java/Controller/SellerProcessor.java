@@ -20,7 +20,7 @@ public class SellerProcessor extends Processor {
     }
 
     public void editField(String field) {
-        System.out.println("What tha fuck????");
+        //TODO : zena
     }
 
     public void viewCompanyInfo() {
@@ -32,7 +32,11 @@ public class SellerProcessor extends Processor {
     }
 
     public void viewProductInfo(String productId) {
-        sellerShowAndCatch.showProductInfo((Seller) user, productId);
+        if (((Seller) user).hasProductWithId(productId)) {
+            sellerShowAndCatch.showProductInfo(((Seller) user).getProductById(productId));
+        } else {
+            sellerShowAndCatch.showInvalidId();
+        }
     }
 
     public void viewProductList() {
@@ -41,14 +45,18 @@ public class SellerProcessor extends Processor {
 
     public void viewBuyers(String productId) {
         Seller seller = (Seller) user;
-        ArrayList<Buyer> buyers = new ArrayList<>();
-        ArrayList<SellOrder> sellOrders = seller.getOrders();
-        for (SellOrder order : sellOrders) {
-            if (order.hasProductWithId(productId)) {
-                buyers.add(order.getBuyer());
+        if (seller.hasProductWithId(productId)) {
+            ArrayList<Buyer> buyers = new ArrayList<>();
+            ArrayList<SellOrder> sellOrders = seller.getOrders();
+            for (SellOrder order : sellOrders) {
+                if (order.hasProductWithId(productId)) {
+                    buyers.add(order.getBuyer());
+                }
             }
+            sellerShowAndCatch.showBuyers(buyers);
+        } else {
+            sellerShowAndCatch.showInvalidId();
         }
-        sellerShowAndCatch.showBuyers(buyers, seller.hasProductWithId(productId));
     }
 
     public void editProductInfo(String productId) {
@@ -76,8 +84,11 @@ public class SellerProcessor extends Processor {
         boolean hasProduct = ((Seller) user).hasProductWithId(productId);
         if (hasProduct) {
             ((Seller) user).removeProduct(((Seller) user).getProductById(productId));
+            sellerShowAndCatch.showRemoveProductDone();
+        } else {
+            sellerShowAndCatch.showInvalidId();
         }
-        sellerShowAndCatch.removeProduct(hasProduct);
+
     }
 
     public void viewCategories() {
@@ -86,6 +97,37 @@ public class SellerProcessor extends Processor {
 
     public void viewBalance() {
         sellerShowAndCatch.showBalance(user.getBalance());
+    }
+
+    public void viewOffs() {
+        sellerShowAndCatch.showOffs(((Seller) user).getOffs());
+    }
+
+    public void viewOff(String offId) {
+        boolean hasOff = ((Seller) user).hasOffWithId(offId);
+        if (hasOff) {
+            sellerShowAndCatch.showOff(((Seller) user).getOffById(offId));
+        } else {
+            sellerShowAndCatch.showInvalidId();
+        }
+    }
+
+    public void editOff(String offId) {
+        boolean hasOff = ((Seller) user).hasOffWithId(offId);
+        if (hasOff) {
+            //TODO : zena
+        } else {
+            sellerShowAndCatch.showInvalidId();
+        }
+    }
+
+    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) {
+        ArrayList<Product> products = new ArrayList<>();
+        for (String productId : productIds) {
+            products.add(((Seller) user).getProductById(productId));
+        }
+        Off off = new Off(startTime, endTime, discountAmount, (Seller) user, products);
+        new OffRequest(off);
     }
 
 }
