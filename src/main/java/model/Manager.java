@@ -1,6 +1,11 @@
 package model;
 
 
+import model.request.OffRequest;
+import model.request.ProductRequest;
+import model.request.Request;
+import model.request.SellerRequest;
+
 import java.util.ArrayList;
 
 public class Manager extends User {

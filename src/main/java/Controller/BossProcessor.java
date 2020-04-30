@@ -2,6 +2,7 @@ package Controller;
 
 import View.BossView;
 import model.*;
+import model.request.Request;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

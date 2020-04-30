@@ -1,6 +1,7 @@
 package View;
 
 import model.*;
+import model.request.Request;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,4 +1,7 @@
-package model;
+package model.request;
+
+import model.Manager;
+import model.Product;
 
 public class ProductRequest extends Request {
     private Product product;

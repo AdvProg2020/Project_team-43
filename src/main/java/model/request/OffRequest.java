@@ -1,4 +1,7 @@
-package model;
+package model.request;
+
+import model.Manager;
+import model.Off;
 
 public class OffRequest extends Request {
     private Off off;

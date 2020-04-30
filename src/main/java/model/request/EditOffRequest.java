@@ -1,4 +1,6 @@
-package model;
+package model.request;
+
+import model.Off;
 
 public class EditOffRequest extends Request {
     String oldOffId;

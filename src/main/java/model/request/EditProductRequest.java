@@ -1,4 +1,6 @@
-package model;
+package model.request;
+
+import model.Product;
 
 public class EditProductRequest extends Request {
     String oldProductId;

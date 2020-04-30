@@ -2,9 +2,10 @@ package Controller;
 
 import model.*;
 import View.SellerShowAndCatch;
+import model.request.OffRequest;
+import model.request.ProductRequest;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SellerProcessor extends Processor {
     private static SellerProcessor instance = new SellerProcessor();
