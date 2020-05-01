@@ -11,9 +11,9 @@ public class Seller extends User {
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
         this.company = Company.getCompanyByName(companyName);
-        products = new ArrayList<Product>();
-        offs = new ArrayList<Off>();
-        orders = new ArrayList<SellOrder>();
+        products = new ArrayList<>();
+        offs = new ArrayList<>();
+        orders = new ArrayList<>();
     }
 
     @Override
@@ -88,8 +88,21 @@ public class Seller extends User {
     }
 
     public Off getOffById(String offId) {
-
+        for (Off off : offs) {
+            if (off.getOffId().equals(offId)){
+                return off;
+            }
+        }
         return null;
+    }
+
+    public boolean hasOffWithId(String offId) {
+        for (Off off : offs) {
+            if (off.getOffId().equals(offId)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<Off> getOffs() {

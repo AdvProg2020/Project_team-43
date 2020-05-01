@@ -7,10 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="code" />
-        <module name="porojectAP" />
         <module name="project" />
         <module name="Project_team-43" />
+        <module name="maven" />
+        <module name="Project_team-43New" />
+        <module name="porojectAP" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>

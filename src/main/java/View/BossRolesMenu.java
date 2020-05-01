@@ -1,5 +1,7 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.HashMap;
 
 public class BossRolesMenu extends Menu {
@@ -28,7 +30,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                bossProcessor.viewPersonalInfo(userName);
+                processor.viewPersonalInfo();
             }
 
             @Override
@@ -52,7 +54,11 @@ public class BossRolesMenu extends Menu {
                 String field = scanner.nextLine();
                 System.out.println("change to :");
                 String changeField = scanner.nextLine();
-                bossProcessor.editField(userName, field, changeField);
+                try {
+                    bossProcessor.editField(userName, field, changeField);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -70,10 +76,14 @@ public class BossRolesMenu extends Menu {
                 bossProcessor.getBossViewManager().viewAllUsers();
                 System.out.println("1 . view user [username]");
                 System.out.println("2 . delete user [username]");
-                System.out.println("3 . create manager profile");
+                System.out.println("3 . create processor profile");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                bossProcessor.manageUsers(command);
+                try {
+                    bossProcessor.manageUsers(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -91,7 +101,11 @@ public class BossRolesMenu extends Menu {
                 System.out.println("1 . remove products [productId]");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
-                bossProcessor.manageAllProducts(command);
+                try {
+                    bossProcessor.manageAllProducts(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -127,7 +141,11 @@ public class BossRolesMenu extends Menu {
                 System.out.println("3 . remove discount code [code]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                bossProcessor.manageCodedDiscounts(command);
+                try {
+                    bossProcessor.manageCodedDiscounts(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -148,7 +166,11 @@ public class BossRolesMenu extends Menu {
                 System.out.println("3 . decline request [requestId]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                bossProcessor.manageRequests(command);
+                try {
+                    bossProcessor.manageRequests(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -169,7 +191,11 @@ public class BossRolesMenu extends Menu {
                 System.out.println("3 . remove category");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
-                bossProcessor.manageCategories(command);
+                try {
+                    bossProcessor.manageCategories(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override

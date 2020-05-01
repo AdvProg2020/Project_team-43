@@ -1,9 +1,12 @@
-package model;
+package model.request;
+
+import model.Manager;
+import model.Off;
 
 public class OffRequest extends Request {
     private Off off;
-    public OffRequest(String requestId, Off off) {
-        super(requestId,"off");
+    public OffRequest(Off off) {
+        super("off");
         this.off=off;
         Manager.allRequest.add(this);
     }

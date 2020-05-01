@@ -1,6 +1,5 @@
 package View;
 
-import model.User;
 import model.UserType;
 
 import java.util.HashMap;
@@ -17,9 +16,9 @@ public class LoggedInStatus extends Menu {
     }
 
     public void show() {
-        if (manager.getUser().getUserType() == UserType.MANAGER) {
+        if (processor.getUser().getUserType() == UserType.MANAGER) {
             submenus.get(1).show();
-        } else if (manager.getUser().getUserType() == UserType.BUYER) {
+        } else if (processor.getUser().getUserType() == UserType.BUYER) {
             submenus.get(2).show();
         } else {
             submenus.get(3).show();
@@ -27,9 +26,9 @@ public class LoggedInStatus extends Menu {
     }
 
     public void run() {
-        if (manager.getUser().getUserType() == UserType.MANAGER) {
+        if (processor.getUser().getUserType() == UserType.MANAGER) {
             submenus.get(1).run();
-        } else if (manager.getUser().getUserType() == UserType.BUYER) {
+        } else if (processor.getUser().getUserType() == UserType.BUYER) {
             submenus.get(2).run();
         } else {
             submenus.get(3).run();

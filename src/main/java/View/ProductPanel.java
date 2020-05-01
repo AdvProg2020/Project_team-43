@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class ProductPanel extends Menu {
     private String productId;
-
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
@@ -21,12 +20,11 @@ public class ProductPanel extends Menu {
         return new Menu(this, "digest") {
             @Override
             public void show() {
-                manager.showDigest(productId);
+                processor.showDigest(productId);
                 System.out.println("1 . ADD to cart");
-                System.out.println("2 . select seller");
-                System.out.println("3 . back");
+                System.out.println("2 . back");
                 String command = scanner.nextLine();
-                manager.manageDigest(command, productId);
+                processor.manageDigest(command, productId);
             }
 
             @Override
@@ -42,7 +40,7 @@ public class ProductPanel extends Menu {
         return new Menu(this, "attributes") {
             @Override
             public void show() {
-                manager.showAttributes(productId);
+                processor.showAttributes(productId);
             }
 
             @Override
@@ -58,8 +56,9 @@ public class ProductPanel extends Menu {
         return new Menu(this, "comparing") {
             @Override
             public void show() {
+                System.out.println("second product Id : ");
                 String secondProductId = scanner.nextLine();
-                manager.compareProcess(productId, secondProductId);
+                processor.compareProcess(productId, secondProductId);
             }
 
             @Override
@@ -71,15 +70,14 @@ public class ProductPanel extends Menu {
     }
 
     private Menu getComments() {
-
         return new Menu(this, "comments") {
             @Override
             public void show() {
-                manager.showComments(productId);
+                processor.showComments(productId);
                 System.out.println("1 . ADD comment");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
-                manager.manageComments(command);
+                processor.manageComments(command);
             }
 
             @Override
@@ -89,13 +87,26 @@ public class ProductPanel extends Menu {
             }
         };
     }
-
     private void getIdProductFromUser() {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
     }
-    public void run(String productId) {
-        this.productId = productId;
+    public void show (){
+        getIdProductFromUser();
+        System.out.println(this.name + ":");
+        for (Integer menuNum : submenus.keySet()) {
+            System.out.println(menuNum + ". " + submenus.get(menuNum).name);
+        }
+        if (processor.isUserLoggedIn()){//////////////////////////////////////////////chi shode in error dare??
+            System.out.println((submenus.size() + 1)+". logout");
+        }
+        else {
+            System.out.println((submenus.size() + 1)+". login");
+        }
+        if (this.parent != null)
+            System.out.println((submenus.size() + 2) + ". Back");
+        else
+            System.out.println((submenus.size() + 2) + ". Exit");
     }
 }
 

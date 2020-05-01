@@ -1,5 +1,7 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.HashMap;
 
 public class BuyerRolesMenu extends Menu {
@@ -9,19 +11,26 @@ public class BuyerRolesMenu extends Menu {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getPersonalInfo());
-        submenus.put(2, getEdit());
-        submenus.put(3, new ManageCartMenu(this,"Cart"));//vared shodan be safe mahsool  morede nazar
-        //submenus.put(4, new Purchase(this, "purchase panel"));
-        submenus.put(4, getManageOrders());
-        submenus.put(5, getViewBalance());
-        submenus.put(6, getViewDiscountCodes());
+        submenus.put(2, new ManageCartMenu(this, "Cart"));
+        submenus.put(3, getManageOrders());
+        submenus.put(4, getViewBalance());
+        submenus.put(5, getViewDiscountCodes());
         this.setSubmenus(submenus);
     }
+
     private Menu getPersonalInfo() {
         return new Menu(this, "view personal info") {
             @Override
             public void show() {
-                buyerProcessor.viewPersonalInfo();
+                processor.viewPersonalInfo();
+                System.out.println("1 . edit [field]");
+                System.out.println("2 . back");
+                String command = scanner.nextLine();
+                try {
+                    System.out.println(buyerProcessor.editBuyerField(command));
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -37,7 +46,11 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
                 String field = scanner.nextLine();
-                buyerProcessor.editField(field);
+                try {
+                    buyerProcessor.editField(field);
+                } catch (NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -53,7 +66,7 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
 
-                manager.viewProductInCart(userName);
+                processor.viewProductInCart(userName);
                 System.out.println("1 . show products");
                 System.out.println("2 . view product panel");
                 System.out.println("3 . increase product");
@@ -61,7 +74,11 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("5 . show total price");
                 System.out.println("6 . back");
                 String command = scanner.nextLine();
-                manager.manageCart(userName, command);
+                try {
+                    processor.manageCart(userName, command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -80,7 +97,11 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("1 . show Order");
                 System.out.println("2 . rate product");
                 String command = scanner.nextLine();
-                buyerProcessor.manageOrders(command);
+                try {
+                    buyerProcessor.manageOrders(command);
+                } catch (InvalidCommandException | NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -122,4 +143,31 @@ public class BuyerRolesMenu extends Menu {
         };
     }
 
+    public void run() {
+        int input = Integer.parseInt(scanner.nextLine());
+        if (input <= submenus.size()) {
+            submenus.get(input).show();
+            submenus.get(input).run();
+        } else {
+            if (input == submenus.size() + 2) {
+                if (this.parent == null)
+                    System.exit(0);
+                else {
+                    parent.show();
+                    parent.run();
+                }
+            } else {
+                new Menu(this, "logout") {
+                    @Override
+                    public void run() {
+                        //TODO : Logout
+                        processor.logout();
+                        this.parent.parent.show();
+                        this.parent.parent.run();
+                    }
+                }.run();
+            }
+        }
+    }
 }
+
