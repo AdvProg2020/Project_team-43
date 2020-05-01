@@ -45,9 +45,6 @@ public class BossView {
     }
 
     public void getCodedDiscountInfo(ArrayList<String> discountCodedInfo) {
-        System.out.print("Discount code : ");
-        String discountCode = scanner.nextLine();
-        discountCodedInfo.add(discountCode);
         System.out.print("Start time : ");
         String startTime = scanner.nextLine();
         discountCodedInfo.add(startTime);
@@ -76,26 +73,21 @@ public class BossView {
         System.out.println(codedDiscount);
     }
 
-    public void getEditCodedDiscountInfo(ArrayList<String> codedDiscountInfo) {
+    public String getEditCodedDiscountField() {
         System.out.println("FIELDS : ");
         System.out.println("1 . discount code");
         System.out.println("2 . start time");
         System.out.println("3 . end time");
         System.out.println("4 . discount amount");
         System.out.println("5 . remaining time");
-        while (true) {
-            System.out.println("enter the field's name or enter finish: ");
-            String command = scanner.nextLine();
-            command = command.trim();
-            if (command.equalsIgnoreCase("finish")) {
-                break;
-            } else {
-                System.out.println("change to : ");
-                String changeTo = scanner.nextLine();
-                codedDiscountInfo.add(command);
-                codedDiscountInfo.add(changeTo);
-            }
-        }
+        System.out.println("6 . back");
+        String command = scanner.nextLine();
+        return command;
+    }
+    public String getEditCodedDiscountInField(){
+        System.out.println("change to : ");
+        String command = scanner.nextLine();
+        return command;
     }
 
     public void viewAllRequests() {
