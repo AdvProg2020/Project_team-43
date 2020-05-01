@@ -1,6 +1,7 @@
 package View;
 
 import model.*;
+import model.request.Request;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -118,17 +119,9 @@ public class BossView {
         }
     }
 
-    public void getEditCategoryField() {
-        //TODO : fill
-
-    }
-
-    public ArrayList<String> getCategoryInfo(ArrayList<String> categoryInfo) {
+    public ArrayList<String> getCategoryFeatures() {
         ArrayList<String> features = new ArrayList<>();
-        System.out.print("category name : ");
-        String categoryName = scanner.nextLine();
-        categoryInfo.add(categoryName);
-        System.out.println("features : [feature's name/finish]");
+        System.out.println("features : [feature's name]/[finish]");
         while (true) {
             String command = scanner.nextLine();
             command = command.trim();
@@ -137,14 +130,44 @@ public class BossView {
             }
             features.add(command);
         }
-        System.out.println("does it have a super category ? [yes/no]");
-        String command = scanner.nextLine();
-        if (command.equalsIgnoreCase("yes")) {
-            System.out.print("super category's name : ");
-            String superCategoryName = scanner.next();
-            categoryInfo.add(superCategoryName);
-        }
         return features;
+    }
+
+    public String editCategoryTask() {
+        System.out.println("please enter a number !!");
+        System.out.println("1 . change name of category");
+        System.out.println("2 . change a feature's name of category");
+        System.out.println("3 . remove a feature of category");
+        System.out.println("4 . add a feature to category");
+        String number = scanner.nextLine();
+        number = number.trim();
+        return number;
+    }
+
+    public String getFeatureNameForChangeOrDelete(Category category) {
+        int counter = 1;
+        System.out.println("please enter name of the feature! ");
+        for (String feature : category.getFeatures()) {
+            System.out.println(counter + " . " + feature);
+            counter += 1;
+        }
+        String feature = scanner.nextLine();
+        feature = feature.trim();
+        return feature;
+    }
+
+    public String getFeatureNameForAddOrChange() {
+        System.out.println("please enter the new feature's name ! ");
+        String newFeature = scanner.nextLine();
+        newFeature = newFeature.trim();
+        return newFeature;
+
+    }
+
+    public String getCategoryNewName() {
+        System.out.print("new name : ");
+        String newName = scanner.nextLine();
+        return newName;
     }
 
 }
