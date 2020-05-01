@@ -127,15 +127,11 @@ public class Processor {
     public void showProducts() {
         //TODO : error handling
         ArrayList<Product> products = Product.allProductsInList;
-
-
     }
 
     public void showProductById(String Id) {
         //TODO : error handling
         Product product = Product.getProductById(Id);
-
-
     }
 
     public void manageDigest(String command, String productId) {
@@ -145,15 +141,10 @@ public class Processor {
         }
         Pattern addToCartPattern = Pattern.compile("add to cart");
         Matcher addToCartMatcher = addToCartPattern.matcher(command);
-        Pattern selectSellerPattern = Pattern.compile("select seller (.+)");
-        Matcher selectSellerMatcher = selectSellerPattern.matcher(command);
-
         if (addToCartMatcher.matches()) {
+            //TODO : Seller seller = viewManager.selectSeller();
             addToCart(productId);
-        } else if (selectSellerMatcher.matches()) {
-            selectSeller(selectSellerMatcher.group(1));
         }
-
     }
 
     public void showDigest(String productId) {
@@ -181,8 +172,8 @@ public class Processor {
         //TODO : error handling
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
-
-
+        if (secondProduct.getCategory() == firstProduct.getCategory())
+            viewManager.compare(firstProduct, secondProduct);
     }
 
     public void manageComments(String command) {
@@ -195,7 +186,6 @@ public class Processor {
         if (addCommentMatcher.matches()) {
             addComment();
         }
-
     }
 
     public void addComment() {
@@ -331,7 +321,6 @@ public class Processor {
 
 
     }
-
 
 
     public ArrayList<Product> castStringToProduct(ArrayList<String> productsInString) {

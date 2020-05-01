@@ -4,6 +4,7 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ShowAndCatch {
@@ -179,6 +180,23 @@ public class ShowAndCatch {
     public void showCategories(ArrayList<Category> categories){
         for (Category category : categories) {
             System.out.println(category.getName());
+        }
+    }
+    public Seller selectSeller(){
+        System.out.println("select seller :");
+        String sellerName;
+        sellerName=Menu.getScanner().nextLine();
+        return (Seller)User.getUserByUserName(sellerName);
+    }
+
+    public void compare(Product firstProduct , Product secondProduct){
+        System.out.println("product ID : " +firstProduct.getProductId()+" "+secondProduct.getProductId());
+        System.out.println("name : " + firstProduct.getName()+" "+ secondProduct.getName());
+        System.out.println("price : "+ firstProduct.getPrice()+" "+ secondProduct.getPrice());
+        Map<String,String> featuresOfFirstProduct=firstProduct.getFeaturesMap();
+        Map<String,String> featuresOfSecondProduct=secondProduct.getFeaturesMap();
+        for (String feature : featuresOfFirstProduct.keySet()) {
+            System.out.println(feature +" "+featuresOfFirstProduct.get(feature)+" "+ featuresOfSecondProduct.get(feature));
         }
     }
 }
