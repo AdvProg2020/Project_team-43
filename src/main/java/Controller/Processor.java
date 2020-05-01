@@ -176,7 +176,10 @@ public class Processor {
             viewManager.compare(firstProduct, secondProduct);
     }
 
-    public void manageComments(String command) {
+    public void manageComments(String command, String productId) throws InvalidCommandException {
+        if (!isLogin) {
+            throw new InvalidCommandException("user in not login");
+        }
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -184,14 +187,22 @@ public class Processor {
         Pattern addCommentPattern = Pattern.compile("add comment");
         Matcher addCommentMatcher = addCommentPattern.matcher(command);
         if (addCommentMatcher.matches()) {
-            addComment();
+            addComment(Product.getProductById(productId));
         }
     }
 
-    public void addComment() {
+    public void addComment(Product product) {
         //TODO : error handling
         ArrayList<String> commentInfo = new ArrayList<String>();
         viewManager.getCommentInfo(commentInfo);
+        boolean isBuy = false;
+        for (BuyOrder order : ((Buyer) user).getOrders()) {
+            if (order.getProducts().containsKey(product)) {
+                isBuy = true;
+                break;
+            }
+        }
+        new Comment(product, commentInfo.get(1), isBuy);
         //handle commente gerefte shode
 
     }
@@ -217,7 +228,7 @@ public class Processor {
 
     }
 
-    public void manageCart(String userName, String command) throws InvalidCommandException, NullPointerException{
+    public void manageCart(String userName, String command) throws InvalidCommandException, NullPointerException {
         //TODO : error handling
         if (command.equals("back")) {
             return;

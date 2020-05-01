@@ -77,7 +77,13 @@ public class ProductPanel extends Menu {
                 System.out.println("1 . ADD comment");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
-                processor.manageComments(command);
+                try {
+                    processor.manageComments(command,productId);
+                }
+                catch (Exception e){
+                    System.out.printf(e.getMessage());
+                }
+
             }
 
             @Override
