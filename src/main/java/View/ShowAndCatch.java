@@ -1,6 +1,8 @@
 package View;
 
 import model.*;
+import model.filters.Criteria;
+import model.filters.FilterManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -202,5 +204,28 @@ public class ShowAndCatch {
 
     public void showErrorMessage(String message){
         System.out.println(message);
+    }
+    public void showAvailableFilters(){
+        System.out.println("filter by price from [price] to [price]");
+        System.out.println("filter by availability");
+        System.out.println("filter by [category name] features");
+    }
+    public HashMap<String ,String > filterByCategoryFeatures(String categoryName){
+        for (String feature : Category.getCategoryByName(categoryName).getFeatures()) {
+            System.out.println(feature);
+        }
+        System.out.println("print features and their value that you want to filter by them. print exit to end this process");
+        HashMap<String,String> features = new HashMap<String, String>();
+        String feature,value;
+        while (!(feature=Menu.getScanner().nextLine()).equalsIgnoreCase("exit")){
+            value=Menu.getScanner().nextLine();
+            features.put(feature,value);
+        }
+        return features;
+    }
+    public void showCurrentFilters(){
+        for (Criteria filter : FilterManager.getInstance().getCurrentFilters()) {
+            System.out.println(filter.getName());
+        }
     }
 }

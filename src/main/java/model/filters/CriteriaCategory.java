@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class CriteriaCategory implements Criteria {
     private Category category;
-
+    private String name;
     public CriteriaCategory(Category category) {
+        this.name="category : "+category.getName();
         this.category = category;
     }
 
@@ -20,5 +21,10 @@ public class CriteriaCategory implements Criteria {
                 meetCriteria.add(product);
         }
         return meetCriteria;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

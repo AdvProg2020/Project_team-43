@@ -2,6 +2,8 @@ package Controller;
 
 import View.ShowAndCatch;
 import model.*;
+import model.filters.Criteria;
+import model.filters.FilterManager;
 import model.request.SellerRequest;
 
 
@@ -62,19 +64,36 @@ public class Processor {
         } else if (disableFilterMatcher.matches()) {
             disableFilter(disableFilterMatcher.group(1));
         }
-
-
     }
 
     public void showAvailableFilter() {
-
+        viewManager.showAvailableFilters();
     }
 
     public void filter(String selectedFilter) {
-
+        /*if (selectedFilter.matches("by category (.+)")){
+            Pattern pattern = Pattern.compile("by category (.+)");
+            Matcher matcher = pattern.matcher(selectedFilter);
+            FilterManager.getInstance().addCategoryFilter(Category.getCategoryByName(matcher.group(1)));
+        }*/
+        if (selectedFilter.matches("by price from (\\d+) to (\\d+)")) {
+            FilterManager.getInstance().addPriceFilter(Double.parseDouble(selectedFilter.split(" ")[3]),
+                    Double.parseDouble(selectedFilter.split(" ")[5]));
+        } else if (selectedFilter.matches("by availability")) {
+            FilterManager.getInstance().addAvailabilityPrice();
+        } else if (selectedFilter.matches("by (.+) features")) {
+            Pattern pattern = Pattern.compile("by (.+) features");
+            Matcher matcher = pattern.matcher(selectedFilter);
+            String categoryName = matcher.group(1);
+            FilterManager.getInstance().addCategoryFeaturesFilter(Category.getCategoryByName(categoryName),
+                    viewManager.filterByCategoryFeatures(categoryName));
+        } else {
+            //TODO: error handling
+        }
     }
 
     public void currentFilter() {
+        viewManager.showCurrentFilters();
 
     }
 
@@ -305,8 +324,6 @@ public class Processor {
         } else if (rateProductMatcher.matches()) {
             rateProduct(userName, rateProductMatcher.group(1), Integer.parseInt(rateProductMatcher.group(2)));
         }
-
-
     }
 
     public void viewOrders(String userName) {

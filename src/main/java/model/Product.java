@@ -139,4 +139,7 @@ public class Product {
         this.getScore().addBuyer(score);
     }
 
+    public static ArrayList<Product> getAllProductsInList() {
+        return allProductsInList;
+    }
 }
