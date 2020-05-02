@@ -71,22 +71,18 @@ public class Processor {
     }
 
     public void filter(String selectedFilter) {
-        /*if (selectedFilter.matches("by category (.+)")){
-            Pattern pattern = Pattern.compile("by category (.+)");
-            Matcher matcher = pattern.matcher(selectedFilter);
-            FilterManager.getInstance().addCategoryFilter(Category.getCategoryByName(matcher.group(1)));
-        }*/
         if (selectedFilter.matches("by price from (\\d+) to (\\d+)")) {
             FilterManager.getInstance().addPriceFilter(Double.parseDouble(selectedFilter.split(" ")[3]),
                     Double.parseDouble(selectedFilter.split(" ")[5]));
         } else if (selectedFilter.matches("by availability")) {
             FilterManager.getInstance().addAvailabilityPrice();
-        } else if (selectedFilter.matches("by (.+) features")) {
-            Pattern pattern = Pattern.compile("by (.+) features");
-            Matcher matcher = pattern.matcher(selectedFilter);
-            String categoryName = matcher.group(1);
-            FilterManager.getInstance().addCategoryFeaturesFilter(Category.getCategoryByName(categoryName),
-                    viewManager.filterByCategoryFeatures(categoryName));
+        } else if (selectedFilter.matches("by category features")) {
+            if (FilterManager.getInstance().getCategory() == null) {
+                FilterManager.getInstance().addCategoryFeaturesFilter(viewManager.filterByCategoryFeatures());
+            } else {
+                FilterManager.getInstance().addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures());
+            }
+
         } else {
             //TODO: error handling
         }
@@ -145,7 +141,8 @@ public class Processor {
 
     public void showProducts() {
         //TODO : error handling
-        ArrayList<Product> products = Product.allProductsInList;
+        ArrayList<Product> products = FilterManager.getInstance().getProductsAfterFilter();
+        viewManager.showProducts(products);
     }
 
     public void showProductById(String Id) {

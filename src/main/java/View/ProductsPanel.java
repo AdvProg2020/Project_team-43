@@ -37,7 +37,7 @@ public class ProductsPanel extends Menu {
             @Override
             public void show() {
                 System.out.println("1 . show available filters");
-                System.out.println("2 . filter");
+                System.out.println("2 . filter by []");
                 System.out.println("3 . current filters");
                 System.out.println("4 . disable filter");
                 System.out.println("5 . back");

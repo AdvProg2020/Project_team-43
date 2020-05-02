@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
     private static Scanner scanner = Menu.getScanner();
+
     public static ShowAndCatch getInstance() {
         return ourInstance;
     }
@@ -129,14 +130,15 @@ public class ShowAndCatch {
             System.out.println(feature + " : " + product.getFeaturesMap().get(feature));
         }
     }
-    public void showDigest(Product product){
-        System.out.println("name: "+product.getName());
-        System.out.println("price: "+product.getPrice());
-        System.out.println("category: "+product.getCategory());
-        System.out.println("sellers: "+product.getSeller());
-        System.out.println("score:"+product.getScore());
-        System.out.println("description: "+product.getDescription());
-        System.out.println("sale: "+Off.isProductInOff(product));
+
+    public void showDigest(Product product) {
+        System.out.println("name: " + product.getName());
+        System.out.println("price: " + product.getPrice());
+        System.out.println("category: " + product.getCategory());
+        System.out.println("sellers: " + product.getSeller());
+        System.out.println("score:" + product.getScore());
+        System.out.println("description: " + product.getDescription());
+        System.out.println("sale: " + Off.isProductInOff(product));
     }
 
 
@@ -167,63 +169,89 @@ public class ShowAndCatch {
         String content = scanner.nextLine();
         commentInfo.add(content);
     }
-    public String getCompanyNameMenuFromUser(){
+
+    public String getCompanyNameMenuFromUser() {
         System.out.print("company name: ");
         return Menu.getScanner().nextLine();
     }
-    public void viewPersonalInfo(UserPersonalInfo personalInfo){
+
+    public void viewPersonalInfo(UserPersonalInfo personalInfo) {
         System.out.println(personalInfo);
     }
-    public void viewBuyerOrders(ArrayList<BuyOrder> buyOrders){
+
+    public void viewBuyerOrders(ArrayList<BuyOrder> buyOrders) {
         for (BuyOrder order : buyOrders) {
             System.out.println(order);
         }
     }
-    public void showCategories(ArrayList<Category> categories){
+
+    public void showCategories(ArrayList<Category> categories) {
         for (Category category : categories) {
             System.out.println(category.getName());
         }
     }
-    public Seller selectSeller(){
+
+    public Seller selectSeller() {
         System.out.println("select seller :");
         String sellerName;
-        sellerName=Menu.getScanner().nextLine();
-        return (Seller)User.getUserByUserName(sellerName);
+        sellerName = Menu.getScanner().nextLine();
+        return (Seller) User.getUserByUserName(sellerName);
     }
 
-    public void compare(Product firstProduct , Product secondProduct){
-        System.out.println("product ID : " +firstProduct.getProductId()+" "+secondProduct.getProductId());
-        System.out.println("name : " + firstProduct.getName()+" "+ secondProduct.getName());
-        System.out.println("price : "+ firstProduct.getPrice()+" "+ secondProduct.getPrice());
-        Map<String,String> featuresOfFirstProduct=firstProduct.getFeaturesMap();
-        Map<String,String> featuresOfSecondProduct=secondProduct.getFeaturesMap();
+    public void compare(Product firstProduct, Product secondProduct) {
+        System.out.println("product ID : " + firstProduct.getProductId() + " " + secondProduct.getProductId());
+        System.out.println("name : " + firstProduct.getName() + " " + secondProduct.getName());
+        System.out.println("price : " + firstProduct.getPrice() + " " + secondProduct.getPrice());
+        Map<String, String> featuresOfFirstProduct = firstProduct.getFeaturesMap();
+        Map<String, String> featuresOfSecondProduct = secondProduct.getFeaturesMap();
         for (String feature : featuresOfFirstProduct.keySet()) {
-            System.out.println(feature +" "+featuresOfFirstProduct.get(feature)+" "+ featuresOfSecondProduct.get(feature));
+            System.out.println(feature + " " + featuresOfFirstProduct.get(feature) + " " + featuresOfSecondProduct.get(feature));
         }
     }
 
-    public void showErrorMessage(String message){
+    public void showErrorMessage(String message) {
         System.out.println(message);
     }
-    public void showAvailableFilters(){
+
+    public void showAvailableFilters() {
         System.out.println("filter by price from [price] to [price]");
         System.out.println("filter by availability");
         System.out.println("filter by [category name] features");
     }
-    public HashMap<String ,String > filterByCategoryFeatures(String categoryName){
+
+    public HashMap<String, String> filterByCategoryFeatures() {
+        System.out.println("please select a category : ");
+        String categoryName = Menu.getScanner().nextLine();
         for (String feature : Category.getCategoryByName(categoryName).getFeatures()) {
             System.out.println(feature);
         }
         System.out.println("print features and their value that you want to filter by them. print exit to end this process");
-        HashMap<String,String> features = new HashMap<String, String>();
-        String feature,value;
-        while (!(feature=Menu.getScanner().nextLine()).equalsIgnoreCase("exit")){
-            value=Menu.getScanner().nextLine();
-            features.put(feature,value);
+        HashMap<String, String> features = new HashMap<>();
+        String feature, value;
+        while (!(feature = Menu.getScanner().nextLine()).equalsIgnoreCase("exit")) {
+            value = Menu.getScanner().nextLine();
+            features.put(feature, value);
         }
         return features;
     }
-    public void showCurrentFilters(){
+
+    public HashMap<String, String> addFilterByCategoryFeatures() {
+        Category category = FilterManager.getInstance().getCategory();
+        for (String feature : category.getFeatures()) {
+            System.out.println(feature);
+        }
+        System.out.println("print features and their value that you want to filter by them. print exit to end this process");
+        HashMap<String, String> features = FilterManager.getInstance().getCriteriaCategoryFeatures().getFeatures();
+        String feature, value;
+        while (!(feature = Menu.getScanner().nextLine()).equalsIgnoreCase("exit")) {
+            value = Menu.getScanner().nextLine();
+            features.remove(feature);
+            features.put(feature, value);
+        }
+        return features;
+    }
+
+    public void showCurrentFilters() {
         for (Criteria filter : FilterManager.getInstance().getCurrentFilters()) {
             System.out.println(filter.getName());
         }

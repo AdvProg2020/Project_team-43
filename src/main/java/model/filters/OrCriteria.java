@@ -7,6 +7,12 @@ import java.util.ArrayList;
 public class OrCriteria implements Criteria {
     private Criteria criteria;
     private Criteria otherCriteria;
+    private String name;
+
+    @Override
+    public String getName() {
+        return name;
+    }
 
     public OrCriteria(Criteria criteria, Criteria otherCriteria) {
         this.criteria = criteria;
