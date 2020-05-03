@@ -71,4 +71,7 @@ public class FilterManager {
     public void disableAvailabilityFilter(){
         currentFilters.removeIf(t -> t instanceof CriteriaAvailable);
     }
+    public void disableFeature(String feature){
+        criteriaCategoryFeatures.deleteFeature(feature);
+    }
 }

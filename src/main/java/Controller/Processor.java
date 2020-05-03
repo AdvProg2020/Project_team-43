@@ -100,6 +100,11 @@ public class Processor {
         else if (selectedFilter.equalsIgnoreCase("availability")){
             FilterManager.getInstance().disableAvailabilityFilter();
         }
+        else if (selectedFilter.matches("(\\S+)")){
+            Pattern pattern = Pattern.compile("(\\S+)");
+            Matcher matcher = pattern.matcher(selectedFilter);
+            FilterManager.getInstance().disableFeature(matcher.group(1));
+        }
     }
 
     public void sortingProcess(String command) {

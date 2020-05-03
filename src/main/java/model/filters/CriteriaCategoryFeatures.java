@@ -40,4 +40,7 @@ public class CriteriaCategoryFeatures extends CriteriaCategory {
         }
         return true;
     }
+    public void deleteFeature(String feature){
+        this.features.remove(feature);
+    }
 }
