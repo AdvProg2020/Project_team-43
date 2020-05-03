@@ -65,4 +65,10 @@ public class FilterManager {
             criteriaCategoryFeatures.addFeature(feature, newFeatures.get(feature));
         }
     }
+    public void disablePriceFilter(){
+        currentFilters.removeIf(t -> t instanceof CriteriaPrice);
+    }
+    public void disableAvailabilityFilter(){
+        currentFilters.removeIf(t -> t instanceof CriteriaAvailable);
+    }
 }

@@ -94,7 +94,12 @@ public class Processor {
     }
 
     public void disableFilter(String selectedFilter) {
-
+        if (selectedFilter.equalsIgnoreCase("price")){
+            FilterManager.getInstance().disablePriceFilter();
+        }
+        else if (selectedFilter.equalsIgnoreCase("availability")){
+            FilterManager.getInstance().disableAvailabilityFilter();
+        }
     }
 
     public void sortingProcess(String command) {
