@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 public class CriteriaCategoryFeatures extends CriteriaCategory {
     private HashMap<String, String> features;
-    public CriteriaCategoryFeatures(Category category, HashMap<String, String> features) {
+    public CriteriaCategoryFeatures(Category category) {
         super(category);
-        this.features = features;
+        this.features = new HashMap<String , String>();
     }
 
 

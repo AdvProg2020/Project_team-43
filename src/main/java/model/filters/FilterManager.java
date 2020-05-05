@@ -7,21 +7,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FilterManager {
-    private static FilterManager instance = new FilterManager();
     private CriteriaCategoryFeatures criteriaCategoryFeatures;
     private Category category;
     private ArrayList<Criteria> currentFilters;
 
-    private FilterManager() {
+    public FilterManager() {
         currentFilters = new ArrayList<Criteria>();
     }
 
-    public static FilterManager getInstance() {
-        return instance;
-    }
-
-    public ArrayList<Product> getProductsAfterFilter() {
-        ArrayList<Product> products = Product.getAllProductsInList();
+    public ArrayList<Product> getProductsAfterFilter(ArrayList<Product> products) {
         for (Criteria filter : currentFilters) {
             products = filter.meetCriteria(products);
         }
@@ -50,28 +44,29 @@ public class FilterManager {
 
     public void setCategory(Category category) {
         this.category = category;
+        this.criteriaCategoryFeatures = new CriteriaCategoryFeatures(this.category);
     }
 
     public CriteriaCategoryFeatures getCriteriaCategoryFeatures() {
         return criteriaCategoryFeatures;
     }
 
-    public void addCategoryFeaturesFilter(HashMap<String, String> features) {
-        criteriaCategoryFeatures = new CriteriaCategoryFeatures(this.category, features);
-    }
 
     public void addFeaturesToCategoryFeaturesFilter(HashMap<String, String> newFeatures) {
         for (String feature : newFeatures.keySet()) {
             criteriaCategoryFeatures.addFeature(feature, newFeatures.get(feature));
         }
     }
-    public void disablePriceFilter(){
+
+    public void disablePriceFilter() {
         currentFilters.removeIf(t -> t instanceof CriteriaPrice);
     }
-    public void disableAvailabilityFilter(){
+
+    public void disableAvailabilityFilter() {
         currentFilters.removeIf(t -> t instanceof CriteriaAvailable);
     }
-    public void disableFeature(String feature){
+
+    public void disableFeature(String feature) {
         criteriaCategoryFeatures.deleteFeature(feature);
     }
 }

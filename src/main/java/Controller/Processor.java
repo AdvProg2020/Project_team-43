@@ -17,6 +17,7 @@ public class Processor {
     protected static boolean isLogin;
     protected static User user;
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
+    protected FilterManager productFilter;
 
     public User getUser() {
         return user;
@@ -24,6 +25,11 @@ public class Processor {
 
     public Processor() {
     }
+
+    public void newProductFilter() {
+        productFilter = new FilterManager();
+    }
+
 
     public boolean isUserLoggedIn() {
         return isLogin;
@@ -54,7 +60,8 @@ public class Processor {
         Matcher currentFiltersMatcher = currentFiltersPattern.matcher(command);
         Pattern disableFilterPattern = Pattern.compile("disable filter (.+)");
         Matcher disableFilterMatcher = disableFilterPattern.matcher(command);
-
+        Pattern selectCategoryPattern = Pattern.compile("select category (.+)");
+        Matcher selectCategoryMatcher = disableFilterPattern.matcher(command);
         if (showAvailableFiltersMatcher.matches()) {
             showAvailableFilter();
         } else if (filterMatcher.matches()) {
@@ -63,7 +70,13 @@ public class Processor {
             currentFilter();
         } else if (disableFilterMatcher.matches()) {
             disableFilter(disableFilterMatcher.group(1));
+        } else if (selectCategoryMatcher.matches()) {
+            selectCategoryForFilter(selectCategoryMatcher.group(1));
         }
+    }
+
+    public void selectCategoryForFilter(String categoryName) {
+        productFilter.setCategory(Category.getCategoryByName(categoryName));
     }
 
     public void showAvailableFilter() {
@@ -72,15 +85,19 @@ public class Processor {
 
     public void filter(String selectedFilter) {
         if (selectedFilter.matches("by price from (\\d+) to (\\d+)")) {
-            FilterManager.getInstance().addPriceFilter(Double.parseDouble(selectedFilter.split(" ")[3]),
+            productFilter.addPriceFilter(Double.parseDouble(selectedFilter.split(" ")[3]),
                     Double.parseDouble(selectedFilter.split(" ")[5]));
         } else if (selectedFilter.matches("by availability")) {
-            FilterManager.getInstance().addAvailabilityPrice();
+            productFilter.addAvailabilityPrice();
         } else if (selectedFilter.matches("by category features")) {
-            if (FilterManager.getInstance().getCategory() == null) {
-                FilterManager.getInstance().addCategoryFeaturesFilter(viewManager.filterByCategoryFeatures());
+            if (productFilter.getCategory() == null) {
+                try {
+                    throw new InvalidCommandException("please select a category");
+                } catch (Exception e) {
+                    viewManager.showErrorMessage(e.getMessage());
+                }
             } else {
-                FilterManager.getInstance().addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures());
+                productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
             }
 
         } else {
@@ -89,21 +106,19 @@ public class Processor {
     }
 
     public void currentFilter() {
-        viewManager.showCurrentFilters();
+        viewManager.showCurrentFilters(productFilter);
 
     }
 
     public void disableFilter(String selectedFilter) {
-        if (selectedFilter.equalsIgnoreCase("price")){
-            FilterManager.getInstance().disablePriceFilter();
-        }
-        else if (selectedFilter.equalsIgnoreCase("availability")){
-            FilterManager.getInstance().disableAvailabilityFilter();
-        }
-        else if (selectedFilter.matches("(\\S+)")){
+        if (selectedFilter.equalsIgnoreCase("price")) {
+            productFilter.disablePriceFilter();
+        } else if (selectedFilter.equalsIgnoreCase("availability")) {
+            productFilter.disableAvailabilityFilter();
+        } else if (selectedFilter.matches("(\\S+)")) {
             Pattern pattern = Pattern.compile("(\\S+)");
             Matcher matcher = pattern.matcher(selectedFilter);
-            FilterManager.getInstance().disableFeature(matcher.group(1));
+            productFilter.disableFeature(matcher.group(1));
         }
     }
 
@@ -151,7 +166,7 @@ public class Processor {
 
     public void showProducts() {
         //TODO : error handling
-        ArrayList<Product> products = FilterManager.getInstance().getProductsAfterFilter();
+        ArrayList<Product> products = productFilter.getProductsAfterFilter(Product.getAllProductsInList());
         viewManager.showProducts(products);
     }
 
@@ -242,7 +257,7 @@ public class Processor {
     public void showOffs() {
         //TODO : error handling
         ArrayList<Off> offs = Off.acceptedOffs;
-        viewManager.showOffs(offs);
+        viewManager.showOffs(offs, productFilter);
     }
 
     public void viewPersonalInfo() {

@@ -26,17 +26,16 @@ public class ShowAndCatch {
         }
     }
 
-    public void showOffs(ArrayList<Off> offs) {
+    public void showOffs(ArrayList<Off> offs,FilterManager filterManager) {
         for (int i = 1; i <= offs.size(); i++) {
             System.out.println(i + " : " + "\n" + "Off Id : " + offs.get(i - 1).getOffId());
             System.out.println("Seller user name : " + offs.get(i - 1).getSellerName());
             System.out.println("Discount amount : " + offs.get(i - 1).getDiscountAmount());
             System.out.println("Date : " + offs.get(i - 1).getStartTime() + " - " + offs.get(i - 1).getEndTime());
             System.out.println("Products : ");
-            for (Product product : offs.get(i - 1).getProducts()) {
+            for (Product product : filterManager.getProductsAfterFilter(offs.get(i - 1).getProducts())) {
                 System.out.println(product.getName());
             }
-
         }
     }
 
@@ -219,29 +218,14 @@ public class ShowAndCatch {
         System.out.println("filter by [category name] features");
     }
 
-    public HashMap<String, String> filterByCategoryFeatures() {
-        System.out.println("please select a category : ");
-        String categoryName = Menu.getScanner().nextLine();
-        for (String feature : Category.getCategoryByName(categoryName).getFeatures()) {
-            System.out.println(feature);
-        }
-        System.out.println("print features and their value that you want to filter by them. print exit to end this process");
-        HashMap<String, String> features = new HashMap<>();
-        String feature, value;
-        while (!(feature = Menu.getScanner().nextLine()).equalsIgnoreCase("exit")) {
-            value = Menu.getScanner().nextLine();
-            features.put(feature, value);
-        }
-        return features;
-    }
 
-    public HashMap<String, String> addFilterByCategoryFeatures() {
-        Category category = FilterManager.getInstance().getCategory();
+    public HashMap<String, String> addFilterByCategoryFeatures(FilterManager filterManager) {
+        Category category = filterManager.getCategory();
         for (String feature : category.getFeatures()) {
             System.out.println(feature);
         }
         System.out.println("print features and their value that you want to filter by them. print exit to end this process");
-        HashMap<String, String> features = FilterManager.getInstance().getCriteriaCategoryFeatures().getFeatures();
+        HashMap<String, String> features = filterManager.getCriteriaCategoryFeatures().getFeatures();
         String feature, value;
         while (!(feature = Menu.getScanner().nextLine()).equalsIgnoreCase("exit")) {
             value = Menu.getScanner().nextLine();
@@ -251,8 +235,8 @@ public class ShowAndCatch {
         return features;
     }
 
-    public void showCurrentFilters() {
-        for (Criteria filter : FilterManager.getInstance().getCurrentFilters()) {
+    public void showCurrentFilters(FilterManager filterManager) {
+        for (Criteria filter : filterManager.getCurrentFilters()) {
             System.out.println(filter.getName());
         }
     }
