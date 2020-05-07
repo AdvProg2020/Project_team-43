@@ -14,7 +14,7 @@ public class CriteriaCategory implements Criteria {
     }
 
     public CriteriaCategory(Category category) {
-        this.name="category : "+category.getName();
+        this.name = "category : " + category.getName();
         this.category = category;
     }
 
@@ -22,7 +22,7 @@ public class CriteriaCategory implements Criteria {
     public ArrayList<Product> meetCriteria(ArrayList<Product> products) {
         ArrayList<Product> meetCriteria = new ArrayList<>();
         for (Product product : products) {
-            if (product.getCategory()==category)
+            if (product.getCategory() == category)
                 meetCriteria.add(product);
         }
         return meetCriteria;

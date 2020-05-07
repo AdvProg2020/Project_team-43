@@ -1,6 +1,7 @@
 package Controller;
 
 import View.ShowAndCatch;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
@@ -62,7 +63,7 @@ public class Processor {
         Pattern disableFilterPattern = Pattern.compile("disable filter (.+)");
         Matcher disableFilterMatcher = disableFilterPattern.matcher(command);
         Pattern selectCategoryPattern = Pattern.compile("select category (.+)");
-        Matcher selectCategoryMatcher = disableFilterPattern.matcher(command);
+        Matcher selectCategoryMatcher = selectCategoryPattern.matcher(command);
         if (showAvailableFiltersMatcher.matches()) {
             showAvailableFilter();
         } else if (filterMatcher.matches()) {
@@ -90,6 +91,10 @@ public class Processor {
                     Double.parseDouble(selectedFilter.split(" ")[5]));
         } else if (selectedFilter.matches("by availability")) {
             productFilter.addAvailabilityPrice();
+        } else if (selectedFilter.matches("by name (.+)")) {
+            Pattern pattern = Pattern.compile("by name (.+)");
+            Matcher matcher = pattern.matcher(selectedFilter);
+            productFilter.addNameFilter(matcher.group(1));
         } else if (selectedFilter.matches("by category features")) {
             if (productFilter.getCategory() == null) {
                 try {
@@ -116,6 +121,8 @@ public class Processor {
             productFilter.disablePriceFilter();
         } else if (selectedFilter.equalsIgnoreCase("availability")) {
             productFilter.disableAvailabilityFilter();
+        } else if (selectedFilter.equalsIgnoreCase("name")) {
+            productFilter.disableNameFilter();
         } else if (selectedFilter.matches("(\\S+)")) {
             Pattern pattern = Pattern.compile("(\\S+)");
             Matcher matcher = pattern.matcher(selectedFilter);

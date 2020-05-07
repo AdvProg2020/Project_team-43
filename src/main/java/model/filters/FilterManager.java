@@ -38,6 +38,10 @@ public class FilterManager {
         currentFilters.add(new CriteriaAvailable());
     }
 
+    public void addNameFilter(String name) {
+        currentFilters.add(new CriteriaName(name));
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -68,5 +72,9 @@ public class FilterManager {
 
     public void disableFeature(String feature) {
         criteriaCategoryFeatures.deleteFeature(feature);
+    }
+
+    public void disableNameFilter() {
+        currentFilters.removeIf(t -> t instanceof CriteriaName);
     }
 }

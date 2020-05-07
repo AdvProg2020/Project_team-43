@@ -212,6 +212,7 @@ public class ShowAndCatch {
     public void showAvailableFilters() {
         System.out.println("filter by price from [price] to [price]");
         System.out.println("filter by availability");
+        System.out.println("filter by name [name]");
         System.out.println("filter by [category name] features");
     }
 

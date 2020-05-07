@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 public class ProductPanel extends Menu {
     private String productId;
+
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
@@ -80,9 +81,8 @@ public class ProductPanel extends Menu {
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
                 try {
-                    processor.manageComments(command,productId);
-                }
-                catch (Exception e){
+                    processor.manageComments(command, productId);
+                } catch (Exception e) {
                     System.out.printf(e.getMessage());
                 }
 
@@ -95,22 +95,23 @@ public class ProductPanel extends Menu {
             }
         };
     }
+
     private void getIdProductFromUser() {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
         Product.getProductById(productId).addVisit();
     }
-    public void show (){
+
+    public void show() {
         getIdProductFromUser();
         System.out.println(this.name + ":");
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
         }
-        if (processor.isUserLoggedIn()){//////////////////////////////////////////////chi shode in error dare??
-            System.out.println((submenus.size() + 1)+". logout");
-        }
-        else {
-            System.out.println((submenus.size() + 1)+". login");
+        if (processor.isUserLoggedIn()) {//////////////////////////////////////////////chi shode in error dare??
+            System.out.println((submenus.size() + 1) + ". logout");
+        } else {
+            System.out.println((submenus.size() + 1) + ". login");
         }
         if (this.parent != null)
             System.out.println((submenus.size() + 2) + ". Back");

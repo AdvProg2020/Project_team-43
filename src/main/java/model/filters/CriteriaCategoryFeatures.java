@@ -8,17 +8,19 @@ import java.util.HashMap;
 
 public class CriteriaCategoryFeatures extends CriteriaCategory {
     private HashMap<String, String> features;
+
     public CriteriaCategoryFeatures(Category category) {
         super(category);
-        this.features = new HashMap<String , String>();
+        this.features = new HashMap<String, String>();
     }
 
 
     public HashMap<String, String> getFeatures() {
         return features;
     }
-    public void addFeature(String feature,String value){
-        this.features.put(feature,value);
+
+    public void addFeature(String feature, String value) {
+        this.features.put(feature, value);
     }
 
     @Override
@@ -40,7 +42,8 @@ public class CriteriaCategoryFeatures extends CriteriaCategory {
         }
         return true;
     }
-    public void deleteFeature(String feature){
+
+    public void deleteFeature(String feature) {
         this.features.remove(feature);
     }
 }
