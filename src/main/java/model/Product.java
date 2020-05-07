@@ -14,6 +14,8 @@ public class Product {
     private Company company;
     private double price;
     private int visit;
+
+
     private int availableCount;
     private Category category;
     private Map<String, String> featuresMap;
@@ -141,5 +143,13 @@ public class Product {
 
     public static ArrayList<Product> getAllProductsInList() {
         return allProductsInList;
+    }
+
+    public int getVisit() {
+        return visit;
+    }
+
+    public void addVisit() {
+        this.visit += 1;
     }
 }

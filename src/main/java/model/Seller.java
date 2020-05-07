@@ -89,7 +89,7 @@ public class Seller extends User {
 
     public Off getOffById(String offId) {
         for (Off off : offs) {
-            if (off.getOffId().equals(offId)){
+            if (off.getOffId().equals(offId)) {
                 return off;
             }
         }
@@ -98,7 +98,7 @@ public class Seller extends User {
 
     public boolean hasOffWithId(String offId) {
         for (Off off : offs) {
-            if (off.getOffId().equals(offId)){
+            if (off.getOffId().equals(offId)) {
                 return true;
             }
         }

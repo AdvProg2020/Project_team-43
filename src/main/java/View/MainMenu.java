@@ -12,6 +12,7 @@ public class MainMenu extends Menu {
         submenus.put(3, new OffPanel(this, "OffPanel"));
         this.setSubmenus(submenus);
     }
+
     public void show() {
         super.show();
         processor.newProductFilter();

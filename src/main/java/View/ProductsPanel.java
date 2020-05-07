@@ -61,11 +61,11 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "sorting") {
             @Override
             public void show() {
-                System.out.println("1 . show available sorts");
-                System.out.println("2 . sort");
-                System.out.println("3 . current sort");
-                System.out.println("4 . disable sort");
-                System.out.println("5 . back");
+                System.out.println("show available sorts");
+                System.out.println("sort");
+                System.out.println("current sort");
+                System.out.println("disable sort");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 processor.sortingProcess(command);
                 //

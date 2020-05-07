@@ -4,10 +4,7 @@ import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ShowAndCatch {
     private static ShowAndCatch ourInstance = new ShowAndCatch();
@@ -26,7 +23,7 @@ public class ShowAndCatch {
         }
     }
 
-    public void showOffs(ArrayList<Off> offs,FilterManager filterManager) {
+    public void showOffs(ArrayList<Off> offs, FilterManager filterManager) {
         for (int i = 1; i <= offs.size(); i++) {
             System.out.println(i + " : " + "\n" + "Off Id : " + offs.get(i - 1).getOffId());
             System.out.println("Seller user name : " + offs.get(i - 1).getSellerName());
@@ -239,5 +236,10 @@ public class ShowAndCatch {
         for (Criteria filter : filterManager.getCurrentFilters()) {
             System.out.println(filter.getName());
         }
+    }
+
+    public void showSort(Comparator<Product> comparator) {
+        if (comparator != null)
+            System.out.println(comparator);
     }
 }

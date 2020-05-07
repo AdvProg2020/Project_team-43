@@ -1,6 +1,8 @@
 package View;
 
 
+import model.Product;
+
 import java.util.HashMap;
 
 public class ProductPanel extends Menu {
@@ -96,6 +98,7 @@ public class ProductPanel extends Menu {
     private void getIdProductFromUser() {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
+        Product.getProductById(productId).addVisit();
     }
     public void show (){
         getIdProductFromUser();

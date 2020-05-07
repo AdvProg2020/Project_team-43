@@ -9,6 +9,7 @@ import model.request.SellerRequest;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,11 +154,14 @@ public class Processor {
     }
 
     public void sort(String selectedSort) {
+        if (selectedSort.equalsIgnoreCase("by view"))
+            Sorting.setSortByView();
+        //TODO: other sorts
 
     }
 
     public void currentSort() {
-
+        viewManager.showSort(Sorting.getComparator());
     }
 
     public void disableSort() {
@@ -167,6 +171,7 @@ public class Processor {
     public void showProducts() {
         //TODO : error handling
         ArrayList<Product> products = productFilter.getProductsAfterFilter(Product.getAllProductsInList());
+        Collections.sort(products, Sorting.getComparator());
         viewManager.showProducts(products);
     }
 
