@@ -5,12 +5,12 @@ import java.util.HashMap;
 public class ProductsPanel extends Menu {
     public ProductsPanel(Menu parent, String name) {
         super(parent, name);
-        HashMap<Integer,Menu> submenus=new HashMap<Integer,Menu>();
-        submenus.put(1,viewCategory());
-        submenus.put(2,getFiltering());
-        submenus.put(3,getSorting());
-        submenus.put(4,showProducts());
-        submenus.put(5,new ProductPanel(this,"show product with Id"));
+        HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
+        submenus.put(1, viewCategory());
+        submenus.put(2, getFiltering());
+        submenus.put(3, getSorting());
+        submenus.put(4, showProducts());
+        submenus.put(5, new ProductPanel(this, "show product with Id"));
         this.setSubmenus(submenus);
     }
 
@@ -36,13 +36,16 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "filtering") {
             @Override
             public void show() {
-                System.out.println("1 . show available filters");
-                System.out.println("2 . filter");
-                System.out.println("3 . current filters");
-                System.out.println("4 . disable filter");
-                System.out.println("5 . back");
+                System.out.println("show available filters");
+                System.out.println("select category [category name]");
+                System.out.println("filter by []");
+                System.out.println("current filters");
+                System.out.println("disable filter [filter]/[feature name]");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 processor.filteringProcess(command);
+                if (!command.equalsIgnoreCase("back"))
+                    this.show();
             }
 
             @Override
@@ -58,11 +61,11 @@ public class ProductsPanel extends Menu {
         return new Menu(this, "sorting") {
             @Override
             public void show() {
-                System.out.println("1 . show available sorts");
-                System.out.println("2 . sort");
-                System.out.println("3 . current sort");
-                System.out.println("4 . disable sort");
-                System.out.println("5 . back");
+                System.out.println("show available sorts");
+                System.out.println("sort");
+                System.out.println("current sort");
+                System.out.println("disable sort");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 processor.sortingProcess(command);
                 //
@@ -82,6 +85,7 @@ public class ProductsPanel extends Menu {
             public void show() {
                 processor.showProducts();
             }
+
             @Override
             public void run() {
                 this.parent.show();
@@ -89,5 +93,6 @@ public class ProductsPanel extends Menu {
             }
         };
     }
+
 }
 

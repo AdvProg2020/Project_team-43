@@ -14,4 +14,7 @@ public class ProductScore {
         avgScore = (avgScore * (buyers - 1) + score) / buyers;
     }
 
+    public double getAvgScore() {
+        return avgScore;
+    }
 }

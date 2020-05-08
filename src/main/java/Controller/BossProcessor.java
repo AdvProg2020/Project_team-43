@@ -79,7 +79,6 @@ public class BossProcessor extends Processor {
         } else {
             throw new InvalidCommandException("invalid command");
         }
-
     }
 
     public void processViewUser(String userName) throws NullPointerException {

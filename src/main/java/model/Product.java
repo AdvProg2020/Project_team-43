@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class Product {
@@ -14,6 +15,9 @@ public class Product {
     private Company company;
     private double price;
     private int visit;
+    private Date date;
+
+
     private int availableCount;
     private Category category;
     private Map<String, String> featuresMap;
@@ -36,6 +40,7 @@ public class Product {
         this.price = price;
         this.category = category;
         this.seller = seller;
+        this.date = new Date();
         score = new ProductScore();
         this.visit = 0;
         comments = new ArrayList<Comment>();
@@ -56,6 +61,11 @@ public class Product {
         this.visit = 0;
         comments = new ArrayList<Comment>();
         allProductsInQueueExpect.add(this);
+    }
+
+
+    public Date getDate() {
+        return date;
     }
 
     public ArrayList<Comment> getComments() {
@@ -139,4 +149,15 @@ public class Product {
         this.getScore().addBuyer(score);
     }
 
+    public static ArrayList<Product> getAllProductsInList() {
+        return allProductsInList;
+    }
+
+    public int getVisit() {
+        return visit;
+    }
+
+    public void addVisit() {
+        this.visit += 1;
+    }
 }
