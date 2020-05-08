@@ -14,13 +14,13 @@ public class BossRolesMenu extends Menu {
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
-        submenus.put(1, getPersonalInfo());//complete
-        submenus.put(2, getEdit());//complete
-        submenus.put(3, getManageUsers());//complete
-        submenus.put(4, getManageAllProducts());//complete
-        submenus.put(5, getCreateCodedDiscount());//complete
-        submenus.put(6, getViewCodedDiscounts());//complete
-        submenus.put(7, getManageRequests());//complete
+        submenus.put(1, getPersonalInfo());
+        submenus.put(2, getEdit());
+        submenus.put(3, getManageUsers());
+        submenus.put(4, getManageAllProducts());
+        submenus.put(5, getCreateCodedDiscount());
+        submenus.put(6, getViewCodedDiscounts());
+        submenus.put(7, getManageRequests());
         submenus.put(8, getManageCategories());
         this.setSubmenus(submenus);
 
@@ -56,7 +56,7 @@ public class BossRolesMenu extends Menu {
                 String changeField = scanner.nextLine();
                 try {
                     bossProcessor.editField(userName, field, changeField);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -81,7 +81,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.manageUsers(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -103,7 +103,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.manageAllProducts(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -143,7 +143,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.manageCodedDiscounts(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -168,7 +168,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.manageRequests(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -193,7 +193,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.manageCategories(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }

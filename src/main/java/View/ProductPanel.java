@@ -48,7 +48,11 @@ public class ProductPanel extends Menu {
         return new Menu(this, "attributes") {
             @Override
             public void show() {
-                processor.showAttributes(productId);
+                try {
+                    processor.showAttributes(productId);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -66,7 +70,12 @@ public class ProductPanel extends Menu {
             public void show() {
                 System.out.println("second product Id : ");
                 String secondProductId = scanner.nextLine();
-                processor.compareProcess(productId, secondProductId);
+                try {
+                    processor.compareProcess(productId, secondProductId);
+                } catch (NullPointerException e) {
+                    System.out.println(e.getMessage());
+                }
+
             }
 
             @Override
@@ -88,7 +97,7 @@ public class ProductPanel extends Menu {
                 try {
                     processor.manageComments(command, productId);
                 } catch (Exception e) {
-                    System.out.printf(e.getMessage());
+                    System.out.println(e.getMessage());
                 }
 
             }
@@ -104,7 +113,12 @@ public class ProductPanel extends Menu {
     private void getIdProductFromUser() {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
-        Product.getProductById(productId).addVisit();
+        Product product = Product.getProductById(productId);
+        if(product == null){
+            System.out.println("product with this Id doesn't exist");
+            return;
+        }
+        product.addVisit();
     }
 
     public void show() {

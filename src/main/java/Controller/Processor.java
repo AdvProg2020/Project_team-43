@@ -206,7 +206,6 @@ public class Processor {
     }
 
     public void showDigest(String productId) throws NullPointerException{
-        //TODO : error handling
         Product product = Product.getProductById(productId);
         if(product == null){
             throw new NullPointerException("product with this Id doesn't exist");
@@ -222,17 +221,21 @@ public class Processor {
 
     }
 
-    public void showAttributes(String Id) {
-        //TODO : error handling
+    public void showAttributes(String Id) throws NullPointerException{
         Product product = Product.getProductById(Id);
+        if(product == null){
+            throw new NullPointerException("product with this Id doesn't exist");
+        }
         viewManager.showProductInfo(product);
 
     }
 
-    public void compareProcess(String firstProductId, String secondProductId) {
-        //TODO : error handling
+    public void compareProcess(String firstProductId, String secondProductId) throws NullPointerException{
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
+        if(secondProduct == null || firstProduct == null){
+            throw new NullPointerException("product with this Id doesn't exist");
+        }
         if (secondProduct.getCategory() == firstProduct.getCategory())
             viewManager.compare(firstProduct, secondProduct);
     }
@@ -241,7 +244,6 @@ public class Processor {
         if (!isLogin) {
             throw new InvalidCommandException("user in not login");
         }
-        //TODO : error handling
         if (command.equals("back")) {
             return;
         }
@@ -249,6 +251,8 @@ public class Processor {
         Matcher addCommentMatcher = addCommentPattern.matcher(command);
         if (addCommentMatcher.matches()) {
             addComment(Product.getProductById(productId));
+        } else{
+            throw new InvalidCommandException("invalid command");
         }
     }
 

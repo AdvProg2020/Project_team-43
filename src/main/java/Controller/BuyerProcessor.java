@@ -72,7 +72,7 @@ public class BuyerProcessor extends Processor {
         }
     }
 
-    public void showOrder(String orderId) throws NullPointerException{
+    public void showOrder(String orderId) throws NullPointerException {
         BuyOrder order = (BuyOrder) Order.getOrderById(orderId);
         if (order == null) {
             throw new NullPointerException("order with this Id doesn't exist");
@@ -80,7 +80,7 @@ public class BuyerProcessor extends Processor {
         buyerViewManager.showBuyOrder(order);
     }
 
-    public void rateProduct(String productId, int score) throws NullPointerException{
+    public void rateProduct(String productId, int score) throws NullPointerException {
         Product product = Product.getProductById(productId);
         if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
@@ -92,7 +92,7 @@ public class BuyerProcessor extends Processor {
         viewManager.showBalance(user);
     }
 
-    public void viewBuyerDiscountCodes(){
+    public void viewBuyerDiscountCodes() {
         ArrayList<CodedDiscount> discounts = ((Buyer) user).getDiscounts();
         buyerViewManager.viewDiscountCodes(discounts);
     }
@@ -101,10 +101,9 @@ public class BuyerProcessor extends Processor {
         buyerViewManager.showProductsInCart(((Buyer) user).getBuyerCart());
     }
 
-    public void increaseProduct(String productId) throws NullPointerException{
-        //TODO : error handling
+    public void increaseProduct(String productId) throws NullPointerException {
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         ((Buyer) user).increaseCart(product);
@@ -112,7 +111,7 @@ public class BuyerProcessor extends Processor {
 
     public void decreaseProduct(String productId) {
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         ((Buyer) user).decreaseCart(product);
@@ -122,7 +121,7 @@ public class BuyerProcessor extends Processor {
         return ((Buyer) user).getCartPrice();
     }
 
-    public boolean checkDiscountCode(String code) throws NullPointerException{
+    public boolean checkDiscountCode(String code) throws NullPointerException {
         if (!CodedDiscount.isCodedDiscountWithThisCode(code))
             return false;
         return ((Buyer) user).checkDiscountCode(CodedDiscount.getDiscountById(code));
