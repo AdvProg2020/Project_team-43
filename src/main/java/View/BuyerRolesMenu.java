@@ -23,8 +23,8 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
                 processor.viewPersonalInfo();
-                System.out.println("1 . edit [field]");
-                System.out.println("2 . back");
+                System.out.println("edit [field]");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 try {
                     System.out.println(buyerProcessor.editBuyerField(command));
@@ -48,7 +48,7 @@ public class BuyerRolesMenu extends Menu {
                 String field = scanner.nextLine();
                 try {
                     buyerProcessor.editField(field);
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -76,7 +76,7 @@ public class BuyerRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     processor.manageCart(userName, command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -94,12 +94,13 @@ public class BuyerRolesMenu extends Menu {
             @Override
             public void show() {
                 buyerProcessor.viewOrders();
-                System.out.println("1 . show Order");
-                System.out.println("2 . rate product");
+                System.out.println("show Order");
+                System.out.println("rate product");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 try {
                     buyerProcessor.manageOrders(command);
-                } catch (InvalidCommandException | NullPointerException e){
+                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }

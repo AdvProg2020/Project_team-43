@@ -3,7 +3,7 @@ package model;
 import java.util.Comparator;
 
 public class Sorting {
-    private static Comparator<Product> comparator;
+    private static Comparator<Product> comparator = SortingByView.getInstance();
 
     public static void setSortByView() {
         comparator = SortingByView.getInstance();

@@ -62,13 +62,14 @@ public class ProductsPanel extends Menu {
             @Override
             public void show() {
                 System.out.println("show available sorts");
-                System.out.println("sort");
+                System.out.println("sort [sort type]");
                 System.out.println("current sort");
                 System.out.println("disable sort");
                 System.out.println("back");
                 String command = scanner.nextLine();
                 processor.sortingProcess(command);
-                //
+                if (!command.equalsIgnoreCase("back"))
+                    this.show();
             }
 
             @Override

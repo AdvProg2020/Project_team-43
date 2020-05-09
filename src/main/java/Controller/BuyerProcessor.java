@@ -39,7 +39,12 @@ public class BuyerProcessor extends Processor {
     }
 
     public void addToBuyerCart(Product product) {
-        buyerCart.put(product, 1);
+        if (buyerCart.containsKey(product)) {
+            buyerCart.replace(product, buyerCart.get(product), buyerCart.get(product) + 1);
+        } else
+            buyerCart.put(product, 1);
+        if (user != null)
+            setBuyerCart();
     }
 
     public void viewOrders() {

@@ -157,7 +157,7 @@ public class Processor {
     }
 
     public void showAvailableSort() {
-
+        viewManager.showAvailableSorts();
     }
 
     public void sort(String selectedSort) {
@@ -167,7 +167,7 @@ public class Processor {
             Sorting.setSortByScore();
         } else if (selectedSort.equalsIgnoreCase("by date")) {
             Sorting.setSortByDate();
-        } else{
+        } else {
             viewManager.showErrorMessage("invalid command");
         }
     }
@@ -205,9 +205,9 @@ public class Processor {
         }
     }
 
-    public void showDigest(String productId) throws NullPointerException{
+    public void showDigest(String productId) throws NullPointerException {
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         viewManager.showDigest(product);
@@ -221,19 +221,19 @@ public class Processor {
 
     }
 
-    public void showAttributes(String Id) throws NullPointerException{
+    public void showAttributes(String Id) throws NullPointerException {
         Product product = Product.getProductById(Id);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         viewManager.showProductInfo(product);
 
     }
 
-    public void compareProcess(String firstProductId, String secondProductId) throws NullPointerException{
+    public void compareProcess(String firstProductId, String secondProductId) throws NullPointerException {
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
-        if(secondProduct == null || firstProduct == null){
+        if (secondProduct == null || firstProduct == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         if (secondProduct.getCategory() == firstProduct.getCategory())
@@ -251,7 +251,7 @@ public class Processor {
         Matcher addCommentMatcher = addCommentPattern.matcher(command);
         if (addCommentMatcher.matches()) {
             addComment(Product.getProductById(productId));
-        } else{
+        } else {
             throw new InvalidCommandException("invalid command");
         }
     }
