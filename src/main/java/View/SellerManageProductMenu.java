@@ -1,5 +1,7 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.HashMap;
 
 public class SellerManageProductMenu extends Menu {
@@ -50,7 +52,14 @@ public class SellerManageProductMenu extends Menu {
             @Override
             public void show() {
                 System.out.println("Please enter product id");
-                sellerProcessor.editProductInfo(scanner.nextLine());
+                String id = scanner.nextLine();
+                System.out.println("edit [field]");
+                String field = scanner.nextLine();
+                try {
+                    System.out.println(sellerProcessor.editProductInfo(id, field));
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -59,5 +68,23 @@ public class SellerManageProductMenu extends Menu {
                 this.parent.run();
             }
         };
+    }
+
+    @Override
+    public void show() {
+        sellerProcessor.viewProductList();
+        System.out.println(this.name + ":");
+        for (Integer menuNum : submenus.keySet()) {
+            System.out.println(menuNum + ". " + submenus.get(menuNum).name);
+        }
+        if (processor.isUserLoggedIn()) {
+            System.out.println((submenus.size() + 1) + ". logout");
+        } else {
+            System.out.println((submenus.size() + 1) + ". login");
+        }
+        if (this.parent != null)
+            System.out.println((submenus.size() + 2) + ". Back");
+        else
+            System.out.println((submenus.size() + 2) + ". Exit");
     }
 }

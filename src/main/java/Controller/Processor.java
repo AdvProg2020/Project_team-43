@@ -420,8 +420,9 @@ public class Processor {
         if (matcher.group(1).equalsIgnoreCase("seller")) {
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
+
             //test
-            User.allUsers.add(new Seller(matcher.group(2), personalInfo, companyName));
+            //User.allUsers.add(new Seller(matcher.group(2), personalInfo, companyName));
 
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {

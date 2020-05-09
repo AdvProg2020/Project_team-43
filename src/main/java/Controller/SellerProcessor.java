@@ -2,6 +2,7 @@ package Controller;
 
 import model.*;
 import View.SellerShowAndCatch;
+import model.request.EditProductRequest;
 import model.request.OffRequest;
 import model.request.ProductRequest;
 
@@ -25,10 +26,9 @@ public class SellerProcessor extends Processor {
     public String editSellerField(String command) throws InvalidCommandException {
         Pattern pattern = Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
-        if (!matcher.matches()) {
+        if (!matcher.find()) {
             throw new InvalidCommandException("invalid command");
         }
-        matcher.find();
         String field = matcher.group(1);
         String newField = sellerShowAndCatch.getNewField(field);
         ((Seller) user).editFields(field, newField);
@@ -71,8 +71,18 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public void editProductInfo(String productId) {
-        //TODO : zena
+    public String editProductInfo(String productId, String command) throws InvalidCommandException {
+        Pattern pattern = Pattern.compile("edit (\\S+)");
+        Matcher matcher = pattern.matcher(command);
+        if (!matcher.find()) {
+            throw new InvalidCommandException("invalid command");
+        }
+        String field = matcher.group(1);
+        String newField = sellerShowAndCatch.getNewField(field);
+        Product newProduct = new Product(Product.getProductById(productId));
+        newProduct.editField(field, newField);
+        new EditProductRequest(productId, newProduct);
+        return (field + " successfully changed to " + newField);
     }
 
     public String addNewProduct(String name, String companyName, String categoryName, String priceString) throws InvalidCommandException {

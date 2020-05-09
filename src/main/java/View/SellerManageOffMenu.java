@@ -3,9 +3,9 @@ package View;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ManageOffMenu extends Menu {
+public class SellerManageOffMenu extends Menu {
 
-    public ManageOffMenu(Menu parent, String name) {
+    public SellerManageOffMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<>();
         submenus.put(1, getViewOff());
@@ -78,5 +78,23 @@ public class ManageOffMenu extends Menu {
             productId = scanner.nextLine();
         }
         return productIds;
+    }
+
+    @Override
+    public void show() {
+        sellerProcessor.viewOffs();
+        System.out.println(this.name + ":");
+        for (Integer menuNum : submenus.keySet()) {
+            System.out.println(menuNum + ". " + submenus.get(menuNum).name);
+        }
+        if (processor.isUserLoggedIn()) {
+            System.out.println((submenus.size() + 1) + ". logout");
+        } else {
+            System.out.println((submenus.size() + 1) + ". login");
+        }
+        if (this.parent != null)
+            System.out.println((submenus.size() + 2) + ". Back");
+        else
+            System.out.println((submenus.size() + 2) + ". Exit");
     }
 }
