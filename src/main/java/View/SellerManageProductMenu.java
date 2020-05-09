@@ -73,18 +73,6 @@ public class SellerManageProductMenu extends Menu {
     @Override
     public void show() {
         sellerProcessor.viewProductList();
-        System.out.println(this.name + ":");
-        for (Integer menuNum : submenus.keySet()) {
-            System.out.println(menuNum + ". " + submenus.get(menuNum).name);
-        }
-        if (processor.isUserLoggedIn()) {
-            System.out.println((submenus.size() + 1) + ". logout");
-        } else {
-            System.out.println((submenus.size() + 1) + ". login");
-        }
-        if (this.parent != null)
-            System.out.println((submenus.size() + 2) + ". Back");
-        else
-            System.out.println((submenus.size() + 2) + ". Exit");
+        super.show();
     }
 }

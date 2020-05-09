@@ -40,6 +40,7 @@ public class Product {
         price = product.price;
         category = product.category;
         seller = product.seller;
+        sellers = product.sellers;
         date = product.date;
         score = product.score;
         visit = product.visit;
