@@ -1,8 +1,10 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.HashMap;
 
-public class SellerPersonalInfoMenu extends Menu{
+public class SellerPersonalInfoMenu extends Menu {
     public SellerPersonalInfoMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
@@ -14,9 +16,13 @@ public class SellerPersonalInfoMenu extends Menu{
         return new Menu(this, "Edit fields") {
             @Override
             public void show() {
-                System.out.println("Please enter the fields which you want to edit");
+                System.out.println("edit [field]");
                 String field = scanner.nextLine();
-                sellerProcessor.editField(field);
+                try {
+                    System.out.println(sellerProcessor.editSellerField(field));
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override

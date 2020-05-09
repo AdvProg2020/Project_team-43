@@ -89,4 +89,9 @@ public class SellerShowAndCatch {
         System.out.println("Invalid Id");
     }
 
+    public String getNewField(String field){
+        System.out.println("new "+field + ":");
+        return Menu.getScanner().nextLine();
+    }
+
 }

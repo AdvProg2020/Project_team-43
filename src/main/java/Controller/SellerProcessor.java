@@ -6,6 +6,8 @@ import model.request.OffRequest;
 import model.request.ProductRequest;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SellerProcessor extends Processor {
     private static SellerProcessor instance = new SellerProcessor();
@@ -20,8 +22,17 @@ public class SellerProcessor extends Processor {
         sellerShowAndCatch.viewUser((Seller) user);
     }
 
-    public void editField(String field) {
-        //TODO : zena
+    public String editSellerField(String command) throws InvalidCommandException {
+        Pattern pattern = Pattern.compile("edit (\\S+)");
+        Matcher matcher = pattern.matcher(command);
+        if (!matcher.matches()) {
+            throw new InvalidCommandException("invalid command");
+        }
+        matcher.find();
+        String field = matcher.group(1);
+        String newField = sellerShowAndCatch.getNewField(field);
+        ((Seller) user).editFields(field, newField);
+        return (field + " successfully changed to " + newField);
     }
 
     public void viewCompanyInfo() {
@@ -44,7 +55,7 @@ public class SellerProcessor extends Processor {
         sellerShowAndCatch.showProductList((Seller) user);
     }
 
-    public void viewBuyers(String productId) throws NullPointerException{
+    public void viewBuyers(String productId) throws NullPointerException {
         Seller seller = (Seller) user;
         if (seller.hasProductWithId(productId)) {
             ArrayList<Buyer> buyers = new ArrayList<>();
@@ -64,7 +75,7 @@ public class SellerProcessor extends Processor {
         //TODO : zena
     }
 
-    public String addProduct(String name, String companyName, String categoryName, String priceString) throws InvalidCommandException{
+    public String addNewProduct(String name, String companyName, String categoryName, String priceString) throws InvalidCommandException {
         if (Category.hasCategoryWithName(categoryName)) {
             if (Company.hasCompanyWithName(companyName)) {
                 Company company = Company.getCompanyByName(companyName);
@@ -81,7 +92,16 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public void removeProduct(String productId) throws NullPointerException{
+    public String addExistingProduct(String id) throws InvalidCommandException {
+        if (Product.hasProductWithId(id)) {
+            new ProductRequest(Product.getProductById(id));
+            return "Product add successfully\nWaiting for manger to confirm";
+        } else {
+            throw new InvalidCommandException("product with this Id doesn't exist");
+        }
+    }
+
+    public void removeProduct(String productId) throws NullPointerException {
         boolean hasProduct = ((Seller) user).hasProductWithId(productId);
         if (hasProduct) {
             ((Seller) user).removeProduct(((Seller) user).getProductById(productId));
@@ -104,7 +124,7 @@ public class SellerProcessor extends Processor {
         sellerShowAndCatch.showOffs(((Seller) user).getOffs());
     }
 
-    public void viewOff(String offId) throws NullPointerException{
+    public void viewOff(String offId) throws NullPointerException {
         boolean hasOff = ((Seller) user).hasOffWithId(offId);
         if (hasOff) {
             sellerShowAndCatch.showOff(((Seller) user).getOffById(offId));

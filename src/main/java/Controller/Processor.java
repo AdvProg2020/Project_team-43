@@ -1,7 +1,6 @@
 package Controller;
 
 import View.ShowAndCatch;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
@@ -421,6 +420,9 @@ public class Processor {
         if (matcher.group(1).equalsIgnoreCase("seller")) {
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
+            //test
+            User.allUsers.add(new Seller(matcher.group(2), personalInfo, companyName));
+
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
             Buyer.addBuyer(personalInfo, matcher.group(2));

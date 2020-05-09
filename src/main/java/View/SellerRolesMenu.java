@@ -5,7 +5,6 @@ import model.InvalidCommandException;
 import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
-    private String userName;
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
@@ -13,8 +12,8 @@ public class SellerRolesMenu extends Menu {
         submenus.put(1, new SellerPersonalInfoMenu(this, "Personal Info Menu"));
         submenus.put(2, getViewCompanyInfo());
         submenus.put(3, getViewSalesHistory());
-        submenus.put(4, new ManageProductMenu(this, "Manage Product Menu"));
-        submenus.put(5, getAddProduct());
+        submenus.put(4, new SellerManageProductMenu(this, "Manage Product Menu"));
+        submenus.put(5, new SellerAddProductMenu(this, "Add Product Menu"));
         submenus.put(6, getRemoveProduct());
         submenus.put(7, getShowCategories());
         submenus.put(8, new ManageOffMenu(this, "Manage Off Menu"));
@@ -68,7 +67,7 @@ public class SellerRolesMenu extends Menu {
                 System.out.print("price : ");
                 String price = scanner.nextLine();
                 try {
-                    System.out.println(sellerProcessor.addProduct(name, company, category, price));
+                    System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
                 } catch (NullPointerException | InvalidCommandException e){
                     System.out.println(e.getMessage());
                 }

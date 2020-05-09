@@ -2,9 +2,9 @@ package View;
 
 import java.util.HashMap;
 
-public class ManageProductMenu extends Menu {
+public class SellerManageProductMenu extends Menu {
 
-    public ManageProductMenu(Menu parent, String name) {
+    public SellerManageProductMenu(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getViewProduct());
