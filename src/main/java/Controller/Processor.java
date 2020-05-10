@@ -7,6 +7,7 @@ import model.filters.FilterManager;
 import model.request.SellerRequest;
 
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -415,9 +416,10 @@ public class Processor {
             return ("invalid command");
         if (User.hasUserWithUserName(matcher.group(2)))
             return ("there is a user with this username");
-        UserPersonalInfo personalInfo = new UserPersonalInfo();
-        viewManager.getPersonalInfo(personalInfo);
+
         if (matcher.group(1).equalsIgnoreCase("seller")) {
+            UserPersonalInfo personalInfo = new UserPersonalInfo();
+            viewManager.getPersonalInfo(personalInfo);
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
 
@@ -426,11 +428,20 @@ public class Processor {
 
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
+            UserPersonalInfo personalInfo = new UserPersonalInfo();
+            viewManager.getPersonalInfo(personalInfo);
             Buyer.addBuyer(personalInfo, matcher.group(2));
             return "done";
-        } else {
-            return ("invalid type");
+        } else if (matcher.group(1).equalsIgnoreCase("manager")) {
+            if (!User.hasManager()) {
+                UserPersonalInfo personalInfo = new UserPersonalInfo();
+                viewManager.getPersonalInfo(personalInfo);
+                new Manager(matcher.group(2), personalInfo);
+                return "done";
+            }
+            return "there is a manger";
         }
+        return ("invalid type");
 
     }
 
