@@ -68,7 +68,7 @@ public class SellerRolesMenu extends Menu {
                 String price = scanner.nextLine();
                 try {
                     System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
-                } catch (NullPointerException | InvalidCommandException e){
+                } catch (NullPointerException | InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -125,6 +125,33 @@ public class SellerRolesMenu extends Menu {
                 this.parent.run();
             }
         };
+    }
+
+    public void run() {
+        int input = Integer.parseInt(scanner.nextLine());
+        if (input <= submenus.size()) {
+            submenus.get(input).show();
+            submenus.get(input).run();
+        } else {
+            if (input == submenus.size() + 2) {
+                if (this.parent == null)
+                    System.exit(0);
+                else {
+                    parent.show();
+                    parent.run();
+                }
+            } else {
+                new Menu(this, "logout") {
+                    @Override
+                    public void run() {
+                        //TODO : Logout
+                        processor.logout();
+                        this.parent.parent.show();
+                        this.parent.parent.run();
+                    }
+                }.run();
+            }
+        }
     }
 
 }
