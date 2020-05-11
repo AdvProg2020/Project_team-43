@@ -52,9 +52,9 @@ public class BossProcessor extends Processor {
         if (command.equals("back")) {
             return;
         }
-        Pattern viewUserPattern = Pattern.compile("view (.+)");
+        Pattern viewUserPattern = Pattern.compile("view request(.+)");
         Matcher viewUserMatcher = viewUserPattern.matcher(command);
-        Pattern deleteUserPattern = Pattern.compile("delete user (.+)");
+        Pattern deleteUserPattern = Pattern.compile("delete user request(.+)");
         Matcher deleteUserMatcher = deleteUserPattern.matcher(command);
         Pattern createManagerPattern = Pattern.compile("create manager profile");
         Matcher createManagerMatcher = createManagerPattern.matcher(command);

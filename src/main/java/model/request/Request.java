@@ -24,6 +24,15 @@ public abstract class Request {
         return requestType;
     }
 
+    public static Request getRequestById(String requestId){
+        for (Request request : allRequests) {
+            if(request.requestId.equalsIgnoreCase(requestId)){
+                return request;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Request{" +

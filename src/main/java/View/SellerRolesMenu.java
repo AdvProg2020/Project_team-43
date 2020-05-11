@@ -5,7 +5,6 @@ import model.InvalidCommandException;
 import java.util.HashMap;
 
 public class SellerRolesMenu extends Menu {
-    private String userName;
 
     public SellerRolesMenu(Menu parent, String name) {
         super(parent, name);
@@ -13,11 +12,11 @@ public class SellerRolesMenu extends Menu {
         submenus.put(1, new SellerPersonalInfoMenu(this, "Personal Info Menu"));
         submenus.put(2, getViewCompanyInfo());
         submenus.put(3, getViewSalesHistory());
-        submenus.put(4, new ManageProductMenu(this, "Manage Product Menu"));
-        submenus.put(5, getAddProduct());
+        submenus.put(4, new SellerManageProductMenu(this, "Manage Product Menu"));
+        submenus.put(5, new SellerAddProductMenu(this, "Add Product Menu"));
         submenus.put(6, getRemoveProduct());
         submenus.put(7, getShowCategories());
-        submenus.put(8, new ManageOffMenu(this, "Manage Off Menu"));
+        submenus.put(8, new SellerManageOffMenu(this, "Manage Off Menu"));
         submenus.put(9, getViewBalance());
         this.setSubmenus(submenus);
     }
@@ -68,7 +67,7 @@ public class SellerRolesMenu extends Menu {
                 System.out.print("price : ");
                 String price = scanner.nextLine();
                 try {
-                    System.out.println(sellerProcessor.addProduct(name, company, category, price));
+                    System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
                 } catch (NullPointerException | InvalidCommandException e){
                     System.out.println(e.getMessage());
                 }
@@ -126,58 +125,6 @@ public class SellerRolesMenu extends Menu {
                 this.parent.run();
             }
         };
-    }
-
-    @Override
-    public void run() {
-        int input = Integer.parseInt(scanner.nextLine());
-        if (input == 1) {
-            sellerProcessor.viewPersonalInfo();
-        }
-        if (input == 4) {
-            sellerProcessor.viewProductList();
-        }
-        if (input == 8) {
-            sellerProcessor.viewOffs();
-        }
-        if (input <= submenus.size()) {
-            submenus.get(input).show();
-            submenus.get(input).run();
-        } else {
-            if (input == submenus.size() + 2) {
-                if (this.parent == null)
-                    System.exit(0);
-                else {
-                    parent.show();
-                    parent.run();
-                }
-            } else {
-                if (processor.isUserLoggedIn()) {
-                    new Menu(this, "logout") {
-                        @Override
-                        public void run() {
-                            //TODO : Logout
-                            this.parent.show();
-                            this.parent.run();
-                        }
-                    }.run();
-                } else {
-                    new Menu(this, "login") {
-                        @Override
-                        public void run() {
-                            //TODO : Login
-                            System.out.print("username : ");
-                            String username = scanner.nextLine();
-                            System.out.print("password : ");
-                            String password = scanner.nextLine();
-                            System.out.println(processor.login(username, password));
-                            this.parent.show();
-                            this.parent.run();
-                        }
-                    }.run();
-                }
-            }
-        }
     }
 
 }

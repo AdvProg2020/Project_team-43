@@ -44,7 +44,7 @@ public class SellerShowAndCatch {
     public void showProductList(Seller user) {
         ArrayList<Product> products = user.getProducts();
         if (products.size() == 0) {
-            System.out.println("Nothing to show");
+            System.out.println("No product to show");
         } else {
             System.out.println("Product List:");
             for (Product product : products) {
@@ -87,6 +87,11 @@ public class SellerShowAndCatch {
 
     public void showInvalidId() {
         System.out.println("Invalid Id");
+    }
+
+    public String getNewField(String field){
+        System.out.println("new "+field + ":");
+        return Menu.getScanner().nextLine();
     }
 
 }

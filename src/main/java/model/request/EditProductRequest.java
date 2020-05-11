@@ -6,8 +6,8 @@ public class EditProductRequest extends Request {
     String oldProductId;
     Product newProduct;
 
-    public EditProductRequest(String requestType, String oldProductId, Product newProduct) {
-        super(requestType);
+    public EditProductRequest(String oldProductId, Product newProduct) {
+        super("edit product");
         this.oldProductId = oldProductId;
         this.newProduct = newProduct;
     }

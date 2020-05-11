@@ -22,8 +22,11 @@ public class Manager extends User {
     }
 
     public static Request getRequestById(String requestId) {
-
-        return null;
+        Request request = Request.getRequestById(requestId);
+        if(request == null){
+            throw new NullPointerException("request with this Id doesn't exist");
+        }
+        return request;
     }
 
     public UserPersonalInfo getUserPersonalInfo() {
@@ -93,7 +96,6 @@ public class Manager extends User {
     public void acceptSellerRequest(Request request) {
         Seller seller = ((SellerRequest) request).getSeller();
         User.allUsers.add(seller);
-
     }
 
     public void declineRequest(Request request) {

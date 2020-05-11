@@ -57,6 +57,15 @@ public abstract class User {
 
     }
 
+    public static boolean hasManager() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.MANAGER)
+                return true;
+        }
+        return false;
+
+    }
+
     public void editFields(String field) {
 
     }

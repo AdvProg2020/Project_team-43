@@ -1,13 +1,13 @@
 package Controller;
 
 import View.ShowAndCatch;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
 import model.request.SellerRequest;
 
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -157,7 +157,7 @@ public class Processor {
     }
 
     public void showAvailableSort() {
-
+        viewManager.showAvailableSorts();
     }
 
     public void sort(String selectedSort) {
@@ -167,7 +167,7 @@ public class Processor {
             Sorting.setSortByScore();
         } else if (selectedSort.equalsIgnoreCase("by date")) {
             Sorting.setSortByDate();
-        } else{
+        } else {
             viewManager.showErrorMessage("invalid command");
         }
     }
@@ -205,9 +205,9 @@ public class Processor {
         }
     }
 
-    public void showDigest(String productId) throws NullPointerException{
+    public void showDigest(String productId) throws NullPointerException {
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         viewManager.showDigest(product);
@@ -221,19 +221,19 @@ public class Processor {
 
     }
 
-    public void showAttributes(String Id) throws NullPointerException{
+    public void showAttributes(String Id) throws NullPointerException {
         Product product = Product.getProductById(Id);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         viewManager.showProductInfo(product);
 
     }
 
-    public void compareProcess(String firstProductId, String secondProductId) throws NullPointerException{
+    public void compareProcess(String firstProductId, String secondProductId) throws NullPointerException {
         Product firstProduct = Product.getProductById(firstProductId);
         Product secondProduct = Product.getProductById(secondProductId);
-        if(secondProduct == null || firstProduct == null){
+        if (secondProduct == null || firstProduct == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         if (secondProduct.getCategory() == firstProduct.getCategory())
@@ -251,7 +251,7 @@ public class Processor {
         Matcher addCommentMatcher = addCommentPattern.matcher(command);
         if (addCommentMatcher.matches()) {
             addComment(Product.getProductById(productId));
-        } else{
+        } else {
             throw new InvalidCommandException("invalid command");
         }
     }
@@ -416,18 +416,32 @@ public class Processor {
             return ("invalid command");
         if (User.hasUserWithUserName(matcher.group(2)))
             return ("there is a user with this username");
-        UserPersonalInfo personalInfo = new UserPersonalInfo();
-        viewManager.getPersonalInfo(personalInfo);
+
         if (matcher.group(1).equalsIgnoreCase("seller")) {
+            UserPersonalInfo personalInfo = new UserPersonalInfo();
+            viewManager.getPersonalInfo(personalInfo);
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
+
+            //test
+            //User.allUsers.add(new Seller(matcher.group(2), personalInfo, companyName));
+
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
+            UserPersonalInfo personalInfo = new UserPersonalInfo();
+            viewManager.getPersonalInfo(personalInfo);
             Buyer.addBuyer(personalInfo, matcher.group(2));
             return "done";
-        } else {
-            return ("invalid type");
+        } else if (matcher.group(1).equalsIgnoreCase("manager")) {
+            if (!User.hasManager()) {
+                UserPersonalInfo personalInfo = new UserPersonalInfo();
+                viewManager.getPersonalInfo(personalInfo);
+                new Manager(matcher.group(2), personalInfo);
+                return "done";
+            }
+            return "there is a manger";
         }
+        return ("invalid type");
 
     }
 

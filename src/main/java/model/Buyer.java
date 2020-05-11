@@ -42,7 +42,7 @@ public class Buyer extends User {
 
     }
 
-    public void editFields(String field, String newField) throws InvalidCommandException{
+    public void editFields(String field, String newField) throws InvalidCommandException {
         if (field.equalsIgnoreCase("password")) {
             this.getUserPersonalInfo().setPassword(newField);
         } else if (field.equalsIgnoreCase("lastName")) {
@@ -53,7 +53,7 @@ public class Buyer extends User {
             this.getUserPersonalInfo().setEmail(newField);
         } else if (field.equalsIgnoreCase("phoneNumber")) {
             this.getUserPersonalInfo().setPhoneNumber(newField);
-        } else{
+        } else {
             throw new InvalidCommandException("invalid field");
         }
     }

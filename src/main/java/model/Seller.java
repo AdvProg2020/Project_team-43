@@ -21,12 +21,23 @@ public class Seller extends User {
         userType = UserType.SELLER;
     }
 
-    public void viewPersonalInfo() {
 
-    }
-
-    public void editFields(String field) {
-
+    public void editFields(String field, String newField) throws InvalidCommandException {
+        if (field.equalsIgnoreCase("password")) {
+            this.getUserPersonalInfo().setPassword(newField);
+        } else if (field.equalsIgnoreCase("lastName")) {
+            this.getUserPersonalInfo().setLastName(newField);
+        } else if (field.equalsIgnoreCase("firstName")) {
+            this.getUserPersonalInfo().setFirstName(newField);
+        } else if (field.equalsIgnoreCase("email")) {
+            this.getUserPersonalInfo().setEmail(newField);
+        } else if (field.equalsIgnoreCase("phoneNumber")) {
+            this.getUserPersonalInfo().setPhoneNumber(newField);
+        } else if (field.equalsIgnoreCase("company")) {
+            company = Company.getCompanyByName(newField);
+        } else {
+            throw new InvalidCommandException("invalid field");
+        }
     }
 
     public boolean hasProductWithId(String productId) {

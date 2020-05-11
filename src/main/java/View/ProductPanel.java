@@ -24,8 +24,8 @@ public class ProductPanel extends Menu {
             @Override
             public void show() {
                 processor.showDigest(productId);
-                System.out.println("1 . ADD to cart");
-                System.out.println("2 . back");
+                System.out.println("ADD to cart");
+                System.out.println("back");
                 String command = scanner.nextLine();
                 try {
                     processor.manageDigest(command, productId);

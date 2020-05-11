@@ -9,6 +9,7 @@ public class ProductRequest extends Request {
     public ProductRequest(Product product) {
         super("product");
         Manager.allRequest.add(this);
+        allRequests.add(this);
         this.product = product;
         this.requestType = "product";
     }

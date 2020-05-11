@@ -17,4 +17,8 @@ public class ProductScore {
     public double getAvgScore() {
         return avgScore;
     }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
+    }
 }

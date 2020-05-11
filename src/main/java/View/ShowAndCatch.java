@@ -216,6 +216,11 @@ public class ShowAndCatch {
         System.out.println("filter by [category name] features");
     }
 
+    public void showAvailableSorts() {
+        System.out.println("sort by view");
+        System.out.println("sort by score");
+        System.out.println("sort by date");
+    }
 
     public HashMap<String, String> addFilterByCategoryFeatures(FilterManager filterManager) {
         Category category = filterManager.getCategory();

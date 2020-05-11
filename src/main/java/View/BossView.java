@@ -162,4 +162,10 @@ public class BossView {
         return newName;
     }
 
+    public void showAllRequests(ArrayList<Request> allRequests){
+        for (Request request : allRequests) {
+            System.out.println(request);
+        }
+    }
+
 }

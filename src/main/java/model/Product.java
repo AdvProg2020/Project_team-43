@@ -22,6 +22,7 @@ public class Product {
     private Category category;
     private Map<String, String> featuresMap;
     private Seller seller;
+    private ArrayList<Seller> sellers;
 
     public Seller getSeller() {
         return seller;
@@ -31,6 +32,22 @@ public class Product {
     private ProductScore score;
     private ArrayList<Comment> comments;
 
+    public Product(Product product) {
+        productId = product.productId;
+        productState = product.productState;
+        name = product.name;
+        company = product.company;
+        price = product.price;
+        category = product.category;
+        seller = product.seller;
+        sellers = product.sellers;
+        date = product.date;
+        score = product.score;
+        visit = product.visit;
+        comments = product.comments;
+        description = product.description;
+        featuresMap = product.featuresMap;
+    }
 
     public Product(String name, Company company, double price, Category category, Seller seller) {
         this.productId = "" + constructId;
@@ -159,5 +176,71 @@ public class Product {
 
     public void addVisit() {
         this.visit += 1;
+    }
+
+    public void addSeller(Seller seller) {
+        sellers.add(seller);
+    }
+
+    public void editField(String field, String newField) throws InvalidCommandException {
+        if (field.equalsIgnoreCase("name")) {
+            name = newField;
+        } else if (field.equalsIgnoreCase("company")) {
+            company = Company.getCompanyByName(newField);
+        } else if (field.equalsIgnoreCase("price")) {
+            price = Double.parseDouble(newField);
+        } else if (field.equalsIgnoreCase("category")) {
+            category = Category.getCategoryByName(newField);
+        } else {
+            throw new InvalidCommandException("invalid field");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId='" + productId + '\'' +
+                ", productState=" + productState +
+                ", name='" + name + '\'' +
+                ", company=" + company +
+                ", price=" + price +
+                ", visit=" + visit +
+                ", date=" + date +
+                ", availableCount=" + availableCount +
+                ", category=" + category +
+                ", featuresMap=" + featuresMap +
+                ", seller=" + seller +
+                ", sellers=" + sellers +
+                ", description='" + description + '\'' +
+                ", score=" + score +
+                '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setFeaturesMap(Map<String, String> featuresMap) {
+        this.featuresMap = featuresMap;
     }
 }
