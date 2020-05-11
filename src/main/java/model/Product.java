@@ -232,6 +232,10 @@ public class Product {
         this.visit = visit;
     }
 
+    public void setAvailableCount(int availableCount) {
+        this.availableCount = availableCount;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
