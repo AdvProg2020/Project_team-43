@@ -37,7 +37,9 @@ public class ManageCartMenu extends Menu {
             public void show() {
                 System.out.print("product Id : ");
                 String productId = scanner.nextLine();
-                buyerProcessor.increaseProduct(productId);
+                System.out.println("seller name : ");
+                String sellerName = scanner.nextLine();
+                buyerProcessor.increaseProduct(productId, sellerName);
             }
 
             @Override
@@ -54,7 +56,9 @@ public class ManageCartMenu extends Menu {
             public void show() {
                 System.out.print("product Id : ");
                 String productId = scanner.nextLine();
-                buyerProcessor.decreaseProduct(productId);
+                System.out.println("seller name : ");
+                String sellerName = scanner.nextLine();
+                buyerProcessor.decreaseProduct(productId, sellerName);
             }
 
             @Override
@@ -64,8 +68,9 @@ public class ManageCartMenu extends Menu {
             }
         };
     }
-    private Menu showTotalPrice(){
-        return new Menu(this,"total price") {
+
+    private Menu showTotalPrice() {
+        return new Menu(this, "total price") {
             @Override
             public void show() {
                 System.out.println(buyerProcessor.showTotalPrice());

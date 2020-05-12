@@ -131,7 +131,8 @@ public class ShowAndCatch {
         System.out.println("name: " + product.getName());
         System.out.println("price: " + product.getPrice());
         System.out.println("category: " + product.getCategory());
-        System.out.println("sellers: " + product.getSeller());
+        System.out.println("seller: " + product.getSeller());
+        System.out.println("sellers: " + product.getSellers());
         System.out.println("score:" + product.getScore());
         System.out.println("description: " + product.getDescription());
         System.out.println("sale: " + Off.isProductInOff(product));

@@ -17,6 +17,9 @@ public class Product {
     private int visit;
     private Date date;
 
+    public ArrayList<Seller> getSellers() {
+        return sellers;
+    }
 
     private int availableCount;
     private Category category;

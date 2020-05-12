@@ -1,8 +1,10 @@
 package Controller;
 
 import View.BuyerShowAndCatch;
+import javafx.util.Pair;
 import model.*;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -15,7 +17,8 @@ public class BuyerProcessor extends Processor {
         return instance;
     }
 
-    private static HashMap<Product, Integer> buyerCart = new HashMap<Product, Integer>();
+    private static HashMap<Product, Integer> buyerCart = new HashMap<>();
+    private static HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
     private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
 
     private BuyerProcessor() {
@@ -41,11 +44,26 @@ public class BuyerProcessor extends Processor {
     public void addToBuyerCart(Product product) {
         if (buyerCart.containsKey(product)) {
             buyerCart.replace(product, buyerCart.get(product), buyerCart.get(product) + 1);
-        } else
+        } else {
             buyerCart.put(product, 1);
+        }
+        product.setAvailableCount(product.getAvailableCount() - 1);
         if (user != null)
             setBuyerCart();
     }
+
+    public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
+        if (newBuyerCart.containsKey(productSellerPair)) {
+            newBuyerCart.replace(productSellerPair,
+                    newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
+        } else {
+            newBuyerCart.put(productSellerPair, 1);
+        }
+        productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
+        if (user != null)
+            setNewBuyerCart();
+    }
+
 
     public void viewOrders() {
         ArrayList<BuyOrder> orders = ((Buyer) user).getOrders();
@@ -103,15 +121,29 @@ public class BuyerProcessor extends Processor {
     }
 
     public void showProductsInCart() {
-        buyerViewManager.showProductsInCart(((Buyer) user).getBuyerCart());
+        buyerViewManager.showProductsInCart(((Buyer) user).getNewBuyerCart());
     }
 
     public void increaseProduct(String productId) throws NullPointerException {
         Product product = Product.getProductById(productId);
         if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
-        }
-        ((Buyer) user).increaseCart(product);
+        } else if (product.getAvailableCount() > 0) {
+            ((Buyer) user).increaseCart(product);
+            product.setAvailableCount(product.getAvailableCount() - 1);
+        } else
+            throw new NullPointerException("the product is not available");
+    }
+
+    public void increaseProduct(String productId, String sellerName) throws NullPointerException {
+        Product product = Product.getProductById(productId);
+        if (product == null) {
+            throw new NullPointerException("product with this Id doesn't exist");
+        } else if (product.getAvailableCount() > 0) {
+            ((Buyer) user).increaseCart(product, (Seller) User.getUserByUserName(sellerName));
+            product.setAvailableCount(product.getAvailableCount() - 1);
+        } else
+            throw new NullPointerException("the product is not available");
     }
 
     public void decreaseProduct(String productId) {
@@ -120,10 +152,20 @@ public class BuyerProcessor extends Processor {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         ((Buyer) user).decreaseCart(product);
+        product.setAvailableCount(product.getAvailableCount() + 1);
+    }
+
+    public void decreaseProduct(String productId, String sellerName) {
+        Product product = Product.getProductById(productId);
+        if (product == null) {
+            throw new NullPointerException("product with this Id doesn't exist");
+        }
+        ((Buyer) user).decreaseCart(product, (Seller) User.getUserByUserName(sellerName));
+        product.setAvailableCount(product.getAvailableCount() + 1);
     }
 
     public double showTotalPrice() {
-        return ((Buyer) user).getCartPrice();
+        return ((Buyer) user).getNewCartPrice();
     }
 
     public boolean checkDiscountCode(String code) throws NullPointerException {
@@ -133,10 +175,10 @@ public class BuyerProcessor extends Processor {
     }
 
     public String payment(String address, String phoneNumber, double discount) {
-        if (user.getBalance() < ((Buyer) user).getCartPrice())
+        if (user.getBalance() < ((Buyer) user).getNewCartPrice())
             return "insufficient money";
         ((Buyer) user).purchase();
-        buyerCart.clear();
+        newBuyerCart.clear();
         return "payment done";
     }
 
@@ -144,9 +186,13 @@ public class BuyerProcessor extends Processor {
         ((Buyer) user).setBuyerCart(buyerCart);
     }
 
+    public void setNewBuyerCart() {
+        ((Buyer) user).setNewBuyerCart(newBuyerCart);
+    }
+
     public void logout() {
         user = null;
         isLogin = false;
-        buyerCart.clear();
+        newBuyerCart.clear();
     }
 }

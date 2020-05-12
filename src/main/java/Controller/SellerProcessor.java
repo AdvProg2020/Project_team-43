@@ -80,7 +80,7 @@ public class SellerProcessor extends Processor {
         String field = matcher.group(1);
         String newField = sellerShowAndCatch.getNewField(field);
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         Product newProduct = new Product(product);

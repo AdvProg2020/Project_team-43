@@ -1,6 +1,7 @@
 package Controller;
 
 import View.ShowAndCatch;
+import javafx.util.Pair;
 import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
@@ -200,8 +201,8 @@ public class Processor {
         Pattern addToCartPattern = Pattern.compile("add to cart");
         Matcher addToCartMatcher = addToCartPattern.matcher(command);
         if (addToCartMatcher.matches()) {
-            //TODO : Seller seller = viewManager.selectSeller();
-            addToCart(productId);
+            Seller seller = viewManager.selectSeller();
+            addToCart(productId, seller);
         }
     }
 
@@ -217,9 +218,10 @@ public class Processor {
         BuyerProcessor.getInstance().addToBuyerCart(Product.getProductById(productId));
     }
 
-    public void selectSeller(String sellerUserName) {
-
+    public void addToCart(String productId, Seller seller) {
+        BuyerProcessor.getInstance().addToBuyerCart(new Pair<Product, Seller>(Product.getProductById(productId), seller));
     }
+
 
     public void showAttributes(String Id) throws NullPointerException {
         Product product = Product.getProductById(Id);

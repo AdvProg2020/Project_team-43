@@ -1,5 +1,7 @@
 package model;
 
+import javafx.util.Pair;
+
 import javax.crypto.spec.IvParameterSpec;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +14,8 @@ public class Buyer extends User {
     private ArrayList<Integer> repeatOfDiscountCode;
     private ArrayList<Product> cart;
     private HashMap<Product, Integer> buyerCart;
+    private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
+
 
     public HashMap<Product, Integer> getBuyerCart() {
         return buyerCart;
@@ -77,16 +81,39 @@ public class Buyer extends User {
         buyerCart.replace(product,
                 buyerCart.get(product),
                 buyerCart.get(product) + 1);
+
+    }
+
+    public void increaseCart(Product product, Seller seller) {
+        Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
+        newBuyerCart.replace(productSellerPair,
+                newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
+
     }
 
     public void decreaseCart(Product product) {
+
         if (buyerCart.get(product) == 1) {
             buyerCart.remove(product);
+
         } else {
             buyerCart.replace(product,
                     buyerCart.get(product),
                     buyerCart.get(product) - 1);
         }
+
+    }
+
+    public void decreaseCart(Product product, Seller seller) {
+        Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
+        if (newBuyerCart.get(productSellerPair) == 1) {
+            newBuyerCart.remove(productSellerPair);
+
+        } else {
+            newBuyerCart.replace(productSellerPair,
+                    newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) - 1);
+        }
+
     }
 
     public double getCartPrice() {
@@ -97,11 +124,28 @@ public class Buyer extends User {
         return price;
     }
 
+    public HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
+        return newBuyerCart;
+    }
+
+    public double getNewCartPrice() {
+        double price = 0;
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            price += productSellerPair.getKey().getPrice() * newBuyerCart.get(productSellerPair);
+        }
+        return price;
+    }
+
     public void purchase() {
+        HashMap<Product, Integer> order = new HashMap<>();
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
+        }
         BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
-                this.getCartPrice(), buyerCart, this.getSellerOfCartProducts());
+                this.getCartPrice(), order, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
-        this.buyerCart.clear();
+        this.balance -= this.getNewCartPrice();
+        this.newBuyerCart.clear();
     }
 
     public void viewOrders() {
@@ -120,16 +164,8 @@ public class Buyer extends User {
         this.buyerCart = buyerCart;
     }
 
-    public void rateProduct(String productId, int score) {
-
-    }
-
-    public void viewBalance() {
-
-    }
-
-    public void viewDiscounts() {
-
+    public void setNewBuyerCart(HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+        this.newBuyerCart = newBuyerCart;
     }
 
     public static void addBuyer(UserPersonalInfo personalInfo, String username) {

@@ -23,7 +23,7 @@ public class Manager extends User {
 
     public static Request getRequestById(String requestId) {
         Request request = Request.getRequestById(requestId);
-        if(request == null){
+        if (request == null) {
             throw new NullPointerException("request with this Id doesn't exist");
         }
         return request;
@@ -127,7 +127,7 @@ public class Manager extends User {
         category.setName(newName);
     }
 
-    public void addCategoryFeature(Category category, String newFeature) throws InvalidCommandException{
+    public void addCategoryFeature(Category category, String newFeature) throws InvalidCommandException {
         if (!category.hasFeature(newFeature)) {
             category.addFeatures(newFeature);
         } else {
@@ -135,10 +135,10 @@ public class Manager extends User {
         }
     }
 
-    public void editFeatureName(Category category, String oldFeatureName, String newFeatureName) throws InvalidCommandException{
+    public void editFeatureName(Category category, String oldFeatureName, String newFeatureName) throws InvalidCommandException {
         if (category.hasFeature(oldFeatureName)) {
             category.changeFeatureName(oldFeatureName, newFeatureName);
-        } else{
+        } else {
             throw new InvalidCommandException("category doesn't have this feature");
         }
     }
