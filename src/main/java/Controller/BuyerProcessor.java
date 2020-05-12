@@ -4,7 +4,6 @@ import View.BuyerShowAndCatch;
 import javafx.util.Pair;
 import model.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;

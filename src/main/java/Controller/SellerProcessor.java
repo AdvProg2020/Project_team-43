@@ -97,7 +97,7 @@ public class SellerProcessor extends Processor {
                 int price = Integer.parseInt(priceString);
                 Product product = new Product(name, company, price, category, (Seller) user);
                 new ProductRequest(product);
-                return "Product add successfully\nWaiting for manger to confirm";
+                return "Product add successfully\nWaiting for manager to confirm";
             } else {
                 throw new InvalidCommandException("company with this name doesn't exist");
             }

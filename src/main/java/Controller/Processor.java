@@ -1,14 +1,13 @@
 package Controller;
 
-import View.ShowAndCatch;
 import javafx.util.Pair;
+import View.ShowAndCatch;
 import model.*;
 import model.filters.Criteria;
 import model.filters.FilterManager;
 import model.request.SellerRequest;
 
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 
 import java.util.Collections;
