@@ -112,6 +112,7 @@ public class BossView {
     }
 
     public ArrayList<String> getCategoryFeatures() {
+        Scanner scanner = new Scanner(System.in);
         ArrayList<String> features = new ArrayList<>();
         System.out.println("features : [feature's name]/[finish]");
         while (true) {

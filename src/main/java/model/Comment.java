@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Comment {
     public static ArrayList<Comment> acceptedComments = new ArrayList<Comment>();
-    public static ArrayList<Comment> inQueueExpection = new ArrayList<Comment>();
+    public static ArrayList<Comment> inQueueExpectation = new ArrayList<Comment>();
     private Buyer user;
     private Product product;
     private String commentText;
@@ -16,7 +16,7 @@ public class Comment {
         this.commentText = opinionText;
         this.opinionState = State.OpinionState.WAITING_CONFIRMATION;
         this.isBuy = isBuy;
-        inQueueExpection.add(this);
+        inQueueExpectation.add(this);
     }
 
     public String getCommentText() {

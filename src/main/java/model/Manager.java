@@ -83,6 +83,7 @@ public class Manager extends User {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
+        product.getSeller().getProducts().add(product);
         product.setProductState(State.ProductState.CONFIRMED);
     }
 
@@ -100,27 +101,25 @@ public class Manager extends User {
 
     public void declineRequest(Request request) {
         if (request.getRequestType().equalsIgnoreCase("offType")) {
-            Off off = ((OffRequest) request).getOff();
-            declineOffRequest(off);
+            declineOffRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
-            Product product = ((ProductRequest) request).getProduct();
-            declineProductRequest(product);
-
+            declineProductRequest(request);
         }
         allRequest.remove(request);
     }
 
-    public void declineProductRequest(Product product) {
+    public void declineProductRequest(Request productRequest) {
+        Product product = ((ProductRequest) productRequest).getProduct();
         Seller seller = product.getSeller();
         seller.getProducts().remove(product);
         Product.allProductsInQueueExpect.remove(product);
     }
 
-    public void declineOffRequest(Off off) {
+    public void declineOffRequest(Request offRequest) {
+        Off off = ((OffRequest) offRequest).getOff();
         Off.inQueueExpectionOffs.remove(off);
         Seller seller = off.getSeller();
         seller.getOffs().remove(off);
-        // TODO : remove from product.off
     }
 
     public void editCategoryName(Category category, String newName) {

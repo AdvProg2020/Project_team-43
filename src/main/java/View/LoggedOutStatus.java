@@ -61,7 +61,16 @@ public class LoggedOutStatus extends Menu {
     }
 
     public void run() {
-        int input = Integer.parseInt(scanner.nextLine());
+        String command;
+        while (true) {
+            command = scanner.nextLine();
+            if(command.matches("\\d+")){
+                break;
+            } else{
+                System.out.println("invalid command! please enter a number");
+            }
+        }
+        int input = Integer.parseInt(command);
         if (input <= submenus.size()) {
             submenus.get(input).show();
             submenus.get(input).run();

@@ -10,6 +10,7 @@ public class Company {
     public Company(String name, String info) {
         this.name = name;
         this.info = info;
+        allCompanies.add(this);
     }
 
     public String getName() {

@@ -66,7 +66,6 @@ public class UserPersonalInfo {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

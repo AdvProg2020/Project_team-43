@@ -8,7 +8,6 @@ import model.filters.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import sun.font.CreatedFontTracker;
 
 import java.util.ArrayList;
 

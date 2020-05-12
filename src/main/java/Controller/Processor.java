@@ -275,13 +275,15 @@ public class Processor {
     }
 
     public void showComments(String productId) {
-        //TODO : error handling
         Product product = Product.getProductById(productId);
-        viewManager.showComments(product.getComments());
+        if(product == null){
+            throw new NullPointerException("product with this Id doesn't exist");
+        }
+        ArrayList<Comment> comments = product.getComments();
+        viewManager.showComments(comments);
     }
 
     public void showOffs() {
-        //TODO : error handling
         ArrayList<Off> offs = Off.acceptedOffs;
         viewManager.showOffs(offs, productFilter);
     }

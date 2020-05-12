@@ -39,7 +39,11 @@ public class ManageCartMenu extends Menu {
                 String productId = scanner.nextLine();
                 System.out.println("seller name : ");
                 String sellerName = scanner.nextLine();
-                buyerProcessor.increaseProduct(productId, sellerName);
+                try {
+                    buyerProcessor.increaseProduct(productId, sellerName);
+                } catch (NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -58,7 +62,11 @@ public class ManageCartMenu extends Menu {
                 String productId = scanner.nextLine();
                 System.out.println("seller name : ");
                 String sellerName = scanner.nextLine();
-                buyerProcessor.decreaseProduct(productId, sellerName);
+                try {
+                    buyerProcessor.decreaseProduct(productId, sellerName);
+                } catch (NullPointerException e) {
+                    e.getMessage();
+                }
             }
 
             @Override

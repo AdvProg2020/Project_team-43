@@ -88,6 +88,10 @@ public class Product {
         return date;
     }
 
+    public State.ProductState getProductState() {
+        return productState;
+    }
+
     public ArrayList<Comment> getComments() {
         return comments;
     }

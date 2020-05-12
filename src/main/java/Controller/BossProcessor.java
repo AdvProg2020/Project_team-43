@@ -23,15 +23,15 @@ public class BossProcessor extends Processor {
     public void editField(String userName, String field, String changeField) throws InvalidCommandException {
         User user = User.getUserByUserName(userName);
         field = field.trim();
-        Pattern firstNamePattern = Pattern.compile("^(?i)first name$");
+        Pattern firstNamePattern = Pattern.compile("^(?i)edit first name$");
         Matcher firstNameMatcher = firstNamePattern.matcher(field);
-        Pattern lastNamePattern = Pattern.compile("^(?i)last name$");
+        Pattern lastNamePattern = Pattern.compile("^(?i)edit last name$");
         Matcher lastNameMatcher = lastNamePattern.matcher(field);
-        Pattern emailPattern = Pattern.compile("^(?i)email$");
+        Pattern emailPattern = Pattern.compile("^(?i)edit email$");
         Matcher emailMatcher = emailPattern.matcher(field);
-        Pattern phoneNumberPattern = Pattern.compile("^(?i)phone number$");
+        Pattern phoneNumberPattern = Pattern.compile("^(?i)edit phone number$");
         Matcher phoneNumberMatcher = phoneNumberPattern.matcher(field);
-        Pattern passwordPattern = Pattern.compile("^(?i)first name$");
+        Pattern passwordPattern = Pattern.compile("^(?i)edit password$");
         Matcher passwordMatcher = passwordPattern.matcher(field);
         if (firstNameMatcher.matches()) {
             user.getUserPersonalInfo().setFirstName(changeField);
@@ -52,9 +52,9 @@ public class BossProcessor extends Processor {
         if (command.equals("back")) {
             return;
         }
-        Pattern viewUserPattern = Pattern.compile("view request(.+)");
+        Pattern viewUserPattern = Pattern.compile("view user (.+)");
         Matcher viewUserMatcher = viewUserPattern.matcher(command);
-        Pattern deleteUserPattern = Pattern.compile("delete user request(.+)");
+        Pattern deleteUserPattern = Pattern.compile("delete user (.+)");
         Matcher deleteUserMatcher = deleteUserPattern.matcher(command);
         Pattern createManagerPattern = Pattern.compile("create manager profile");
         Matcher createManagerMatcher = createManagerPattern.matcher(command);
@@ -110,7 +110,7 @@ public class BossProcessor extends Processor {
         if (command.equals("back")) {
             return;
         }
-        Pattern removeProductPattern = Pattern.compile("^(?i)remove (.+)$");
+        Pattern removeProductPattern = Pattern.compile("^(?i)remove product (.+)$");
         Matcher removeProductMatcher = removeProductPattern.matcher(command);
         if (removeProductMatcher.matches()) {
             try {
@@ -233,11 +233,11 @@ public class BossProcessor extends Processor {
         if (command.equals("back")) {
             return;
         }
-        Pattern detailsPattern = Pattern.compile("details (.+)");
+        Pattern detailsPattern = Pattern.compile("details request (.+)");
         Matcher detailsMatcher = detailsPattern.matcher(command);
-        Pattern acceptRequestPattern = Pattern.compile("accept (.+)");
+        Pattern acceptRequestPattern = Pattern.compile("accept request (.+)");
         Matcher acceptRequestMatcher = acceptRequestPattern.matcher(command);
-        Pattern declineRequestPattern = Pattern.compile("decline (.+)");
+        Pattern declineRequestPattern = Pattern.compile("decline request (.+)");
         Matcher declineRequestMatcher = declineRequestPattern.matcher(command);
         if (detailsMatcher.matches()) {
             try {
@@ -293,11 +293,11 @@ public class BossProcessor extends Processor {
         if (command.equals("back")) {
             return;
         }
-        Pattern editCategoryPattern = Pattern.compile("edit (.+)");
+        Pattern editCategoryPattern = Pattern.compile("edit category (.+)");
         Matcher editCategoryMatcher = editCategoryPattern.matcher(command);
-        Pattern addCategoryPattern = Pattern.compile("add (.+)");
+        Pattern addCategoryPattern = Pattern.compile("add category (.+)");
         Matcher addCategoryMatcher = addCategoryPattern.matcher(command);
-        Pattern removeCategoryPattern = Pattern.compile("remove (.+)");
+        Pattern removeCategoryPattern = Pattern.compile("remove category (.+)");
         Matcher removeCategoryMatcher = removeCategoryPattern.matcher(command);
         if (editCategoryMatcher.matches()) {
             try {

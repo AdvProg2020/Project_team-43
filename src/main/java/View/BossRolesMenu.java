@@ -51,7 +51,9 @@ public class BossRolesMenu extends Menu {
                 System.out.println("3 . email");
                 System.out.println("4 . phone number");
                 System.out.println("5 . password");
+                System.out.println("edit [field]");
                 String field = scanner.nextLine();
+                if(!checkField(field))return;
                 System.out.println("change to :");
                 String changeField = scanner.nextLine();
                 try {
@@ -61,6 +63,13 @@ public class BossRolesMenu extends Menu {
                 }
             }
 
+            public boolean checkField(String field){
+                if(field.equalsIgnoreCase("edit first name") || field.equalsIgnoreCase("edit last name") || field.equalsIgnoreCase("edit email") || field.equalsIgnoreCase("edit phone number") || field.equalsIgnoreCase("edit password")){
+                    return true;
+                }
+                System.out.println("invalid command");
+                return false;
+            }
             @Override
             public void run() {
                 this.parent.show();
@@ -98,7 +107,7 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "manage all products") {
             @Override
             public void show() {
-                System.out.println("1 . remove products [productId]");
+                System.out.println("1 . remove product [productId]");
                 System.out.println("2 . back");
                 String command = scanner.nextLine();
                 try {
@@ -186,9 +195,9 @@ public class BossRolesMenu extends Menu {
             @Override
             public void show() {
                 bossProcessor.getBossViewManager().viewAllCategories();
-                System.out.println("1 . edit category");
-                System.out.println("2 . add category");
-                System.out.println("3 . remove category");
+                System.out.println("1 . edit category [category name]");
+                System.out.println("2 . add category [category name]");
+                System.out.println("3 . remove category [category name]");
                 System.out.println("4 . back");
                 String command = scanner.nextLine();
                 try {
@@ -205,7 +214,16 @@ public class BossRolesMenu extends Menu {
             }
         };
     }public void run() {
-        int input = Integer.parseInt(scanner.nextLine());
+        String command;
+        while (true) {
+            command = scanner.nextLine();
+            if(command.matches("\\d+")){
+                break;
+            } else{
+                System.out.println("invalid command! please enter a number");
+            }
+        }
+        int input = Integer.parseInt(command);
         if (input <= submenus.size()) {
             submenus.get(input).show();
             submenus.get(input).run();
