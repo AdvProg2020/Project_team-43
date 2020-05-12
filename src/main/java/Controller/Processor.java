@@ -43,12 +43,6 @@ public class Processor {
         viewManager.showCategories(categories);
     }
 
-    public boolean loginProcess(String username, String password) {
-        if (User.hasUserWithUserName(username))
-            return User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password);
-        return false;
-    }
-
     public void filteringProcess(String command) {
         //TODO : error handling
         if (command.equals("back")) {
@@ -187,11 +181,6 @@ public class Processor {
         viewManager.showProducts(products);
     }
 
-    public void showProductById(String Id) {
-        //TODO : error handling
-        Product product = Product.getProductById(Id);
-    }
-
     public void manageDigest(String command, String productId) {
         //TODO : error handling
         if (command.equals("back")) {
@@ -289,127 +278,6 @@ public class Processor {
 
     public void viewPersonalInfo() {
         viewManager.viewPersonalInfo(user.getUserPersonalInfo());
-    }
-
-    public void editField(String field) {
-        //TODO : error handling
-
-    }
-
-    public void manageCart(String userName, String command) throws InvalidCommandException, NullPointerException {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern showProductsPattern = Pattern.compile("show products");
-        Matcher showProductsMatcher = showProductsPattern.matcher(command);
-        Pattern viewProductPattern = Pattern.compile("view (.+)");
-        Matcher viewProductMatcher = viewProductPattern.matcher(command);
-        Pattern increaseProductPattern = Pattern.compile("increase (.+)");
-        Matcher increaseProductMatcher = increaseProductPattern.matcher(command);
-        Pattern decreaseProductPattern = Pattern.compile("decrease (.+)");
-        Matcher decreaseProductMatcher = decreaseProductPattern.matcher(command);
-        Pattern showTotalPricePattern = Pattern.compile("show total price");
-        Matcher showTotalPriceMatcher = showTotalPricePattern.matcher(command);
-        if (showProductsMatcher.matches()) {
-            viewProductInCart(userName);
-        } else if (viewProductMatcher.matches()) {
-            // handle kardan raftan be safe mahsoolat
-        } else if (increaseProductMatcher.matches()) {
-            increaseProduct(userName, increaseProductMatcher.group(1));
-        } else if (decreaseProductMatcher.matches()) {
-            decreaseProduct(userName, decreaseProductMatcher.group(1));
-        } else if (showTotalPriceMatcher.matches()) {
-            showTotalPrice(userName);
-        } else {
-            throw new InvalidCommandException("invalid command");
-        }
-
-    }
-
-    public void viewProductInCart(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void increaseProduct(String userName, String productId) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        Product product = Product.getProductById(productId);
-
-    }
-
-    public void decreaseProduct(String userName, String productId) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        Product product = Product.getProductById(productId);
-
-    }
-
-    public void showTotalPrice(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void viewBalance(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-        viewManager.showBalance(user);
-    }
-
-    public void manageOrders(String userName, String command) {
-        //TODO : error handling
-        if (command.equals("back")) {
-            return;
-        }
-        Pattern showOrderPattern = Pattern.compile("show order (.+)");
-        Matcher showOrderMatcher = showOrderPattern.matcher(command);
-        Pattern rateProductPattern = Pattern.compile("rate (.+) (\\d)");
-        Matcher rateProductMatcher = rateProductPattern.matcher(command);
-        if (showOrderMatcher.matches()) {
-            showOrder(userName, showOrderMatcher.group(1));
-        } else if (rateProductMatcher.matches()) {
-            rateProduct(userName, rateProductMatcher.group(1), Integer.parseInt(rateProductMatcher.group(2)));
-        }
-    }
-
-    public void viewOrders(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void showOrder(String userName, String orderId) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-    }
-
-    public void rateProduct(String userName, String productId, int score) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-
-    }
-
-    public void viewBuyerDiscountCodes(String userName) {
-        //TODO : error handling
-        User user = User.getUserByUserName(userName);
-
-
-    }
-
-
-    public ArrayList<Product> castStringToProduct(ArrayList<String> productsInString) {
-        //TODO : erro handling
-        ArrayList<Product> products = new ArrayList<Product>();
-        for (String productId : productsInString) {
-            Product product = Product.getProductById(productId);
-            products.add(product);
-        }
-        return products;
     }
 
     public String registerUser(String command) {

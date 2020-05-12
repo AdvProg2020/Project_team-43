@@ -70,10 +70,10 @@ public class SellerManageOffMenu extends Menu {
     }
 
     private ArrayList<String> getProductIds() {
-        System.out.println("Now please enter productIDs.At the end type 'finnish'");
+        System.out.println("Now please enter productIDs. At the end type 'finish'");
         String productId = scanner.nextLine();
         ArrayList<String> productIds = new ArrayList<>();
-        while (!productId.equalsIgnoreCase("finnish")) {
+        while (!productId.equalsIgnoreCase("finish")) {
             productIds.add(productId);
             productId = scanner.nextLine();
         }

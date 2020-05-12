@@ -5,7 +5,6 @@ import model.InvalidCommandException;
 import java.util.HashMap;
 
 public class BuyerRolesMenu extends Menu {
-    private String userName;
 
     public BuyerRolesMenu(Menu parent, String name) {
         super(parent, name);
@@ -29,54 +28,6 @@ public class BuyerRolesMenu extends Menu {
                 try {
                     System.out.println(buyerProcessor.editBuyerField(command));
                 } catch (InvalidCommandException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getEdit() {
-        return new Menu(this, "edit fields") {
-            @Override
-            public void show() {
-                String field = scanner.nextLine();
-                try {
-                    buyerProcessor.editField(field);
-                } catch (NullPointerException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getManageCart() {
-        return new Menu(this, "view product in cart") {
-            @Override
-            public void show() {
-
-                processor.viewProductInCart(userName);
-                System.out.println("1 . show products");
-                System.out.println("2 . view product panel");
-                System.out.println("3 . increase product");
-                System.out.println("4 . decrease product");
-                System.out.println("5 . show total price");
-                System.out.println("6 . back");
-                String command = scanner.nextLine();
-                try {
-                    processor.manageCart(userName, command);
-                } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -144,8 +95,9 @@ public class BuyerRolesMenu extends Menu {
         };
     }
 
+    @Override
     public void run() {
-        String command;
+        String command="";
         while (true) {
             command = scanner.nextLine();
             if(command.matches("\\d+")){
