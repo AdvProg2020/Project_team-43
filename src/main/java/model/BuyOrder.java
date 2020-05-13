@@ -11,7 +11,7 @@ public class BuyOrder extends Order {
     private ArrayList<Seller> sellers;
     private DeliveryStatus deliveryStatus;
 
-    public BuyOrder(String orderId, Date date, double payment, double codedDiscountAmount, HashMap<Product, Integer> products, ArrayList<Seller> sellers) {
+    public BuyOrder(Date date, double payment, double codedDiscountAmount, HashMap<Product, Integer> products, ArrayList<Seller> sellers) {
         super(date);
         this.payment = payment;
         this.products = products;
@@ -22,5 +22,23 @@ public class BuyOrder extends Order {
 
     public HashMap<Product, Integer> getProducts() {
         return products;
+    }
+
+    @Override
+    public String toString() {
+        String string = "BuyOrder{" +
+                "payment=" + payment +
+                ", codedDiscountAmount=" + codedDiscountAmount +
+                ", deliveryStatus=" + deliveryStatus +
+                ", sellersUsername=[";
+        for (Seller seller : sellers) {
+            string = string.concat(seller.getUsername() + ", ");
+        }
+        string = string.concat("], productsId and numbers=[");
+        for (Product product : products.keySet()) {
+            string = string.concat("( " + product.getProductId() + ", " + products.get(product) + " )");
+        }
+        string = string.concat("]}");
+        return string;
     }
 }

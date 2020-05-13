@@ -10,10 +10,10 @@ public class SellOrder extends Order {
     private Buyer buyer;
     private DeliveryStatus deliveryStatus;
 
-    public SellOrder(String orderId, double offAmount, Date date, double payment, Product product, Buyer buyer) {
+    public SellOrder(double offAmount, Date date, double payment, ArrayList<Product> products, Buyer buyer) {
         super(date);
         this.payment = payment;
-        this.products.add(product);
+        this.products = products;
         this.buyer = buyer;
         this.offAmount = offAmount;
         this.deliveryStatus = DeliveryStatus.DELIVERING;
@@ -30,5 +30,20 @@ public class SellOrder extends Order {
 
     public Buyer getBuyer() {
         return buyer;
+    }
+
+    @Override
+    public String toString() {
+        String string = "SellOrder{" +
+                "payment=" + payment +
+                ", offAmount=" + offAmount +
+                ", buyer=" + buyer +
+                ", deliveryStatus=" + deliveryStatus +
+                ", productsId=[";
+        for (Product product : products) {
+            string = string.concat(product.getProductId() + ", ");
+        }
+        string = string.concat("]}");
+        return string;
     }
 }

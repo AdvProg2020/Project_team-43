@@ -78,10 +78,6 @@ public class Seller extends User {
         return company;
     }
 
-    public void viewProduct(String productId) {
-
-    }
-
     public ArrayList<Buyer> getBuyers(String productId) {
         ArrayList<Buyer> buyers = new ArrayList<>();
         for (SellOrder order : orders) {
