@@ -89,4 +89,30 @@ public class Off {
     public boolean hasProduct(Product product) {
         return products.contains(product);
     }
+
+    public void editField(String field, String newField) throws InvalidCommandException {
+        if (field.equalsIgnoreCase("startTime")) {
+            startTime = newField;
+        } else if (field.equalsIgnoreCase("endTime")) {
+            endTime = newField;
+        } else if (field.equalsIgnoreCase("discountAmount")) {
+            try {
+                discountAmount = Double.parseDouble(newField);
+            } catch (Exception e) {
+                throw new InvalidCommandException("discountAmount must be double");
+            }
+        } else {
+            throw new InvalidCommandException("invalid field");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Off{" +
+                "offId='" + offId + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", discountAmount=" + discountAmount +
+                '}';
+    }
 }

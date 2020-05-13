@@ -1,22 +1,35 @@
 package model.request;
 
+import model.Manager;
 import model.Product;
+import model.Seller;
 
 public class EditProductRequest extends Request {
-    String oldProductId;
-    Product newProduct;
+    Product product;
+    String field;
+    String input;
+    Seller seller;
 
-    public EditProductRequest(String oldProductId, Product newProduct) {
+    public EditProductRequest(Product product, String field, String input, Seller seller) {
         super("edit product");
-        this.oldProductId = oldProductId;
-        this.newProduct = newProduct;
+        this.product = product;
+        this.field = field;
+        this.input = input;
+        this.seller = seller;
+        Manager.allRequest.add(this);
+        allRequests.add(this);
     }
 
-    public String getOldProductId() {
-        return oldProductId;
+
+    public Product getProduct() {
+        return product;
     }
 
-    public Product getNewProduct() {
-        return newProduct;
+    public String getField() {
+        return field;
+    }
+
+    public String getInput() {
+        return input;
     }
 }

@@ -18,9 +18,7 @@ public class SellerAddProductMenu extends Menu {
             @Override
             public void show() {
 
-                System.out.println("Please enter product information");
-
-                System.out.print("name : ");
+                System.out.println("Please enter product information\nname : ");
                 String name = scanner.nextLine();
                 System.out.print("company : ");
                 String company = scanner.nextLine();
@@ -28,9 +26,11 @@ public class SellerAddProductMenu extends Menu {
                 String category = scanner.nextLine();
                 System.out.print("price : ");
                 String price = scanner.nextLine();
+                System.out.print("number : ");
+                String number = scanner.nextLine();
                 try {
-                    System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
-                } catch (NullPointerException | InvalidCommandException e){
+                    System.out.println(sellerProcessor.addNewProduct(name, company, category, price, number));
+                } catch (NullPointerException | InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -50,9 +50,11 @@ public class SellerAddProductMenu extends Menu {
 
                 System.out.println("Please enter product id");
                 String id = scanner.nextLine();
+                System.out.println("amount : ");
+                String number = scanner.nextLine();
                 try {
-                    System.out.println(sellerProcessor.addExistingProduct(id));
-                } catch (NullPointerException | InvalidCommandException e){
+                    System.out.println(sellerProcessor.addExistingProduct(id, number));
+                } catch (NullPointerException | InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
             }

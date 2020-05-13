@@ -35,31 +35,14 @@ public class Product {
     private ProductScore score;
     private ArrayList<Comment> comments;
 
-    public Product(Product product) {
-        productId = product.productId;
-        productState = product.productState;
-        name = product.name;
-        company = product.company;
-        price = product.price;
-        category = product.category;
-        seller = product.seller;
-        sellers = product.sellers;
-        date = product.date;
-        score = product.score;
-        visit = product.visit;
-        comments = product.comments;
-        description = product.description;
-        featuresMap = product.featuresMap;
-    }
-
-    public Product(String name, Company company, double price, Category category, Seller seller) {
+    public Product(String name, Company company, double price, Category category) {
         this.productId = "" + constructId;
         this.productState = State.ProductState.CREATING_PROCESS;
         this.name = name;
         this.company = company;
         this.price = price;
         this.category = category;
-        this.seller = seller;
+        sellers = new ArrayList<>();
         this.date = new Date();
         score = new ProductScore();
         this.visit = 0;

@@ -1,10 +1,17 @@
 package model;
 
+import model.request.EditOffRequest;
+import model.request.EditProductRequest;
+import model.request.OffRequest;
+import model.request.ProductRequest;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Seller extends User {
     private Company company;
     private ArrayList<Product> products;
+    private HashMap<Product, Integer> productsNumber;
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;
 
@@ -14,6 +21,7 @@ public class Seller extends User {
         products = new ArrayList<>();
         offs = new ArrayList<>();
         orders = new ArrayList<>();
+        productsNumber = new HashMap<>();
     }
 
     @Override
@@ -41,8 +49,8 @@ public class Seller extends User {
     }
 
     public boolean hasProductWithId(String productId) {
-        for (Product product : products) {
-            if (product.getProductId().equals(productId)) {
+        for (Product product : productsNumber.keySet()) {
+            if (product.getProductId().equals(productId) && productsNumber.get(product) > 0) {
                 return true;
             }
         }
@@ -50,7 +58,7 @@ public class Seller extends User {
     }
 
     public Product getProductById(String productId) {
-        for (Product product : products) {
+        for (Product product : productsNumber.keySet()) {
             if (product.getProductId().equals(productId)) {
                 return product;
             }
@@ -74,28 +82,46 @@ public class Seller extends User {
 
     }
 
-    public void viewBuyers(String productId) {
-
+    public ArrayList<Buyer> getBuyers(String productId) {
+        ArrayList<Buyer> buyers = new ArrayList<>();
+        for (SellOrder order : orders) {
+            if (order.hasProductWithId(productId)) {
+                buyers.add(order.getBuyer());
+            }
+        }
+        return buyers;
     }
 
-    public void editProduct(String productId) {
-
+    public void editProduct(Product product, String field, String newField) {
+        new EditProductRequest(product, field, newField, this);
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public void addNewProduct(String name, Company company, Double price, Category category, int number) {
+        Product product = new Product(name, company, price, category);
+        new ProductRequest(product, this, number);
     }
+
+    public void addExistingProduct(String productId, int number) {
+        new ProductRequest(Product.getProductById(productId), this, number);
+    }
+
 
     public void removeProduct(Product product) {
-        products.remove(product);
+        int number = productsNumber.get(product);
+        productsNumber.replace(product, number, number - 1);
     }
 
-    public void editOff(String offId) {
-
+    public void editOff(Off off, String field, String input) {
+        new EditOffRequest(off, field, input);
     }
 
-    public void addOff(Off off) {
-        offs.add(off);
+    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) {
+        ArrayList<Product> productsTemp = new ArrayList<>();
+        for (String productId : productIds) {
+            productsTemp.add((getProductById(productId)));
+        }
+        Off off = new Off(startTime, endTime, discountAmount, this, productsTemp);
+        new OffRequest(off);
     }
 
     public Off getOffById(String offId) {
@@ -143,4 +169,9 @@ public class Seller extends User {
     public void addOrder(SellOrder sellOrder) {
         orders.add(sellOrder);
     }
+
+    public HashMap<Product, Integer> getProductsNumber() {
+        return productsNumber;
+    }
+
 }

@@ -1,6 +1,5 @@
 package View;
 
-import model.InvalidCommandException;
 
 import java.util.HashMap;
 
@@ -41,36 +40,6 @@ public class SellerRolesMenu extends Menu {
             @Override
             public void show() {
                 sellerProcessor.viewSalesHistory();
-            }
-
-            @Override
-            public void run() {
-                this.parent.show();
-                this.parent.run();
-            }
-        };
-    }
-
-    private Menu getAddProduct() {
-        return new Menu(this, "Add product") {
-            @Override
-            public void show() {
-
-                System.out.println("Please enter product information");
-
-                System.out.print("name : ");
-                String name = scanner.nextLine();
-                System.out.print("company : ");
-                String company = scanner.nextLine();
-                System.out.print("category : ");
-                String category = scanner.nextLine();
-                System.out.print("price : ");
-                String price = scanner.nextLine();
-                try {
-                    System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
-                } catch (NullPointerException | InvalidCommandException e) {
-                    System.out.println(e.getMessage());
-                }
             }
 
             @Override

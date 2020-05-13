@@ -1,22 +1,31 @@
 package model.request;
 
+import model.Manager;
 import model.Off;
 
 public class EditOffRequest extends Request {
-    String oldOffId;
-    Off newOff;
+    Off off;
+    String field;
+    String input;
 
-    public EditOffRequest(String requestType, String oldOffId, Off newOff) {
-        super(requestType);
-        this.oldOffId = oldOffId;
-        this.newOff = newOff;
+    public EditOffRequest(Off off, String field, String input) {
+        super("edit off");
+        this.off = off;
+        this.field = field;
+        this.input = input;
+        Manager.allRequest.add(this);
+        allRequests.add(this);
     }
 
-    public String getOldOffId() {
-        return oldOffId;
+    public Off getOff() {
+        return off;
     }
 
-    public Off getNewOff() {
-        return newOff;
+    public String getField() {
+        return field;
+    }
+
+    public String getInput() {
+        return input;
     }
 }

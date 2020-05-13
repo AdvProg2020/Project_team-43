@@ -3,10 +3,10 @@ package View;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class SellerShowAndCatch {
-    private Scanner scanner = Menu.getScanner();
     private static SellerShowAndCatch ourInstance = new SellerShowAndCatch();
 
     public static SellerShowAndCatch getInstance() {
@@ -41,14 +41,13 @@ public class SellerShowAndCatch {
         System.out.println(product.toString());
     }
 
-    public void showProductList(Seller user) {
-        ArrayList<Product> products = user.getProducts();
+    public void showProductList(HashMap<Product, Integer> products) {
         if (products.size() == 0) {
             System.out.println("No product to show");
         } else {
             System.out.println("Product List:");
-            for (Product product : products) {
-                System.out.println(product.toString());
+            for (Product product : products.keySet()) {
+                System.out.println(product.toString() + " Product amount : " + products.get(product));
             }
         }
     }
@@ -86,8 +85,8 @@ public class SellerShowAndCatch {
     }
 
 
-    public String getNewField(String field){
-        System.out.println("new "+field + ":");
+    public String getNewField(String field) {
+        System.out.println("new " + field + ":");
         return Menu.getScanner().nextLine();
     }
 

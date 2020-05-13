@@ -1,5 +1,7 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,7 +37,14 @@ public class SellerManageOffMenu extends Menu {
             @Override
             public void show() {
                 System.out.println("Please Enter Off Id");
-                sellerProcessor.editOff(scanner.nextLine());
+                String id = scanner.nextLine();
+                System.out.println("edit [field]");
+                String field = scanner.nextLine();
+                try {
+                    System.out.println(sellerProcessor.editOff(id, field));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
