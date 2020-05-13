@@ -6,26 +6,21 @@ import java.util.Date;
 public class SellOrder extends Order {
     private double payment;
     private double offAmount;
-    private ArrayList<Product> products;
+    private Product product;
     private Buyer buyer;
     private DeliveryStatus deliveryStatus;
 
-    public SellOrder(double offAmount, Date date, double payment, ArrayList<Product> products, Buyer buyer) {
+    public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer) {
         super(date);
         this.payment = payment;
-        this.products = products;
+        this.product = product;
         this.buyer = buyer;
         this.offAmount = offAmount;
         this.deliveryStatus = DeliveryStatus.DELIVERING;
     }
 
-    public boolean hasProductWithId(String productId) {
-        for (Product product : products) {
-            if (product.getProductId().equals(productId)) {
-                return true;
-            }
-        }
-        return false;
+    public Product getProduct() {
+        return product;
     }
 
     public Buyer getBuyer() {
@@ -40,9 +35,7 @@ public class SellOrder extends Order {
                 ", buyer=" + buyer +
                 ", deliveryStatus=" + deliveryStatus +
                 ", productsId=[";
-        for (Product product : products) {
-            string = string.concat(product.getProductId() + ", ");
-        }
+        string = string.concat(product.getProductId() + ", ");
         string = string.concat("]}");
         return string;
     }
