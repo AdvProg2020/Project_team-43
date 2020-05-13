@@ -68,7 +68,7 @@ public class SellerRolesMenu extends Menu {
                 String price = scanner.nextLine();
                 try {
                     System.out.println(sellerProcessor.addNewProduct(name, company, category, price));
-                } catch (NullPointerException | InvalidCommandException e){
+                } catch (NullPointerException | InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
             }
