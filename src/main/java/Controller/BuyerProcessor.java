@@ -194,4 +194,8 @@ public class BuyerProcessor extends Processor {
         isLogin = false;
         newBuyerCart.clear();
     }
+
+    public boolean isCartEmpty() {
+        return newBuyerCart.size() == 0;
+    }
 }
