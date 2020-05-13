@@ -3,7 +3,6 @@ package Controller;
 import javafx.util.Pair;
 import View.ShowAndCatch;
 import model.*;
-import model.filters.Criteria;
 import model.filters.FilterManager;
 import model.request.SellerRequest;
 
@@ -11,6 +10,7 @@ import model.request.SellerRequest;
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -201,7 +201,6 @@ public class Processor {
     }
 
     public void manageDigest(String command, String productId) {
-        //TODO : error handling
         if (command.equals("back")) {
             return;
         }
@@ -210,7 +209,8 @@ public class Processor {
         if (addToCartMatcher.matches()) {
             Seller seller = viewManager.selectSeller();
             addToCart(productId, seller);
-        }
+        } else
+            errorMessage("invalid command");
     }
 
     public void showDigest(String productId) throws NullPointerException {
@@ -221,12 +221,9 @@ public class Processor {
         viewManager.showDigest(product);
     }
 
-    public void addToCart(String productId) {
-        BuyerProcessor.getInstance().addToBuyerCart(Product.getProductById(productId));
-    }
 
     public void addToCart(String productId, Seller seller) {
-        BuyerProcessor.getInstance().addToBuyerCart(new Pair<Product, Seller>(Product.getProductById(productId), seller));
+        BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(Product.getProductById(productId), seller));
     }
 
 
@@ -267,7 +264,7 @@ public class Processor {
 
     public void addComment(Product product) {
         //TODO : error handling
-        ArrayList<String> commentInfo = new ArrayList<String>();
+        ArrayList<String> commentInfo = new ArrayList<>();
         viewManager.getCommentInfo(commentInfo);
         boolean isBuy = false;
         for (BuyOrder order : ((Buyer) user).getOrders()) {
@@ -338,11 +335,11 @@ public class Processor {
     public String login(String username, String password) {
         if (!User.hasUserWithUserName(username))
             return "there is no user with this username";
-        if (!User.getUserByUserName(username).getUserPersonalInfo().getPassword().equals(password))
+        if (!Objects.requireNonNull(User.getUserByUserName(username)).getUserPersonalInfo().getPassword().equals(password))
             return "incorrect password";
         isLogin = true;
         user = User.getUserByUserName(username);
-        if (user.getUserType() == UserType.BUYER)
+        if (Objects.requireNonNull(user).getUserType() == UserType.BUYER)
             BuyerProcessor.getInstance().setBuyerCart();
         return "logged in successful";
     }
