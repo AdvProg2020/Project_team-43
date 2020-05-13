@@ -17,6 +17,7 @@ public class BuyOrder extends Order {
         this.products = products;
         this.codedDiscountAmount = codedDiscountAmount;
         this.sellers = sellers;
+        this.deliveryStatus = DeliveryStatus.DELIVERING;
     }
 
     public HashMap<Product, Integer> getProducts() {

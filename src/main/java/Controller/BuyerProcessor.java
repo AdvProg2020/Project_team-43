@@ -145,6 +145,7 @@ public class BuyerProcessor extends Processor {
             throw new NullPointerException("the product is not available");
     }
 
+    
     public void decreaseProduct(String productId) {
         Product product = Product.getProductById(productId);
         if (product == null) {

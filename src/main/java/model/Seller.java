@@ -139,4 +139,8 @@ public class Seller extends User {
     public ArrayList<Off> getOffs() {
         return offs;
     }
+
+    public void addOrder(SellOrder sellOrder) {
+        orders.add(sellOrder);
+    }
 }
