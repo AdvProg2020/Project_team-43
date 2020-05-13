@@ -117,7 +117,7 @@ public class Buyer extends User {
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
-        BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
+        BuyOrder buyOrder = new BuyOrder( new Date(),
                 this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
@@ -130,7 +130,7 @@ public class Buyer extends User {
             Seller seller = productSellerPair.getValue();
             Product product = productSellerPair.getKey();
             double discount = seller.getOffDiscountAmount(product);
-            SellOrder sellOrder = new SellOrder(UUID.randomUUID().toString(), discount, new Date(),
+            SellOrder sellOrder = new SellOrder( discount, new Date(),
                     product.getPrice(), product, this);
             seller.addOrder(sellOrder);
         }
