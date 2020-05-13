@@ -174,9 +174,9 @@ public class BuyerProcessor extends Processor {
     }
 
     public String payment(String address, String phoneNumber, double discount) {
-        if (user.getBalance() < ((Buyer) user).getNewCartPrice())
+        if (user.getBalance() < ((Buyer) user).getNewCartPrice() * (100 - discount) / 100)
             return "insufficient money";
-        ((Buyer) user).purchase();
+        ((Buyer) user).purchase(discount);
         newBuyerCart.clear();
         return "payment done";
     }

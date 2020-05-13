@@ -16,14 +16,6 @@ public class Buyer extends User {
     private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
 
 
-    public HashMap<Product, Integer> getBuyerCart() {
-        return buyerCart;
-    }
-
-    public ArrayList<Product> getCart() {
-        return cart;
-    }
-
     private ArrayList<BuyOrder> orders;
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
@@ -61,20 +53,11 @@ public class Buyer extends User {
         }
     }
 
-    //////////viewCart??????
-
 
     public ArrayList<BuyOrder> getOrders() {
         return orders;
     }
 
-    public void showProducts() {
-
-    }
-
-    public void viewProduct(String productId) {
-
-    }
 
     public void increaseCart(Product product) {
         buyerCart.replace(product,
@@ -115,13 +98,6 @@ public class Buyer extends User {
 
     }
 
-    public double getCartPrice() {
-        double price = 0;
-        for (Product product : buyerCart.keySet()) {
-            price += buyerCart.get(product) * product.getPrice();
-        }
-        return price;
-    }
 
     public HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
         return newBuyerCart;
@@ -131,29 +107,26 @@ public class Buyer extends User {
         double price = 0;
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             price += productSellerPair.getKey().getPrice() * newBuyerCart.get(productSellerPair);
+            if (productSellerPair.getValue().isProductInOff(productSellerPair.getKey())) {
+                double discount = productSellerPair.getValue().getOffDiscountAmount(productSellerPair.getKey());
+                price -= productSellerPair.getKey().getPrice() * newBuyerCart.get(productSellerPair) * (discount) / 100;
+            }
         }
         return price;
     }
 
-    public void purchase() {
+    public void purchase(double discount) {
         HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
-                this.getCartPrice(), order, this.getSellerOfCartProducts());
+                this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
-        this.balance -= this.getNewCartPrice();
+        this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.newBuyerCart.clear();
     }
 
-    public void viewOrders() {
-
-    }//////View logs
-
-    public void showOrder(String orderId) {
-
-    }
 
     public ArrayList<CodedDiscount> getDiscounts() {
         return discounts;
