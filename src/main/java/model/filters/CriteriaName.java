@@ -23,6 +23,6 @@ public class CriteriaName implements Criteria {
 
     @Override
     public String getName() {
-        return this.name;
+        return "name filter : " + this.name;
     }
 }

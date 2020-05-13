@@ -1,6 +1,7 @@
 package model.filters;
 
 import model.Category;
+import model.InvalidCommandException;
 import model.Product;
 
 import java.util.ArrayList;
@@ -31,14 +32,17 @@ public class FilterManager {
     }
 
     public void addPriceFilter(double minPrice, double maxPrice) {
+        disablePriceFilter();
         currentFilters.add(new CriteriaPrice(minPrice, maxPrice));
     }
 
-    public void addAvailabilityPrice() {
+    public void addAvailabilityFilter() {
+        disableAvailabilityFilter();
         currentFilters.add(new CriteriaAvailable());
     }
 
     public void addNameFilter(String name) {
+        disableNameFilter();
         currentFilters.add(new CriteriaName(name));
     }
 

@@ -32,19 +32,24 @@ public class Processor {
         productFilter = new FilterManager();
     }
 
+    public void errorMessage(String message) {
+        try {
+            throw new InvalidCommandException(message);
+        } catch (Exception e) {
+            viewManager.showErrorMessage(e.getMessage());
+        }
+    }
 
     public boolean isUserLoggedIn() {
         return isLogin;
     }
 
     public void viewCategories() {
-        //TODO : error handling
         ArrayList<Category> categories = Category.getAllCategories();
         viewManager.showCategories(categories);
     }
 
     public void filteringProcess(String command) {
-        //TODO : error handling
         if (command.equals("back")) {
             return;
         }
@@ -68,11 +73,16 @@ public class Processor {
             disableFilter(disableFilterMatcher.group(1));
         } else if (selectCategoryMatcher.matches()) {
             selectCategoryForFilter(selectCategoryMatcher.group(1));
+        } else {
+            errorMessage("invalid command");
         }
     }
 
     public void selectCategoryForFilter(String categoryName) {
-        productFilter.setCategory(Category.getCategoryByName(categoryName));
+        if (Category.hasCategoryWithName(categoryName))
+            productFilter.setCategory(Category.getCategoryByName(categoryName));
+        else
+            errorMessage("there is not category with this name");
     }
 
     public void showAvailableFilter() {
@@ -80,48 +90,57 @@ public class Processor {
     }
 
     public void filter(String selectedFilter) {
-        if (selectedFilter.matches("by price from (\\d+) to (\\d+)")) {
-            productFilter.addPriceFilter(Double.parseDouble(selectedFilter.split(" ")[3]),
-                    Double.parseDouble(selectedFilter.split(" ")[5]));
-        } else if (selectedFilter.matches("by availability")) {
-            productFilter.addAvailabilityPrice();
-        } else if (selectedFilter.matches("by name (.+)")) {
-            Pattern pattern = Pattern.compile("by name (.+)");
-            Matcher matcher = pattern.matcher(selectedFilter);
-            productFilter.addNameFilter(matcher.group(1));
-        } else if (selectedFilter.matches("by category features")) {
-            if (productFilter.getCategory() == null) {
-                try {
-                    throw new InvalidCommandException("please select a category");
-                } catch (Exception e) {
-                    viewManager.showErrorMessage(e.getMessage());
-                }
-            } else {
-                productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
-            }
+        Pattern pricePattern = Pattern.compile("by price from (\\d+) to (\\d+)");
+        Matcher priceMatcher = pricePattern.matcher(selectedFilter);
+        Pattern namePattern = Pattern.compile("by name (.+)");
+        Matcher nameMatcher = namePattern.matcher(selectedFilter);
+        Pattern availabilityPattern = Pattern.compile("by availability");
+        Matcher availabilityMatcher = availabilityPattern.matcher(selectedFilter);
+        Pattern categoryPattern = Pattern.compile("by category features");
+        Matcher categoryMatcher = categoryPattern.matcher(selectedFilter);
+        if (priceMatcher.matches()) {
+            productFilter.addPriceFilter(Double.parseDouble(priceMatcher.group(1)),
+                    Double.parseDouble(priceMatcher.group(2)));
+        } else if (availabilityMatcher.matches()) {
+            productFilter.addAvailabilityFilter();
+        } else if (nameMatcher.matches()) {
+            productFilter.addNameFilter(nameMatcher.group(1));
+        } else if (categoryMatcher.matches()) {
+            addFeaturesFilter();
 
         } else {
-            //TODO: error handling
+            errorMessage("invalid filter");
+        }
+    }
+
+    public void addFeaturesFilter() {
+        if (productFilter.getCategory() == null) {
+            errorMessage("please select a category");
+        } else {
+            productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
         }
     }
 
     public void currentFilter() {
         viewManager.showCurrentFilters(productFilter);
-
     }
 
     public void disableFilter(String selectedFilter) {
+        Pattern featurePattern = Pattern.compile("feature (\\S+)");
+        Matcher featureMatcher = featurePattern.matcher(selectedFilter);
         if (selectedFilter.equalsIgnoreCase("price")) {
             productFilter.disablePriceFilter();
         } else if (selectedFilter.equalsIgnoreCase("availability")) {
             productFilter.disableAvailabilityFilter();
         } else if (selectedFilter.equalsIgnoreCase("name")) {
             productFilter.disableNameFilter();
-        } else if (selectedFilter.matches("(\\S+)")) {
-            Pattern pattern = Pattern.compile("(\\S+)");
-            Matcher matcher = pattern.matcher(selectedFilter);
-            productFilter.disableFeature(matcher.group(1));
-        }
+        } else if (featureMatcher.matches()) {
+            if (productFilter.getCategory() != null)
+                productFilter.disableFeature(featureMatcher.group(1));
+            else
+                errorMessage("you did not select a category");
+        } else
+            errorMessage("there is no filter with this name");
     }
 
     public void sortingProcess(String command) {
@@ -264,7 +283,7 @@ public class Processor {
 
     public void showComments(String productId) {
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
         ArrayList<Comment> comments = product.getComments();
