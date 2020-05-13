@@ -20,8 +20,7 @@ public class BossProcessor extends Processor {
         return bossViewManager;
     }
 
-    public void editField(String userName, String field, String changeField) throws InvalidCommandException {
-        User user = User.getUserByUserName(userName);
+    public void editField(String field, String changeField) throws InvalidCommandException {
         field = field.trim();
         Pattern firstNamePattern = Pattern.compile("^(?i)edit first name$");
         Matcher firstNameMatcher = firstNamePattern.matcher(field);
@@ -131,12 +130,23 @@ public class BossProcessor extends Processor {
         ((Manager) user).removeProduct(product);
     }
 
-    public void processCreateCodedDiscount() {
-        //TODO : error handling
+    public void processCreateCodedDiscount() throws InvalidCommandException {
         ArrayList<String> codedDiscountInfo = new ArrayList<String>();
         bossViewManager.getCodedDiscountInfo(codedDiscountInfo);
-        ((Manager) user).createDiscountCoded(codedDiscountInfo);
+        if (checkCodedDiscountInfo(codedDiscountInfo)) {
+            ((Manager) user).createDiscountCoded(codedDiscountInfo);
+        }
 
+    }
+
+    public boolean checkCodedDiscountInfo(ArrayList<String> codedDiscountInfo) throws InvalidCommandException {
+        if (!codedDiscountInfo.get(2).matches("^\\d*\\.?\\d*$")) {
+            throw new InvalidCommandException("invalid discount amount");
+        }
+        if (!codedDiscountInfo.get(3).matches("\\d+")) {
+            throw new InvalidCommandException("invalid repeat number");
+        }
+        return true;
     }
 
     public void manageCodedDiscounts(String command) throws InvalidCommandException {
@@ -196,8 +206,6 @@ public class BossProcessor extends Processor {
     public void processEditCodedDiscountSecond(String field, String discountCode) throws InvalidCommandException {
         String changeField = bossViewManager.getEditCodedDiscountInField();
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        Pattern discountCodePattern = Pattern.compile("^(?i)discount code$");
-        Matcher discountCodeMatcher = discountCodePattern.matcher(field);
         Pattern startTimePattern = Pattern.compile("^(?i)start time$");
         Matcher startTimeMatcher = startTimePattern.matcher(field);
         Pattern endTimePattern = Pattern.compile("^(?i)end time$");
@@ -206,9 +214,7 @@ public class BossProcessor extends Processor {
         Matcher amountMatcher = amountPattern.matcher(field);
         Pattern remainingPattern = Pattern.compile("^(?i)remaining time$");
         Matcher remainingMatcher = remainingPattern.matcher(field);
-        if (discountCodeMatcher.matches()) {
-            codedDiscount.setDiscountCode(changeField);
-        } else if (startTimeMatcher.matches()) {
+        if (startTimeMatcher.matches()) {
             codedDiscount.setStartTime(changeField);
         } else if (endTimeMatcher.matches()) {
             codedDiscount.setEndTime(changeField);

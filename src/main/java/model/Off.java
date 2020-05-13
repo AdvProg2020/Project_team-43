@@ -85,4 +85,8 @@ public class Off {
         }
         return 0;
     }
+
+    public boolean hasProduct(Product product) {
+        return products.contains(product);
+    }
 }

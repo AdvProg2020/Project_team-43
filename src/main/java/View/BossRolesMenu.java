@@ -3,6 +3,7 @@ package View;
 import model.InvalidCommandException;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class BossRolesMenu extends Menu {
     private String userName;
@@ -10,6 +11,7 @@ public class BossRolesMenu extends Menu {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    private Scanner scannerView = new Scanner(System.in);
 
     public BossRolesMenu(Menu parent, String name) {
         super(parent, name);
@@ -52,24 +54,28 @@ public class BossRolesMenu extends Menu {
                 System.out.println("4 . phone number");
                 System.out.println("5 . password");
                 System.out.println("edit [field]");
-                String field = scanner.nextLine();
-                if(!checkField(field))return;
-                System.out.println("change to :");
-                String changeField = scanner.nextLine();
+                String field = scannerView.nextLine();
+                field = field.trim();
+                if (!checkField(field)) return;
+                System.out.println(field + " to :");
+                String changeField = scannerView.nextLine();
+                changeField = changeField.trim();
                 try {
-                    bossProcessor.editField(userName, field, changeField);
+                    bossProcessor.editField(field, changeField);
+                    System.out.println("changed successfully");
                 } catch (InvalidCommandException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
 
-            public boolean checkField(String field){
-                if(field.equalsIgnoreCase("edit first name") || field.equalsIgnoreCase("edit last name") || field.equalsIgnoreCase("edit email") || field.equalsIgnoreCase("edit phone number") || field.equalsIgnoreCase("edit password")){
+            public boolean checkField(String field) {
+                if (field.equalsIgnoreCase("edit first name") || field.equalsIgnoreCase("edit last name") || field.equalsIgnoreCase("edit email") || field.equalsIgnoreCase("edit phone number") || field.equalsIgnoreCase("edit password")) {
                     return true;
                 }
                 System.out.println("invalid command");
                 return false;
             }
+
             @Override
             public void run() {
                 this.parent.show();
@@ -85,9 +91,9 @@ public class BossRolesMenu extends Menu {
                 bossProcessor.getBossViewManager().viewAllUsers();
                 System.out.println("1 . view user [username]");
                 System.out.println("2 . delete user [username]");
-                System.out.println("3 . create processor profile");
+                System.out.println("3 . create manager profile");
                 System.out.println("4 . back");
-                String command = scanner.nextLine();
+                String command = scannerView.nextLine();
                 try {
                     bossProcessor.manageUsers(command);
                 } catch (InvalidCommandException | NullPointerException e) {
@@ -109,7 +115,7 @@ public class BossRolesMenu extends Menu {
             public void show() {
                 System.out.println("1 . remove product [productId]");
                 System.out.println("2 . back");
-                String command = scanner.nextLine();
+                String command = scannerView.nextLine();
                 try {
                     bossProcessor.manageAllProducts(command);
                 } catch (InvalidCommandException | NullPointerException e) {
@@ -129,7 +135,12 @@ public class BossRolesMenu extends Menu {
         return new Menu(this, "create coded discount") {
             @Override
             public void show() {
-                bossProcessor.processCreateCodedDiscount();
+                try {
+                    bossProcessor.processCreateCodedDiscount();
+                    System.out.println("coded discount created");
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -149,7 +160,7 @@ public class BossRolesMenu extends Menu {
                 System.out.println("2 . edit discount code [code]");
                 System.out.println("3 . remove discount code [code]");
                 System.out.println("4 . back");
-                String command = scanner.nextLine();
+                String command = scannerView.nextLine();
                 try {
                     bossProcessor.manageCodedDiscounts(command);
                 } catch (InvalidCommandException | NullPointerException e) {
@@ -174,7 +185,7 @@ public class BossRolesMenu extends Menu {
                 System.out.println("2 . accept request [requestId]");
                 System.out.println("3 . decline request [requestId]");
                 System.out.println("4 . back");
-                String command = scanner.nextLine();
+                String command = scannerView.nextLine();
                 try {
                     bossProcessor.manageRequests(command);
                 } catch (InvalidCommandException | NullPointerException e) {
@@ -199,7 +210,7 @@ public class BossRolesMenu extends Menu {
                 System.out.println("2 . add category [category name]");
                 System.out.println("3 . remove category [category name]");
                 System.out.println("4 . back");
-                String command = scanner.nextLine();
+                String command = scannerView.nextLine();
                 try {
                     bossProcessor.manageCategories(command);
                 } catch (InvalidCommandException | NullPointerException e) {
@@ -213,39 +224,5 @@ public class BossRolesMenu extends Menu {
                 this.parent.run();
             }
         };
-    }public void run() {
-        String command;
-        while (true) {
-            command = scanner.nextLine();
-            if(command.matches("\\d+")){
-                break;
-            } else{
-                System.out.println("invalid command! please enter a number");
-            }
-        }
-        int input = Integer.parseInt(command);
-        if (input <= submenus.size()) {
-            submenus.get(input).show();
-            submenus.get(input).run();
-        } else {
-            if (input == submenus.size() + 2) {
-                if (this.parent == null)
-                    System.exit(0);
-                else {
-                    parent.show();
-                    parent.run();
-                }
-            } else {
-                new Menu(this, "logout") {
-                    @Override
-                    public void run() {
-                        //TODO : Logout
-                        processor.logout();
-                        this.parent.parent.show();
-                        this.parent.parent.run();
-                    }
-                }.run();
-            }
-        }
     }
 }

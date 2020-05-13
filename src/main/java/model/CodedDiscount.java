@@ -46,6 +46,11 @@ public class CodedDiscount {
     }
 
     public static CodedDiscount getDiscountById(String discountCode) {
+        for (CodedDiscount codedDiscount : allCodedDiscount) {
+            if(codedDiscount.discountCode.equalsIgnoreCase(discountCode)){
+                return codedDiscount;
+            }
+        }
         return null;
     }
 
@@ -80,5 +85,14 @@ public class CodedDiscount {
 
     public void setRepeat(String repeat) {
         this.repeat = Integer.parseInt(repeat);
+    }
+
+    @Override
+    public String toString() {
+        return "{discount code : " + discountCode + "}"
+                + "{discount amount : " + discountAmount + "}"
+                + "{repeat : " + repeat + "}"
+                + "{start time : " + startTime + "}"
+                + "{end time : " + endTime + "}";
     }
 }

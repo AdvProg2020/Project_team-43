@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BossView {
-    public Scanner scanner;
+    public Scanner scannerView;
 
     public BossView() {
-        scanner = Menu.scanner;
+        scannerView = new Scanner(System.in);
     }
 
     public void viewAllUsers() {
@@ -25,37 +25,37 @@ public class BossView {
 
     public void getManagerInfo(ArrayList<String> managerInfo) {
         System.out.print("user name : ");
-        String userName = scanner.nextLine();
+        String userName = scannerView.nextLine();
         managerInfo.add(userName);
         System.out.print("first name : ");
-        String firstName = scanner.nextLine();
+        String firstName = scannerView.nextLine();
         managerInfo.add(firstName);
         System.out.print("last name : ");
-        String lastName = scanner.nextLine();
+        String lastName = scannerView.nextLine();
         managerInfo.add(lastName);
         System.out.print("email : ");
-        String email = scanner.nextLine();
+        String email = scannerView.nextLine();
         managerInfo.add(email);
         System.out.print("phone number : ");
-        String phoneNumber = scanner.nextLine();
+        String phoneNumber = scannerView.nextLine();
         managerInfo.add(phoneNumber);
         System.out.print("password : ");
-        String password = scanner.nextLine();
+        String password = scannerView.nextLine();
         managerInfo.add(password);
     }
 
     public void getCodedDiscountInfo(ArrayList<String> discountCodedInfo) {
         System.out.print("Start time : ");
-        String startTime = scanner.nextLine();
+        String startTime = scannerView.nextLine();
         discountCodedInfo.add(startTime);
         System.out.print("End time : ");
-        String endTime = scanner.nextLine();
+        String endTime = scannerView.nextLine();
         discountCodedInfo.add(endTime);
         System.out.print("Discount amount : ");
-        String discountAmount = scanner.nextLine();
+        String discountAmount = scannerView.nextLine();
         discountCodedInfo.add(discountAmount);
         System.out.print("repeat : ");
-        String repeat = scanner.nextLine();
+        String repeat = scannerView.nextLine();
         discountCodedInfo.add(repeat);
     }
 
@@ -75,18 +75,18 @@ public class BossView {
 
     public String getEditCodedDiscountField() {
         System.out.println("FIELDS : ");
-        System.out.println("1 . discount code");
+        System.out.println("1 . remaining time");
         System.out.println("2 . start time");
         System.out.println("3 . end time");
         System.out.println("4 . discount amount");
-        System.out.println("5 . remaining time");
-        System.out.println("6 . back");
-        String command = scanner.nextLine();
+        System.out.println("5 . back");
+        System.out.println("[field]");
+        String command = scannerView.nextLine();
         return command;
     }
     public String getEditCodedDiscountInField(){
         System.out.println("change to : ");
-        String command = scanner.nextLine();
+        String command = scannerView.nextLine();
         return command;
     }
 
@@ -132,7 +132,7 @@ public class BossView {
         System.out.println("2 . change a feature's name of category");
         System.out.println("3 . remove a feature of category");
         System.out.println("4 . add a feature to category");
-        String number = scanner.nextLine();
+        String number = scannerView.nextLine();
         number = number.trim();
         return number;
     }
@@ -144,14 +144,14 @@ public class BossView {
             System.out.println(counter + " . " + feature);
             counter += 1;
         }
-        String feature = scanner.nextLine();
+        String feature = scannerView.nextLine();
         feature = feature.trim();
         return feature;
     }
 
     public String getFeatureNameForAddOrChange() {
         System.out.println("please enter the new feature's name ! ");
-        String newFeature = scanner.nextLine();
+        String newFeature = scannerView.nextLine();
         newFeature = newFeature.trim();
         return newFeature;
 
@@ -159,7 +159,7 @@ public class BossView {
 
     public String getCategoryNewName() {
         System.out.print("new name : ");
-        String newName = scanner.nextLine();
+        String newName = scannerView.nextLine();
         return newName;
     }
 

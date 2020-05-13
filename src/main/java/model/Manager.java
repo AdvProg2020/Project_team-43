@@ -1,10 +1,7 @@
 package model;
 
 
-import model.request.OffRequest;
-import model.request.ProductRequest;
-import model.request.Request;
-import model.request.SellerRequest;
+import model.request.*;
 
 import java.util.ArrayList;
 
@@ -69,20 +66,33 @@ public class Manager extends User {
 
 
     public void acceptRequest(Request request) {
-        if (request.getRequestType().equals("sellerType")) {
+        if (request.getRequestType().equalsIgnoreCase("sellerType")) {
             acceptSellerRequest(request);
-        } else if (request.getRequestType().equals("offType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("offType")) {
             acceptOffRequest((OffRequest) request);
-        } else if (request.getRequestType().equals("productType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             acceptProductRequest((ProductRequest) request);
+        } else if(request.getRequestType().equalsIgnoreCase("editOffType")){
+            acceptEditOffRequest((EditOffRequest)request);
+        } else if(request.getRequestType().equalsIgnoreCase("editProductType")){
+            acceptEditProductRequest((EditProductRequest)request);
         }
         allRequest.remove(request);
+    }
+
+    public void acceptEditOffRequest(EditOffRequest editOffRequest){
+
+    }
+
+    public void acceptEditProductRequest(EditProductRequest editProductRequest){
+
     }
 
     public void acceptProductRequest(ProductRequest request) {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
+        //seller in the request
         product.getSeller().getProducts().add(product);
         product.setProductState(State.ProductState.CONFIRMED);
     }

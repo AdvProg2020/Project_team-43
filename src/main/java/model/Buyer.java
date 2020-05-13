@@ -2,35 +2,23 @@ package model;
 
 import javafx.util.Pair;
 
-import javax.crypto.spec.IvParameterSpec;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class Buyer extends User {
     //TODO
-    private ArrayList<CodedDiscount> discounts;
-    private ArrayList<Integer> repeatOfDiscountCode;
+    //private ArrayList<CodedDiscount> discounts;
+    //private ArrayList<Integer> repeatOfDiscountCode;
+    private HashMap<CodedDiscount, Integer> codedDiscounts;
     private ArrayList<Product> cart;
     private HashMap<Product, Integer> buyerCart;
     private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
 
 
-    public HashMap<Product, Integer> getBuyerCart() {
-        return buyerCart;
-    }
-
-    public ArrayList<Product> getCart() {
-        return cart;
-    }
-
     private ArrayList<BuyOrder> orders;
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
-        discounts = new ArrayList<CodedDiscount>();
-        repeatOfDiscountCode = new ArrayList<Integer>();
+        codedDiscounts = new HashMap<CodedDiscount, Integer>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
         buyerCart = new HashMap<>();
@@ -62,20 +50,11 @@ public class Buyer extends User {
         }
     }
 
-    //////////viewCart??????
-
 
     public ArrayList<BuyOrder> getOrders() {
         return orders;
     }
 
-    public void showProducts() {
-
-    }
-
-    public void viewProduct(String productId) {
-
-    }
 
     public void increaseCart(Product product) {
         buyerCart.replace(product,
@@ -116,13 +95,6 @@ public class Buyer extends User {
 
     }
 
-    public double getCartPrice() {
-        double price = 0;
-        for (Product product : buyerCart.keySet()) {
-            price += buyerCart.get(product) * product.getPrice();
-        }
-        return price;
-    }
 
     public HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
         return newBuyerCart;
@@ -132,31 +104,30 @@ public class Buyer extends User {
         double price = 0;
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             price += productSellerPair.getKey().getPrice() * newBuyerCart.get(productSellerPair);
+            if (productSellerPair.getValue().isProductInOff(productSellerPair.getKey())) {
+                double discount = productSellerPair.getValue().getOffDiscountAmount(productSellerPair.getKey());
+                price -= productSellerPair.getKey().getPrice() * newBuyerCart.get(productSellerPair) * (discount) / 100;
+            }
         }
         return price;
     }
 
-    public void purchase() {
+    public void purchase(double discount) {
         HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(UUID.randomUUID().toString(), new Date(),
-                this.getCartPrice(), order, this.getSellerOfCartProducts());
+                this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts());
         this.orders.add(buyOrder);
-        this.balance -= this.getNewCartPrice();
+        this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.newBuyerCart.clear();
     }
 
-    public void viewOrders() {
-
-    }//////View logs
-
-    public void showOrder(String orderId) {
-
-    }
 
     public ArrayList<CodedDiscount> getDiscounts() {
+        ArrayList<CodedDiscount> discounts = new ArrayList<>();
+        discounts.addAll(codedDiscounts.keySet());
         return discounts;
     }
 
@@ -173,23 +144,20 @@ public class Buyer extends User {
     }
 
     public boolean checkDiscountCode(CodedDiscount discount) {
-        if (!this.discounts.contains(discount))
+        if (!this.codedDiscounts.containsKey(discount))
             return false;
         if (!discount.checkTime())
             return false;
-        this.repeatOfDiscountCode.set(discounts.indexOf(discount),
-                this.repeatOfDiscountCode.get(discounts.indexOf(discount)) - 1);
-        if (this.repeatOfDiscountCode.get(discounts.indexOf(discount)) == discount.getRepeat()) {
-            this.repeatOfDiscountCode.remove(discounts.indexOf(discount));
-            this.discounts.remove(discount);
+        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) - 1);
+        if (codedDiscounts.get(discount) == discount.getRepeat()) {
+            codedDiscounts.remove(discount);
         }
         return true;
 
     }
 
     public void addDiscountCode(CodedDiscount discount) {
-        this.discounts.add(discount);
-        this.repeatOfDiscountCode.add(0);
+        codedDiscounts.put(discount, 0);
     }
 
     public ArrayList<Seller> getSellerOfCartProducts() {

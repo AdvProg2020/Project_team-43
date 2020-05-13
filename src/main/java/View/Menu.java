@@ -55,9 +55,9 @@ public abstract class Menu {
         String command;
         while (true) {
             command = scanner.nextLine();
-            if(command.matches("\\d+")){
+            if (command.matches("\\d+")) {
                 break;
-            } else{
+            } else {
                 System.out.println("invalid command! please enter a number");
             }
         }
@@ -78,10 +78,19 @@ public abstract class Menu {
                     new Menu(this, "logout") {
                         @Override
                         public void run() {
-                            //TODO : Logout
                             processor.logout();
-                            this.parent.show();
-                            this.parent.run();
+                            Menu ans = this;
+                            Menu menu = this;
+                            while (menu != null) {
+                                if (menu.name.equalsIgnoreCase("Boss Login To Do List") ||
+                                        menu.name.equalsIgnoreCase("Buyer Login To Do List") ||
+                                        menu.name.equalsIgnoreCase("Seller Login To Do List")) {
+                                    ans = menu;
+                                }
+                                menu = menu.parent;
+                            }
+                            ans.parent.show();
+                            ans.parent.run();
                         }
                     }.run();
                 } else {

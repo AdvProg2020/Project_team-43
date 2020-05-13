@@ -116,6 +116,26 @@ public class Seller extends User {
         return false;
     }
 
+    public boolean isProductInOff(Product product) {
+        for (Off off : offs) {
+            if (off.getOffState() == State.OffState.CONFIRMED) {
+                if (off.hasProduct(product))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public double getOffDiscountAmount(Product product) {
+        for (Off off : offs) {
+            if (off.getOffState() == State.OffState.CONFIRMED) {
+                if (off.hasProduct(product))
+                    return off.getDiscountAmount();
+            }
+        }
+        return 0;
+    }
+
     public ArrayList<Off> getOffs() {
         return offs;
     }

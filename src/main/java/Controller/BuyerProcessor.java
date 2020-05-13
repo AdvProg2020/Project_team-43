@@ -4,7 +4,6 @@ import View.BuyerShowAndCatch;
 import javafx.util.Pair;
 import model.*;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -175,9 +174,9 @@ public class BuyerProcessor extends Processor {
     }
 
     public String payment(String address, String phoneNumber, double discount) {
-        if (user.getBalance() < ((Buyer) user).getNewCartPrice())
+        if (user.getBalance() < ((Buyer) user).getNewCartPrice() * (100 - discount) / 100)
             return "insufficient money";
-        ((Buyer) user).purchase();
+        ((Buyer) user).purchase(discount);
         newBuyerCart.clear();
         return "payment done";
     }
@@ -194,5 +193,9 @@ public class BuyerProcessor extends Processor {
         user = null;
         isLogin = false;
         newBuyerCart.clear();
+    }
+
+    public boolean isCartEmpty() {
+        return newBuyerCart.size() == 0;
     }
 }

@@ -41,7 +41,7 @@ public class ManageCartMenu extends Menu {
                 String sellerName = scanner.nextLine();
                 try {
                     buyerProcessor.increaseProduct(productId, sellerName);
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -91,4 +91,5 @@ public class ManageCartMenu extends Menu {
             }
         };
     }
+
 }

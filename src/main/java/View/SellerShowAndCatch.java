@@ -27,7 +27,7 @@ public class SellerShowAndCatch {
     public void showSellOrders(ArrayList<SellOrder> orders) {
         System.out.println("Your sales history:");
         if (orders.size() == 0) {
-            System.out.println("Nothing to show");
+            System.out.println("No order to show");
         } else {
             int i = 1;
             for (SellOrder order : orders) {
@@ -85,9 +85,6 @@ public class SellerShowAndCatch {
         System.out.println(off.toString());
     }
 
-    public void showInvalidId() {
-        System.out.println("Invalid Id");
-    }
 
     public String getNewField(String field){
         System.out.println("new "+field + ":");
