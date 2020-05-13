@@ -2,15 +2,13 @@ package model;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class Buyer extends User {
     //TODO
-    private ArrayList<CodedDiscount> discounts;
-    private ArrayList<Integer> repeatOfDiscountCode;
+    //private ArrayList<CodedDiscount> discounts;
+    //private ArrayList<Integer> repeatOfDiscountCode;
+    private HashMap<CodedDiscount, Integer> codedDiscounts;
     private ArrayList<Product> cart;
     private HashMap<Product, Integer> buyerCart;
     private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
@@ -20,8 +18,7 @@ public class Buyer extends User {
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
-        discounts = new ArrayList<CodedDiscount>();
-        repeatOfDiscountCode = new ArrayList<Integer>();
+        codedDiscounts = new HashMap<CodedDiscount, Integer>();
         cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
         buyerCart = new HashMap<>();
@@ -129,6 +126,8 @@ public class Buyer extends User {
 
 
     public ArrayList<CodedDiscount> getDiscounts() {
+        ArrayList<CodedDiscount> discounts = new ArrayList<>();
+        discounts.addAll(codedDiscounts.keySet());
         return discounts;
     }
 
@@ -145,23 +144,20 @@ public class Buyer extends User {
     }
 
     public boolean checkDiscountCode(CodedDiscount discount) {
-        if (!this.discounts.contains(discount))
+        if (!this.codedDiscounts.containsKey(discount))
             return false;
         if (!discount.checkTime())
             return false;
-        this.repeatOfDiscountCode.set(discounts.indexOf(discount),
-                this.repeatOfDiscountCode.get(discounts.indexOf(discount)) - 1);
-        if (this.repeatOfDiscountCode.get(discounts.indexOf(discount)) == discount.getRepeat()) {
-            this.repeatOfDiscountCode.remove(discounts.indexOf(discount));
-            this.discounts.remove(discount);
+        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) - 1);
+        if (codedDiscounts.get(discount) == discount.getRepeat()) {
+            codedDiscounts.remove(discount);
         }
         return true;
 
     }
 
     public void addDiscountCode(CodedDiscount discount) {
-        this.discounts.add(discount);
-        this.repeatOfDiscountCode.add(0);
+        codedDiscounts.put(discount, 0);
     }
 
     public ArrayList<Seller> getSellerOfCartProducts() {
