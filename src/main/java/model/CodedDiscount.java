@@ -47,7 +47,7 @@ public class CodedDiscount {
 
     public static CodedDiscount getDiscountById(String discountCode) {
         for (CodedDiscount codedDiscount : allCodedDiscount) {
-            if(codedDiscount.discountCode.equalsIgnoreCase(discountCode)){
+            if (codedDiscount.discountCode.equalsIgnoreCase(discountCode)) {
                 return codedDiscount;
             }
         }
