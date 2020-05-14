@@ -223,7 +223,17 @@ public class Processor {
 
 
     public void addToCart(String productId, Seller seller) {
-        BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(Product.getProductById(productId), seller));
+        Product product;
+        if (Product.hasProductWithId(productId)) {
+            product = Product.getProductById(productId);
+        } else {
+            errorMessage("invalid product Id");
+            return;
+        }
+        if (seller.isProductAvailable(product))
+            BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller));
+        else
+            errorMessage("seller has not any of this product");
     }
 
 
@@ -345,8 +355,7 @@ public class Processor {
     }
 
     public void logout() {
-        user = null;
-        isLogin = false;
+        BuyerProcessor.getInstance().logout();
     }
 
 }

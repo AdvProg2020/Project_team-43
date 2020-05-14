@@ -170,4 +170,20 @@ public class Seller extends User {
         return productsNumber;
     }
 
+    public boolean isProductAvailable(Product product) {
+        return productsNumber.get(product) > 0;
+    }
+
+    public void decreaseProduct(Product product) {
+        productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) - 1);
+    }
+
+    public void increaseProduct(Product product) {
+        productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) + 1);
+    }
+
+    public void increaseProduct(Product product, int number) {
+        productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) + number);
+    }
+
 }
