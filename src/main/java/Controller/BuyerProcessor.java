@@ -6,19 +6,19 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerProcessor extends Processor {
-    private static BuyerProcessor instance = new BuyerProcessor();
+    private final static BuyerProcessor instance = new BuyerProcessor();
 
     public static BuyerProcessor getInstance() {
         return instance;
     }
 
-    private static HashMap<Product, Integer> buyerCart = new HashMap<>();
-    private static HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
-    private static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
+    private final static HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
+    private final static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
 
     private BuyerProcessor() {
     }
@@ -40,16 +40,6 @@ public class BuyerProcessor extends Processor {
         }
     }
 
-    public void addToBuyerCart(Product product) {
-        if (buyerCart.containsKey(product)) {
-            buyerCart.replace(product, buyerCart.get(product), buyerCart.get(product) + 1);
-        } else {
-            buyerCart.put(product, 1);
-        }
-        product.setAvailableCount(product.getAvailableCount() - 1);
-        if (user != null)
-            setBuyerCart();
-    }
 
     public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
         if (newBuyerCart.containsKey(productSellerPair)) {
@@ -58,6 +48,7 @@ public class BuyerProcessor extends Processor {
         } else {
             newBuyerCart.put(productSellerPair, 1);
         }
+        productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
         productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
         if (user != null)
             setNewBuyerCart();
@@ -123,45 +114,40 @@ public class BuyerProcessor extends Processor {
         buyerViewManager.showProductsInCart(((Buyer) user).getNewBuyerCart());
     }
 
-    public void increaseProduct(String productId) throws NullPointerException {
-        Product product = Product.getProductById(productId);
-        if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
-        } else if (product.getAvailableCount() > 0) {
-            ((Buyer) user).increaseCart(product);
-            product.setAvailableCount(product.getAvailableCount() - 1);
-        } else
-            throw new NullPointerException("the product is not available");
+    public boolean checkProductAndSellerValidation(String productId, String sellerName) {
+        if (!(User.hasUserWithUserName(sellerName) && User.getUserByUserName(sellerName) instanceof Seller)) {
+            errorMessage("invalid seller name");
+            return true;
+        }
+        if (!Product.hasProductWithId(productId)) {
+            errorMessage("product with this Id doesn't exist");
+            return true;
+        }
+        return false;
     }
 
     public void increaseProduct(String productId, String sellerName) throws NullPointerException {
+        if (checkProductAndSellerValidation(productId, sellerName))
+            return;
         Product product = Product.getProductById(productId);
-        if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
-        } else if (product.getAvailableCount() > 0) {
+        Seller seller = (Seller) User.getUserByUserName(sellerName);
+        if (Objects.requireNonNull(seller).isProductAvailable(product)) {
             ((Buyer) user).increaseCart(product, (Seller) User.getUserByUserName(sellerName));
-            product.setAvailableCount(product.getAvailableCount() - 1);
+            Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() - 1);
+            seller.decreaseProduct(product);
         } else
-            throw new NullPointerException("the product is not available");
+            errorMessage("not available any more");
     }
 
-
-    public void decreaseProduct(String productId) {
-        Product product = Product.getProductById(productId);
-        if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
-        }
-        ((Buyer) user).decreaseCart(product);
-        product.setAvailableCount(product.getAvailableCount() + 1);
-    }
 
     public void decreaseProduct(String productId, String sellerName) {
+        if (checkProductAndSellerValidation(productId, sellerName))
+            return;
         Product product = Product.getProductById(productId);
-        if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
-        }
+        Seller seller = (Seller) User.getUserByUserName(sellerName);
         ((Buyer) user).decreaseCart(product, (Seller) User.getUserByUserName(sellerName));
-        product.setAvailableCount(product.getAvailableCount() + 1);
+        Objects.requireNonNull(seller).increaseProduct(product);
+        Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() + 1);
     }
 
     public double showTotalPrice() {
@@ -177,14 +163,11 @@ public class BuyerProcessor extends Processor {
     public String payment(String address, String phoneNumber, double discount) {
         if (user.getBalance() < ((Buyer) user).getNewCartPrice() * (100 - discount) / 100)
             return "insufficient money";
-        ((Buyer) user).purchase(discount);
+        ((Buyer) user).purchase(discount, address, phoneNumber);
         newBuyerCart.clear();
         return "payment done";
     }
 
-    public void setBuyerCart() {
-        ((Buyer) user).setBuyerCart(buyerCart);
-    }
 
     public void setNewBuyerCart() {
         ((Buyer) user).setNewBuyerCart(newBuyerCart);
@@ -193,6 +176,10 @@ public class BuyerProcessor extends Processor {
     public void logout() {
         user = null;
         isLogin = false;
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            productSellerPair.getValue().increaseProduct(productSellerPair.getKey(),
+                    newBuyerCart.get(productSellerPair));
+        }
         newBuyerCart.clear();
     }
 

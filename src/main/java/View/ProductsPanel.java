@@ -1,8 +1,5 @@
 package View;
 
-import model.InvalidCommandException;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-
 import java.util.HashMap;
 
 public class ProductsPanel extends Menu {
@@ -70,11 +67,7 @@ public class ProductsPanel extends Menu {
                 System.out.println("disable sort");
                 System.out.println("back");
                 String command = scanner.nextLine();
-                try {
-                    processor.sortingProcess(command);
-                } catch (InvalidCommandException e){
-                    System.out.println(e.getMessage());
-                }
+                processor.sortingProcess(command);
                 if (!command.equalsIgnoreCase("back"))
                     this.show();
             }

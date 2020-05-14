@@ -54,6 +54,14 @@ public class CodedDiscount {
         return null;
     }
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
     public boolean hasUser(Buyer buyer) {
         return this.users.contains(buyer);
     }

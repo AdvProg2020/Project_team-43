@@ -45,16 +45,16 @@ public class BossView {
     }
 
     public void getCodedDiscountInfo(ArrayList<String> discountCodedInfo) {
-        System.out.print("Start time : ");
+        System.out.print("Start time [dd/MM/yyyy]: ");
         String startTime = scannerView.nextLine();
         discountCodedInfo.add(startTime);
-        System.out.print("End time : ");
+        System.out.print("End time [dd/MM/yyyy]: ");
         String endTime = scannerView.nextLine();
         discountCodedInfo.add(endTime);
-        System.out.print("Discount amount : ");
+        System.out.print("Discount amount (must be Integer(double)): ");
         String discountAmount = scannerView.nextLine();
         discountCodedInfo.add(discountAmount);
-        System.out.print("repeat : ");
+        System.out.print("repeat (must be Integer): ");
         String repeat = scannerView.nextLine();
         discountCodedInfo.add(repeat);
     }

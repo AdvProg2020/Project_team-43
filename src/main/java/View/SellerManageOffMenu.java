@@ -70,10 +70,9 @@ public class SellerManageOffMenu extends Menu {
                 try {
                     sellerProcessor.addOff(startTime, endTime, discountAmount, productIds);
                     System.out.println("Off sent to manger to confirm");
-                } catch (ParseException|InvalidCommandException e){
+                } catch (ParseException |InvalidCommandException e){
                     System.out.println(e.getMessage());
                 }
-
             }
 
             @Override

@@ -209,7 +209,7 @@ public class BossProcessor extends Processor {
     public void processEditCodedDiscountSecond(String field, String discountCode) throws InvalidCommandException, NullPointerException, ParseException {
         String changeField = bossViewManager.getEditCodedDiscountInField();
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        if(codedDiscount == null){
+        if (codedDiscount == null) {
             throw new NullPointerException("codedDiscount with this Id doesn't exist");
         }
         Pattern startTimePattern = Pattern.compile("^(?i)start time$");
@@ -222,10 +222,18 @@ public class BossProcessor extends Processor {
         Matcher remainingMatcher = remainingPattern.matcher(field);
         if (startTimeMatcher.matches() && changeField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(changeField);
-            codedDiscount.setStartTime(date);
-        } else if (endTimeMatcher.matches()) {
+            if (date.before(codedDiscount.getEndTime())) {
+                codedDiscount.setStartTime(date);
+            } else {
+                throw new InvalidCommandException("startTime must be before endTime");
+            }
+        } else if (endTimeMatcher.matches() && changeField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(changeField);
-            codedDiscount.setEndTime(date);
+            if (date.after(codedDiscount.getStartTime())) {
+                codedDiscount.setEndTime(date);
+            } else {
+                throw new InvalidCommandException("endTime must be after startTime");
+            }
         } else if (amountMatcher.matches()) {
             codedDiscount.setDiscountAmount(changeField);
         } else if (remainingMatcher.matches()) {
@@ -262,7 +270,7 @@ public class BossProcessor extends Processor {
         } else if (acceptRequestMatcher.matches()) {
             try {
                 acceptRequest(acceptRequestMatcher.group(1));
-            } catch (NullPointerException|ParseException e) {
+            } catch (NullPointerException | ParseException e) {
                 viewManager.showErrorMessage(e.getMessage());
             }
         } else if (declineRequestMatcher.matches()) {

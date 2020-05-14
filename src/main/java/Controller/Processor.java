@@ -143,7 +143,7 @@ public class Processor {
             errorMessage("there is no filter with this name");
     }
 
-    public void sortingProcess(String command) throws InvalidCommandException{
+    public void sortingProcess(String command) {
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -165,8 +165,6 @@ public class Processor {
             currentSort();
         } else if (disableSortMatcher.matches()) {
             disableSort();
-        } else {
-            throw new  InvalidCommandException("invalid command");
         }
 
     }
@@ -352,7 +350,7 @@ public class Processor {
         isLogin = true;
         user = User.getUserByUserName(username);
         if (Objects.requireNonNull(user).getUserType() == UserType.BUYER)
-            BuyerProcessor.getInstance().setBuyerCart();
+            BuyerProcessor.getInstance().setNewBuyerCart();
         return "logged in successful";
     }
 
