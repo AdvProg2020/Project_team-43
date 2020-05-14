@@ -143,7 +143,7 @@ public class Processor {
             errorMessage("there is no filter with this name");
     }
 
-    public void sortingProcess(String command) {
+    public void sortingProcess(String command) throws InvalidCommandException{
         //TODO : error handling
         if (command.equals("back")) {
             return;
@@ -165,6 +165,8 @@ public class Processor {
             currentSort();
         } else if (disableSortMatcher.matches()) {
             disableSort();
+        } else {
+            throw new  InvalidCommandException("invalid command");
         }
 
     }

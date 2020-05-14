@@ -176,11 +176,23 @@ public class Product {
         if (field.equalsIgnoreCase("name")) {
             name = newField;
         } else if (field.equalsIgnoreCase("company")) {
-            company = Company.getCompanyByName(newField);
+            if (Company.hasCompanyWithName(newField)) {
+                company = Company.getCompanyByName(newField);
+            } else {
+                throw new InvalidCommandException("invalid company");
+            }
         } else if (field.equalsIgnoreCase("price")) {
-            price = Double.parseDouble(newField);
+            try {
+                price = Double.parseDouble(newField);
+            } catch (Exception e) {
+                throw new InvalidCommandException("price must be double");
+            }
         } else if (field.equalsIgnoreCase("category")) {
-            category = Category.getCategoryByName(newField);
+            if (Category.hasCategoryWithName(newField)) {
+                category = Category.getCategoryByName(newField);
+            } else {
+                throw new InvalidCommandException("invalid category");
+            }
         } else {
             throw new InvalidCommandException("invalid field");
         }

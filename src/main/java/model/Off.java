@@ -1,6 +1,9 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 //import java.util.Date;
 
 public class Off {
@@ -11,13 +14,11 @@ public class Off {
     private Seller seller;
     private ArrayList<Product> products;
     private State.OffState offState;
-    private String startTime;
-    private String endTime;
-    //private Date startDate;
-    //private Date endDate;
+    private Date startTime;
+    private Date endTime;
     private double discountAmount;
 
-    public Off(String startTime, String endTime, double discountAmount, Seller seller, ArrayList<Product> products1) {
+    public Off(Date startTime, Date endTime, double discountAmount, Seller seller, ArrayList<Product> products1){
         this.offId = "" + constructId;
         this.offState = State.OffState.CREATING_PROCESS;
         this.startTime = startTime;
@@ -45,11 +46,11 @@ public class Off {
         return offState;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
@@ -90,11 +91,21 @@ public class Off {
         return products.contains(product);
     }
 
-    public void editField(String field, String newField) throws InvalidCommandException {
-        if (field.equalsIgnoreCase("startTime")) {
-            startTime = newField;
+    public void editField(String field, String newField) throws InvalidCommandException, ParseException {
+        if (field.equalsIgnoreCase("startTime") && newField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
+            if(date.before(endTime)){
+                startTime = date;
+            } else{
+                throw new InvalidCommandException("startTime must be before endTime");
+            }
         } else if (field.equalsIgnoreCase("endTime")) {
-            endTime = newField;
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
+            if(date.after(endTime)){
+                endTime = date;
+            } else{
+                throw new InvalidCommandException("endTime must be after startTime");
+            }
         } else if (field.equalsIgnoreCase("discountAmount")) {
             try {
                 discountAmount = Double.parseDouble(newField);

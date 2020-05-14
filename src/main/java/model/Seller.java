@@ -5,7 +5,9 @@ import model.request.EditProductRequest;
 import model.request.OffRequest;
 import model.request.ProductRequest;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Seller extends User {
@@ -111,7 +113,7 @@ public class Seller extends User {
         new EditOffRequest(off, field, input);
     }
 
-    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) {
+    public void addOff(Date startTime, Date endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException {
         ArrayList<Product> productsTemp = new ArrayList<>();
         for (String productId : productIds) {
             productsTemp.add((getProductById(productId)));

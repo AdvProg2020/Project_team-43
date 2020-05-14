@@ -4,7 +4,10 @@ import model.*;
 import View.SellerShowAndCatch;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,6 +65,10 @@ public class SellerProcessor extends Processor {
     }
 
     public String editProductInfo(String productId, String command) throws InvalidCommandException {
+        Product product = Product.getProductById(productId);
+        if (product == null) {
+            throw new NullPointerException("product with this Id doesn't exist");
+        }
         Pattern pattern = Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
         if (!matcher.find()) {
@@ -69,10 +76,6 @@ public class SellerProcessor extends Processor {
         }
         String field = matcher.group(1);
         String newField = sellerShowAndCatch.getNewField(field);
-        Product product = Product.getProductById(productId);
-        if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
-        }
         ((Seller) user).editProduct(product, field, newField);
         return (field + " successfully changed to " + newField + "\nManager must confirm");
     }
@@ -150,6 +153,7 @@ public class SellerProcessor extends Processor {
     public String editOff(String offId, String command) throws NullPointerException, InvalidCommandException {
         boolean hasOff = ((Seller) user).hasOffWithId(offId);
         if (hasOff) {
+            Off off = ((Seller) user).getOffById(offId);
             Pattern pattern = Pattern.compile("edit (\\S+)");
             Matcher matcher = pattern.matcher(command);
             if (!matcher.find()) {
@@ -157,7 +161,6 @@ public class SellerProcessor extends Processor {
             }
             String field = matcher.group(1);
             String newField = sellerShowAndCatch.getNewField(field);
-            Off off = ((Seller) user).getOffById(offId);
             ((Seller) user).editOff(off, field, newField);
             return (field + " successfully changed to " + newField + "\nManager must confirm");
         } else {
@@ -165,8 +168,13 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) {
-        ((Seller) user).addOff(startTime, endTime, discountAmount, productIds);
+    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException, InvalidCommandException {
+        Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
+        Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
+        if(startTimeDate.after(endTimeDate)){
+            throw new InvalidCommandException("startTime must be before endTime");
+        }
+        ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);
     }
 
 }

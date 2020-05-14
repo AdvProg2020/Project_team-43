@@ -5,6 +5,7 @@ import model.*;
 import model.request.Request;
 
 import java.lang.NullPointerException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -254,7 +255,7 @@ public class BossProcessor extends Processor {
         } else if (acceptRequestMatcher.matches()) {
             try {
                 acceptRequest(acceptRequestMatcher.group(1));
-            } catch (NullPointerException e) {
+            } catch (NullPointerException|ParseException e) {
                 viewManager.showErrorMessage(e.getMessage());
             }
         } else if (declineRequestMatcher.matches()) {
@@ -277,7 +278,7 @@ public class BossProcessor extends Processor {
 
     }
 
-    public void acceptRequest(String requestId) throws NullPointerException {
+    public void acceptRequest(String requestId) throws NullPointerException, ParseException, InvalidCommandException {
         Request request = Manager.getRequestById(requestId);
         if (request == null) {
             throw new NullPointerException("request with this Id doesn't exist");

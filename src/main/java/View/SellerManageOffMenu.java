@@ -2,6 +2,7 @@ package View;
 
 import model.InvalidCommandException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,15 +60,20 @@ public class SellerManageOffMenu extends Menu {
         return new Menu(this, "Add Off") {
             @Override
             public void show() {
-                System.out.println("Please Enter Off Start Time:");
+                System.out.println("Please Enter Off Start Time [dd/MM/yyyy]:");
                 String startTime = scanner.nextLine();
-                System.out.println("Off End Time:");
+                System.out.println("Off End Time [dd/MM/yyyy]:");
                 String endTime = scanner.nextLine();
                 System.out.println("Discount Amount(Must be integer):");
                 Double discountAmount = Double.parseDouble(scanner.nextLine());
                 ArrayList<String> productIds = getProductIds();
-                sellerProcessor.addOff(startTime, endTime, discountAmount, productIds);
-                System.out.println("Off sent to manger to confirm");
+                try {
+                    sellerProcessor.addOff(startTime, endTime, discountAmount, productIds);
+                    System.out.println("Off sent to manger to confirm");
+                } catch (ParseException|InvalidCommandException e){
+                    System.out.println(e.getMessage());
+                }
+
             }
 
             @Override

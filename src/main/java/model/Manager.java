@@ -2,7 +2,9 @@ package model;
 
 
 import model.request.*;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Manager extends User {
@@ -65,27 +67,29 @@ public class Manager extends User {
     }
 
 
-    public void acceptRequest(Request request) {
+    public void acceptRequest(Request request) throws InvalidCommandException, ParseException{
         if (request.getRequestType().equalsIgnoreCase("sellerType")) {
             acceptSellerRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("offType")) {
             acceptOffRequest((OffRequest) request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             acceptProductRequest((ProductRequest) request);
-        } else if(request.getRequestType().equalsIgnoreCase("editOffType")){
-            acceptEditOffRequest((EditOffRequest)request);
-        } else if(request.getRequestType().equalsIgnoreCase("editProductType")){
-            acceptEditProductRequest((EditProductRequest)request);
+        } else if (request.getRequestType().equalsIgnoreCase("editOffType")) {
+            acceptEditOffRequest((EditOffRequest) request);
+        } else if (request.getRequestType().equalsIgnoreCase("editProductType")) {
+            acceptEditProductRequest((EditProductRequest) request);
         }
         allRequest.remove(request);
     }
 
-    public void acceptEditOffRequest(EditOffRequest editOffRequest){
-
+    public void acceptEditOffRequest(EditOffRequest editOffRequest) throws InvalidCommandException, ParseException {
+        Off off = editOffRequest.getOff();
+        off.editField(editOffRequest.getField(), editOffRequest.getInput());
     }
 
-    public void acceptEditProductRequest(EditProductRequest editProductRequest){
-
+    public void acceptEditProductRequest(EditProductRequest editProductRequest)throws InvalidCommandException {
+        Product product = editProductRequest.getProduct();
+        product.editField(editProductRequest.getField(), editProductRequest.getInput());
     }
 
     public void acceptProductRequest(ProductRequest request) {
