@@ -5,21 +5,14 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class Buyer extends User {
-    //TODO
-    //private ArrayList<CodedDiscount> discounts;
-    //private ArrayList<Integer> repeatOfDiscountCode;
     private HashMap<CodedDiscount, Integer> codedDiscounts;
-    private ArrayList<Product> cart;
     private HashMap<Product, Integer> buyerCart;
     private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
-
-
     private ArrayList<BuyOrder> orders;
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
-        cart = new ArrayList<Product>();
         orders = new ArrayList<BuyOrder>();
         buyerCart = new HashMap<>();
         allUsers.add(this);
@@ -56,13 +49,6 @@ public class Buyer extends User {
     }
 
 
-    public void increaseCart(Product product) {
-        buyerCart.replace(product,
-                buyerCart.get(product),
-                buyerCart.get(product) + 1);
-
-    }
-
     public void increaseCart(Product product, Seller seller) {
         Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
         newBuyerCart.replace(productSellerPair,
@@ -70,18 +56,6 @@ public class Buyer extends User {
 
     }
 
-    public void decreaseCart(Product product) {
-
-        if (buyerCart.get(product) == 1) {
-            buyerCart.remove(product);
-
-        } else {
-            buyerCart.replace(product,
-                    buyerCart.get(product),
-                    buyerCart.get(product) - 1);
-        }
-
-    }
 
     public void decreaseCart(Product product, Seller seller) {
         Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
@@ -138,14 +112,9 @@ public class Buyer extends User {
 
 
     public ArrayList<CodedDiscount> getDiscounts() {
-        ArrayList<CodedDiscount> discounts = new ArrayList<>();
-        discounts.addAll(codedDiscounts.keySet());
-        return discounts;
+        return new ArrayList<>(codedDiscounts.keySet());
     }
 
-    public void setBuyerCart(HashMap<Product, Integer> buyerCart) {
-        this.buyerCart = buyerCart;
-    }
 
     public void setNewBuyerCart(HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         this.newBuyerCart = newBuyerCart;
