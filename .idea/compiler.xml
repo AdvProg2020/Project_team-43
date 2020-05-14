@@ -16,7 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
-      <module name="Project_team-43" target="1.13" />
+      <module name="maven" target="1.13" />
     </bytecodeTargetLevel>
   </component>
 </project>
