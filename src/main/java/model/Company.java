@@ -10,7 +10,8 @@ import java.util.Arrays;
 
 public class Company {
     private static String fileAddress = "database/Company.dat";
-    public static ArrayList<Company> allCompanies = new ArrayList<>();
+    private static ArrayList<Company> allCompanies = new ArrayList<>();
+
     private String name;
     private String info;
 
