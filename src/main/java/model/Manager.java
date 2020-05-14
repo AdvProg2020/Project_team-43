@@ -67,7 +67,7 @@ public class Manager extends User {
     }
 
 
-    public void acceptRequest(Request request) throws InvalidCommandException, ParseException{
+    public void acceptRequest(Request request) throws InvalidCommandException, ParseException {
         if (request.getRequestType().equalsIgnoreCase("sellerType")) {
             acceptSellerRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("offType")) {
@@ -87,7 +87,7 @@ public class Manager extends User {
         off.editField(editOffRequest.getField(), editOffRequest.getInput());
     }
 
-    public void acceptEditProductRequest(EditProductRequest editProductRequest)throws InvalidCommandException {
+    public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
     }
@@ -96,8 +96,15 @@ public class Manager extends User {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
-        //seller in the request
-        product.getSeller().getProducts().add(product);
+        product.getSellers().add(product.getSeller());
+        Seller seller = product.getSeller();
+        seller.getProducts().add(product);
+        if (seller.getProductsNumber().containsKey(product)) {
+            int numberOfProduct = seller.getProductsNumber().get(product);
+            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+        } else {
+            seller.getProductsNumber().put(product, request.getNumber());
+        }
         product.setProductState(State.ProductState.CONFIRMED);
     }
 

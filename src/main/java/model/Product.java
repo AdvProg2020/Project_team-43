@@ -16,21 +16,11 @@ public class Product {
     private double price;
     private int visit;
     private Date date;
-
-    public ArrayList<Seller> getSellers() {
-        return sellers;
-    }
-
     private int availableCount;
     private Category category;
     private Map<String, String> featuresMap;
     private Seller seller;
     private ArrayList<Seller> sellers;
-
-    public Seller getSeller() {
-        return seller;
-    }
-
     private String description;/////////tozihat
     private ProductScore score;
     private ArrayList<Comment> comments;
@@ -66,6 +56,13 @@ public class Product {
         allProductsInQueueExpect.add(this);
     }
 
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public ArrayList<Seller> getSellers() {
+        return sellers;
+    }
 
     public Date getDate() {
         return date;
