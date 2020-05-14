@@ -4,6 +4,7 @@ import Controller.BossProcessor;
 import Controller.BuyerProcessor;
 import Controller.Processor;
 import Controller.SellerProcessor;
+import model.App;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -67,9 +68,9 @@ public abstract class Menu {
             submenus.get(input).run();
         } else {
             if (input == submenus.size() + 2) {
-                if (this.parent == null)
-                    System.exit(0);
-                else {
+                if (this.parent == null) {
+                    App.getInstance().close();
+                } else {
                     parent.show();
                     parent.run();
                 }

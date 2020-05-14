@@ -2,8 +2,6 @@ package model;
 
 
 import model.request.*;
-import org.omg.CORBA.DynAnyPackage.Invalid;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Manager extends User {
-    public static ArrayList<Request> allRequest = new ArrayList<Request>();
+    public static ArrayList<Request> allRequest = new ArrayList<>();
 
     public Manager(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);

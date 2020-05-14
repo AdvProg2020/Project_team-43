@@ -13,7 +13,6 @@ public class EditOffRequest extends Request {
         this.off = off;
         this.field = field;
         this.input = input;
-        Manager.allRequest.add(this);
         allRequests.add(this);
     }
 

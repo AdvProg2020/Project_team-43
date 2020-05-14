@@ -1,9 +1,16 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Company {
-    public static ArrayList<Company> allCompanies = new ArrayList<Company>();
+    private static String fileAddress = "database/Company.dat";
+    public static ArrayList<Company> allCompanies = new ArrayList<>();
     private String name;
     private String info;
 
@@ -32,7 +39,6 @@ public class Company {
     }
 
     public static boolean hasCompanyWithName(String name) {
-
         for (Company company : allCompanies) {
             if (company.name.equals(name)) {
                 return true;
@@ -41,4 +47,24 @@ public class Company {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", info='" + info + '\'' +
+                '}';
+    }
+
+
+    public static void load() throws FileNotFoundException {
+        Company[] companies = (Company[]) Loader.load(Company[].class, fileAddress);
+        if (companies != null) {
+            allCompanies = new ArrayList<>(Arrays.asList(companies));
+        }
+    }
+
+
+    public static void save() throws IOException {
+        Saver.save(allCompanies, fileAddress);
+    }
 }
