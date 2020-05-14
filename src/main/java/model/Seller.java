@@ -81,7 +81,7 @@ public class Seller extends User {
     public ArrayList<Buyer> getBuyers(String productId) {
         ArrayList<Buyer> buyers = new ArrayList<>();
         for (SellOrder order : orders) {
-            if (order.getProduct().getProductId().equals(productId)) {
+            if (order.hasProductWithId(productId)) {
                 buyers.add(order.getBuyer());
             }
         }
