@@ -6,7 +6,9 @@ import model.request.Request;
 
 import java.lang.NullPointerException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,7 +133,7 @@ public class BossProcessor extends Processor {
         ((Manager) user).removeProduct(product);
     }
 
-    public void processCreateCodedDiscount() throws InvalidCommandException {
+    public void processCreateCodedDiscount() throws InvalidCommandException, ParseException {
         ArrayList<String> codedDiscountInfo = new ArrayList<String>();
         bossViewManager.getCodedDiscountInfo(codedDiscountInfo);
         if (checkCodedDiscountInfo(codedDiscountInfo)) {
@@ -169,7 +171,7 @@ public class BossProcessor extends Processor {
         } else if (editCodedDiscountMatcher.matches()) {
             try {
                 processEditCodedDiscountFirst(editCodedDiscountMatcher.group(1));
-            } catch (InvalidCommandException | NullPointerException e) {
+            } catch (InvalidCommandException | NullPointerException | ParseException e) {
                 viewManager.showErrorMessage(e.getMessage());
             }
         } else if (removeCodedDiscountMatcher.matches()) {
@@ -192,7 +194,7 @@ public class BossProcessor extends Processor {
 
     }
 
-    public void processEditCodedDiscountFirst(String discountCode) throws NullPointerException, InvalidCommandException {
+    public void processEditCodedDiscountFirst(String discountCode) throws NullPointerException, InvalidCommandException, ParseException {
         if (CodedDiscount.getDiscountById(discountCode) == null) {
             throw new NullPointerException("coded discount with this code doesn't exist");
         }
@@ -204,9 +206,12 @@ public class BossProcessor extends Processor {
         }
     }
 
-    public void processEditCodedDiscountSecond(String field, String discountCode) throws InvalidCommandException {
+    public void processEditCodedDiscountSecond(String field, String discountCode) throws InvalidCommandException, NullPointerException, ParseException {
         String changeField = bossViewManager.getEditCodedDiscountInField();
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
+        if(codedDiscount == null){
+            throw new NullPointerException("codedDiscount with this Id doesn't exist");
+        }
         Pattern startTimePattern = Pattern.compile("^(?i)start time$");
         Matcher startTimeMatcher = startTimePattern.matcher(field);
         Pattern endTimePattern = Pattern.compile("^(?i)end time$");
@@ -215,10 +220,12 @@ public class BossProcessor extends Processor {
         Matcher amountMatcher = amountPattern.matcher(field);
         Pattern remainingPattern = Pattern.compile("^(?i)remaining time$");
         Matcher remainingMatcher = remainingPattern.matcher(field);
-        if (startTimeMatcher.matches()) {
-            codedDiscount.setStartTime(changeField);
+        if (startTimeMatcher.matches() && changeField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(changeField);
+            codedDiscount.setStartTime(date);
         } else if (endTimeMatcher.matches()) {
-            codedDiscount.setEndTime(changeField);
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(changeField);
+            codedDiscount.setEndTime(date);
         } else if (amountMatcher.matches()) {
             codedDiscount.setDiscountAmount(changeField);
         } else if (remainingMatcher.matches()) {

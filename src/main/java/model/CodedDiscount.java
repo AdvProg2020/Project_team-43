@@ -7,8 +7,8 @@ public class CodedDiscount {
     public static int constructId = 0;
     public static ArrayList<CodedDiscount> allCodedDiscount = new ArrayList<CodedDiscount>();
     private String discountCode;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private double discountAmount;
     private int repeat;
     private ArrayList<Buyer> users;
@@ -17,7 +17,7 @@ public class CodedDiscount {
         return repeat;
     }
 
-    public CodedDiscount(String startTime, String endTime, double discount, int repeat) {
+    public CodedDiscount(Date startTime, Date endTime, double discount, int repeat) {
         this.discountCode = "" + constructId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -71,11 +71,11 @@ public class CodedDiscount {
         this.discountCode = discountCode;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

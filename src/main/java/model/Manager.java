@@ -3,9 +3,12 @@ package model;
 
 import model.request.*;
 import org.omg.CORBA.DynAnyPackage.Invalid;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Manager extends User {
     public static ArrayList<Request> allRequest = new ArrayList<Request>();
@@ -54,12 +57,14 @@ public class Manager extends User {
         removeFromSellerProducts(product);
     }
 
-    public void createDiscountCoded(ArrayList<String> discountCodedInfo) {
+    public void createDiscountCoded(ArrayList<String> discountCodedInfo) throws ParseException{
         String startTime = discountCodedInfo.get(0);
         String endTime = discountCodedInfo.get(1);
+        Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
+        Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
         double discountAmount = Double.parseDouble(discountCodedInfo.get(2));
         int repeat = Integer.parseInt(discountCodedInfo.get(3));
-        new CodedDiscount(startTime, endTime, discountAmount, repeat);
+        new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
     }
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {

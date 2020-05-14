@@ -2,6 +2,7 @@ package View;
 
 import model.InvalidCommandException;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -138,7 +139,7 @@ public class BossRolesMenu extends Menu {
                 try {
                     bossProcessor.processCreateCodedDiscount();
                     System.out.println("coded discount created");
-                } catch (InvalidCommandException e) {
+                } catch (InvalidCommandException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
             }
