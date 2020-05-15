@@ -40,7 +40,6 @@ public class LoggedOutStatus extends Menu {
 
             @Override
             public void run() {
-                //TODO : register
                 String command = scanner.nextLine();
                 System.out.println(processor.registerUser(command));
                 this.parent.parent.show();

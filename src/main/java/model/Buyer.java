@@ -1,14 +1,21 @@
 package model;
 
 import javafx.util.Pair;
+import model.database.Loader;
+import model.database.Saver;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Buyer extends User {
+    private static String fileAddress = "database/Buyer.dat";
+
     private HashMap<CodedDiscount, Integer> codedDiscounts;
     private HashMap<Product, Integer> buyerCart;
-    private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
+    private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
     private ArrayList<BuyOrder> orders;
+
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
@@ -148,6 +155,25 @@ public class Buyer extends User {
         }
         return sellers;
 
+    }
+
+    public static void load() throws FileNotFoundException {
+        Buyer[] buyers = (Buyer[]) Loader.load(Buyer[].class, fileAddress);
+        if (buyers != null) {
+            ArrayList<Buyer> allBuyers = new ArrayList<>(Arrays.asList(buyers));
+            allUsers.addAll(allBuyers);
+        }
+    }
+
+
+    public static void save() throws IOException {
+        ArrayList<Buyer> allBuyers = new ArrayList<>();
+        for (User user : allUsers) {
+            if (user.userType == UserType.BUYER) {
+                allBuyers.add((Buyer) user);
+            }
+        }
+        Saver.save(allBuyers, fileAddress);
     }
 
 }

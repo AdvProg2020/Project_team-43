@@ -1,14 +1,20 @@
 package model;
 
 
+import model.database.Loader;
+import model.database.Saver;
 import model.request.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Manager extends User {
+    private static String fileAddress = "database/Manager.dat";
     public static ArrayList<Request> allRequest = new ArrayList<>();
 
     public Manager(String username, UserPersonalInfo userPersonalInfo) {
@@ -191,6 +197,26 @@ public class Manager extends User {
                 }
             }
         }
+    }
+
+
+    public static void load() throws FileNotFoundException {
+        Manager[] managers = (Manager[]) Loader.load(Manager[].class, fileAddress);
+        if (managers != null) {
+            ArrayList<Manager> allManagers = new ArrayList<>(Arrays.asList(managers));
+            allUsers.addAll(allManagers);
+        }
+    }
+
+
+    public static void save() throws IOException {
+        ArrayList<Manager> allManagers = new ArrayList<>();
+        for (User user : allUsers) {
+            if (user.userType == UserType.MANAGER) {
+                allManagers.add((Manager) user);
+            }
+        }
+        Saver.save(allManagers, fileAddress);
     }
 
 

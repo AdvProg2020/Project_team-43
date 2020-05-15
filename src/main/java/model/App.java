@@ -23,7 +23,7 @@ public class App {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        new Company("dashagh", "none");
+        //new Company("dashagh", "none");
         MainMenu mainMenu = new MainMenu("main menu");
         mainMenu.show();
         mainMenu.run();
@@ -34,7 +34,8 @@ public class App {
             Database.save();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            System.exit(0);
         }
-        System.exit(0);
     }
 }
