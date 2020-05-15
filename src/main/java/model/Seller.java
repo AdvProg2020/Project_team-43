@@ -9,7 +9,6 @@ import model.request.ProductRequest;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,7 +17,7 @@ import java.util.HashMap;
 public class Seller extends User {
     private static String fileAddress = "database/Seller.dat";
     private Company company;
-    private ArrayList<Product> products;
+    private ArrayList<Product> products;//TODO :bayad hazf she az manager
     private HashMap<Product, Integer> productsNumber;
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;

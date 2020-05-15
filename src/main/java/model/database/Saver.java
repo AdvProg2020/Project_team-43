@@ -2,13 +2,11 @@ package model.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.Buyer;
-import model.User;
+
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class Saver {
 
