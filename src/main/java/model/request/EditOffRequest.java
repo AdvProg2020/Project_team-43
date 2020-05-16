@@ -2,6 +2,7 @@ package model.request;
 
 import model.Manager;
 import model.Off;
+import model.State;
 
 public class EditOffRequest extends Request {
     Off off;
@@ -13,6 +14,7 @@ public class EditOffRequest extends Request {
         this.off = off;
         this.field = field;
         this.input = input;
+        off.setOffState(State.OffState.EDITING_PROCESS);
         allRequests.add(this);
     }
 

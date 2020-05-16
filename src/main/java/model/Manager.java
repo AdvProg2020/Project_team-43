@@ -83,9 +83,9 @@ public class Manager extends User {
             acceptOffRequest((OffRequest) request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             acceptProductRequest((ProductRequest) request);
-        } else if (request.getRequestType().equalsIgnoreCase("editOffType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
             acceptEditOffRequest((EditOffRequest) request);
-        } else if (request.getRequestType().equalsIgnoreCase("editProductType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("edit product")) {
             acceptEditProductRequest((EditProductRequest) request);
         }
         allRequest.remove(request);
@@ -133,8 +133,20 @@ public class Manager extends User {
             declineOffRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             declineProductRequest(request);
+        } else if(request.getRequestType().equalsIgnoreCase("edit off")){
+            declineEditOffRequest(((EditOffRequest)request));
+        } else if(request.getRequestType().equalsIgnoreCase("edit product")){
+            declineEditProductRequest((EditProductRequest)request);
         }
         allRequest.remove(request);
+    }
+
+    public void declineEditOffRequest(EditOffRequest request){
+        request.getOff().setOffState(State.OffState.CONFIRMED);
+    }
+
+    public void declineEditProductRequest(EditProductRequest request){
+        request.getProduct().setProductState(State.ProductState.CONFIRMED);
     }
 
     public void declineProductRequest(Request productRequest) {
