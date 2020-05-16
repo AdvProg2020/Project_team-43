@@ -310,6 +310,19 @@ public class BossProcessor extends Processor {
 
     }
 
+    public void addCompany(String command) throws InvalidCommandException {
+        if (command.equalsIgnoreCase("back")) {
+            return;
+        }
+        Pattern addCompanyPattern = Pattern.compile("add company (.+)");
+        Matcher addCompanyMatcher = addCompanyPattern.matcher(command);
+        if (addCompanyMatcher.matches()) {
+            String info = bossViewManager.getCompanyInfo();
+            new Company(addCompanyMatcher.group(1), info);
+        } else {
+            throw new InvalidCommandException("invalid command");
+        }
+    }
 
     public void manageCategories(String command) throws InvalidCommandException {
         if (command.equals("back")) {

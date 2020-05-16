@@ -83,9 +83,9 @@ public class Manager extends User {
             acceptOffRequest((OffRequest) request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             acceptProductRequest((ProductRequest) request);
-        } else if (request.getRequestType().equalsIgnoreCase("editOffType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
             acceptEditOffRequest((EditOffRequest) request);
-        } else if (request.getRequestType().equalsIgnoreCase("editProductType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("edit product")) {
             acceptEditProductRequest((EditProductRequest) request);
         }
         allRequest.remove(request);
@@ -107,7 +107,6 @@ public class Manager extends User {
         Product.allProductsInQueueExpect.remove(product);
         product.getSellers().add(product.getSeller());
         Seller seller = product.getSeller();
-        seller.getProducts().add(product);
         if (seller.getProductsNumber().containsKey(product)) {
             int numberOfProduct = seller.getProductsNumber().get(product);
             seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
@@ -134,14 +133,24 @@ public class Manager extends User {
             declineOffRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             declineProductRequest(request);
+        } else if(request.getRequestType().equalsIgnoreCase("edit off")){
+            declineEditOffRequest(((EditOffRequest)request));
+        } else if(request.getRequestType().equalsIgnoreCase("edit product")){
+            declineEditProductRequest((EditProductRequest)request);
         }
         allRequest.remove(request);
     }
 
+    public void declineEditOffRequest(EditOffRequest request){
+        request.getOff().setOffState(State.OffState.CONFIRMED);
+    }
+
+    public void declineEditProductRequest(EditProductRequest request){
+        request.getProduct().setProductState(State.ProductState.CONFIRMED);
+    }
+
     public void declineProductRequest(Request productRequest) {
         Product product = ((ProductRequest) productRequest).getProduct();
-        Seller seller = product.getSeller();
-        seller.getProducts().remove(product);
         Product.allProductsInQueueExpect.remove(product);
     }
 
@@ -185,7 +194,7 @@ public class Manager extends User {
 
     public void removeFromSellerProducts(Product product) {
         Seller seller = product.getSeller();
-        seller.getProducts().remove(product);
+        seller.getProductsNumber().remove(product);
     }
 
     private void removeProductRequest(Product product) {

@@ -23,8 +23,9 @@ public class BossRolesMenu extends Menu {
         submenus.put(4, getManageAllProducts());
         submenus.put(5, getCreateCodedDiscount());
         submenus.put(6, getViewCodedDiscounts());
-        submenus.put(7, getManageRequests());
-        submenus.put(8, getManageCategories());
+        submenus.put(7, getAddCompany());
+        submenus.put(8, getManageRequests());
+        submenus.put(9, getManageCategories());
         this.setSubmenus(submenus);
 
     }
@@ -198,6 +199,28 @@ public class BossRolesMenu extends Menu {
             public void run() {
                 this.parent.show();
                 this.parent.run();
+            }
+        };
+    }
+
+    private Menu getAddCompany(){
+        return new Menu(this, "add company") {
+            @Override
+            public void show() {
+                System.out.println("1. add company [name]");
+                System.out.println("2. back");
+                String command = scanner.nextLine();
+                try {
+                    bossProcessor.addCompany(command.trim());
+                } catch (InvalidCommandException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            @Override
+            public void run() {
+                parent.show();
+                parent.run();
             }
         };
     }

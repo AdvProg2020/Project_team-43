@@ -11,7 +11,6 @@ public class CodedDiscount {
     private Date endTime;
     private double discountAmount;
     private int repeat;
-    private ArrayList<Buyer> users;
 
     public int getRepeat() {
         return repeat;
@@ -23,14 +22,8 @@ public class CodedDiscount {
         this.endTime = endTime;
         this.discountAmount = discount;
         this.repeat = repeat;
-        users = new ArrayList<Buyer>();
         allCodedDiscount.add(this);
         constructId += 1;
-    }
-
-    public void addUser(Buyer buyer) {
-        users.add(buyer);
-        buyer.addDiscountCode(this);
     }
 
     public static boolean isCodedDiscountWithThisCode(String discountCode) {
@@ -60,10 +53,6 @@ public class CodedDiscount {
 
     public Date getStartTime() {
         return startTime;
-    }
-
-    public boolean hasUser(Buyer buyer) {
-        return this.users.contains(buyer);
     }
 
     public double getDiscountAmount() {
