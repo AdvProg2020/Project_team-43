@@ -12,7 +12,6 @@ public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
 
     private transient HashMap<CodedDiscount, Integer> codedDiscounts;
-    private transient HashMap<Product, Integer> buyerCart;
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
     private transient ArrayList<BuyOrder> orders;
 
@@ -21,7 +20,6 @@ public class Buyer extends User {
         super(username, userPersonalInfo);
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
-        buyerCart = new HashMap<>();
         allUsers.add(this);
     }
 
@@ -153,8 +151,8 @@ public class Buyer extends User {
 
     public ArrayList<Seller> getSellerOfCartProducts() {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (Product product : buyerCart.keySet()) {
-            sellers.addAll(product.getSellers());
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            sellers.add(productSellerPair.getValue());
         }
         return sellers;
 
