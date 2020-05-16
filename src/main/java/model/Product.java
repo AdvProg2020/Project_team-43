@@ -17,7 +17,7 @@ public class Product {
 
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
-    private static ArrayList<Product> allProductsInQueueEdit = new ArrayList<>();
+    public static ArrayList<Product> allProductsInQueueEdit = new ArrayList<>();
 
     private String productId;
     private State.ProductState productState;

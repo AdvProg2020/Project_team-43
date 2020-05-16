@@ -12,6 +12,38 @@ public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
 
     private transient HashMap<CodedDiscount, Integer> codedDiscounts;
+    private HashMap<String, Integer> codedDiscountsId;
+
+
+    private void codedDiscountsLoad() {
+        codedDiscounts = new HashMap<CodedDiscount, Integer>();
+        for (String codedDiscountId : codedDiscountsId.keySet()) {
+            codedDiscounts.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
+        }
+    }
+
+    private void codedDiscountsSave() {
+        for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
+            codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));
+        }
+    }
+
+    public static void loadAllCodedDiscounts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                ((Buyer) user).codedDiscountsLoad();
+            }
+        }
+    }
+
+    public static void saveAllCodedDiscounts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                ((Buyer) user).codedDiscountsSave();
+            }
+        }
+    }
+
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
     private transient ArrayList<BuyOrder> orders;
 
@@ -20,6 +52,7 @@ public class Buyer extends User {
         super(username, userPersonalInfo);
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
+        codedDiscountsId = new HashMap<String, Integer>();
         allUsers.add(this);
     }
 
@@ -160,14 +193,17 @@ public class Buyer extends User {
 
     public static void load() throws FileNotFoundException {
         Buyer[] buyers = (Buyer[]) Loader.load(Buyer[].class, fileAddress);
+
         if (buyers != null) {
             ArrayList<Buyer> allBuyers = new ArrayList<>(Arrays.asList(buyers));
             allUsers.addAll(allBuyers);
+            loadAllCodedDiscounts();
         }
     }
 
 
     public static void save() throws IOException {
+        saveAllCodedDiscounts();
         ArrayList<Buyer> allBuyers = new ArrayList<>();
         for (User user : allUsers) {
             if (user.userType == UserType.BUYER) {

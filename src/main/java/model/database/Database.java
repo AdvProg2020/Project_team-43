@@ -1,9 +1,6 @@
 package model.database;
 
-import model.Category;
-import model.CodedDiscount;
-import model.Company;
-import model.User;
+import model.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +12,7 @@ public class Database {
         User.load();
         Category.load();
         CodedDiscount.load();
+        Buyer.loadAllCodedDiscounts();
     }
 
     public static void save() throws IOException {
@@ -22,5 +20,6 @@ public class Database {
         User.save();
         Category.save();
         CodedDiscount.save();
+        Buyer.saveAllCodedDiscounts();
     }
 }

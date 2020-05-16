@@ -10,6 +10,8 @@ public class Off {
     public static int constructId = 0;
     public static ArrayList<Off> acceptedOffs = new ArrayList<>();
     public static ArrayList<Off> inQueueExpectionOffs = new ArrayList<>();
+    public static ArrayList<Off> allOffsInQueueEdit = new ArrayList<>();
+
     private String offId;
     private Seller seller;
     private ArrayList<Product> products;

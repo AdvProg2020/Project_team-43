@@ -68,7 +68,12 @@ public class Manager extends User {
         Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
         double discountAmount = Double.parseDouble(discountCodedInfo.get(2));
         int repeat = Integer.parseInt(discountCodedInfo.get(3));
-        new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
+        CodedDiscount codedDiscount = new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
+        for (User user : allUsers) {
+            if (user instanceof Buyer){
+                ((Buyer)user).addDiscountCode(codedDiscount);
+            }
+        }
     }
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {
@@ -95,12 +100,16 @@ public class Manager extends User {
         Off off = editOffRequest.getOff();
         off.editField(editOffRequest.getField(), editOffRequest.getInput());
         off.setOffState(State.OffState.CONFIRMED);
+        Off.acceptedOffs.add(off);
+        Off.allOffsInQueueEdit.remove(off);
     }
 
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
         product.setProductState(State.ProductState.CONFIRMED);
+        Product.allProductsInList.add(product);
+        Product.allProductsInQueueEdit.remove(product);
     }
 
     public void acceptProductRequest(ProductRequest request) {
@@ -146,11 +155,17 @@ public class Manager extends User {
     }
 
     public void declineEditOffRequest(EditOffRequest request) {
+        Off off = request.getOff();
         request.getOff().setOffState(State.OffState.CONFIRMED);
+        Off.acceptedOffs.add(off);
+        Off.allOffsInQueueEdit.remove(off);
     }
 
     public void declineEditProductRequest(EditProductRequest request) {
+        Product product = request.getProduct();
         request.getProduct().setProductState(State.ProductState.CONFIRMED);
+        Product.allProductsInList.add(product);
+        Product.allProductsInQueueEdit.remove(product);
     }
 
     public void declineProductRequest(Request productRequest) {

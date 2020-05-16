@@ -26,6 +26,8 @@ public class CodedDiscount {
     }
 
 
+
+
     public CodedDiscount(Date startTime, Date endTime, double discount, int repeat) {
         this.discountCode = "" + constructId;
         this.startTime = startTime;
