@@ -11,10 +11,10 @@ import java.util.*;
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
 
-    private HashMap<CodedDiscount, Integer> codedDiscounts;
-    private HashMap<Product, Integer> buyerCart;
+    private transient HashMap<CodedDiscount, Integer> codedDiscounts;
+    private transient HashMap<Product, Integer> buyerCart;
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
-    private ArrayList<BuyOrder> orders;
+    private transient ArrayList<BuyOrder> orders;
 
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
@@ -154,7 +154,7 @@ public class Buyer extends User {
     public ArrayList<Seller> getSellerOfCartProducts() {
         ArrayList<Seller> sellers = new ArrayList<>();
         for (Product product : buyerCart.keySet()) {
-            sellers.add(product.getSeller());
+            sellers.addAll(product.getSellers());
         }
         return sellers;
 

@@ -72,7 +72,7 @@ public class Manager extends User {
     }
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {
-        CodedDiscount.allCodedDiscount.remove(codedDiscount);
+        CodedDiscount.remove(codedDiscount);
     }
 
 
@@ -94,24 +94,28 @@ public class Manager extends User {
     public void acceptEditOffRequest(EditOffRequest editOffRequest) throws InvalidCommandException, ParseException {
         Off off = editOffRequest.getOff();
         off.editField(editOffRequest.getField(), editOffRequest.getInput());
+        off.setOffState(State.OffState.CONFIRMED);
     }
 
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
+        product.setProductState(State.ProductState.CONFIRMED);
     }
 
     public void acceptProductRequest(ProductRequest request) {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
-        product.getSellers().add(product.getSeller());
-        Seller seller = product.getSeller();
-        if (seller.getProductsNumber().containsKey(product)) {
-            int numberOfProduct = seller.getProductsNumber().get(product);
-            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
-        } else {
-            seller.getProductsNumber().put(product, request.getNumber());
+        product.getSellers().add(request.getSeller());
+        ArrayList<Seller> sellers = product.getSellers();
+        for (Seller seller : sellers) {
+            if (seller.getProductsNumber().containsKey(product)) {
+                int numberOfProduct = seller.getProductsNumber().get(product);
+                seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+            } else {
+                seller.getProductsNumber().put(product, request.getNumber());
+            }
         }
         product.setProductState(State.ProductState.CONFIRMED);
     }
@@ -125,7 +129,7 @@ public class Manager extends User {
 
     public void acceptSellerRequest(Request request) {
         Seller seller = ((SellerRequest) request).getSeller();
-        User.allUsers.add(seller);
+        allUsers.add(seller);
     }
 
     public void declineRequest(Request request) {
@@ -193,8 +197,10 @@ public class Manager extends User {
     }
 
     public void removeFromSellerProducts(Product product) {
-        Seller seller = product.getSeller();
-        seller.getProductsNumber().remove(product);
+        ArrayList<Seller> sellers = product.getSellers();
+        for (Seller seller : sellers) {
+            seller.getProductsNumber().remove(product);
+        }
     }
 
     private void removeProductRequest(Product product) {

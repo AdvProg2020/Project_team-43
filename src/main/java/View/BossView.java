@@ -14,7 +14,7 @@ public class BossView {
     }
 
     public void viewAllUsers() {
-        for (User user : User.allUsers) {
+        for (User user : User.getAllUsers()) {
             System.out.println(user.getUsername());
         }
     }

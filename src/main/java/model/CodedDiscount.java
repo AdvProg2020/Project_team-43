@@ -24,6 +24,8 @@ public class CodedDiscount {
         return repeat;
     }
 
+
+
     public CodedDiscount(Date startTime, Date endTime, double discount, int repeat) {
         this.discountCode = "" + constructId;
         this.startTime = startTime;
@@ -70,6 +72,10 @@ public class CodedDiscount {
     public boolean checkTime() {
         //ToDo: check if code is valid in that time
         return true;
+    }
+
+    public static void remove(CodedDiscount codedDiscount) {
+        allCodedDiscount.remove(codedDiscount);
     }
 
     public void setDiscountCode(String discountCode) {
