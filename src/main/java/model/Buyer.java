@@ -113,8 +113,11 @@ public class Buyer extends User {
             double discount = seller.getOffDiscountAmount(product);
             SellOrder sellOrder = new SellOrder(discount, new Date(),
                     product.getPrice(), product, this);
+            seller.settleMoney(product.getPrice() * (100 - discount) / 100);
             seller.addOrder(sellOrder);
+
         }
+
     }
 
 

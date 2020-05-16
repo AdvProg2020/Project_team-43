@@ -212,4 +212,9 @@ public class Seller extends User {
         Saver.save(allSellers, fileAddress);
     }
 
+    public void settleMoney(double price) {
+        this.balance += price;
+
+    }
+
 }
