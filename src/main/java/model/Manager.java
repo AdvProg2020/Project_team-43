@@ -61,7 +61,7 @@ public class Manager extends User {
         removeFromSellerProducts(product);
     }
 
-    public void createDiscountCoded(ArrayList<String> discountCodedInfo) throws ParseException{
+    public void createDiscountCoded(ArrayList<String> discountCodedInfo) throws ParseException {
         String startTime = discountCodedInfo.get(0);
         String endTime = discountCodedInfo.get(1);
         Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
@@ -137,19 +137,19 @@ public class Manager extends User {
             declineOffRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             declineProductRequest(request);
-        } else if(request.getRequestType().equalsIgnoreCase("edit off")){
-            declineEditOffRequest(((EditOffRequest)request));
-        } else if(request.getRequestType().equalsIgnoreCase("edit product")){
-            declineEditProductRequest((EditProductRequest)request);
+        } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
+            declineEditOffRequest(((EditOffRequest) request));
+        } else if (request.getRequestType().equalsIgnoreCase("edit product")) {
+            declineEditProductRequest((EditProductRequest) request);
         }
         allRequest.remove(request);
     }
 
-    public void declineEditOffRequest(EditOffRequest request){
+    public void declineEditOffRequest(EditOffRequest request) {
         request.getOff().setOffState(State.OffState.CONFIRMED);
     }
 
-    public void declineEditProductRequest(EditProductRequest request){
+    public void declineEditProductRequest(EditProductRequest request) {
         request.getProduct().setProductState(State.ProductState.CONFIRMED);
     }
 

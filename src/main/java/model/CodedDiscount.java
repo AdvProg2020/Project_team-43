@@ -5,14 +5,15 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 
 public class CodedDiscount {
-    private static String fileAddress="database/CodedDiscount.dat";
+    private static String fileAddress = "database/CodedDiscount.dat";
 
-    public static int constructId = 0;
+    public static int constructId;
     public static ArrayList<CodedDiscount> allCodedDiscount = new ArrayList<CodedDiscount>();
     private String discountCode;
     private Date startTime;
@@ -23,7 +24,6 @@ public class CodedDiscount {
     public int getRepeat() {
         return repeat;
     }
-
 
 
     public CodedDiscount(Date startTime, Date endTime, double discount, int repeat) {
@@ -107,10 +107,12 @@ public class CodedDiscount {
                 + "{end time : " + endTime + "}";
     }
 
+
     public static void load() throws FileNotFoundException {
         CodedDiscount[] codedDiscounts = (CodedDiscount[]) Loader.load(CodedDiscount[].class, fileAddress);
         if (codedDiscounts != null) {
             allCodedDiscount = new ArrayList<>(Arrays.asList(codedDiscounts));
+            constructId = Integer.parseInt(allCodedDiscount.get(allCodedDiscount.size() - 1).getDiscountCode()) + 1;
         }
     }
 
