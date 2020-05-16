@@ -283,7 +283,7 @@ public class Processor {
                 break;
             }
         }
-        new Comment(product, commentInfo.get(1), isBuy);
+        new Comment(product, commentInfo.get(1), isBuy, (Buyer)user);
         //handle commente gerefte shode
 
     }
