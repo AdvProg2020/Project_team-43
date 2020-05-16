@@ -1,31 +1,45 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 //import java.util.Date;
 
 public class Off {
+    private static String fileAddress = "database/Off.dat";
     public static int constructId = 0;
     public static ArrayList<Off> acceptedOffs = new ArrayList<>();
     public static ArrayList<Off> inQueueExpectionOffs = new ArrayList<>();
+    public static ArrayList<Off> allOffsInQueueEdit = new ArrayList<>();
+    public static ArrayList<Off> allOffs = new ArrayList<>();
+
     private String offId;
-    private Seller seller;
+    private transient Seller seller;
+    private String sellerUserName;
     private ArrayList<Product> products;
+    private transient ArrayList<String> productsId;
     private State.OffState offState;
     private Date startTime;
     private Date endTime;
     private double discountAmount;
 
-    public Off(Date startTime, Date endTime, double discountAmount, Seller seller, ArrayList<Product> products1){
+    public Off(Date startTime, Date endTime, double discountAmount, Seller seller, ArrayList<Product> products1) {
         this.offId = "" + constructId;
         this.offState = State.OffState.CREATING_PROCESS;
         this.startTime = startTime;
         this.endTime = endTime;
         this.discountAmount = discountAmount;
         this.seller = seller;
+        sellerUserName = seller.getUsername();
         products = new ArrayList<>(products1);
+        productsId = new ArrayList<>();
         inQueueExpectionOffs.add(this);
         constructId += 1;
     }
@@ -94,16 +108,16 @@ public class Off {
     public void editField(String field, String newField) throws InvalidCommandException, ParseException {
         if (field.equalsIgnoreCase("startTime") && newField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
-            if(date.before(endTime)){
+            if (date.before(endTime)) {
                 startTime = date;
-            } else{
+            } else {
                 throw new InvalidCommandException("startTime must be before endTime");
             }
         } else if (field.equalsIgnoreCase("endTime")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
-            if(date.after(endTime)){
+            if (date.after(endTime)) {
                 endTime = date;
-            } else{
+            } else {
                 throw new InvalidCommandException("endTime must be after startTime");
             }
         } else if (field.equalsIgnoreCase("discountAmount")) {
@@ -125,5 +139,88 @@ public class Off {
                 ", endTime='" + endTime + '\'' +
                 ", discountAmount=" + discountAmount +
                 '}';
+    }
+
+    private void saveProducts() {
+        productsId.clear();
+        for (Product product : products) {
+            productsId.add(product.getProductId());
+        }
+
+    }
+
+    private void loadProducts() {
+        for (String productId : productsId) {
+            products.add(Product.getProductById(productId));
+        }
+    }
+
+    private void saveSeller() {
+        sellerUserName = seller.getUsername();
+    }
+
+    private void loadSeller() {
+        seller = (Seller) (User.getUserByUserName(sellerUserName));
+    }
+
+    private static void loadAllProducts() {
+        for (Off off : allOffs) {
+            off.loadProducts();
+        }
+    }
+
+    private static void saveAllProducts() {
+        for (Off off : allOffs) {
+            off.saveProducts();
+        }
+    }
+
+    private static void loadAllSeller() {
+        for (Off off : allOffs) {
+            off.loadSeller();
+        }
+    }
+
+    private static void saveAllSeller() {
+        for (Off off : allOffs) {
+            off.saveSeller();
+        }
+    }
+
+    public static void saveFields(){
+        saveAllProducts();
+        saveAllSeller();
+    }
+
+    public static void loadFields(){
+        loadAllProducts();
+        loadAllSeller();
+    }
+    public static void load() throws FileNotFoundException {
+        Off[] offs = (Off[]) Loader.load(Off[].class, fileAddress);
+        if (offs != null) {
+            allOffs = new ArrayList<>(Arrays.asList(offs));
+            loadOffs();
+        }
+    }
+
+    private static void loadOffs() {
+        for (Off off : allOffs) {
+            if (off.offState.equals(State.OffState.CONFIRMED)) {
+                acceptedOffs.add(off);
+            } else if (off.offState.equals(State.OffState.EDITING_PROCESS)) {
+                allOffsInQueueEdit.add(off);
+            } else if (off.offState.equals(State.OffState.CREATING_PROCESS)) {
+                inQueueExpectionOffs.add(off);
+            }
+        }
+    }
+
+    public static void save() throws IOException {
+        allOffs.clear();
+        allOffs.addAll(acceptedOffs);
+        allOffs.addAll(inQueueExpectionOffs);
+        allOffs.addAll(allOffsInQueueEdit);
+        Saver.save(allOffs, fileAddress);
     }
 }

@@ -1,13 +1,23 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 
 public class Product {
+    private static String fileAddress = "database/Product.dat";
+    private static ArrayList<Product> allProducts = new ArrayList<>();
+    private static HashMap<String, String> SellerUsernameToProductId = new HashMap<>();
+
+
     public static int constructId = 0;
+
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
+    public static ArrayList<Product> allProductsInQueueEdit = new ArrayList<>();
 
     private String productId;
     private State.ProductState productState;
@@ -17,10 +27,9 @@ public class Product {
     private int visit;
     private Date date;
     private int availableCount;
-    private Category category;
+    private transient Category category;
     private Map<String, String> featuresMap;
-    private Seller seller;
-    private ArrayList<Seller> sellers;
+    private transient ArrayList<Seller> sellers;
     private String description;/////////tozihat
     private ProductScore score;
     private ArrayList<Comment> comments;
@@ -36,28 +45,9 @@ public class Product {
         this.date = new Date();
         score = new ProductScore();
         this.visit = 0;
-        comments = new ArrayList<Comment>();
+        comments = new ArrayList<>();
         allProductsInQueueExpect.add(this);
         constructId += 1;
-    }
-
-    public Product(String productId, String name, Company company, double price, Category category, Seller seller, ArrayList<String> features) {
-        this.productId = productId;
-        this.productState = State.ProductState.CREATING_PROCESS;
-        this.name = name;
-        this.company = company;
-        this.price = price;
-        this.category = category;
-        fillFeaturesMap(features);
-        this.seller = seller;
-        score = new ProductScore();
-        this.visit = 0;
-        comments = new ArrayList<Comment>();
-        allProductsInQueueExpect.add(this);
-    }
-
-    public Seller getSeller() {
-        return seller;
     }
 
     public ArrayList<Seller> getSellers() {
@@ -208,8 +198,6 @@ public class Product {
                 ", availableCount=" + availableCount +
                 ", category=" + category +
                 ", featuresMap=" + featuresMap +
-                ", seller=" + seller +
-                ", sellers=" + sellers +
                 ", description='" + description + '\'' +
                 ", score=" + score +
                 '}';
@@ -245,5 +233,36 @@ public class Product {
 
     public void setFeaturesMap(Map<String, String> featuresMap) {
         this.featuresMap = featuresMap;
+    }
+
+    public static void load() throws FileNotFoundException {
+        Product[] products = (Product[]) Loader.load(Product[].class, fileAddress);
+        if (products != null) {
+            allProducts = new ArrayList<>(Arrays.asList(products));
+            loadProducts();
+        }
+    }
+
+
+    private static void loadProducts() {
+        for (Product product : allProducts) {
+            if (product.getProductState() == State.ProductState.CREATING_PROCESS) {
+                allProductsInQueueExpect.add(product);
+            }
+            if (product.getProductState() == State.ProductState.CONFIRMED) {
+                allProductsInList.add(product);
+            }
+            if (product.getProductState() == State.ProductState.EDITING_PROCESS) {
+                allProductsInQueueEdit.add(product);
+            }
+        }
+    }
+
+
+    public static void save() throws IOException {
+        ArrayList<Product> products = new ArrayList<>(allProductsInList);
+        products.addAll(allProductsInQueueExpect);
+        products.addAll(allProductsInQueueEdit);
+        Saver.save(products, fileAddress);
     }
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class User {
-    private static final int money = 100000;
+    private static final int startMoney = 100000;
 
-    public static ArrayList<User> allUsers = new ArrayList<>();
+    protected static ArrayList<User> allUsers = new ArrayList<>();
     private static String fileAddress = "database/User.dat";
 
 
@@ -28,12 +28,14 @@ public abstract class User {
         this.username = username;
         this.userPersonalInfo = userPersonalInfo;
         setUserType();
-        balance = money;
+        balance = startMoney;
     }
 
-    public void setUserType() {
-
+    public static ArrayList<User> getAllUsers() {
+        return allUsers;
     }
+
+    public abstract void setUserType();
 
     public static boolean hasUserWithUserName(String username) {
         for (User user : allUsers) {
@@ -84,6 +86,14 @@ public abstract class User {
 
     public void viewCredit() {
 
+    }
+
+    public static void addUser(User user){
+        allUsers.add(user);
+    }
+
+    public static void addAll(ArrayList<User> users){
+        allUsers.addAll(users);
     }
 
     public static void load() throws FileNotFoundException {

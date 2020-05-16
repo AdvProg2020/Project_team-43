@@ -61,18 +61,23 @@ public class Manager extends User {
         removeFromSellerProducts(product);
     }
 
-    public void createDiscountCoded(ArrayList<String> discountCodedInfo) throws ParseException{
+    public void createDiscountCoded(ArrayList<String> discountCodedInfo) throws ParseException {
         String startTime = discountCodedInfo.get(0);
         String endTime = discountCodedInfo.get(1);
         Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
         Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
         double discountAmount = Double.parseDouble(discountCodedInfo.get(2));
         int repeat = Integer.parseInt(discountCodedInfo.get(3));
-        new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
+        CodedDiscount codedDiscount = new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
+        for (User user : allUsers) {
+            if (user instanceof Buyer){
+                ((Buyer)user).addDiscountCode(codedDiscount);
+            }
+        }
     }
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {
-        CodedDiscount.allCodedDiscount.remove(codedDiscount);
+        CodedDiscount.remove(codedDiscount);
     }
 
 
@@ -94,24 +99,32 @@ public class Manager extends User {
     public void acceptEditOffRequest(EditOffRequest editOffRequest) throws InvalidCommandException, ParseException {
         Off off = editOffRequest.getOff();
         off.editField(editOffRequest.getField(), editOffRequest.getInput());
+        off.setOffState(State.OffState.CONFIRMED);
+        Off.acceptedOffs.add(off);
+        Off.allOffsInQueueEdit.remove(off);
     }
 
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
+        product.setProductState(State.ProductState.CONFIRMED);
+        Product.allProductsInList.add(product);
+        Product.allProductsInQueueEdit.remove(product);
     }
 
     public void acceptProductRequest(ProductRequest request) {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
-        product.getSellers().add(product.getSeller());
-        Seller seller = product.getSeller();
-        if (seller.getProductsNumber().containsKey(product)) {
-            int numberOfProduct = seller.getProductsNumber().get(product);
-            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
-        } else {
-            seller.getProductsNumber().put(product, request.getNumber());
+        product.getSellers().add(request.getSeller());
+        ArrayList<Seller> sellers = product.getSellers();
+        for (Seller seller : sellers) {
+            if (seller.getProductsNumber().containsKey(product)) {
+                int numberOfProduct = seller.getProductsNumber().get(product);
+                seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+            } else {
+                seller.getProductsNumber().put(product, request.getNumber());
+            }
         }
         product.setProductState(State.ProductState.CONFIRMED);
     }
@@ -125,7 +138,7 @@ public class Manager extends User {
 
     public void acceptSellerRequest(Request request) {
         Seller seller = ((SellerRequest) request).getSeller();
-        User.allUsers.add(seller);
+        allUsers.add(seller);
     }
 
     public void declineRequest(Request request) {
@@ -133,20 +146,26 @@ public class Manager extends User {
             declineOffRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("productType")) {
             declineProductRequest(request);
-        } else if(request.getRequestType().equalsIgnoreCase("edit off")){
-            declineEditOffRequest(((EditOffRequest)request));
-        } else if(request.getRequestType().equalsIgnoreCase("edit product")){
-            declineEditProductRequest((EditProductRequest)request);
+        } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
+            declineEditOffRequest(((EditOffRequest) request));
+        } else if (request.getRequestType().equalsIgnoreCase("edit product")) {
+            declineEditProductRequest((EditProductRequest) request);
         }
         allRequest.remove(request);
     }
 
-    public void declineEditOffRequest(EditOffRequest request){
+    public void declineEditOffRequest(EditOffRequest request) {
+        Off off = request.getOff();
         request.getOff().setOffState(State.OffState.CONFIRMED);
+        Off.acceptedOffs.add(off);
+        Off.allOffsInQueueEdit.remove(off);
     }
 
-    public void declineEditProductRequest(EditProductRequest request){
+    public void declineEditProductRequest(EditProductRequest request) {
+        Product product = request.getProduct();
         request.getProduct().setProductState(State.ProductState.CONFIRMED);
+        Product.allProductsInList.add(product);
+        Product.allProductsInQueueEdit.remove(product);
     }
 
     public void declineProductRequest(Request productRequest) {
@@ -193,8 +212,10 @@ public class Manager extends User {
     }
 
     public void removeFromSellerProducts(Product product) {
-        Seller seller = product.getSeller();
-        seller.getProductsNumber().remove(product);
+        ArrayList<Seller> sellers = product.getSellers();
+        for (Seller seller : sellers) {
+            seller.getProductsNumber().remove(product);
+        }
     }
 
     private void removeProductRequest(Product product) {

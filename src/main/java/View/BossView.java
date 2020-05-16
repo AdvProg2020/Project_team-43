@@ -14,7 +14,7 @@ public class BossView {
     }
 
     public void viewAllUsers() {
-        for (User user : User.allUsers) {
+        for (User user : User.getAllUsers()) {
             System.out.println(user.getUsername());
         }
     }
@@ -115,6 +115,7 @@ public class BossView {
             System.out.print(counter + " . ");
             System.out.print(category);
         }
+        System.out.println();
     }
 
     public ArrayList<String> getCategoryFeatures() {

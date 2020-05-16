@@ -11,17 +11,48 @@ import java.util.*;
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
 
-    private HashMap<CodedDiscount, Integer> codedDiscounts;
-    private HashMap<Product, Integer> buyerCart;
+    private transient HashMap<CodedDiscount, Integer> codedDiscounts;
+    private HashMap<String, Integer> codedDiscountsId;
+
+
+    private void codedDiscountsLoad() {
+        codedDiscounts = new HashMap<CodedDiscount, Integer>();
+        for (String codedDiscountId : codedDiscountsId.keySet()) {
+            codedDiscounts.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
+        }
+    }
+
+    private void codedDiscountsSave() {
+        for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
+            codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));
+        }
+    }
+
+    public static void loadAllCodedDiscounts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                ((Buyer) user).codedDiscountsLoad();
+            }
+        }
+    }
+
+    public static void saveAllCodedDiscounts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                ((Buyer) user).codedDiscountsSave();
+            }
+        }
+    }
+
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
-    private ArrayList<BuyOrder> orders;
+    private transient ArrayList<BuyOrder> orders;
 
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
-        buyerCart = new HashMap<>();
+        codedDiscountsId = new HashMap<String, Integer>();
         allUsers.add(this);
     }
 
@@ -153,8 +184,8 @@ public class Buyer extends User {
 
     public ArrayList<Seller> getSellerOfCartProducts() {
         ArrayList<Seller> sellers = new ArrayList<>();
-        for (Product product : buyerCart.keySet()) {
-            sellers.add(product.getSeller());
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            sellers.add(productSellerPair.getValue());
         }
         return sellers;
 
@@ -162,6 +193,7 @@ public class Buyer extends User {
 
     public static void load() throws FileNotFoundException {
         Buyer[] buyers = (Buyer[]) Loader.load(Buyer[].class, fileAddress);
+
         if (buyers != null) {
             ArrayList<Buyer> allBuyers = new ArrayList<>(Arrays.asList(buyers));
             allUsers.addAll(allBuyers);
@@ -177,6 +209,14 @@ public class Buyer extends User {
             }
         }
         Saver.save(allBuyers, fileAddress);
+    }
+
+    public static void saveFields() {
+        saveAllCodedDiscounts();
+    }
+
+    public static void loadFields() {
+        loadAllCodedDiscounts();
     }
 
 }

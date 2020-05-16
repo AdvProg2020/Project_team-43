@@ -91,6 +91,8 @@ public class Seller extends User {
 
     public void editProduct(Product product, String field, String newField) {
         new EditProductRequest(product, field, newField, this);
+        Product.allProductsInList.remove(product);
+        Product.allProductsInQueueEdit.add(product);
     }
 
     public void addNewProduct(String name, Company company, Double price, Category category, int number) {
@@ -110,6 +112,8 @@ public class Seller extends User {
 
     public void editOff(Off off, String field, String input) {
         new EditOffRequest(off, field, input);
+        Off.acceptedOffs.remove(off);
+        Off.allOffsInQueueEdit.add(off);
     }
 
     public void addOff(Date startTime, Date endTime, Double discountAmount, ArrayList<String> productIds) {
