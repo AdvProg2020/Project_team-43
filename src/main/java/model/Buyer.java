@@ -197,13 +197,11 @@ public class Buyer extends User {
         if (buyers != null) {
             ArrayList<Buyer> allBuyers = new ArrayList<>(Arrays.asList(buyers));
             allUsers.addAll(allBuyers);
-            loadAllCodedDiscounts();
         }
     }
 
 
     public static void save() throws IOException {
-        saveAllCodedDiscounts();
         ArrayList<Buyer> allBuyers = new ArrayList<>();
         for (User user : allUsers) {
             if (user.userType == UserType.BUYER) {
@@ -211,6 +209,14 @@ public class Buyer extends User {
             }
         }
         Saver.save(allBuyers, fileAddress);
+    }
+
+    public static void saveFields() {
+        saveAllCodedDiscounts();
+    }
+
+    public static void loadFields() {
+        loadAllCodedDiscounts();
     }
 
 }

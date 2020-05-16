@@ -1,26 +1,36 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 //import java.util.Date;
 
 public class Off {
+    private static String fileAddress = "database/Off.dat";
     public static int constructId = 0;
     public static ArrayList<Off> acceptedOffs = new ArrayList<>();
     public static ArrayList<Off> inQueueExpectionOffs = new ArrayList<>();
     public static ArrayList<Off> allOffsInQueueEdit = new ArrayList<>();
+    public static ArrayList<Off> allOffs = new ArrayList<>();
 
     private String offId;
+
     private Seller seller;
+    //
     private ArrayList<Product> products;
     private State.OffState offState;
     private Date startTime;
     private Date endTime;
     private double discountAmount;
 
-    public Off(Date startTime, Date endTime, double discountAmount, Seller seller, ArrayList<Product> products1){
+    public Off(Date startTime, Date endTime, double discountAmount, Seller seller, ArrayList<Product> products1) {
         this.offId = "" + constructId;
         this.offState = State.OffState.CREATING_PROCESS;
         this.startTime = startTime;
@@ -96,16 +106,16 @@ public class Off {
     public void editField(String field, String newField) throws InvalidCommandException, ParseException {
         if (field.equalsIgnoreCase("startTime") && newField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
-            if(date.before(endTime)){
+            if (date.before(endTime)) {
                 startTime = date;
-            } else{
+            } else {
                 throw new InvalidCommandException("startTime must be before endTime");
             }
         } else if (field.equalsIgnoreCase("endTime")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
-            if(date.after(endTime)){
+            if (date.after(endTime)) {
                 endTime = date;
-            } else{
+            } else {
                 throw new InvalidCommandException("endTime must be after startTime");
             }
         } else if (field.equalsIgnoreCase("discountAmount")) {
@@ -127,5 +137,28 @@ public class Off {
                 ", endTime='" + endTime + '\'' +
                 ", discountAmount=" + discountAmount +
                 '}';
+    }
+
+    public static void load() throws FileNotFoundException {
+        Off[] offs = (Off[]) Loader.load(Off[].class, fileAddress);
+        if (offs != null) {
+            allOffs = new ArrayList<>(Arrays.asList(offs));
+            loadOffs();
+        }
+    }
+
+    private static void loadOffs() {
+        for (Off off : allOffs) {
+            //check state
+        }
+    }
+
+
+    public static void save() throws IOException {
+        allOffs.clear();
+        allOffs.addAll(acceptedOffs);
+        allOffs.addAll(inQueueExpectionOffs);
+        allOffs.addAll(allOffsInQueueEdit);
+        Saver.save(allOffs, fileAddress);
     }
 }

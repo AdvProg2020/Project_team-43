@@ -239,19 +239,10 @@ public class Product {
         Product[] products = (Product[]) Loader.load(Product[].class, fileAddress);
         if (products != null) {
             allProducts = new ArrayList<>(Arrays.asList(products));
-            setSellerProducts();
-            setCategoryProducts();
             loadProducts();
         }
     }
 
-    private static void setSellerProducts(){
-
-    }
-
-    private static void setCategoryProducts(){
-
-    }
 
     private static void loadProducts() {
         for (Product product : allProducts) {
@@ -271,6 +262,7 @@ public class Product {
     public static void save() throws IOException {
         ArrayList<Product> products = new ArrayList<>(allProductsInList);
         products.addAll(allProductsInQueueExpect);
+        products.addAll(allProductsInQueueEdit);
         Saver.save(products, fileAddress);
     }
 }

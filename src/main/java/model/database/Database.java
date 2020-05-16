@@ -12,14 +12,19 @@ public class Database {
         User.load();
         Category.load();
         CodedDiscount.load();
-        Buyer.loadAllCodedDiscounts();
+
+
+
+
+        Buyer.loadFields();
     }
 
     public static void save() throws IOException {
+        Buyer.saveFields();
+
         Company.save();
         User.save();
         Category.save();
         CodedDiscount.save();
-        Buyer.saveAllCodedDiscounts();
     }
 }
