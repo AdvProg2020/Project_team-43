@@ -17,7 +17,6 @@ import java.util.HashMap;
 public class Seller extends User {
     private static String fileAddress = "database/Seller.dat";
     private Company company;
-    private ArrayList<Product> products;//TODO :bayad hazf she az manager
     private HashMap<Product, Integer> productsNumber;
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;
@@ -25,7 +24,6 @@ public class Seller extends User {
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
         this.company = Company.getCompanyByName(companyName);
-        products = new ArrayList<>();
         offs = new ArrayList<>();
         orders = new ArrayList<>();
         productsNumber = new HashMap<>();
@@ -71,10 +69,6 @@ public class Seller extends User {
             }
         }
         return null;
-    }
-
-    public ArrayList<Product> getProducts() {
-        return products;
     }
 
     public ArrayList<SellOrder> getOrders() {

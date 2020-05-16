@@ -107,7 +107,6 @@ public class Manager extends User {
         Product.allProductsInQueueExpect.remove(product);
         product.getSellers().add(product.getSeller());
         Seller seller = product.getSeller();
-        seller.getProducts().add(product);
         if (seller.getProductsNumber().containsKey(product)) {
             int numberOfProduct = seller.getProductsNumber().get(product);
             seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
@@ -140,8 +139,6 @@ public class Manager extends User {
 
     public void declineProductRequest(Request productRequest) {
         Product product = ((ProductRequest) productRequest).getProduct();
-        Seller seller = product.getSeller();
-        seller.getProducts().remove(product);
         Product.allProductsInQueueExpect.remove(product);
     }
 
@@ -185,7 +182,7 @@ public class Manager extends User {
 
     public void removeFromSellerProducts(Product product) {
         Seller seller = product.getSeller();
-        seller.getProducts().remove(product);
+        seller.getProductsNumber().remove(product);
     }
 
     private void removeProductRequest(Product product) {
