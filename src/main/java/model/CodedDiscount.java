@@ -1,9 +1,17 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 
 public class CodedDiscount {
+    private static String fileAddress="database/CodedDiscount.dat";
+
     public static int constructId = 0;
     public static ArrayList<CodedDiscount> allCodedDiscount = new ArrayList<CodedDiscount>();
     private String discountCode;
@@ -91,5 +99,17 @@ public class CodedDiscount {
                 + "{repeat : " + repeat + "}"
                 + "{start time : " + startTime + "}"
                 + "{end time : " + endTime + "}";
+    }
+
+    public static void load() throws FileNotFoundException {
+        CodedDiscount[] codedDiscounts = (CodedDiscount[]) Loader.load(CodedDiscount[].class, fileAddress);
+        if (codedDiscounts != null) {
+            allCodedDiscount = new ArrayList<>(Arrays.asList(codedDiscounts));
+        }
+    }
+
+
+    public static void save() throws IOException {
+        Saver.save(allCodedDiscount, fileAddress);
     }
 }

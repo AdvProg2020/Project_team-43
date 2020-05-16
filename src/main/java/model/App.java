@@ -33,8 +33,7 @@ public class App {
             Database.save();
         } catch (IOException e) {
             System.exit(-1);
-        } finally {
-            System.exit(0);
         }
+        System.exit(0);
     }
 }

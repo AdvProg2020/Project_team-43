@@ -1,6 +1,7 @@
 package model.database;
 
 import model.Category;
+import model.CodedDiscount;
 import model.Company;
 import model.User;
 
@@ -13,11 +14,13 @@ public class Database {
         Company.load();
         User.load();
         Category.load();
+        CodedDiscount.load();
     }
 
     public static void save() throws IOException {
         Company.save();
         User.save();
         Category.save();
+        CodedDiscount.save();
     }
 }
