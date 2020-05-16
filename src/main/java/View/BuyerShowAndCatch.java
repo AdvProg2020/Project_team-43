@@ -44,6 +44,6 @@ public class BuyerShowAndCatch {
 
     public String getNewField(String field) {
         System.out.println("new " + field + ":");
-        return Menu.getScanner().nextLine();
+        return Menu.getScanner().nextLine().trim();
     }
 }

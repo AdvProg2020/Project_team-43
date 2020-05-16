@@ -1,9 +1,15 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Category {
-
+    private static String fileAddress = "database/Category.dat";
     private static ArrayList<Category> allCategories = new ArrayList<Category>();
 
 
@@ -13,7 +19,8 @@ public class Category {
 
     public Category(String name, ArrayList<String> features) {
         this.name = name;
-        products = new ArrayList<Product>();
+        products = new ArrayList<>();
+        this.features = new ArrayList<>(features);
         allCategories.add(this);
     }
 
@@ -38,7 +45,7 @@ public class Category {
     }
 
     public void addFeatures(String newFeature) {
-        this.features.add(newFeature);
+        features.add(newFeature);
         for (Product product : this.products) {
             product.getFeaturesMap().put(newFeature, "");
         }
@@ -53,7 +60,7 @@ public class Category {
         return false;
     }
 
-    public void changeFeatureName(String oldName, String newName){
+    public void changeFeatureName(String oldName, String newName) {
         for (Product product : this.products) {
             String featureValue = product.getFeaturesMap().get(oldName);
             product.getFeaturesMap().remove(oldName);
@@ -61,7 +68,7 @@ public class Category {
         }
     }
 
-    public void removeFeature(String featureName){
+    public void removeFeature(String featureName) {
         this.getFeatures().remove(featureName);
         for (Product product : this.products) {
             product.getFeaturesMap().remove(featureName);
@@ -98,4 +105,38 @@ public class Category {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", features=" + features +
+                ", products=" + stringProducts() +
+                '}';
+    }
+
+    private String stringProducts() {
+        String res = "[";
+        if (products.size() > 0) {
+            res = res + products.get(0).getName();
+            for (int i = 1; i < products.size(); i++) {
+                res = res + ", " + products.get(i).getName();
+            }
+        }
+        res = res.concat("]");
+        return res;
+    }
+
+    public static void load() throws FileNotFoundException {
+        Category[] categories = (Category[]) Loader.load(Category[].class, fileAddress);
+        if (categories != null) {
+            allCategories = new ArrayList<>(Arrays.asList(categories));
+        }
+    }
+
+
+    public static void save() throws IOException {
+        Saver.save(allCategories, fileAddress);
+    }
+
 }

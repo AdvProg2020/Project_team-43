@@ -16,7 +16,6 @@ public class EditProductRequest extends Request {
         this.field = field;
         this.input = input;
         this.seller = seller;
-        Manager.allRequest.add(this);
         allRequests.add(this);
     }
 

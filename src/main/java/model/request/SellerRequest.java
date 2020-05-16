@@ -11,7 +11,6 @@ public class SellerRequest extends Request {
     public SellerRequest(UserPersonalInfo personalInfo, String companyName, String username) {
         super("sellerType");
         seller = new Seller(username, personalInfo, companyName);
-        Manager.allRequest.add(this);
         allRequests.add(this);
     }
 

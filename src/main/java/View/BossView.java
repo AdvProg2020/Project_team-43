@@ -103,6 +103,12 @@ public class BossView {
         System.out.println(request);
     }
 
+    public String getCompanyInfo(){
+        System.out.println("info : ");
+        String info = scannerView.nextLine();
+        return info.trim();
+    }
+
     public void viewAllCategories() {
         int counter = 1;
         for (Category category : Category.getAllCategories()) {

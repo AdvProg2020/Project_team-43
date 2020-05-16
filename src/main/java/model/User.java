@@ -1,10 +1,20 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class User {
     private static final int money = 100000;
-    public static ArrayList<User> allUsers = new ArrayList<User>();
+
+    public static ArrayList<User> allUsers = new ArrayList<>();
+    private static String fileAddress = "database/User.dat";
+
+
     protected String username;
     protected UserPersonalInfo userPersonalInfo;
     protected double balance;//hamoon etebare
@@ -21,7 +31,9 @@ public abstract class User {
         balance = money;
     }
 
-    public abstract void setUserType();
+    public void setUserType() {
+
+    }
 
     public static boolean hasUserWithUserName(String username) {
         for (User user : allUsers) {
@@ -72,6 +84,19 @@ public abstract class User {
 
     public void viewCredit() {
 
+    }
+
+    public static void load() throws FileNotFoundException {
+        Buyer.load();
+        Seller.load();
+        Manager.load();
+    }
+
+
+    public static void save() throws IOException {
+        Buyer.save();
+        Seller.save();
+        Manager.save();
     }
 
     @Override

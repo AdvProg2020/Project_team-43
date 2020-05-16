@@ -2,11 +2,13 @@ package model.request;
 
 
 
+import model.Manager;
+
 import java.util.ArrayList;
 
 public abstract class Request {
     public static int constructId = 0;
-    protected static ArrayList<Request> allRequests = new ArrayList<Request>();
+    protected static ArrayList<Request> allRequests = new ArrayList<>();
     protected String requestId;
     protected String requestType;
 
@@ -14,6 +16,7 @@ public abstract class Request {
         this.requestId = "" + constructId;
         this.requestType = requestType;
         constructId += 1;
+        Manager.allRequest.add(this);
     }
 
     public static ArrayList<Request> getAllRequests() {

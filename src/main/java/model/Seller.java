@@ -1,18 +1,23 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
 import model.request.EditOffRequest;
 import model.request.EditProductRequest;
 import model.request.OffRequest;
 import model.request.ProductRequest;
 
-import java.text.ParseException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Seller extends User {
+    private static String fileAddress = "database/Seller.dat";
     private Company company;
-    private ArrayList<Product> products;
+    private ArrayList<Product> products;//TODO :bayad hazf she az manager
     private HashMap<Product, Integer> productsNumber;
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;
@@ -113,7 +118,7 @@ public class Seller extends User {
         new EditOffRequest(off, field, input);
     }
 
-    public void addOff(Date startTime, Date endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException {
+    public void addOff(Date startTime, Date endTime, Double discountAmount, ArrayList<String> productIds) {
         ArrayList<Product> productsTemp = new ArrayList<>();
         for (String productId : productIds) {
             productsTemp.add((getProductById(productId)));
@@ -186,6 +191,30 @@ public class Seller extends User {
 
     public void increaseProduct(Product product, int number) {
         productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) + number);
+    }
+
+    public static void load() throws FileNotFoundException {
+        Seller[] sellers = (Seller[]) Loader.load(Seller[].class, fileAddress);
+        if (sellers != null) {
+            ArrayList<Seller> allSellers = new ArrayList<>(Arrays.asList(sellers));
+            allUsers.addAll(allSellers);
+        }
+    }
+
+
+    public static void save() throws IOException {
+        ArrayList<Seller> allSellers = new ArrayList<>();
+        for (User user : allUsers) {
+            if (user.userType == UserType.SELLER) {
+                allSellers.add((Seller) user);
+            }
+        }
+        Saver.save(allSellers, fileAddress);
+    }
+
+    public void settleMoney(double price) {
+        this.balance += price;
+
     }
 
 }

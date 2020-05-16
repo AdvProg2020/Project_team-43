@@ -29,7 +29,7 @@ public class ProductPanel extends Menu {
                 String command = scanner.nextLine();
                 try {
                     processor.manageDigest(command, productId);
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -114,7 +114,7 @@ public class ProductPanel extends Menu {
         System.out.println("product's Id : ");
         this.productId = scanner.nextLine();
         Product product = Product.getProductById(productId);
-        if(product == null){
+        if (product == null) {
             System.out.println("product with this Id doesn't exist");
             return;
         }

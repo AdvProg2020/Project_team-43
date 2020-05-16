@@ -15,7 +15,6 @@ public class ProductRequest extends Request {
         this.requestType = "product";
         this.seller = seller;
         this.number = number;
-        Manager.allRequest.add(this);
         allRequests.add(this);
     }
 
