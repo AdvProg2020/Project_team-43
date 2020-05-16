@@ -109,6 +109,7 @@ public class BossView {
             System.out.print(counter + " . ");
             System.out.print(category);
         }
+        System.out.println();
     }
 
     public ArrayList<String> getCategoryFeatures() {

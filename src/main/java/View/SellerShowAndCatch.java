@@ -65,6 +65,7 @@ public class SellerShowAndCatch {
     }
 
     public void showCategories(ArrayList<Category> categories) {
+        System.out.println("Categories :");
         for (Category category : categories) {
             System.out.println(category.getName());
         }
@@ -75,6 +76,7 @@ public class SellerShowAndCatch {
     }
 
     public void showOffs(ArrayList<Off> offs) {
+        System.out.println("Offs :");
         for (Off off : offs) {
             showOff(off);
         }

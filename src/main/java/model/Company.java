@@ -68,4 +68,5 @@ public class Company {
     public static void save() throws IOException {
         Saver.save(allCompanies, fileAddress);
     }
+
 }

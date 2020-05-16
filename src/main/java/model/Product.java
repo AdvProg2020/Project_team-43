@@ -1,10 +1,17 @@
 package model;
 
+import model.database.Loader;
+import model.database.Saver;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
 public class Product {
+    private static String fileAddress = "database/Product.dat";
     public static int constructId = 0;
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
@@ -17,10 +24,10 @@ public class Product {
     private int visit;
     private Date date;
     private int availableCount;
-    private Category category;
+    private transient Category category;
     private Map<String, String> featuresMap;
-    private Seller seller;
-    private ArrayList<Seller> sellers;
+    private transient Seller seller;
+    private transient ArrayList<Seller> sellers;
     private String description;/////////tozihat
     private ProductScore score;
     private ArrayList<Comment> comments;
@@ -55,6 +62,8 @@ public class Product {
         comments = new ArrayList<Comment>();
         allProductsInQueueExpect.add(this);
     }
+
+
 
     public Seller getSeller() {
         return seller;
@@ -245,5 +254,27 @@ public class Product {
 
     public void setFeaturesMap(Map<String, String> featuresMap) {
         this.featuresMap = featuresMap;
+    }
+
+    public static void load() throws FileNotFoundException {
+        Product[] products = (Product[]) Loader.load(Product[].class, fileAddress);
+        if (products != null) {
+             loadProducts(new ArrayList<>(Arrays.asList(products)));
+        }
+    }
+
+    private static void loadProducts(ArrayList<Product> allProducts){
+        for (Product product : allProducts) {
+            if (product.getProductState()==State.ProductState.CREATING_PROCESS){
+
+            }
+        }
+    }
+
+
+    public static void save() throws IOException {
+        ArrayList<Product> products = new ArrayList<>(allProductsInList);
+        products.addAll(allProductsInQueueExpect);
+        Saver.save(products, fileAddress);
     }
 }

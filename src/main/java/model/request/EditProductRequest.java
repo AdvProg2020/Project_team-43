@@ -3,6 +3,7 @@ package model.request;
 import model.Manager;
 import model.Product;
 import model.Seller;
+import model.State;
 
 public class EditProductRequest extends Request {
     Product product;
@@ -16,6 +17,7 @@ public class EditProductRequest extends Request {
         this.field = field;
         this.input = input;
         this.seller = seller;
+        product.setProductState(State.ProductState.EDITING_PROCESS);
         allRequests.add(this);
     }
 
