@@ -13,7 +13,7 @@ public abstract class Menu {
     public static Processor processor = new Processor();
     public static BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public static SellerProcessor sellerProcessor = SellerProcessor.getInstance();
-    public static BossProcessor bossProcessor = new BossProcessor();
+    public static BossProcessor bossProcessor = BossProcessor.getInstance();
     String name;
     protected Menu parent;
     protected static Scanner scanner = new Scanner(System.in);

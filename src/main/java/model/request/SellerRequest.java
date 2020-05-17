@@ -9,7 +9,7 @@ public class SellerRequest extends Request {
     private Seller seller;
 
     public SellerRequest(UserPersonalInfo personalInfo, String companyName, String username) {
-        super("sellerType");
+        super("seller");
         seller = new Seller(username, personalInfo, companyName);
         allRequests.add(this);
     }

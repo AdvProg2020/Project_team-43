@@ -1,5 +1,7 @@
 package test;
 
+import Controller.BossProcessor;
+import Controller.Processor;
 import model.*;
 import model.request.*;
 import org.junit.Assert;
@@ -22,6 +24,7 @@ public class DeclineRequestsTests {
     Seller seller;
     Category category;
     Off off;
+    BossProcessor bossProcessor;
 
     @BeforeAll
     public void setAll() {
@@ -37,38 +40,39 @@ public class DeclineRequestsTests {
         offRequest = new OffRequest(off);
         editOffRequest = new EditOffRequest(off, "discountAmount", "20");
         editProductRequest = new EditProductRequest(product, "name", "new name", seller);
-
+        bossProcessor = BossProcessor.getInstance();
+        Processor.user = manager;
     }
 
     @Test
-    public void declineProductRequestTest() {
+    public void declineProductRequestTest() throws InvalidCommandException {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        manager.declineProductRequest(productRequest);
+        bossProcessor.manageRequests("decline request " + productRequest.getRequestId());
         Assert.assertFalse(Product.allProductsInQueueExpect.contains(newProduct));
     }
 
     @Test
-    public void declineOffRequestTest() {
+    public void declineOffRequestTest() throws InvalidCommandException {
         setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
-        manager.declineOffRequest(offRequest);
+        bossProcessor.manageRequests("decline request " + offRequest.getRequestId());
         Assert.assertFalse(Off.inQueueExpectionOffs.contains(newOff));
     }
 
     @Test
-    public void declineEditOffRequestTest() {
+    public void declineEditOffRequestTest() throws InvalidCommandException {
         setAll();
-        Off newOff = ((EditOffRequest)editOffRequest).getOff();
-        manager.declineEditOffRequest(((EditOffRequest)editOffRequest));
+        Off newOff = ((EditOffRequest) editOffRequest).getOff();
+        bossProcessor.manageRequests("decline request " + editOffRequest.getRequestId());
         Assert.assertTrue(newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
     }
 
     @Test
-    public void declineEditProductRequestTest() {
+    public void declineEditProductRequestTest() throws InvalidCommandException {
         setAll();
-        Product newProduct = ((EditProductRequest)editProductRequest).getProduct();
-        manager.declineEditProductRequest(((EditProductRequest)editProductRequest));
+        Product newProduct = ((EditProductRequest) editProductRequest).getProduct();
+        bossProcessor.manageRequests("decline request " + editProductRequest.getRequestId());
         Assert.assertTrue(newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
     }
 }

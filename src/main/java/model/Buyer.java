@@ -21,6 +21,7 @@ public class Buyer extends User {
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
+        newBuyerCart = new HashMap<>();
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
         codedDiscountsId = new HashMap<String, Integer>();

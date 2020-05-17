@@ -82,11 +82,11 @@ public class Manager extends User {
 
 
     public void acceptRequest(Request request) throws InvalidCommandException, ParseException {
-        if (request.getRequestType().equalsIgnoreCase("sellerType")) {
+        if (request.getRequestType().equalsIgnoreCase("seller")) {
             acceptSellerRequest(request);
-        } else if (request.getRequestType().equalsIgnoreCase("offType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("off")) {
             acceptOffRequest((OffRequest) request);
-        } else if (request.getRequestType().equalsIgnoreCase("productType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("product")) {
             acceptProductRequest((ProductRequest) request);
         } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
             acceptEditOffRequest((EditOffRequest) request);
@@ -142,9 +142,9 @@ public class Manager extends User {
     }
 
     public void declineRequest(Request request) {
-        if (request.getRequestType().equalsIgnoreCase("offType")) {
+        if (request.getRequestType().equalsIgnoreCase("off")) {
             declineOffRequest(request);
-        } else if (request.getRequestType().equalsIgnoreCase("productType")) {
+        } else if (request.getRequestType().equalsIgnoreCase("product")) {
             declineProductRequest(request);
         } else if (request.getRequestType().equalsIgnoreCase("edit off")) {
             declineEditOffRequest(((EditOffRequest) request));
@@ -213,17 +213,6 @@ public class Manager extends User {
         ArrayList<Seller> sellers = product.getSellers();
         for (Seller seller : sellers) {
             seller.getProductsNumber().remove(product);
-        }
-    }
-
-    private void removeProductRequest(Product product) {
-        for (int i = 0; i < allRequest.size(); i++) {
-            if (allRequest.get(i).getRequestType().equalsIgnoreCase("productType")) {
-                if (((ProductRequest) allRequest.get(i)).getProduct() == product) {
-                    allRequest.remove(allRequest.get(i));
-                    return;
-                }
-            }
         }
     }
 
