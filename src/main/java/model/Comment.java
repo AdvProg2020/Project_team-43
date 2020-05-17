@@ -62,6 +62,10 @@ public class Comment {
         loadAllBuyer();
     }
 
+    public static void saveFields(){
+
+    }
+
     public static void load() throws FileNotFoundException {
         Comment[] comments = (Comment[]) Loader.load(Comment[].class, fileAddress);
         if (comments != null) {

@@ -52,6 +52,10 @@ public class SellerProcessor extends Processor {
         }
     }
 
+    public boolean checkProduct(String productId){
+        return ((Seller)user).hasProductWithId(productId);
+    }
+
     public void viewProductList() {
         sellerShowAndCatch.showProductList(((Seller) user).getProductsNumber());
     }

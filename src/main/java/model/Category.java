@@ -15,12 +15,15 @@ public class Category {
 
     private String name;
     private ArrayList<String> features;
-    private ArrayList<Product> products;
+    private transient ArrayList<Product> products;
+    private ArrayList<String> productsId;
+
 
     public Category(String name, ArrayList<String> features) {
         this.name = name;
         products = new ArrayList<>();
         this.features = new ArrayList<>(features);
+        productsId = new ArrayList<>();
         allCategories.add(this);
     }
 
@@ -138,5 +141,41 @@ public class Category {
     public static void save() throws IOException {
         Saver.save(allCategories, fileAddress);
     }
+
+    private void productsLoad(){
+        products.clear();
+        for (String id : productsId) {
+            products.add(Product.getAllProductById(id));
+        }
+    }
+
+    private void productsSave(){
+        productsId.clear();
+        for (Product product : products) {
+            productsId.add(product.getProductId());
+        }
+    }
+
+    private static void loadAllProducts(){
+        for (Category category : allCategories) {
+            category.productsLoad();
+        }
+    }
+
+    private static void saveAllProducts(){
+        for (Category category : allCategories) {
+            category.productsSave();
+        }
+    }
+
+    public static void loadFields(){
+        loadAllProducts();
+    }
+
+    public static void saveFields(){
+        saveAllProducts();
+    }
+
+
 
 }

@@ -123,6 +123,24 @@ public class Product {
         }
         return null;
     }
+    public static Product getAllProductById(String productId){
+        for (Product product : allProductsInList) {
+           if(product.getProductId().equalsIgnoreCase(productId)){
+               return product;
+           }
+        }
+        for (Product product : allProductsInQueueEdit) {
+            if(product.getProductId().equalsIgnoreCase(productId)){
+                return product;
+            }
+        }
+        for (Product product : allProductsInQueueExpect) {
+            if(product.getProductId().equalsIgnoreCase(productId)){
+                return product;
+            }
+        }
+        return null;
+    }
 
     private void fillFeaturesMap(ArrayList<String> features2) {
         ArrayList<String> features1 = this.category.getFeatures();
