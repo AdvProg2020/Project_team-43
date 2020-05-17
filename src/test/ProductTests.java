@@ -193,4 +193,16 @@ public class ProductTests {
         Assert.assertEquals(product1.getPrice(), 33, 1);
     }
 
+    @Test
+    public void getNameCompanyTest(){
+        setAll();
+        Assert.assertEquals(company.getName(), "asus");
+    }
+
+    @Test
+    public void getInfoCompanyTest(){
+        setAll();
+        Assert.assertEquals(company2.getInfo(), "none");
+    }
+
 }

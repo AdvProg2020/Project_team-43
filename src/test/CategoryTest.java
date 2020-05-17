@@ -110,4 +110,15 @@ public class CategoryTest {
         setAll();
         Assert.assertEquals(category.toString(), "Category{name='categoryName', features=[size, price], products=[a, b]}");
     }
+
+    @Test
+    public void addFeatureCategoryTest(){
+        setAll();
+        try {
+            manager.addCategoryFeature(category, "new feature1");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
+        Assert.assertTrue(category.hasFeature("new feature1"));
+    }
 }

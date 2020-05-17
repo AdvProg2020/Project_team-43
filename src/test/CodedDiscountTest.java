@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class CodedDiscountTest {
     Manager manager;
+    Buyer buyer;
     BossProcessor bossProcessor;
     UserPersonalInfo userPersonalInfo;
     Company company;
@@ -29,6 +30,7 @@ public class CodedDiscountTest {
     public void setAll() {
         userPersonalInfo = new UserPersonalInfo("first name", "last name", "email", "phone number", "password");
         manager = new Manager("sadra", userPersonalInfo);
+        buyer = new Buyer("alireza", userPersonalInfo);
         bossProcessor = BossProcessor.getInstance();
         company = new Company("companyName", "info");
         features = new ArrayList<>();
@@ -63,7 +65,7 @@ public class CodedDiscountTest {
     }
 
     @Test
-    public void editCodedDiscountEndTimeTest()  {
+    public void editCodedDiscountEndTimeTest() {
         setAll();
         try {
             bossProcessor.processEditCodedDiscountSecond("end time", codedDiscount.getDiscountCode(), "11/11/2222");
@@ -81,7 +83,7 @@ public class CodedDiscountTest {
     }
 
     @Test
-    public void editCodedDiscountAmountTest()  {
+    public void editCodedDiscountAmountTest() {
         setAll();
         try {
             bossProcessor.processEditCodedDiscountSecond("discount amount", codedDiscount.getDiscountCode(), "30");
@@ -92,7 +94,7 @@ public class CodedDiscountTest {
     }
 
     @Test
-    public void editCodedDiscountRemainingTimeTest()   {
+    public void editCodedDiscountRemainingTimeTest() {
         setAll();
         try {
             bossProcessor.processEditCodedDiscountSecond("remaining time", codedDiscount.getDiscountCode(), "10");
@@ -103,7 +105,7 @@ public class CodedDiscountTest {
     }
 
     @Test
-    public void viewCodedDiscountTest()  {
+    public void viewCodedDiscountTest() {
         setAll();
         try {
             bossProcessor.manageCodedDiscounts("view discount code " + codedDiscount.getDiscountCode());
@@ -137,6 +139,23 @@ public class CodedDiscountTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
+    }
+
+    @Test
+    public void createDiscountCodeTest() {
+        setAll();
+        ArrayList<String> info = new ArrayList<>();
+        info.add("11/11/1111");
+        info.add("11/12/1111");
+        info.add("10.5");
+        info.add("3");
+        try {
+            manager.createDiscountCoded(info);
+        } catch (ParseException e) {
+            Assert.assertTrue(true);
+        }
+        CodedDiscount codedDiscount = CodedDiscount.allCodedDiscount.get(CodedDiscount.allCodedDiscount.size() - 1);
+        Assert.assertTrue(buyer.checkDiscountCode(codedDiscount));
     }
 
 
