@@ -12,7 +12,6 @@ public class Product {
     private static ArrayList<Product> allProducts = new ArrayList<>();
     private static HashMap<String, String> SellerUsernameToProductId = new HashMap<>();
 
-
     public static int constructId = 0;
 
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
@@ -27,12 +26,18 @@ public class Product {
     private int visit;
     private Date date;
     private int availableCount;
-    private transient Category category;
     private Map<String, String> featuresMap;
-    private transient ArrayList<Seller> sellers;
-    private String description;/////////tozihat
+    private String description;
     private ProductScore score;
     private ArrayList<Comment> comments;
+
+
+    private transient Category category;
+    private String categoryName;
+
+    private transient ArrayList<Seller> sellers;
+    private ArrayList<String> sellersName;
+
 
     public Product(String name, Company company, double price, Category category) {
         this.productId = "" + constructId;
@@ -42,6 +47,7 @@ public class Product {
         this.price = price;
         this.category = category;
         sellers = new ArrayList<>();
+        sellersName = new ArrayList<>();
         this.date = new Date();
         score = new ProductScore();
         this.visit = 0;
@@ -123,19 +129,20 @@ public class Product {
         }
         return null;
     }
-    public static Product getAllProductById(String productId){
+
+    public static Product getAllProductById(String productId) {
         for (Product product : allProductsInList) {
-           if(product.getProductId().equalsIgnoreCase(productId)){
-               return product;
-           }
+            if (product.getProductId().equalsIgnoreCase(productId)) {
+                return product;
+            }
         }
         for (Product product : allProductsInQueueEdit) {
-            if(product.getProductId().equalsIgnoreCase(productId)){
+            if (product.getProductId().equalsIgnoreCase(productId)) {
                 return product;
             }
         }
         for (Product product : allProductsInQueueExpect) {
-            if(product.getProductId().equalsIgnoreCase(productId)){
+            if (product.getProductId().equalsIgnoreCase(productId)) {
                 return product;
             }
         }
@@ -276,11 +283,67 @@ public class Product {
         }
     }
 
-
     public static void save() throws IOException {
         ArrayList<Product> products = new ArrayList<>(allProductsInList);
         products.addAll(allProductsInQueueExpect);
         products.addAll(allProductsInQueueEdit);
         Saver.save(products, fileAddress);
+    }
+
+    public static void saveFields() {
+        saveAllCategories();
+        saveAllSellers();
+    }
+
+    public static void loadFields() {
+        loadAllCategories();
+        loadAllSellers();
+    }
+
+    public static void loadAllCategories() {
+        for (Product product : allProducts) {
+            product.loadCategory();
+        }
+    }
+
+    public void loadCategory() {
+        this.category = Category.getCategoryByName(categoryName);
+    }
+
+    public static void saveAllCategories() {
+        for (Product product : allProducts) {
+            product.saveCategory();
+        }
+    }
+
+    public void saveCategory() {
+        categoryName = category.getName();
+    }
+
+    public static void loadAllSellers() {
+        for (Product product : allProducts) {
+            product.loadSellers();
+        }
+    }
+
+    public void loadSellers() {
+        ArrayList<Seller> sellersFromDataBase = new ArrayList<>();
+        for (String sellerName : sellersName) {
+            sellersFromDataBase.add((Seller) User.getUserByUserName(sellerName));
+        }
+        sellers = sellersFromDataBase;
+    }
+
+    public static void saveAllSellers() {
+        for (Product product : allProducts) {
+            product.saveSellers();
+        }
+    }
+
+    public void saveSellers() {
+        sellersName.clear();
+        for (Seller seller : sellers) {
+            sellersName.add(seller.getUsername());
+        }
     }
 }

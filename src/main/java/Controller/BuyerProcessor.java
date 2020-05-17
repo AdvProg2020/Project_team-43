@@ -40,7 +40,6 @@ public class BuyerProcessor extends Processor {
         }
     }
 
-
     public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
         if (newBuyerCart.containsKey(productSellerPair)) {
             newBuyerCart.replace(productSellerPair,
