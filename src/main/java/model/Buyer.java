@@ -21,6 +21,7 @@ public class Buyer extends User {
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
+        newBuyerCart = new HashMap<>();
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
         codedDiscountsId = new HashMap<String, Integer>();
@@ -149,6 +150,10 @@ public class Buyer extends User {
         }
         return true;
 
+    }
+
+    public boolean cartHasPair(Pair<Product, Seller> pair) {
+        return newBuyerCart.containsKey(pair);
     }
 
     public void addDiscountCode(CodedDiscount discount) {
