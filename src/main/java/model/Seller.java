@@ -17,7 +17,10 @@ import java.util.HashMap;
 public class Seller extends User {
     private static String fileAddress = "database/Seller.dat";
     private Company company;
-    private HashMap<Product, Integer> productsNumber;
+
+    private transient HashMap<Product, Integer> productsNumber;
+    private HashMap<String, Integer> productsNumberWithId;
+
     private ArrayList<Off> offs;
     private ArrayList<SellOrder> orders;
 
@@ -191,6 +194,11 @@ public class Seller extends User {
         productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) + number);
     }
 
+    public void settleMoney(double price) {
+        this.balance += price;
+
+    }
+
     public static void load() throws FileNotFoundException {
         Seller[] sellers = (Seller[]) Loader.load(Seller[].class, fileAddress);
         if (sellers != null) {
@@ -210,9 +218,44 @@ public class Seller extends User {
         Saver.save(allSellers, fileAddress);
     }
 
-    public void settleMoney(double price) {
-        this.balance += price;
-
+    public static void saveAllFields() {
+        saveAllProducts();
     }
+
+    public static void loadAllFields() {
+        loadAllProducts();
+    }
+
+    public static void loadAllProducts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.SELLER) {
+                ((Seller) user).loadProducts();
+            }
+        }
+    }
+
+    public static void saveAllProducts() {
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.SELLER) {
+                ((Seller) user).saveProducts();
+            }
+        }
+    }
+
+    public void loadProducts() {
+        HashMap<Product, Integer> productIntegerHashMap = new HashMap<>();
+        for (String productId : productsNumberWithId.keySet()) {
+            productIntegerHashMap.put(Product.getProductById(productId), productsNumberWithId.get(productId));
+        }
+        productsNumber = productIntegerHashMap;
+    }
+
+    public void saveProducts() {
+        productsNumberWithId.clear();
+        for (Product product : productsNumber.keySet()) {
+            productsNumberWithId.put(product.getProductId(), productsNumber.get(product));
+        }
+    }
+
 
 }
