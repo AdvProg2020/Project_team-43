@@ -23,8 +23,8 @@ public class Off {
     private String offId;
     private transient Seller seller;
     private String sellerUserName;
-    private ArrayList<Product> products;
-    private transient ArrayList<String> productsId;
+    private transient ArrayList<Product> products;
+    private ArrayList<String> productsId;
     private State.OffState offState;
     private Date startTime;
     private Date endTime;
@@ -151,7 +151,7 @@ public class Off {
 
     private void loadProducts() {
         for (String productId : productsId) {
-            products.add(Product.getProductById(productId));
+            products.add(Product.getAllProductById(productId));
         }
     }
 

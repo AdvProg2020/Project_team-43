@@ -151,6 +151,10 @@ public class Buyer extends User {
 
     }
 
+    public boolean cartHasPair(Pair<Product, Seller> pair) {
+        return newBuyerCart.containsKey(pair);
+    }
+
     public void addDiscountCode(CodedDiscount discount) {
         codedDiscounts.put(discount, 0);
     }

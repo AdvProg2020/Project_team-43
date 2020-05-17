@@ -1,6 +1,10 @@
 package View;
 
+import Controller.Processor;
 import model.InvalidCommandException;
+import model.Off;
+import model.Product;
+import model.Seller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -21,8 +25,15 @@ public class SellerManageOffMenu extends Menu {
         return new Menu(this, "View Off Info") {
             @Override
             public void show() {
+                for (Off off : ((Seller) Processor.user).getOffs()) {
+                    System.out.println(off.getOffId());
+                }
                 System.out.println("Please enter off id");
-                sellerProcessor.viewOff(scanner.nextLine());
+                try {
+                    sellerProcessor.viewOff(scanner.nextLine());
+                } catch (NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             @Override
@@ -88,7 +99,9 @@ public class SellerManageOffMenu extends Menu {
         String productId = scanner.nextLine();
         ArrayList<String> productIds = new ArrayList<>();
         while (!productId.equalsIgnoreCase("finish")) {
-            productIds.add(productId);
+            if(sellerProcessor.checkProduct(productId)) {
+                productIds.add(productId);
+            }
             productId = scanner.nextLine();
         }
         return productIds;

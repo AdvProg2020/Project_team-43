@@ -145,7 +145,7 @@ public class Category {
     private void productsLoad(){
         products.clear();
         for (String id : productsId) {
-            products.add(Product.getProductById(id));
+            products.add(Product.getAllProductById(id));
         }
     }
 

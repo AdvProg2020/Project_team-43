@@ -123,7 +123,8 @@ public class BuyerProcessor extends Processor {
             errorMessage("product with this Id doesn't exist");
             return true;
         }
-        return false;
+        return !((Buyer) user).cartHasPair(new Pair<Product, Seller>(Product.getProductById(productId),
+                (Seller) User.getUserByUserName(sellerName)));
     }
 
     public void increaseProduct(String productId, String sellerName) throws NullPointerException {

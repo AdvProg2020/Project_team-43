@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class Processor {
     protected static boolean isLogin;
-    protected static User user;
+    public static User user;
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
     protected FilterManager productFilter;
 
