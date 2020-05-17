@@ -1,14 +1,12 @@
 package test;
 
 import model.*;
-import model.request.OffRequest;
-import model.request.ProductRequest;
-import model.request.Request;
-import model.request.SellerRequest;
+import model.request.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,6 +15,8 @@ public class AcceptRequestsTests {
     Request sellerRequest;
     Request productRequest;
     Request offRequest;
+    Request editOffRequest;
+    Request editProductRequest;
     UserPersonalInfo userPersonalInfo;
     Product product;
     Company company;
@@ -36,6 +36,9 @@ public class AcceptRequestsTests {
         sellerRequest = new SellerRequest(userPersonalInfo, "companyName", "sellerUserName");
         productRequest = new ProductRequest(product, seller, 2);
         offRequest = new OffRequest(off);
+        editOffRequest = new EditOffRequest(off, "discountAmount", "20");
+        editProductRequest = new EditProductRequest(product, "name", "new name", seller);
+
     }
 
     @Test
@@ -64,5 +67,20 @@ public class AcceptRequestsTests {
 
     }
 
+    @Test
+    public void acceptEditOffRequestTest() throws ParseException, InvalidCommandException {
+        setAll();
+        Off newOff = ((EditOffRequest) editOffRequest).getOff();
+        manager.acceptEditOffRequest((EditOffRequest) editOffRequest);
+        Assert.assertTrue(newOff.getDiscountAmount() == 20 && newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
+    }
+
+    @Test
+    public void acceptEditProductRequestTest() throws InvalidCommandException{
+        setAll();
+        Product newProduct = ((EditProductRequest) editProductRequest).getProduct();
+        manager.acceptEditProductRequest(((EditProductRequest) editProductRequest));
+        Assert.assertTrue(newProduct.getName().equalsIgnoreCase("new name") && newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
+    }
 
 }

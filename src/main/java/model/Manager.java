@@ -131,6 +131,8 @@ public class Manager extends User {
 
     public void acceptOffRequest(OffRequest request) {
         Off off = request.getOff();
+        Seller seller = off.getSeller();
+        seller.getOffs().add(off);
         Off.acceptedOffs.add(off);
         Off.inQueueExpectionOffs.remove(off);
         off.setOffState(State.OffState.CONFIRMED);
@@ -176,8 +178,6 @@ public class Manager extends User {
     public void declineOffRequest(Request offRequest) {
         Off off = ((OffRequest) offRequest).getOff();
         Off.inQueueExpectionOffs.remove(off);
-        Seller seller = off.getSeller();
-        seller.getOffs().remove(off);
     }
 
     public void editCategoryName(Category category, String newName) {

@@ -1,10 +1,7 @@
 package test;
 
 import model.*;
-import model.request.OffRequest;
-import model.request.ProductRequest;
-import model.request.Request;
-import model.request.SellerRequest;
+import model.request.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,6 +14,8 @@ public class DeclineRequestsTests {
     Request sellerRequest;
     Request productRequest;
     Request offRequest;
+    Request editOffRequest;
+    Request editProductRequest;
     UserPersonalInfo userPersonalInfo;
     Product product;
     Company company;
@@ -36,6 +35,9 @@ public class DeclineRequestsTests {
         sellerRequest = new SellerRequest(userPersonalInfo, "companyName", "sellerUserName");
         productRequest = new ProductRequest(product, seller, 2);
         offRequest = new OffRequest(off);
+        editOffRequest = new EditOffRequest(off, "discountAmount", "20");
+        editProductRequest = new EditProductRequest(product, "name", "new name", seller);
+
     }
 
     @Test
@@ -43,24 +45,30 @@ public class DeclineRequestsTests {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
         manager.declineProductRequest(productRequest);
-        if(!Product.allProductsInQueueExpect.contains(newProduct)){
-            Assert.assertTrue(true);
-        } else{
-            Assert.assertTrue(false);
-        }
+        Assert.assertFalse(Product.allProductsInQueueExpect.contains(newProduct));
     }
 
     @Test
     public void declineOffRequestTest() {
         setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
-        Seller newOffSeller = newOff.getSeller();
         manager.declineOffRequest(offRequest);
-        if (!newOffSeller.getOffs().contains(newOff) && !Off.inQueueExpectionOffs.contains(newOff)) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.assertTrue(false);
-        }
+        Assert.assertFalse(Off.inQueueExpectionOffs.contains(newOff));
     }
 
+    @Test
+    public void declineEditOffRequestTest() {
+        setAll();
+        Off newOff = ((EditOffRequest)editOffRequest).getOff();
+        manager.declineEditOffRequest(((EditOffRequest)editOffRequest));
+        Assert.assertTrue(newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
+    }
+
+    @Test
+    public void declineEditProductRequestTest() {
+        setAll();
+        Product newProduct = ((EditProductRequest)editProductRequest).getProduct();
+        manager.declineEditProductRequest(((EditProductRequest)editProductRequest));
+        Assert.assertTrue(newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
+    }
 }
