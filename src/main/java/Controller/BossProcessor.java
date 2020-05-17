@@ -206,12 +206,12 @@ public class BossProcessor extends Processor {
         if (field.equalsIgnoreCase("back")) {
             return;
         } else {
-            processEditCodedDiscountSecond(field, discountCode);
+            String changeField = bossViewManager.getEditCodedDiscountInField();
+            processEditCodedDiscountSecond(field, discountCode, changeField);
         }
     }
 
-    public void processEditCodedDiscountSecond(String field, String discountCode) throws InvalidCommandException, NullPointerException, ParseException {
-        String changeField = bossViewManager.getEditCodedDiscountInField();
+    public void processEditCodedDiscountSecond(String field, String discountCode, String changeField) throws InvalidCommandException, NullPointerException, ParseException {
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
         if (codedDiscount == null) {
             throw new NullPointerException("codedDiscount with this Id doesn't exist");

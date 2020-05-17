@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 
-public class categoryTest {
+public class CategoryTest {
     Manager manager;
     BossProcessor bossProcessor;
     UserPersonalInfo userPersonalInfo;
