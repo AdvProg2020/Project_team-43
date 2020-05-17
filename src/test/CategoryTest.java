@@ -38,23 +38,31 @@ public class CategoryTest {
     }
 
     @Test
-    public void editCategoryFeatureTest() throws InvalidCommandException{
+    public void editCategoryFeatureTest() {
         setAll();
-        manager.editFeatureName(category, "size", "new size");
+        try {
+            manager.editFeatureName(category, "size", "new size");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(category.getFeatures().get(1), "new size");
     }
 
     @Test
-    public void removeCategoryFeatureTest(){
+    public void removeCategoryFeatureTest() {
         setAll();
         manager.deleteFeature(category, "size");
         Assert.assertFalse(category.hasFeature("size"));
     }
 
     @Test
-    public void removeCategoryTest()throws InvalidCommandException{
+    public void removeCategoryTest() {
         setAll();
-        bossProcessor.manageCategories("remove category "+category.getName());
+        try {
+            bossProcessor.manageCategories("remove category " + category.getName());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertFalse(Category.hasCategoryWithName(category.getName()));
     }
 }

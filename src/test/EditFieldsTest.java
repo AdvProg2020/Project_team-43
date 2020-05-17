@@ -35,112 +35,172 @@ public class EditFieldsTest {
     }
 
     @Test
-    public void buyerEditFieldTestFirstName() throws InvalidCommandException {
+    public void buyerEditFieldTestFirstName() {
         setAll();
-        buyer.editFields("firstname", "new name");
+        try {
+            buyer.editFields("firstname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getFirstName(), ("new name"));
     }
 
     @Test
-    public void buyerEditFieldTestLastName() throws InvalidCommandException {
+    public void buyerEditFieldTestLastName() {
         setAll();
-        buyer.editFields("lastname", "new name");
+        try {
+            buyer.editFields("lastname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getLastName(), ("new name"));
     }
 
     @Test
-    public void buyerEditFieldTestEmail() throws InvalidCommandException {
+    public void buyerEditFieldTestEmail() {
         setAll();
-        buyer.editFields("email", "new email");
+        try {
+            buyer.editFields("email", "new email");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getEmail(), ("new email"));
     }
 
     @Test
-    public void buyerEditFieldTestPhoneNumber() throws InvalidCommandException {
+    public void buyerEditFieldTestPhoneNumber() {
         setAll();
-        buyer.editFields("phonenumber", "new phone number");
+        try {
+            buyer.editFields("phonenumber", "new phone number");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getPhoneNumber(), ("new phone number"));
     }
 
     @Test
-    public void buyerEditFieldTestPassword() throws InvalidCommandException {
+    public void buyerEditFieldTestPassword() {
         setAll();
-        buyer.editFields("password", "new password");
+        try {
+            buyer.editFields("password", "new password");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getPassword(), ("new password"));
     }
 
     @Test
-    public void sellerEditFieldTestFirstName() throws InvalidCommandException {
+    public void sellerEditFieldTestFirstName() {
         setAll();
-        seller.editFields("firstname", "new name");
+        try {
+            seller.editFields("firstname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getFirstName(), ("new name"));
     }
 
     @Test
-    public void sellerEditFieldTestLastName() throws InvalidCommandException {
+    public void sellerEditFieldTestLastName() {
         setAll();
-        seller.editFields("lastname", "new name");
+        try {
+            seller.editFields("lastname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getLastName(), ("new name"));
     }
 
     @Test
-    public void sellerEditFieldTestEmail() throws InvalidCommandException {
+    public void sellerEditFieldTestEmail() {
         setAll();
-        seller.editFields("email", "new email");
+        try {
+            seller.editFields("email", "new email");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getEmail(), ("new email"));
     }
 
     @Test
-    public void sellerEditFieldTestPhoneNumber() throws InvalidCommandException {
+    public void sellerEditFieldTestPhoneNumber() {
         setAll();
-        seller.editFields("phonenumber", "new phone number");
+        try {
+            seller.editFields("phonenumber", "new phone number");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getPhoneNumber(), ("new phone number"));
     }
 
     @Test
-    public void sellerEditFieldTestPassword() throws InvalidCommandException {
+    public void sellerEditFieldTestPassword() {
         setAll();
-        seller.editFields("password", "new password");
+        try {
+            seller.editFields("password", "new password");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(buyer.getUserPersonalInfo().getPassword(), ("new password"));
     }
 
     @Test
-    public void managerEditFieldTestFirstName() throws InvalidCommandException {
+    public void managerEditFieldTestFirstName() {
         setAll();
         Processor.user = manager;
-        bossProcessor.editField("edit firstname", "new name");
+        try {
+            bossProcessor.editField("edit firstname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(manager.getUserPersonalInfo().getFirstName(), "new name");
     }
 
     @Test
-    public void managerEditFieldTestLastName() throws InvalidCommandException {
+    public void managerEditFieldTestLastName() {
         setAll();
         Processor.user = manager;
-        bossProcessor.editField("edit lastname", "new name");
+        try {
+            bossProcessor.editField("edit lastname", "new name");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(manager.getUserPersonalInfo().getLastName(), "new name");
     }
 
     @Test
-    public void managerEditFieldTestEmail() throws InvalidCommandException {
+    public void managerEditFieldTestEmail() {
         setAll();
         Processor.user = manager;
-        bossProcessor.editField("edit email", "new email");
+        try {
+            bossProcessor.editField("edit email", "new email");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(manager.getUserPersonalInfo().getEmail(), "new email");
     }
 
     @Test
-    public void managerEditFieldTestPhoneNumber() throws InvalidCommandException {
+    public void managerEditFieldTestPhoneNumber() {
         setAll();
         Processor.user = manager;
-        bossProcessor.editField("edit phonenumber", "new phone number");
+        try {
+            bossProcessor.editField("edit phonenumber", "new phone number");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(manager.getUserPersonalInfo().getPhoneNumber(), "new phone number");
     }
 
     @Test
-    public void managerEditFieldTestPassword() throws InvalidCommandException {
+    public void managerEditFieldTestPassword() {
         setAll();
         Processor.user = manager;
-        bossProcessor.editField("edit password", "new password");
+        try {
+            bossProcessor.editField("edit password", "new password");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(manager.getUserPersonalInfo().getPassword(), "new password");
     }
 

@@ -46,44 +46,64 @@ public class AcceptRequestsTests {
     }
 
     @Test
-    public void acceptSellerRequestTest() throws InvalidCommandException {
+    public void acceptSellerRequestTest()  {
         setAll();
-        bossProcessor.manageRequests("accept request " + sellerRequest.getRequestId());
+        try {
+            bossProcessor.manageRequests("accept request " + sellerRequest.getRequestId());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Seller newSeller = ((SellerRequest) sellerRequest).getSeller();
         Assert.assertTrue(User.allUsers.contains(newSeller));
     }
 
     @Test
-    public void acceptProductRequestTest() throws InvalidCommandException {
+    public void acceptProductRequestTest()  {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        bossProcessor.manageRequests("accept request " + productRequest.getRequestId());
+        try {
+            bossProcessor.manageRequests("accept request " + productRequest.getRequestId());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertTrue(Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueExpect.contains(newProduct) && newProduct.getProductState().equals(State.ProductState.CONFIRMED));
 
     }
 
     @Test
-    public void acceptOffRequestTest() throws InvalidCommandException {
+    public void acceptOffRequestTest()  {
         setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
-        bossProcessor.manageRequests("accept request " + offRequest.getRequestId());
+        try {
+            bossProcessor.manageRequests("accept request " + offRequest.getRequestId());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertTrue(Off.acceptedOffs.contains(newOff) && !Off.inQueueExpectionOffs.contains(newOff) && newOff.getOffState().equals(State.OffState.CONFIRMED));
 
     }
 
     @Test
-    public void acceptEditOffRequestTest() throws InvalidCommandException {
+    public void acceptEditOffRequestTest()  {
         setAll();
         Off newOff = ((EditOffRequest) editOffRequest).getOff();
-        bossProcessor.manageRequests("accept request " + editOffRequest.getRequestId());
+        try {
+            bossProcessor.manageRequests("accept request " + editOffRequest.getRequestId());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertTrue(newOff.getDiscountAmount() == 20 && newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
     }
 
     @Test
-    public void acceptEditProductRequestTest() throws InvalidCommandException {
+    public void acceptEditProductRequestTest()  {
         setAll();
         Product newProduct = ((EditProductRequest) editProductRequest).getProduct();
-        bossProcessor.manageRequests("accept request " + editProductRequest.getRequestId());
+        try {
+            bossProcessor.manageRequests("accept request " + editProductRequest.getRequestId());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertTrue(newProduct.getName().equalsIgnoreCase("new name") && newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
     }
 

@@ -23,10 +23,14 @@ public class ManageUserOfManagerTest {
     }
 
     @Test
-    public void deleteUserTest()throws InvalidCommandException{
+    public void deleteUserTest() {
         setAll();
         Processor.user = manager;
-        bossProcessor.manageUsers("delete user alireza");
+        try {
+            bossProcessor.manageUsers("delete user alireza");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertFalse(User.hasUserWithUserName("alireza"));
     }
 
