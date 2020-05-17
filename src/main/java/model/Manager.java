@@ -70,8 +70,8 @@ public class Manager extends User {
         int repeat = Integer.parseInt(discountCodedInfo.get(3));
         CodedDiscount codedDiscount = new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
         for (User user : allUsers) {
-            if (user instanceof Buyer){
-                ((Buyer)user).addDiscountCode(codedDiscount);
+            if (user instanceof Buyer) {
+                ((Buyer) user).addDiscountCode(codedDiscount);
             }
         }
     }
@@ -117,14 +117,12 @@ public class Manager extends User {
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
         product.getSellers().add(request.getSeller());
-        ArrayList<Seller> sellers = product.getSellers();
-        for (Seller seller : sellers) {
-            if (seller.getProductsNumber().containsKey(product)) {
-                int numberOfProduct = seller.getProductsNumber().get(product);
-                seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
-            } else {
-                seller.getProductsNumber().put(product, request.getNumber());
-            }
+        Seller seller = request.getSeller();
+        if (seller.getProductsNumber().containsKey(product)) {
+            int numberOfProduct = seller.getProductsNumber().get(product);
+            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+        } else {
+            seller.getProductsNumber().put(product, request.getNumber());
         }
         product.setProductState(State.ProductState.CONFIRMED);
     }
