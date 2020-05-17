@@ -107,7 +107,6 @@ public class BossProcessor extends Processor {
     }
 
     public void processCreateManagerProfile() {
-        //TODO : error handling
         ArrayList<String> managerInfo = new ArrayList<String>();
         bossViewManager.getManagerInfo(managerInfo);
         ((Manager) user).createManagerProfile(managerInfo);
