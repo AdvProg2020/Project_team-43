@@ -52,9 +52,9 @@ public class CategoryTest {
     }
 
     @Test
-    public void removeCategoryTest(){
+    public void removeCategoryTest()throws InvalidCommandException{
         setAll();
-        bossProcessor.removeCategory(category.getName());
+        bossProcessor.manageCategories("remove category "+category.getName());
         Assert.assertFalse(Category.hasCategoryWithName(category.getName()));
     }
 }

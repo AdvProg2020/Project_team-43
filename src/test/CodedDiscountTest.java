@@ -90,4 +90,16 @@ public class CodedDiscountTest {
         Assert.assertFalse(CodedDiscount.isCodedDiscountWithThisCode(codedDiscount.getDiscountCode()));
     }
 
+    @Test
+    public void checkCodedDiscountInfoTest() throws InvalidCommandException {
+        setAll();
+        ArrayList<String> info = new ArrayList<>();
+        info.add("none");
+        info.add("none");
+        info.add("20.2");
+        info.add("11");
+        Assert.assertTrue(bossProcessor.checkCodedDiscountInfo(info));
+    }
+
+
 }

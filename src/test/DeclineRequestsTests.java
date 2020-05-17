@@ -45,34 +45,34 @@ public class DeclineRequestsTests {
     }
 
     @Test
-    public void declineProductRequestTest() {
+    public void declineProductRequestTest() throws InvalidCommandException {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        bossProcessor.declineRequest(productRequest.getRequestId());
+        bossProcessor.manageRequests("decline request " + productRequest.getRequestId());
         Assert.assertFalse(Product.allProductsInQueueExpect.contains(newProduct));
     }
 
     @Test
-    public void declineOffRequestTest() {
+    public void declineOffRequestTest() throws InvalidCommandException {
         setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
-        bossProcessor.declineRequest(offRequest.getRequestId());
+        bossProcessor.manageRequests("decline request " + offRequest.getRequestId());
         Assert.assertFalse(Off.inQueueExpectionOffs.contains(newOff));
     }
 
     @Test
-    public void declineEditOffRequestTest() {
+    public void declineEditOffRequestTest() throws InvalidCommandException {
         setAll();
-        Off newOff = ((EditOffRequest)editOffRequest).getOff();
-        bossProcessor.declineRequest(editOffRequest.getRequestId());
+        Off newOff = ((EditOffRequest) editOffRequest).getOff();
+        bossProcessor.manageRequests("decline request " + editOffRequest.getRequestId());
         Assert.assertTrue(newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
     }
 
     @Test
-    public void declineEditProductRequestTest() {
+    public void declineEditProductRequestTest() throws InvalidCommandException {
         setAll();
-        Product newProduct = ((EditProductRequest)editProductRequest).getProduct();
-        bossProcessor.declineRequest(editProductRequest.getRequestId());
+        Product newProduct = ((EditProductRequest) editProductRequest).getProduct();
+        bossProcessor.manageRequests("decline request " + editProductRequest.getRequestId());
         Assert.assertTrue(newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
     }
 }
