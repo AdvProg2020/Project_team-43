@@ -11,8 +11,8 @@ import java.util.*;
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
 
-    private transient HashMap<CodedDiscount, Integer> codedDiscounts;
-    private HashMap<String, Integer> codedDiscountsId;
+    private transient HashMap<CodedDiscount, Integer> codedDiscounts = new HashMap<>();
+    private HashMap<String, Integer> codedDiscountsId = new HashMap<>();
 
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart;
     private transient ArrayList<BuyOrder> orders;
