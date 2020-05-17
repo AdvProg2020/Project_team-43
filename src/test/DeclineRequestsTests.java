@@ -1,5 +1,7 @@
 package test;
 
+import Controller.BossProcessor;
+import Controller.Processor;
 import model.*;
 import model.request.*;
 import org.junit.Assert;
@@ -22,6 +24,7 @@ public class DeclineRequestsTests {
     Seller seller;
     Category category;
     Off off;
+    BossProcessor bossProcessor;
 
     @BeforeAll
     public void setAll() {
@@ -37,14 +40,15 @@ public class DeclineRequestsTests {
         offRequest = new OffRequest(off);
         editOffRequest = new EditOffRequest(off, "discountAmount", "20");
         editProductRequest = new EditProductRequest(product, "name", "new name", seller);
-
+        bossProcessor = BossProcessor.getInstance();
+        Processor.user = manager;
     }
 
     @Test
     public void declineProductRequestTest() {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        manager.declineProductRequest(productRequest);
+        bossProcessor.declineRequest(productRequest.getRequestId());
         Assert.assertFalse(Product.allProductsInQueueExpect.contains(newProduct));
     }
 
@@ -52,7 +56,7 @@ public class DeclineRequestsTests {
     public void declineOffRequestTest() {
         setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
-        manager.declineOffRequest(offRequest);
+        bossProcessor.declineRequest(offRequest.getRequestId());
         Assert.assertFalse(Off.inQueueExpectionOffs.contains(newOff));
     }
 
@@ -60,7 +64,7 @@ public class DeclineRequestsTests {
     public void declineEditOffRequestTest() {
         setAll();
         Off newOff = ((EditOffRequest)editOffRequest).getOff();
-        manager.declineEditOffRequest(((EditOffRequest)editOffRequest));
+        bossProcessor.declineRequest(editOffRequest.getRequestId());
         Assert.assertTrue(newOff.getOffState().equals(State.OffState.CONFIRMED) && Off.acceptedOffs.contains(newOff) && !Off.allOffsInQueueEdit.contains(newOff));
     }
 
@@ -68,7 +72,7 @@ public class DeclineRequestsTests {
     public void declineEditProductRequestTest() {
         setAll();
         Product newProduct = ((EditProductRequest)editProductRequest).getProduct();
-        manager.declineEditProductRequest(((EditProductRequest)editProductRequest));
+        bossProcessor.declineRequest(editProductRequest.getRequestId());
         Assert.assertTrue(newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
     }
 }

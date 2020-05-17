@@ -27,7 +27,7 @@ public class ManageUserOfManagerTest {
         setAll();
         Processor.user = manager;
         bossProcessor.manageUsers("delete user alireza");
-        Assert.assertFalse(User.allUsers.contains(buyer));
+        Assert.assertFalse(User.hasUserWithUserName("alireza"));
     }
 
     @Test
