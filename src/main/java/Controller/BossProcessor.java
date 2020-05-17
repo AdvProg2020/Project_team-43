@@ -13,6 +13,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BossProcessor extends Processor {
+    private final static BossProcessor instance = new BossProcessor();
+    public static BossProcessor getInstance() {
+        return instance;
+    }
+
     private BossView bossViewManager;
 
     public BossProcessor() {
@@ -25,13 +30,13 @@ public class BossProcessor extends Processor {
 
     public void editField(String field, String changeField) throws InvalidCommandException {
         field = field.trim();
-        Pattern firstNamePattern = Pattern.compile("^(?i)edit first name$");
+        Pattern firstNamePattern = Pattern.compile("^(?i)edit firstname$");
         Matcher firstNameMatcher = firstNamePattern.matcher(field);
-        Pattern lastNamePattern = Pattern.compile("^(?i)edit last name$");
+        Pattern lastNamePattern = Pattern.compile("^(?i)edit lastname$");
         Matcher lastNameMatcher = lastNamePattern.matcher(field);
         Pattern emailPattern = Pattern.compile("^(?i)edit email$");
         Matcher emailMatcher = emailPattern.matcher(field);
-        Pattern phoneNumberPattern = Pattern.compile("^(?i)edit phone number$");
+        Pattern phoneNumberPattern = Pattern.compile("^(?i)edit phonenumber$");
         Matcher phoneNumberMatcher = phoneNumberPattern.matcher(field);
         Pattern passwordPattern = Pattern.compile("^(?i)edit password$");
         Matcher passwordMatcher = passwordPattern.matcher(field);
