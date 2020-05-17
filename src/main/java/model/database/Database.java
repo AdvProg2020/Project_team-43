@@ -15,12 +15,14 @@ public class Database {
 
 
         Buyer.loadFields();
+        Category.loadFields();
         Seller.loadAllFields();
     }
 
     public static void save() throws IOException {
         Buyer.saveFields();
         Seller.saveAllFields();
+        Category.saveFields();
 
         Company.save();
         User.save();

@@ -16,6 +16,6 @@
         <module name="porojectAP" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="13" />
   </component>
 </project>
