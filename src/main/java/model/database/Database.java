@@ -14,6 +14,7 @@ public class Database {
         User.load();
         Category.load();
         CodedDiscount.load();
+        Order.load();
 
 
         Buyer.loadFields();
@@ -21,6 +22,8 @@ public class Database {
         Off.loadFields();
         Comment.loadFields();
         Seller.loadAllFields();
+        Product.loadFields();
+        Order.loadAllFields();
     }
 
     public static void save() throws IOException {
@@ -29,12 +32,19 @@ public class Database {
         Category.saveFields();
         Off.saveFields();
         Comment.saveFields();
-        Company.save();
+        Order.saveAllFields();
 
+
+
+        Company.save();
+        Product.save();
+
+        Order.save();
         User.save();
         Comment.save();
         Off.save();
         Category.save();
         CodedDiscount.save();
+        Product.saveFields();
     }
 }

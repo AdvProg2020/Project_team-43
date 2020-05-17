@@ -144,40 +144,39 @@ public class Category {
         Saver.save(allCategories, fileAddress);
     }
 
-    private void productsLoad(){
-        products.clear();
+    private void productsLoad() {
+        products = new ArrayList<>();
         for (String id : productsId) {
             products.add(Product.getAllProductById(id));
         }
     }
 
-    private void productsSave(){
+    private void productsSave() {
         productsId.clear();
         for (Product product : products) {
             productsId.add(product.getProductId());
         }
     }
 
-    private static void loadAllProducts(){
+    private static void loadAllProducts() {
         for (Category category : allCategories) {
             category.productsLoad();
         }
     }
 
-    private static void saveAllProducts(){
+    private static void saveAllProducts() {
         for (Category category : allCategories) {
             category.productsSave();
         }
     }
 
-    public static void loadFields(){
+    public static void loadFields() {
         loadAllProducts();
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
         saveAllProducts();
     }
-
 
 
 }

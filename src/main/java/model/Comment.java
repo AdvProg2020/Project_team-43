@@ -62,7 +62,7 @@ public class Comment {
         loadAllBuyer();
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
 
     }
 

@@ -115,7 +115,10 @@ public class CodedDiscount {
         CodedDiscount[] codedDiscounts = (CodedDiscount[]) Loader.load(CodedDiscount[].class, fileAddress);
         if (codedDiscounts != null) {
             allCodedDiscount = new ArrayList<>(Arrays.asList(codedDiscounts));
-            constructId = Integer.parseInt(allCodedDiscount.get(allCodedDiscount.size() - 1).getDiscountCode()) + 1;
+            if (allCodedDiscount.size() != 0)
+                constructId = Integer.parseInt(allCodedDiscount.get(allCodedDiscount.size() - 1).getDiscountCode()) + 1;
+            else
+                constructId = 0;
         }
     }
 
