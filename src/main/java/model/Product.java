@@ -193,6 +193,7 @@ public class Product {
         } else if (field.equalsIgnoreCase("category")) {
             if (Category.hasCategoryWithName(newField)) {
                 category = Category.getCategoryByName(newField);
+                category.addProduct(this);
             } else {
                 throw new InvalidCommandException("invalid category");
             }
@@ -245,10 +246,6 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public void setFeaturesMap(Map<String, String> featuresMap) {
-        this.featuresMap = featuresMap;
     }
 
     public static void load() throws FileNotFoundException {

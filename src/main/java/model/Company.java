@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Company {
     private static String fileAddress = "database/Company.dat";
-    private static ArrayList<Company> allCompanies = new ArrayList<>();
+    public static ArrayList<Company> allCompanies = new ArrayList<>();
 
     private String name;
     private String info;
@@ -30,9 +30,8 @@ public class Company {
     }
 
     public static Company getCompanyByName(String name) {
-
         for (Company company : allCompanies) {
-            if (company.name.equals(name)) {
+            if (company.name.equalsIgnoreCase(name)) {
                 return company;
             }
         }
@@ -41,7 +40,7 @@ public class Company {
 
     public static boolean hasCompanyWithName(String name) {
         for (Company company : allCompanies) {
-            if (company.name.equals(name)) {
+            if (company.name.equalsIgnoreCase(name)) {
                 return true;
             }
         }

@@ -68,21 +68,16 @@ public class CodedDiscount {
         return startTime;
     }
 
+    public boolean checkTime(){
+        return true;
+    }
+
     public double getDiscountAmount() {
         return discountAmount;
     }
 
-    public boolean checkTime() {
-        //ToDo: check if code is valid in that time
-        return true;
-    }
-
     public static void remove(CodedDiscount codedDiscount) {
         allCodedDiscount.remove(codedDiscount);
-    }
-
-    public void setDiscountCode(String discountCode) {
-        this.discountCode = discountCode;
     }
 
     public void setStartTime(Date startTime) {
