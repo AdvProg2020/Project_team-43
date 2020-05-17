@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AcceptRequestsTests {
     Manager manager;
@@ -29,11 +30,11 @@ public class AcceptRequestsTests {
         seller = new Seller("sellerUserName", userPersonalInfo, "companyName");
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("companyName", "info");
-        category = new Category("categoryName", null);
-        product = new Product("productName", company, 10, category, seller);
-        off = new Off("startTime", "endTime", 10, seller, new ArrayList<Product>());
+        category = new Category("categoryName", new ArrayList<>());
+        product = new Product("productName", company, 10, category);
+        off = new Off(new Date(), new Date(), 10, seller, new ArrayList<Product>());
         sellerRequest = new SellerRequest(userPersonalInfo, "companyName", "sellerUserName");
-        productRequest = new ProductRequest(product);
+        productRequest = new ProductRequest(product, seller, 2);
         offRequest = new OffRequest(off);
     }
 
@@ -50,11 +51,8 @@ public class AcceptRequestsTests {
         setAll();
         manager.acceptProductRequest((ProductRequest) productRequest);
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        if (Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueExpect.contains(newProduct) && newProduct.getProductState().equals(State.ProductState.CONFIRMED)) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.assertTrue(false);
-        }
+        Assert.assertTrue(Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueExpect.contains(newProduct) && newProduct.getProductState().equals(State.ProductState.CONFIRMED));
+
     }
 
     @Test
@@ -62,11 +60,9 @@ public class AcceptRequestsTests {
         setAll();
         manager.acceptOffRequest(((OffRequest) offRequest));
         Off newOff = ((OffRequest) offRequest).getOff();
-        if (Off.acceptedOffs.contains(newOff) && !Off.inQueueExpectionOffs.contains(newOff) && newOff.getOffState().equals(State.OffState.CONFIRMED)) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.assertTrue(false);
-        }
+        Assert.assertTrue(Off.acceptedOffs.contains(newOff) && !Off.inQueueExpectionOffs.contains(newOff) && newOff.getOffState().equals(State.OffState.CONFIRMED));
+
     }
+
 
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 public abstract class User {
     private static final int startMoney = 100000;
 
-    protected static ArrayList<User> allUsers = new ArrayList<>();
+    public static ArrayList<User> allUsers = new ArrayList<>();
     private static String fileAddress = "database/User.dat";
 
 

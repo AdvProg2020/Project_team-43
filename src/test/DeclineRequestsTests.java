@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DeclineRequestsTests {
     Manager manager;
@@ -29,11 +30,11 @@ public class DeclineRequestsTests {
         seller = new Seller("sellerUserName", userPersonalInfo, "companyName");
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("companyName", "info");
-        category = new Category("categoryName", null);
-        product = new Product("productName", company, 10, category, seller);
-        off = new Off("startTime", "endTime", 10, seller, new ArrayList<Product>());
+        category = new Category("categoryName", new ArrayList<>());
+        product = new Product("productName", company, 10, category);
+        off = new Off(new Date(), new Date(), 10, seller, new ArrayList<Product>());
         sellerRequest = new SellerRequest(userPersonalInfo, "companyName", "sellerUserName");
-        productRequest = new ProductRequest(product);
+        productRequest = new ProductRequest(product, seller, 2);
         offRequest = new OffRequest(off);
     }
 
@@ -41,11 +42,10 @@ public class DeclineRequestsTests {
     public void declineProductRequestTest() {
         setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
-        Seller newProductSeller = newProduct.getSeller();
         manager.declineProductRequest(productRequest);
-        if (!newProductSeller.getProducts().contains(newProduct) && !Product.allProductsInQueueExpect.contains(newProduct)) {
+        if(!Product.allProductsInQueueExpect.contains(newProduct)){
             Assert.assertTrue(true);
-        } else {
+        } else{
             Assert.assertTrue(false);
         }
     }

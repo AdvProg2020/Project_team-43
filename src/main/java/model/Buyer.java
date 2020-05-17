@@ -14,38 +14,9 @@ public class Buyer extends User {
     private transient HashMap<CodedDiscount, Integer> codedDiscounts;
     private HashMap<String, Integer> codedDiscountsId;
 
-
-    private void codedDiscountsLoad() {
-        codedDiscounts = new HashMap<CodedDiscount, Integer>();
-        for (String codedDiscountId : codedDiscountsId.keySet()) {
-            codedDiscounts.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
-        }
-    }
-
-    private void codedDiscountsSave() {
-        for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
-            codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));
-        }
-    }
-
-    public static void loadAllCodedDiscounts() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).codedDiscountsLoad();
-            }
-        }
-    }
-
-    public static void saveAllCodedDiscounts() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).codedDiscountsSave();
-            }
-        }
-    }
-
-    private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
+    private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart;
     private transient ArrayList<BuyOrder> orders;
+    private ArrayList<String> buyOrdersId;
 
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
@@ -53,8 +24,10 @@ public class Buyer extends User {
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
         codedDiscountsId = new HashMap<String, Integer>();
+        buyOrdersId = new ArrayList<String>();
         allUsers.add(this);
     }
+
 
     @Override
     public void setUserType() {
@@ -213,10 +186,76 @@ public class Buyer extends User {
 
     public static void saveFields() {
         saveAllCodedDiscounts();
+        saveAllBuyOrders();
     }
 
     public static void loadFields() {
         loadAllCodedDiscounts();
+        loadAllBuyOrders();
+    }
+
+    public static ArrayList<Buyer> getBuyers() {
+        ArrayList<Buyer> buyers = new ArrayList<>();
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                buyers.add((Buyer) user);
+            }
+        }
+        return buyers;
+    }
+
+    private void codedDiscountsLoad() {
+        HashMap<CodedDiscount, Integer> codedDiscountsFromDataBase = new HashMap<>();
+        for (String codedDiscountId : codedDiscountsId.keySet()) {
+            codedDiscountsFromDataBase.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
+        }
+        this.codedDiscounts = codedDiscountsFromDataBase;
+    }
+
+    private void codedDiscountsSave() {
+        codedDiscountsId.clear();
+        for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
+            codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));
+        }
+    }
+
+    public static void loadAllCodedDiscounts() {
+        for (Buyer buyer : getBuyers()) {
+            buyer.codedDiscountsLoad();
+        }
+    }
+
+    public static void saveAllCodedDiscounts() {
+        for (Buyer buyer : getBuyers()) {
+            buyer.codedDiscountsSave();
+        }
+    }
+
+    public static void saveAllBuyOrders() {
+        for (Buyer buyer : getBuyers()) {
+            buyer.buyOrdersSave();
+        }
+    }
+
+    public void buyOrdersSave() {
+        buyOrdersId.clear();
+        for (BuyOrder buyOrder : orders) {
+            buyOrdersId.add(buyOrder.getOrderId());
+        }
+    }
+
+    public static void loadAllBuyOrders() {
+        for (Buyer buyer : getBuyers()) {
+            buyer.buyOrdersLoad();
+        }
+    }
+
+    public void buyOrdersLoad() {
+        ArrayList<BuyOrder> ordersFromDataBase = new ArrayList<>();
+        for (String orderId : buyOrdersId) {
+            ordersFromDataBase.add((BuyOrder) Order.getOrderById(orderId));
+        }
+        orders = ordersFromDataBase;
     }
 
 }
