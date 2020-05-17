@@ -69,6 +69,8 @@ public class Category {
             product.getFeaturesMap().remove(oldName);
             product.getFeaturesMap().put(newName, featureValue);
         }
+        this.features.remove(oldName);
+        this.addFeatures(newName);
     }
 
     public void removeFeature(String featureName) {

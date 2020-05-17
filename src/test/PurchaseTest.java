@@ -2,6 +2,7 @@ import Controller.BuyerProcessor;
 import Controller.Processor;
 import javafx.util.Pair;
 import model.*;
+import org.codehaus.plexus.component.annotations.Component;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -55,10 +56,6 @@ public class PurchaseTest {
             Assert.assertTrue((buyer.getBalance()==100000) && seller.getBalance()==100000);
         }
     }
-
-
-
-
 }
 
 

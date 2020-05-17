@@ -218,17 +218,6 @@ public class Manager extends User {
         }
     }
 
-    private void removeProductRequest(Product product) {
-        for (int i = 0; i < allRequest.size(); i++) {
-            if (allRequest.get(i).getRequestType().equalsIgnoreCase("productType")) {
-                if (((ProductRequest) allRequest.get(i)).getProduct() == product) {
-                    allRequest.remove(allRequest.get(i));
-                    return;
-                }
-            }
-        }
-    }
-
 
     public static void load() throws FileNotFoundException {
         Manager[] managers = (Manager[]) Loader.load(Manager[].class, fileAddress);
