@@ -24,6 +24,7 @@ public class Buyer extends User {
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
         codedDiscountsId = new HashMap<String, Integer>();
+        buyOrdersId = new ArrayList<String>();
         allUsers.add(this);
     }
 

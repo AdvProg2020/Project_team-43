@@ -14,13 +14,13 @@ public class Database {
         CodedDiscount.load();
 
 
-
-
         Buyer.loadFields();
+        Seller.loadAllFields();
     }
 
     public static void save() throws IOException {
         Buyer.saveFields();
+        Seller.saveAllFields();
 
         Company.save();
         User.save();

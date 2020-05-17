@@ -3,11 +3,14 @@ package model;
 import model.database.Loader;
 import model.database.Saver;
 
+import java.text.ParseException;
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.ArrayList;
 
 public class CodedDiscount {
@@ -24,8 +27,6 @@ public class CodedDiscount {
     public int getRepeat() {
         return repeat;
     }
-
-
 
 
     public CodedDiscount(Date startTime, Date endTime, double discount, int repeat) {
