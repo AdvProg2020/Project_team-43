@@ -193,6 +193,15 @@ public class Buyer extends User {
         loadAllBuyOrders();
     }
 
+    public static ArrayList<Buyer> getBuyers() {
+        ArrayList<Buyer> buyers = new ArrayList<>();
+        for (User user : allUsers) {
+            if (user.getUserType() == UserType.BUYER) {
+                buyers.add((Buyer) user);
+            }
+        }
+        return buyers;
+    }
 
     private void codedDiscountsLoad() {
         HashMap<CodedDiscount, Integer> codedDiscountsFromDataBase = new HashMap<>();
@@ -210,27 +219,20 @@ public class Buyer extends User {
     }
 
     public static void loadAllCodedDiscounts() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).codedDiscountsLoad();
-            }
+        for (Buyer buyer : getBuyers()) {
+            buyer.codedDiscountsLoad();
         }
     }
 
     public static void saveAllCodedDiscounts() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).codedDiscountsSave();
-            }
+        for (Buyer buyer : getBuyers()) {
+            buyer.codedDiscountsSave();
         }
     }
 
-
     public static void saveAllBuyOrders() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).buyOrdersSave();
-            }
+        for (Buyer buyer : getBuyers()) {
+            buyer.buyOrdersSave();
         }
     }
 
@@ -242,10 +244,8 @@ public class Buyer extends User {
     }
 
     public static void loadAllBuyOrders() {
-        for (User user : allUsers) {
-            if (user.getUserType() == UserType.BUYER) {
-                ((Buyer) user).buyOrdersLoad();
-            }
+        for (Buyer buyer : getBuyers()) {
+            buyer.buyOrdersLoad();
         }
     }
 
