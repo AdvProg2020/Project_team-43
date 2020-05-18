@@ -114,13 +114,15 @@ public class Manager extends User {
 
     public void acceptProductRequest(ProductRequest request) {
         Product product = request.getProduct();
-        Product.allProductsInList.add(product);
+        if (!Product.allProductsInList.contains(product)) {
+            Product.allProductsInList.add(product);
+        }
         Product.allProductsInQueueExpect.remove(product);
         product.addSeller(request.getSeller());
         Seller seller = request.getSeller();
         if (seller.getProductsNumber().containsKey(product)) {
             int numberOfProduct = seller.getProductsNumber().get(product);
-            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+            seller.getProductsNumber().replace(product, numberOfProduct, numberOfProduct + request.getNumber());
         } else {
             seller.getProductsNumber().put(product, request.getNumber());
         }

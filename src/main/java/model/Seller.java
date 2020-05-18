@@ -128,7 +128,7 @@ public class Seller extends User {
     public void addOff(Date startTime, Date endTime, Double discountAmount, ArrayList<String> productIds) {
         ArrayList<Product> productsTemp = new ArrayList<>();
         for (String productId : productIds) {
-            productsTemp.add((getProductById(productId)));
+            productsTemp.add(Product.getProductById(productId));
         }
         Off off = new Off(startTime, endTime, discountAmount, this, productsTemp);
         new OffRequest(off);

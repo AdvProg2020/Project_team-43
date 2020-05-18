@@ -172,7 +172,9 @@ public class Product {
     }
 
     public void addSeller(Seller seller) {
-        sellers.add(seller);
+        if (!sellers.contains(seller)) {
+            sellers.add(seller);
+        }
     }
 
     public void editField(String field, String newField) throws InvalidCommandException {
@@ -299,6 +301,10 @@ public class Product {
     }
 
     public static void saveAllCategories() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.saveCategory();
         }
@@ -323,6 +329,10 @@ public class Product {
     }
 
     public static void saveAllSellers() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.saveSellers();
         }

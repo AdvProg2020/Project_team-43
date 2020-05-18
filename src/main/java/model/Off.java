@@ -142,7 +142,7 @@ public class Off {
     }
 
     private void saveProducts() {
-        productsId.clear();
+        productsId = new ArrayList<>();
         for (Product product : products) {
             productsId.add(product.getProductId());
         }
@@ -150,6 +150,7 @@ public class Off {
     }
 
     private void loadProducts() {
+        products = new ArrayList<>();
         for (String productId : productsId) {
             products.add(Product.getAllProductById(productId));
         }
@@ -170,6 +171,10 @@ public class Off {
     }
 
     private static void saveAllProducts() {
+        allOffs.clear();
+        allOffs.addAll(acceptedOffs);
+        allOffs.addAll(inQueueExpectionOffs);
+        allOffs.addAll(allOffsInQueueEdit);
         for (Off off : allOffs) {
             off.saveProducts();
         }
@@ -182,6 +187,10 @@ public class Off {
     }
 
     private static void saveAllSeller() {
+        allOffs.clear();
+        allOffs.addAll(acceptedOffs);
+        allOffs.addAll(inQueueExpectionOffs);
+        allOffs.addAll(allOffsInQueueEdit);
         for (Off off : allOffs) {
             off.saveSeller();
         }

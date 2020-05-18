@@ -15,9 +15,11 @@ public class Purchase extends Menu {
     }
 
     public void show() {
-        if (!BuyerProcessor.getInstance().isCartEmpty())
+        if (!BuyerProcessor.getInstance().isCartEmpty()) {
             doPurchase();
-        System.out.println("your cart is empty");
+        } else {
+            System.out.println("your cart is empty");
+        }
     }
 
     public void run() {
@@ -58,7 +60,6 @@ public class Purchase extends Menu {
         if (isDiscountCodeValid)
             discount = CodedDiscount.getDiscountById(discountCode).getDiscountAmount();
         System.out.println(buyerProcessor.payment(address, phoneNumber, discount));
-
     }
 
 }
