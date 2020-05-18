@@ -51,7 +51,7 @@ public class ShowAndCatch {
         personalInfo.setEmail(email);
         System.out.print("phone number : +98...");
         String phoneNumber = Menu.getScanner().nextLine();
-        while (!phoneNumber.matches("(\\d){9}")) {
+        while (!phoneNumber.matches("(\\d){10}")) {
             System.out.println("invalid phone number");
             phoneNumber = Menu.getScanner().nextLine();
         }

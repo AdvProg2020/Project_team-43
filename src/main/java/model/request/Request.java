@@ -38,10 +38,6 @@ public abstract class Request {
         return null;
     }
 
-    public String getRequestId() {
-        return requestId;
-    }
-
     @Override
     public String toString() {
         return "Request{" +
