@@ -1,6 +1,7 @@
 package model.database;
 
 import model.*;
+import model.request.SellerRequest;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class Database {
         CodedDiscount.load();
         Order.load();
         Product.load();
+        SellerRequest.load();
 
 
         Buyer.loadFields();
@@ -25,6 +27,7 @@ public class Database {
         Seller.loadAllFields();
         Product.loadFields();
         Order.loadAllFields();
+        SellerRequest.loadAllFields();
     }
 
     public static void save() throws IOException {
@@ -37,7 +40,6 @@ public class Database {
         Product.saveFields();
 
 
-
         CodedDiscount.save();
         Company.save();
         Product.save();
@@ -46,6 +48,7 @@ public class Database {
         Comment.save();
         Off.save();
         Category.save();
+        SellerRequest.save();
 
     }
 }
