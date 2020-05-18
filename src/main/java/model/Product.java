@@ -47,6 +47,7 @@ public class Product {
         this.price = price;
         this.category = category;
         category.addProduct(this);
+        this.description = "";
         sellers = new ArrayList<>();
         sellersName = new ArrayList<>();
         featuresMap = new HashMap<>();
@@ -56,6 +57,10 @@ public class Product {
         comments = new ArrayList<>();
         allProductsInQueueExpect.add(this);
         constructId += 1;
+    }
+
+    public static ArrayList<Product> getAllProducts() {
+        return allProducts;
     }
 
     public ArrayList<Seller> getSellers() {
@@ -263,7 +268,7 @@ public class Product {
     }
 
 
-    private static void loadProducts() {
+    public static void loadProducts() {
         for (Product product : allProducts) {
             if (product.getProductState() == State.ProductState.CREATING_PROCESS) {
                 allProductsInQueueExpect.add(product);

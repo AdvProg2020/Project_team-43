@@ -25,7 +25,6 @@ public class EditOffRequest extends Request {
         this.field = field;
         this.input = input;
         off.setOffState(State.OffState.EDITING_PROCESS);
-        allRequests.add(this);
     }
 
     public Off getOff() {

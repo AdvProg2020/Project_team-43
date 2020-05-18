@@ -24,7 +24,6 @@ public class EditProductRequest extends Request {
         this.input = input;
         this.seller = seller;
         product.setProductState(State.ProductState.EDITING_PROCESS);
-        allRequests.add(this);
     }
 
 

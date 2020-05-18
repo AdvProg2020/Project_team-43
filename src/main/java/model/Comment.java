@@ -24,6 +24,7 @@ public class Comment {
 
     public Comment(Product product, String opinionText, boolean isBuy, Buyer buyer) {
         this.product = product;
+        // TODO : nabayad be product.comments add beshe???
         this.productId = product.getProductId();
         this.buyer = buyer;
         this.buyerUserName = this.buyer.getUsername();

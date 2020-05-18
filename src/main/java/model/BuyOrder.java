@@ -41,8 +41,35 @@ public class BuyOrder extends Order {
         this.orderType = "BuyOrder";
     }
 
+
+    public HashMap<String, Integer> getProductsId() {
+        return productsId;
+    }
+
+    public ArrayList<Seller> getSellers() {
+        return sellers;
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public HashMap<Product, Integer> getProducts() {
         return products;
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+
+    public double getPayment() {
+        return payment;
+    }
+
+    public double getCodedDiscountAmount() {
+        return codedDiscountAmount;
     }
 
     @Override

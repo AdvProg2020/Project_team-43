@@ -162,7 +162,7 @@ public class OffTest {
     }
 
     @Test
-    public void toStringOffTest(){
+    public void toStringOffTest() {
         setAll();
         Assert.assertEquals(off.toString(), "Off{" +
                 "offId='" + off.getOffId() + '\'' +
@@ -173,19 +173,21 @@ public class OffTest {
     }
 
     @Test
-    public void loadFieldsProductTest(){
+    public void loadFieldsProductTest() {
         setAll();
         Off.loadFields();
         Assert.assertArrayEquals(off.getProducts().toArray(), products.toArray());
     }
+
     @Test
-    public void loadFieldsSellerTest(){
+    public void loadFieldsSellerTest() {
         setAll();
         Off.loadFields();
         Assert.assertEquals(off.getSeller(), seller);
     }
+
     @Test
-    public void loadOffsTest(){
+    public void loadOffsTest() {
         setAll();
         Off.allOffs.add(off);
         Off.allOffs.add(off2);
@@ -195,10 +197,64 @@ public class OffTest {
     }
 
     @Test
-    public void saveFieldsTest(){
+    public void saveFieldsTest() {
         setAll();
         Off.saveFields();
         Assert.assertEquals(off.getSellerName(), seller.getUsername());
+    }
+
+    @Test
+    public void getAllOfByIdTest() {
+        setAll();
+        Assert.assertNotNull(Off.getAllOffById(off.getOffId()));
+    }
+
+    @Test
+    public void getAllOffByIdNullTest() {
+        setAll();
+        Assert.assertNull(Off.getAllOffById("null Id"));
+    }
+
+    @Test
+    public void editOffSellerTest() {
+        setAll();
+        seller.editOff(off, "startTime", "11/11/1101");
+        Assert.assertTrue(!Off.acceptedOffs.contains(off) && Off.allOffsInQueueEdit.contains(off));
+    }
+
+    @Test
+    public void getOffByIdSellerTest() {
+        setAll();
+        Assert.assertEquals(seller.getOffById(off.getOffId()), off);
+    }
+
+    @Test
+    public void getOffByIdNullSellerTest() {
+        setAll();
+        Assert.assertNull(seller.getOffById("null Id"));
+    }
+
+    @Test
+    public void isProductInOffSellerTest() {
+        setAll();
+        Assert.assertTrue(seller.isProductInOff(product1));
+    }
+
+    @Test
+    public void isProductNotInOffSellerTest() {
+        setAll();
+        Assert.assertFalse(seller.isProductInOff(product4));
+    }
+
+    @Test
+    public void getOffDiscountAmountSellerTest(){
+        setAll();
+        Assert.assertEquals(seller.getOffDiscountAmount(product1), off.getDiscountAmount(), 1);
+    }
+    @Test
+    public void getOffDiscountAmountSeller2Test(){
+        setAll();
+        Assert.assertEquals(seller.getOffDiscountAmount(product4), 0, 1);
     }
 
 }

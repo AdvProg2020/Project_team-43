@@ -46,6 +46,23 @@ public class SellOrder extends Order {
     }
 
     @Override
+    public String getOrderId() {
+        return super.getOrderId();
+    }
+
+    public double getPayment() {
+        return payment;
+    }
+
+    public double getOffAmount() {
+        return offAmount;
+    }
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    @Override
     public String toString() {
         String string = "SellOrder{" +
                 "payment=" + payment +

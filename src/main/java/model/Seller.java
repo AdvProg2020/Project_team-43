@@ -36,6 +36,7 @@ public class Seller extends User {
         productsNumberWithId = new HashMap<>();
         offsId = new ArrayList<>();
         sellOrdersId = new ArrayList<>();
+        setUserType();
     }
 
     @Override

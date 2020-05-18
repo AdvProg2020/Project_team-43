@@ -18,7 +18,7 @@ public abstract class Request {
         this.requestId = "" + constructId;
         this.requestType = requestType;
         constructId += 1;
-        Manager.allRequest.add(this);
+        allRequests.add(this);
     }
 
     public static ArrayList<Request> getAllRequests() {

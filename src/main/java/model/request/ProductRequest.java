@@ -25,7 +25,6 @@ public class ProductRequest extends Request {
         this.product = product;
         this.seller = seller;
         this.number = number;
-        allRequests.add(this);
     }
 
     public Product getProduct() {
