@@ -33,9 +33,9 @@ public class App {
         try {
             Database.save();
         } catch (IOException e) {
-            System.exit(-1);
             System.out.println("Error saving database");
             e.printStackTrace();
+            System.exit(-1);
         }
         System.exit(0);
     }
