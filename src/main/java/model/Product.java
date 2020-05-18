@@ -66,6 +66,10 @@ public class Product {
         return date;
     }
 
+    public void setFeaturesMap(Map<String, String> featuresMap) {
+        this.featuresMap = featuresMap;
+    }
+
     public State.ProductState getProductState() {
         return productState;
     }

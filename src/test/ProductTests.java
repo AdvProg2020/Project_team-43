@@ -286,35 +286,35 @@ public class ProductTests {
     public void addNewProductTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
-        Assert.assertEquals(sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "2"), "Product add successfully\nWaiting for manager to confirm");
+        Assert.assertEquals(sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "2", null), "Product add successfully\nWaiting for manager to confirm");
     }
 
     @Test (expected = InvalidCommandException.class)
     public void addNewProductCompanyTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
-        sellerProcessor.addNewProduct("new name", "asus1", "laptop", "15", "2");
+        sellerProcessor.addNewProduct("new name", "asus1", "laptop", "15", "2", null);
     }
 
     @Test(expected = InvalidCommandException.class)
     public void addNewProductCategoryTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
-        sellerProcessor.addNewProduct("new name", "asus", "laptop1", "15", "2");
+        sellerProcessor.addNewProduct("new name", "asus", "laptop1", "15", "2", null);
     }
 
     @Test(expected = InvalidCommandException.class)
     public void addNewProductNumberTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
-        sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "not a number");
+        sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "not a number", null);
     }
 
     @Test(expected = InvalidCommandException.class)
     public void addNewProductPriceTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
-        sellerProcessor.addNewProduct("new name", "asus", "laptop", "not a number", "2");
+        sellerProcessor.addNewProduct("new name", "asus", "laptop", "not a number", "2", null);
     }
 
     @Test

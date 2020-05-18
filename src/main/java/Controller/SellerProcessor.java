@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -84,7 +85,7 @@ public class SellerProcessor extends Processor {
         return (field + " successfully changed to " + newField + "\nManager must confirm");
     }
 
-    public String addNewProduct(String name, String companyName, String categoryName, String priceString, String number) throws InvalidCommandException {
+    public String addNewProduct(String name, String companyName, String categoryName, String priceString, String number, HashMap<String, String> features) throws InvalidCommandException {
         if (number.matches("(\\d)+")) {
             int numberInt = Integer.parseInt(number);
             if (Category.hasCategoryWithName(categoryName)) {
@@ -95,7 +96,7 @@ public class SellerProcessor extends Processor {
                         throw new InvalidCommandException("price must be an integer");
                     }
                     Double price = Double.parseDouble(priceString);
-                    ((Seller) user).addNewProduct(name, company, price, category, numberInt);
+                    ((Seller) user).addNewProduct(name, company, price, category, numberInt, features);
                     return "Product add successfully\nWaiting for manager to confirm";
                 } else {
                     throw new InvalidCommandException("company with this name doesn't exist");

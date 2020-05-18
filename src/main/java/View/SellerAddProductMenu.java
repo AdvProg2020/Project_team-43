@@ -1,5 +1,6 @@
 package View;
 
+import model.Category;
 import model.InvalidCommandException;
 
 import java.util.HashMap;
@@ -17,13 +18,20 @@ public class SellerAddProductMenu extends Menu {
         return new Menu(this, "Add new product") {
             @Override
             public void show() {
-
+                SellerShowAndCatch.getInstance().getProductsInformation(sellerProcessor);
+                /*
                 System.out.println("Please enter product information\nname : ");
                 String name = scanner.nextLine();
                 System.out.print("company : ");
                 String company = scanner.nextLine();
                 System.out.print("category : ");
-                String category = scanner.nextLine();
+                String category;
+                while (true) {
+                    category = scanner.nextLine();
+                    if (Category.hasCategoryWithName(category))
+                        break;
+                    System.out.println("category name is invalid");
+                }
                 System.out.print("price : ");
                 String price = scanner.nextLine();
                 System.out.print("number : ");
@@ -32,7 +40,7 @@ public class SellerAddProductMenu extends Menu {
                     System.out.println(sellerProcessor.addNewProduct(name, company, category, price, number));
                 } catch (NullPointerException | InvalidCommandException e) {
                     System.out.println(e.getMessage());
-                }
+                }*/
             }
 
             @Override
