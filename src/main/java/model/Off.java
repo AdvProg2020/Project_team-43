@@ -213,7 +213,7 @@ public class Off {
         }
     }
 
-    private static void loadOffs() {
+    public static void loadOffs() {
         for (Off off : allOffs) {
             if (off.offState.equals(State.OffState.CONFIRMED)) {
                 acceptedOffs.add(off);

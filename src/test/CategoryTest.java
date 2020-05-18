@@ -121,4 +121,22 @@ public class CategoryTest {
         }
         Assert.assertTrue(category.hasFeature("new feature1"));
     }
+
+    @Test
+    public void getCompanyByNameTest(){
+        setAll();
+        Assert.assertNull(Company.getCompanyByName("null company"));
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void addCategoryFeatureExceptionTest() throws InvalidCommandException {
+        setAll();
+        manager.addCategoryFeature(category, "size");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void editCategoryFeatureExceptionTest() throws InvalidCommandException {
+        setAll();
+        manager.editFeatureName(category, "old feature", "new feature");
+    }
 }

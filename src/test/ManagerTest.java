@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 
-public class ManageUserOfManagerTest {
+public class ManagerTest {
     Buyer buyer;
     Manager manager;
     BossProcessor bossProcessor;
@@ -47,4 +47,10 @@ public class ManageUserOfManagerTest {
         manager.createManagerProfile(info);
         Assert.assertTrue(User.hasUserWithUserName("sadra2"));
     }
+    @Test(expected = NullPointerException.class)
+    public void getRequestByIdNullTest(){
+        setAll();
+        manager.getRequestById("null Id");
+    }
+
 }

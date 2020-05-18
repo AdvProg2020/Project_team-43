@@ -9,8 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class OffTest {
     Processor processor;
@@ -26,6 +25,8 @@ public class OffTest {
     Company company;
     Category category;
     Off off;
+    Off off2;
+    Off off3;
     ArrayList<String> productsId;
 
     @BeforeAll
@@ -51,6 +52,11 @@ public class OffTest {
         products.add(product2);
         products.add(product3);
         off = new Off(new Date(), new Date(), 10, seller, products);
+        off2 = new Off(new Date(), new Date(), 10, seller, products);
+        off3 = new Off(new Date(), new Date(), 10, seller, products);
+        off.setOffState(State.OffState.CONFIRMED);
+        off2.setOffState(State.OffState.EDITING_PROCESS);
+        off3.setOffState(State.OffState.CREATING_PROCESS);
         Off.acceptedOffs.add(off);
         seller.getOffs().add(off);
 
@@ -164,6 +170,35 @@ public class OffTest {
                 ", endTime='" + off.getEndTime() + '\'' +
                 ", discountAmount=" + off.getDiscountAmount() +
                 '}');
+    }
+
+    @Test
+    public void loadFieldsProductTest(){
+        setAll();
+        Off.loadFields();
+        Assert.assertArrayEquals(off.getProducts().toArray(), products.toArray());
+    }
+    @Test
+    public void loadFieldsSellerTest(){
+        setAll();
+        Off.loadFields();
+        Assert.assertEquals(off.getSeller(), seller);
+    }
+    @Test
+    public void loadOffsTest(){
+        setAll();
+        Off.allOffs.add(off);
+        Off.allOffs.add(off2);
+        Off.allOffs.add(off3);
+        Off.loadOffs();
+        Assert.assertTrue(Off.inQueueExpectionOffs.contains(off3));
+    }
+
+    @Test
+    public void saveFieldsTest(){
+        setAll();
+        Off.saveFields();
+        Assert.assertEquals(off.getSellerName(), seller.getUsername());
     }
 
 }

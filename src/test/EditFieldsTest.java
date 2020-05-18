@@ -7,7 +7,6 @@ import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 public class EditFieldsTest {
     Company company;
