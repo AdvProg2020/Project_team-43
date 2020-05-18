@@ -64,16 +64,15 @@ public class SellOrder extends Order {
 
     @Override
     public String toString() {
-        String string = "SellOrder{" +
-                "payment=" + payment +
+        return "SellOrder{" +
+                "orderId=" + orderId +
+                ", payment=" + payment +
                 ", offAmount=" + offAmount +
-                ", id=" + this.getOrderId() +
-                ", buyer=" + buyer +
+                ", product=" + product +
+                ", buyerUsername='" + buyerUsername + '\'' +
                 ", deliveryStatus=" + deliveryStatus +
-                ", productId=";
-        string = string.concat(product.getProductId() + ", ");
-        string = string.concat("}");
-        return string;
+                ", orderType='" + orderType + '\'' +
+                '}';
     }
 
     private void loadBuyer() {
@@ -137,7 +136,7 @@ public class SellOrder extends Order {
     public static void load() throws FileNotFoundException {
         SellOrder[] sellOrders = (SellOrder[]) Loader.load(SellOrder[].class, fileAddress);
         if (sellOrders != null) {
-            allOrders.addAll(new ArrayList<>(Arrays.asList(sellOrders)));
+            Order.addAll(new ArrayList<>(Arrays.asList(sellOrders)));
         }
     }
 

@@ -243,9 +243,6 @@ public class Product {
         this.price = price;
     }
 
-    public void setVisit(int visit) {
-        this.visit = visit;
-    }
 
     public void setAvailableCount(int availableCount) {
         this.availableCount = availableCount;
@@ -278,6 +275,10 @@ public class Product {
             }
             if (product.getProductState() == State.ProductState.EDITING_PROCESS) {
                 allProductsInQueueEdit.add(product);
+            }
+            int id = Integer.parseInt(product.getProductId());
+            if (constructId <= id) {
+                constructId = id + 1;
             }
         }
     }

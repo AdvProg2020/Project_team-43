@@ -31,58 +31,11 @@ public class ShowAndCatch {
         }
     }
 
-    public void showOff(Off off) {
-        System.out.println("Off Id : " + off.getOffId());
-        System.out.println("Seller user name : " + off.getSellerName());
-        System.out.println("Discount amount : " + off.getDiscountAmount());
-        System.out.println("Date : " + off.getStartTime() + " - " + off.getEndTime());
-        System.out.println("Products : ");
-        for (Product product : off.getProducts()) {
-            System.out.println(product.getName());
-        }
-    }
-
-    public void getProductInfo(ArrayList<String> productInfo) {
-        System.out.print("Id : ");
-        String productId = scanner.nextLine();
-        productInfo.add(productId);
-        System.out.print("name : ");
-        String name = scanner.nextLine();
-        productInfo.add(name);
-        System.out.print("company : ");
-        String company = scanner.nextLine();
-        productInfo.add(company);
-        System.out.print("category : ");
-        String category = scanner.nextLine();
-        productInfo.add(category);
-        System.out.print("price : ");
-        String price = scanner.nextLine();
-        productInfo.add(price);
-    }
-
-    public void getProductFeatures(ArrayList<String> features1, ArrayList<String> features2) {
-        for (String feature : features1) {
-            System.out.print(feature + " : ");
-            String feature2 = scanner.nextLine();
-            features2.add(feature2);
-        }
-    }
 
     public void showProducts(ArrayList<Product> products) {
         for (Product product : products) {
             System.out.println(product.getName());
         }
-    }
-
-    public void showSellOrders(ArrayList<SellOrder> orders) {
-        for (SellOrder order : orders) {
-            System.out.println(order.getOrderId());
-        }
-    }
-
-    public void showCompanyInfo(Company company) {
-        System.out.println("name : " + company.getName());
-        System.out.println("company information : " + company.getInfo());
     }
 
 
@@ -96,11 +49,18 @@ public class ShowAndCatch {
         System.out.print("email : ");
         String email = Menu.getScanner().nextLine();
         personalInfo.setEmail(email);
-        System.out.print("phone number : ");
+        System.out.print("phone number : +98...");
         String phoneNumber = Menu.getScanner().nextLine();
+        while (!phoneNumber.matches("(\\d){10}")) {
+            System.out.println("invalid phone number");
+            phoneNumber = Menu.getScanner().nextLine();
+        }
         personalInfo.setPhoneNumber(phoneNumber);
-        System.out.print("password : ");
+        System.out.print("password : (at least 8 character)");
         String password = Menu.getScanner().nextLine();
+        while (password.length() < 8) {
+            password = Menu.getScanner().nextLine();
+        }
         personalInfo.setPassword(password);
     }
 
@@ -133,21 +93,6 @@ public class ShowAndCatch {
     }
 
 
-    public void getOffInfo(ArrayList<String> offInfo) {
-        System.out.print("Off Id : ");
-        String offId = scanner.nextLine();
-        offInfo.add(offId);
-        System.out.print("Start time : ");
-        String startTime = scanner.nextLine();
-        offInfo.add(startTime);
-        System.out.print("End time : ");
-        String endTime = scanner.nextLine();
-        offInfo.add(endTime);
-        System.out.print("Off discount amount : ");
-        String offDiscountAmount = scanner.nextLine();
-        offInfo.add(offDiscountAmount);
-    }
-
     public void showBalance(User user) {
         System.out.println("user balance : " + user.getBalance());
     }
@@ -163,18 +108,18 @@ public class ShowAndCatch {
 
     public String getCompanyNameMenuFromUser() {
         System.out.print("company name: ");
-        return Menu.getScanner().nextLine();
+        String companyName = Menu.getScanner().nextLine();
+        while (!Company.hasCompanyWithName(companyName)) {
+            System.out.println("invalid company name");
+            companyName = Menu.getScanner().nextLine();
+        }
+        return companyName;
     }
 
     public void viewPersonalInfo(UserPersonalInfo personalInfo) {
         System.out.println(personalInfo);
     }
 
-    public void viewBuyerOrders(ArrayList<BuyOrder> buyOrders) {
-        for (BuyOrder order : buyOrders) {
-            System.out.println(order);
-        }
-    }
 
     public void showCategories(ArrayList<Category> categories) {
         for (Category category : categories) {

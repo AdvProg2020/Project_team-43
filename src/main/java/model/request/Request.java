@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Request {
-    public static int constructId = 0;
+    private static int constructId = 0;
     protected static ArrayList<Request> allRequests = new ArrayList<>();
     protected String requestId;
     protected String requestType;
@@ -19,6 +19,16 @@ public abstract class Request {
         this.requestType = requestType;
         constructId += 1;
         allRequests.add(this);
+    }
+
+    public static void addAll(ArrayList<Request> requests) {
+        allRequests.addAll(requests);
+        for (Request request : requests) {
+            int id = Integer.parseInt(request.getRequestId());
+            if (constructId <= id) {
+                constructId = id + 1;
+            }
+        }
     }
 
     public static ArrayList<Request> getAllRequests() {
@@ -54,24 +64,31 @@ public abstract class Request {
         EditProductRequest.load();
         EditOffRequest.load();
         ProductRequest.load();
+        SellerRequest.load();
+        OffRequest.load();
     }
 
     public static void loadFields() {
         EditOffRequest.loadFields();
         EditProductRequest.loadFields();
         ProductRequest.loadFields();
+        SellerRequest.loadAllFields();
+        OffRequest.loadFields();
     }
 
     public static void save() throws IOException {
         EditProductRequest.save();
         EditOffRequest.save();
         ProductRequest.save();
+        SellerRequest.save();
+        OffRequest.save();
     }
 
     public static void saveFields() {
         EditOffRequest.saveFields();
         ProductRequest.saveFields();
         EditProductRequest.saveFields();
+        OffRequest.saveFields();
     }
 
 

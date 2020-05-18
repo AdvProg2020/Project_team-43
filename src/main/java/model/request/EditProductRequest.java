@@ -42,7 +42,7 @@ public class EditProductRequest extends Request {
     public static void load() throws FileNotFoundException {
         EditProductRequest[] editProductRequests = (EditProductRequest[]) Loader.load(EditProductRequest[].class, fileAddress);
         if (editProductRequests != null) {
-            allRequests.addAll(new ArrayList<>(Arrays.asList(editProductRequests)));
+            Request.addAll(new ArrayList<>(Arrays.asList(editProductRequests)));
         }
     }
 
@@ -50,42 +50,54 @@ public class EditProductRequest extends Request {
     public static void save() throws IOException {
         ArrayList<EditProductRequest> editProductRequests = new ArrayList<>();
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit product")){
+            if (request.getRequestType().equals("edit product")) {
                 editProductRequests.add((EditProductRequest) request);
             }
         }
         Saver.save(editProductRequests, fileAddress);
     }
 
-    private void loadProduct(){
+    private void loadProduct() {
         this.product = Product.getAllProductById(productId);
     }
 
-    private void saveProduct(){
+    private void saveProduct() {
         this.productId = product.getProductId();
     }
 
-    private static void loadAllProducts(){
+    private static void loadAllProducts() {
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit product")){
-                ((EditProductRequest)request).loadProduct();
+            if (request.getRequestType().equals("edit product")) {
+                ((EditProductRequest) request).loadProduct();
             }
         }
     }
 
-    private static void saveAllProducts(){
+    private static void saveAllProducts() {
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit product")){
-                ((EditProductRequest)request).saveProduct();
+            if (request.getRequestType().equals("edit product")) {
+                ((EditProductRequest) request).saveProduct();
             }
         }
     }
 
-    public static void loadFields(){
+    public static void loadFields() {
         loadAllProducts();
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
         saveAllProducts();
+    }
+
+    @Override
+    public String toString() {
+        return "EditProductRequest{" +
+                "requestId='" + requestId + '\'' +
+                ", product=" + product +
+                ", field='" + field + '\'' +
+                ", input='" + input + '\'' +
+                ", seller=" + seller +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }
