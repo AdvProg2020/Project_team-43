@@ -9,7 +9,6 @@ public class OffRequest extends Request {
     public OffRequest(Off off) {
         super("off");
         this.off=off;
-        allRequests.add(this);
     }
 
     public Off getOff() {
