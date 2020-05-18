@@ -14,10 +14,10 @@ public class BuyOrder extends Order {
     private static String fileAddress="database/BuyOrder.dat";
     private double payment;
     private double codedDiscountAmount;
-    private transient HashMap<Product, Integer> products;
-    private HashMap<String, Integer> productsId;
+    private transient HashMap<Product, Integer> products = new HashMap<>();
+    private HashMap<String, Integer> productsId = new HashMap<>();
     private transient ArrayList<Seller> sellers;
-    private ArrayList<String> sellersId;
+    private ArrayList<String> sellersId = new ArrayList<>();
     private DeliveryStatus deliveryStatus;
     private String address;
     private String phoneNumber;
@@ -31,7 +31,9 @@ public class BuyOrder extends Order {
         this.deliveryStatus = DeliveryStatus.DELIVERING;
         this.phoneNumber = phoneNumber;
         this.address = address;
-
+        products = new HashMap<>();
+        productsId = new HashMap<>();
+        sellersId = new ArrayList<>();
     }
 
     @Override
@@ -48,6 +50,7 @@ public class BuyOrder extends Order {
         String string = "BuyOrder{" +
                 "payment=" + payment +
                 ", codedDiscountAmount=" + codedDiscountAmount +
+                ", id=" + this.getOrderId() +
                 ", deliveryStatus=" + deliveryStatus +
                 ", sellersUsername=[";
         for (Seller seller : sellers) {
@@ -62,7 +65,7 @@ public class BuyOrder extends Order {
     }
 
     private void loadProducts() {
-        products.clear();
+        products = new HashMap<>();
         for (String id : productsId.keySet()) {
             products.put(Product.getProductById(id), productsId.get(id));
         }
@@ -92,7 +95,7 @@ public class BuyOrder extends Order {
     }
 
     private void loadSellers(){
-        sellers.clear();
+        sellers = new ArrayList<>();
         for (String username : sellersId) {
             sellers.add((Seller)User.getUserByUserName(username));
         }

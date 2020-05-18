@@ -30,7 +30,7 @@ public class SellOrder extends Order {
 
     @Override
     public void setOrderType() {
-        this.orderType = "SellerOrder";
+        this.orderType = "SellOrder";
     }
 
     public Product getProducts() {
@@ -50,6 +50,7 @@ public class SellOrder extends Order {
         String string = "SellOrder{" +
                 "payment=" + payment +
                 ", offAmount=" + offAmount +
+                ", id=" + this.getOrderId() +
                 ", buyer=" + buyer +
                 ", deliveryStatus=" + deliveryStatus +
                 ", productId=";

@@ -88,11 +88,11 @@ public abstract class User {
 
     }
 
-    public static void addUser(User user){
+    public static void addUser(User user) {
         allUsers.add(user);
     }
 
-    public static void addAll(ArrayList<User> users){
+    public static void addAll(ArrayList<User> users) {
         allUsers.addAll(users);
     }
 
@@ -111,6 +111,6 @@ public abstract class User {
 
     @Override
     public String toString() {
-        return userPersonalInfo.toString();
+        return username + ":" + userPersonalInfo.toString();
     }
 }

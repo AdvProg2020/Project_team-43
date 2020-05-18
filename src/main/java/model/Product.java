@@ -172,7 +172,9 @@ public class Product {
     }
 
     public void addSeller(Seller seller) {
-        sellers.add(seller);
+        if (!sellers.contains(seller)) {
+            sellers.add(seller);
+        }
     }
 
     public void editField(String field, String newField) throws InvalidCommandException {

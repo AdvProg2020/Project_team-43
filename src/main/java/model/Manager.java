@@ -114,7 +114,9 @@ public class Manager extends User {
 
     public void acceptProductRequest(ProductRequest request) {
         Product product = request.getProduct();
-        Product.allProductsInList.add(product);
+        if (!Product.allProductsInList.contains(product)) {
+            Product.allProductsInList.add(product);
+        }
         Product.allProductsInQueueExpect.remove(product);
         product.addSeller(request.getSeller());
         Seller seller = request.getSeller();
