@@ -108,7 +108,12 @@ public class ShowAndCatch {
 
     public String getCompanyNameMenuFromUser() {
         System.out.print("company name: ");
-        return Menu.getScanner().nextLine();
+        String companyName = Menu.getScanner().nextLine();
+        while (!Company.hasCompanyWithName(companyName)) {
+            System.out.println("invalid company name");
+            companyName = Menu.getScanner().nextLine();
+        }
+        return companyName;
     }
 
     public void viewPersonalInfo(UserPersonalInfo personalInfo) {
