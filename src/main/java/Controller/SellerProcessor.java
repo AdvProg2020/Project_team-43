@@ -52,8 +52,8 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public boolean checkProduct(String productId){
-        return ((Seller)user).hasProductWithId(productId);
+    public boolean checkProduct(String productId) {
+        return ((Seller) user).hasProductWithId(productId);
     }
 
     public void viewProductList() {
@@ -175,7 +175,7 @@ public class SellerProcessor extends Processor {
     public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException, InvalidCommandException {
         Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
         Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
-        if(startTimeDate.after(endTimeDate)){
+        if (startTimeDate.after(endTimeDate)) {
             throw new InvalidCommandException("startTime must be before endTime");
         }
         ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);

@@ -26,6 +26,10 @@ public class Processor {
         return productFilter;
     }
 
+    public static void setIsLogin(boolean isLogin) {
+        Processor.isLogin = isLogin;
+    }
+
     public User getUser() {
         return user;
     }
@@ -170,7 +174,7 @@ public class Processor {
             currentSort();
         } else if (disableSortMatcher.matches()) {
             disableSort();
-        } else{
+        } else {
             throw new InvalidCommandException("sort with this name doesn't exist");
         }
 
@@ -290,7 +294,7 @@ public class Processor {
                 break;
             }
         }
-        new Comment(product, commentInfo.get(1), isBuy, (Buyer)user);
+        new Comment(product, commentInfo.get(1), isBuy, (Buyer) user);
         //handle commente gerefte shode
 
     }

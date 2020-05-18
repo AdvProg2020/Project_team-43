@@ -7,6 +7,7 @@ import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 public class EditFieldsTest {
     Company company;
@@ -202,6 +203,18 @@ public class EditFieldsTest {
             Assert.assertTrue(true);
         }
         Assert.assertEquals(manager.getUserPersonalInfo().getPassword(), "new password");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void sellerEditFieldExceptionTest() throws InvalidCommandException {
+        setAll();
+        sellerProcessor.editSellerField("invalid command");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void buyerEditFieldExceptionTest() throws InvalidCommandException {
+        setAll();
+        buyerProcessor.editBuyerField("invalid command");
     }
 
 

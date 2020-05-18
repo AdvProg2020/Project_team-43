@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class PurchaseTest {
     Buyer buyer;
     BuyerProcessor buyerProcessor;
+    Processor processor;
     Category category1;
     Category category2;
     Category category3;
@@ -27,6 +28,7 @@ public class PurchaseTest {
 
     @BeforeAll
     public void setAll() {
+        processor = new Processor();
         buyerProcessor = BuyerProcessor.getInstance();
         buyer = new Buyer("alireza", null);
         seller = new Seller("seller", null, "asus");
@@ -153,6 +155,15 @@ public class PurchaseTest {
         Processor.user = buyer;
         buyerProcessor.logout();
         Assert.assertEquals(BuyerProcessor.getNewBuyerCart().size(), 0);
+    }
+
+    @Test
+    public void addToCartFromProcessorTest(){
+        setAll();
+        Product.allProductsInList.add(product1);
+        processor.addToCart(product1.getProductId(), seller);
+        Assert.assertFalse(BuyerProcessor.getNewBuyerCart().isEmpty());
+
     }
 
 

@@ -1,9 +1,11 @@
 import Controller.BossProcessor;
 import Controller.Processor;
+import Controller.SellerProcessor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.ArrayList;
 
@@ -23,9 +25,13 @@ public class ProductTests {
     Product product4;
     Product product5;
     BossProcessor bossProcessor;
+    SellerProcessor sellerProcessor;
+    Processor processor;
 
     @BeforeAll
     public void setAll() {
+        processor = new Processor();
+        sellerProcessor = SellerProcessor.getInstance();
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("asus", "none");
         company2 = new Company("lenovo", "none");
@@ -33,8 +39,10 @@ public class ProductTests {
         category2 = new Category("mobile", new ArrayList<>());
         buyer = new Buyer("alireza", userPersonalInfo);
         manager = new Manager("sadra", userPersonalInfo);
-        seller = new Seller("parsa", userPersonalInfo, "companyName");
-        seller2 = new Seller("parsa2", userPersonalInfo, "companyName");
+        seller = new Seller("parsa", userPersonalInfo, "asus");
+        seller2 = new Seller("parsa2", userPersonalInfo, "lenovo");
+        User.allUsers.add(seller);
+        User.allUsers.add(seller2);
         bossProcessor = BossProcessor.getInstance();
         product1 = new Product("a", company, 1, category);
         product2 = new Product("b", company, 2, category);
@@ -175,34 +183,172 @@ public class ProductTests {
     }
 
     @Test
-    public void setNameProductTest(){
+    public void setNameProductTest() {
         setAll();
         product1.setName("new name");
         Assert.assertEquals(product1.getName(), "new name");
     }
+
     @Test
-    public void setCompanyProductTest(){
+    public void setCompanyProductTest() {
         setAll();
         product1.setCompany(company2);
         Assert.assertEquals(product1.getCompany(), company2);
     }
+
     @Test
-    public void setPriceProductTest(){
+    public void setPriceProductTest() {
         setAll();
         product1.setPrice(33);
         Assert.assertEquals(product1.getPrice(), 33, 1);
     }
 
     @Test
-    public void getNameCompanyTest(){
+    public void getNameCompanyTest() {
         setAll();
         Assert.assertEquals(company.getName(), "asus");
     }
 
     @Test
-    public void getInfoCompanyTest(){
+    public void getInfoCompanyTest() {
         setAll();
         Assert.assertEquals(company2.getInfo(), "none");
     }
 
+    @Test(expected = NullPointerException.class)
+    public void showAttributesExceptionTest() {
+        setAll();
+        processor.showAttributes("null Id");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void compareProcessExceptionTest() {
+        setAll();
+        processor.compareProcess("null product 1", "null product 2");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void addCommentExceptionTest() throws InvalidCommandException {
+        setAll();
+        processor.manageComments("add comment", product2.getProductId());
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void manageCommentExceptionTest() throws InvalidCommandException {
+        setAll();
+        Processor.setIsLogin(true);
+        processor.manageComments("invalid command", product2.getProductId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void showDigestExceptionTest() {
+        setAll();
+        processor.showDigest("null product");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void showCommentExceptionTest() {
+        setAll();
+        processor.showComments("null product");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void viewProductInfoExceptionTest() {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.viewProductInfo("null product");
+    }
+
+    @Test
+    public void checkProductSellerTest() {
+        setAll();
+        Processor.user = seller;
+        seller.getProductsNumber().put(product1, 1);
+        Assert.assertTrue(sellerProcessor.checkProduct(product1.getProductId()) && !sellerProcessor.checkProduct("null product"));
+
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void viewBuyerExceptionTest() {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.viewBuyers("null product");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void editProductCommandExceptionTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.editProductInfo(product1.getProductId(), "invalid command");
+    }
+
+    @Test
+    public void addNewProductTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        Assert.assertEquals(sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "2"), "Product add successfully\nWaiting for manager to confirm");
+    }
+
+    @Test (expected = InvalidCommandException.class)
+    public void addNewProductCompanyTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addNewProduct("new name", "asus1", "laptop", "15", "2");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void addNewProductCategoryTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addNewProduct("new name", "asus", "laptop1", "15", "2");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void addNewProductNumberTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "not a number");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void addNewProductPriceTest() throws InvalidCommandException {
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addNewProduct("new name", "asus", "laptop", "not a number", "2");
+    }
+
+    @Test
+    public void addExistingProductTest()throws InvalidCommandException{
+        setAll();
+        Processor.user = seller;
+        Assert.assertEquals(sellerProcessor.addExistingProduct(product1.getProductId(), "1"), "Product add successfully\nWaiting for manger to confirm");
+    }
+    @Test(expected = InvalidCommandException.class)
+    public void addExistingProductExceptionNumberTest()throws InvalidCommandException{
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addExistingProduct(product1.getProductId(), "not a number");
+    }
+    @Test(expected = InvalidCommandException.class)
+    public void addExistingProductNullProductExceptionTest()throws InvalidCommandException{
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.addExistingProduct("null product", "1");
+    }
+
+    @Test
+    public void removeProductSellerProcessorTest(){
+        setAll();
+        Processor.user = seller;
+        seller.getProductsNumber().put(product1, 2);
+        sellerProcessor.removeProduct(product1.getProductId());
+        Assert.assertEquals(seller.getProductsNumber().get(product1), 1, 1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void removeProductExceptionTest(){
+        setAll();
+        Processor.user = seller;
+        sellerProcessor.removeProduct("null product");
+    }
 }
