@@ -1,6 +1,5 @@
-package model;
+package View;
 
-import View.MainMenu;
 import model.database.Database;
 
 import java.io.FileNotFoundException;
@@ -21,6 +20,8 @@ public class App {
         try {
             Database.load();
         } catch (FileNotFoundException e) {
+            System.out.println("Error loading database");
+            e.printStackTrace();
             System.exit(-1);
         }
         MainMenu mainMenu = new MainMenu("main menu");
@@ -33,6 +34,8 @@ public class App {
             Database.save();
         } catch (IOException e) {
             System.exit(-1);
+            System.out.println("Error saving database");
+            e.printStackTrace();
         }
         System.exit(0);
     }

@@ -93,6 +93,19 @@ public class Off {
         return null;
     }
 
+    public static Off getAllOffById(String offId) {
+        allOffs.clear();
+        allOffs.addAll(acceptedOffs);
+        allOffs.addAll(inQueueExpectionOffs);
+        allOffs.addAll(allOffsInQueueEdit);
+        for (Off off : allOffs) {
+            if (off.getOffId().equals(offId)) {
+                return off;
+            }
+        }
+        return null;
+    }
+
     public static double isProductInOff(Product product) {
         for (Off off : acceptedOffs) {
             if (off.getProducts().contains(product))

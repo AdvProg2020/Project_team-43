@@ -92,6 +92,10 @@ public abstract class User {
         allUsers.add(user);
     }
 
+    public static void removeUser(User user) {
+        allUsers.remove(user);
+    }
+
     public static void addAll(ArrayList<User> users) {
         allUsers.addAll(users);
     }

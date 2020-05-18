@@ -1,1 +1,1 @@
-[{"username":"sadra","userPersonalInfo":{"firstName":"sadra","lastName":"abdollahi","email":"s@gmai.com","phoneNumber":"09129991234","password":"sadra"},"balance":100000.0,"userType":"MANAGER"}]
+[{"username":"sadra","userPersonalInfo":{"firstName":"sadra","lastName":"abdollahi","email":"s@gmai.com","phoneNumber":"09129991234","password":"sadra"},"balance":100000.0,"userType":"MANAGER"},{"username":"sadra2","userPersonalInfo":{"firstName":"sa","lastName":"fasf","email":"fasdf","phoneNumber":"asdfg","password":"sadra2"},"balance":100000.0,"userType":"MANAGER"}]
