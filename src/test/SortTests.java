@@ -125,4 +125,5 @@ public class SortTests {
         Object[] expectationArray = expectationSort.toArray();
         Assert.assertArrayEquals(expectationArray, productsArray);
     }
+
 }
