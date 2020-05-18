@@ -92,8 +92,8 @@ public class EditProductRequest extends Request {
     @Override
     public String toString() {
         return "EditProductRequest{" +
-                ", requestId='" + requestId + '\'' +
-                "product=" + product +
+                "requestId='" + requestId + '\'' +
+                ", product=" + product +
                 ", field='" + field + '\'' +
                 ", input='" + input + '\'' +
                 ", seller=" + seller +

@@ -63,8 +63,8 @@ public class SellerRequest extends Request {
     @Override
     public String toString() {
         return "SellerRequest{" +
-                ", requestId='" + requestId + '\'' +
-                "seller=" + seller +
+                "requestId='" + requestId + '\'' +
+                ", seller=" + seller +
                 ", requestType='" + requestType + '\'' +
                 '}';
     }

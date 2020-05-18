@@ -118,8 +118,8 @@ public class ProductRequest extends Request {
     @Override
     public String toString() {
         return "ProductRequest{" +
-                ", requestId='" + requestId + '\'' +
-                "product=" + product +
+                "requestId='" + requestId + '\'' +
+                ", product=" + product +
                 ", seller=" + seller +
                 ", number=" + number +
                 ", requestType='" + requestType + '\'' +

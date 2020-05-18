@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public abstract class Order {
     public static int constructId = 0;
     protected static ArrayList<Order> allOrders = new ArrayList<Order>();
-    private String orderId;
+    protected String orderId;
     private Date date;
     protected String orderType;
 
@@ -21,6 +21,16 @@ public abstract class Order {
     }
 
     public abstract void setOrderType();
+
+    public static void addAll(ArrayList<Order> orders) {
+        allOrders.addAll(orders);
+        for (Order order : orders) {
+            int id = Integer.parseInt(order.getOrderId());
+            if (constructId <= id) {
+                constructId = id + 1;
+            }
+        }
+    }
 
     public String getOrderType() {
         return orderType;
@@ -48,12 +58,12 @@ public abstract class Order {
         SellOrder.save();
     }
 
-    public static void loadAllFields(){
+    public static void loadAllFields() {
         SellOrder.loadAllFields();
         BuyOrder.loadAllFields();
     }
 
-    public static void saveAllFields(){
+    public static void saveAllFields() {
         SellOrder.saveAllFields();
         BuyOrder.saveAllFields();
     }

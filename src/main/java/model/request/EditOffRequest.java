@@ -92,8 +92,8 @@ public class EditOffRequest extends Request {
     @Override
     public String toString() {
         return "EditOffRequest{" +
-                ", requestId='" + requestId + '\'' +
-                "off=" + off +
+                "requestId='" + requestId + '\'' +
+                ", off=" + off +
                 ", field='" + field + '\'' +
                 ", input='" + input + '\'' +
                 ", requestType='" + requestType + '\'' +

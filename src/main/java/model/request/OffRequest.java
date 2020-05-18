@@ -78,8 +78,8 @@ public class OffRequest extends Request {
     @Override
     public String toString() {
         return "OffRequest{" +
-                ", requestId='" + requestId + '\'' +
-                "off=" + off +
+                "requestId='" + requestId + '\'' +
+                ", off=" + off +
                 ", requestType='" + requestType + '\'' +
                 '}';
     }

@@ -23,7 +23,12 @@ public abstract class Request {
 
     public static void addAll(ArrayList<Request> requests) {
         allRequests.addAll(requests);
-        constructId += requests.size();
+        for (Request request : requests) {
+            int id = Integer.parseInt(request.getRequestId());
+            if (constructId <= id) {
+                constructId = id + 1;
+            }
+        }
     }
 
     public static ArrayList<Request> getAllRequests() {

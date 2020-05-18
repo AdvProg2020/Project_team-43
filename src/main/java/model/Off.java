@@ -212,15 +212,16 @@ public class Off {
         }
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
         saveAllProducts();
         saveAllSeller();
     }
 
-    public static void loadFields(){
+    public static void loadFields() {
         loadAllProducts();
         loadAllSeller();
     }
+
     public static void load() throws FileNotFoundException {
         Off[] offs = (Off[]) Loader.load(Off[].class, fileAddress);
         if (offs != null) {
@@ -237,6 +238,10 @@ public class Off {
                 allOffsInQueueEdit.add(off);
             } else if (off.offState.equals(State.OffState.CREATING_PROCESS)) {
                 inQueueExpectionOffs.add(off);
+            }
+            int id = Integer.parseInt(off.getOffId());
+            if (constructId <= id) {
+                constructId = id + 1;
             }
         }
     }
