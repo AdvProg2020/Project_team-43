@@ -111,6 +111,18 @@ public abstract class User {
         Buyer.save();
         Seller.save();
         Manager.save();
+
+    }
+
+    public static void loadFields() {
+        Buyer.loadFields();
+        Seller.loadAllFields();
+    }
+
+    public static void saveFields() {
+        Buyer.saveFields();
+        Seller.saveAllFields();
+
     }
 
     @Override

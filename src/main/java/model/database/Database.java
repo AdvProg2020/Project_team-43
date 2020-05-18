@@ -19,27 +19,23 @@ public class Database {
         Product.load();
         Request.load();
 
-
-        Buyer.loadFields();
+        User.loadFields();
         Request.loadFields();
         Category.loadFields();
         Off.loadFields();
         Comment.loadFields();
-        Seller.loadAllFields();
         Product.loadFields();
         Order.loadAllFields();
     }
 
     public static void save() throws IOException {
-        Buyer.saveFields();
         Request.saveFields();
-        Seller.saveAllFields();
         Category.saveFields();
         Off.saveFields();
         Comment.saveFields();
         Order.saveAllFields();
         Product.saveFields();
-
+        User.saveFields();
 
 
         CodedDiscount.save();

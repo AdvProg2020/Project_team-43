@@ -54,24 +54,31 @@ public abstract class Request {
         EditProductRequest.load();
         EditOffRequest.load();
         ProductRequest.load();
+        SellerRequest.load();
+        OffRequest.load();
     }
 
     public static void loadFields() {
         EditOffRequest.loadFields();
         EditProductRequest.loadFields();
         ProductRequest.loadFields();
+        SellerRequest.loadAllFields();
+        OffRequest.loadFields();
     }
 
     public static void save() throws IOException {
         EditProductRequest.save();
         EditOffRequest.save();
         ProductRequest.save();
+        SellerRequest.save();
+        OffRequest.save();
     }
 
     public static void saveFields() {
         EditOffRequest.saveFields();
         ProductRequest.saveFields();
         EditProductRequest.saveFields();
+        OffRequest.saveFields();
     }
 
 
