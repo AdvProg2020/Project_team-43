@@ -230,7 +230,7 @@ public class ProductTests {
     @Test(expected = InvalidCommandException.class)
     public void addCommentExceptionTest() throws InvalidCommandException {
         setAll();
-        processor.manageComments("add comment", product2.getProductId());
+        processor.manageComments("invalid command", product2.getProductId());
     }
 
     @Test(expected = InvalidCommandException.class)

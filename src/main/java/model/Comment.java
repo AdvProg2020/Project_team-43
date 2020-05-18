@@ -33,6 +33,14 @@ public class Comment {
         inQueueExpectation.add(this);
     }
 
+    public void setOpinionState(State.OpinionState opinionState) {
+        this.opinionState = opinionState;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
     public String getCommentText() {
         return commentText;
     }
@@ -62,9 +70,7 @@ public class Comment {
         loadAllBuyer();
     }
 
-    public static void saveFields() {
-
-    }
+    public static void saveFields() { }
 
     public static void load() throws FileNotFoundException {
         Comment[] comments = (Comment[]) Loader.load(Comment[].class, fileAddress);
@@ -74,7 +80,7 @@ public class Comment {
         }
     }
 
-    private static void loadComments() {
+    public static void loadComments() {
         for (Comment comment : allComments) {
             if (comment.opinionState.equals(State.OpinionState.CONFIRMED)) {
                 acceptedComments.add(comment);
