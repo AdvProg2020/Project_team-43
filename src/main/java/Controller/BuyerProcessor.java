@@ -23,6 +23,10 @@ public class BuyerProcessor extends Processor {
     private BuyerProcessor() {
     }
 
+    public static HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
+        return newBuyerCart;
+    }
+
     public String editBuyerField(String command) throws InvalidCommandException {
         Pattern pattern = Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
@@ -42,8 +46,7 @@ public class BuyerProcessor extends Processor {
 
     public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
         if (newBuyerCart.containsKey(productSellerPair)) {
-            newBuyerCart.replace(productSellerPair,
-                    newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
+            newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
         } else {
             newBuyerCart.put(productSellerPair, 1);
         }
@@ -122,8 +125,7 @@ public class BuyerProcessor extends Processor {
             errorMessage("product with this Id doesn't exist");
             return true;
         }
-        return !((Buyer) user).cartHasPair(new Pair<Product, Seller>(Product.getProductById(productId),
-                (Seller) User.getUserByUserName(sellerName)));
+        return !((Buyer) user).cartHasPair(new Pair<Product, Seller>(Product.getProductById(productId), (Seller) User.getUserByUserName(sellerName)));
     }
 
     public void increaseProduct(String productId, String sellerName) throws NullPointerException {

@@ -17,11 +17,6 @@ public class ShowAndCatch {
     private ShowAndCatch() {
     }
 
-    public void getOffProducts(ArrayList<String> products) {
-        while (true) {
-            //fill products
-        }
-    }
 
     public void showOffs(ArrayList<Off> offs, FilterManager filterManager) {
         for (int i = 1; i <= offs.size(); i++) {

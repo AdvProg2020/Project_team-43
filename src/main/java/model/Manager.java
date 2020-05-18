@@ -116,7 +116,7 @@ public class Manager extends User {
         Product product = request.getProduct();
         Product.allProductsInList.add(product);
         Product.allProductsInQueueExpect.remove(product);
-        product.getSellers().add(request.getSeller());
+        product.addSeller(request.getSeller());
         Seller seller = request.getSeller();
         if (seller.getProductsNumber().containsKey(product)) {
             int numberOfProduct = seller.getProductsNumber().get(product);

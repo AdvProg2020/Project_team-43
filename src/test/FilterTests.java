@@ -1,5 +1,6 @@
 package test;
 
+import Controller.Processor;
 import model.Category;
 import model.Company;
 import model.Product;
@@ -31,10 +32,11 @@ public class FilterTests {
     Product product8;
     Product product9;
     Product product10;
+    Processor processor;
 
     @BeforeAll
     public void setAll() {
-        filterManager = new FilterManager();
+        processor = new Processor();
         products = new ArrayList<>();
         expectationFilter = new ArrayList<>();
         company = new Company("asus", "non");
@@ -62,11 +64,14 @@ public class FilterTests {
         products.add(product8);
         products.add(product9);
         products.add(product10);
+        processor.newProductFilter();
+        filterManager = processor.getProductFilter();
     }
 
     @Test
     public void availableFilterTest() {
         setAll();
+        processor.filteringProcess("filter by availability");
         product1.setAvailableCount(2);
         product2.setAvailableCount(0);
         product3.setAvailableCount(5);
@@ -83,8 +88,7 @@ public class FilterTests {
         expectationFilter.add(product6);
         expectationFilter.add(product9);
         expectationFilter.add(product10);
-        CriteriaAvailable criteriaAvailable = new CriteriaAvailable();
-        ArrayList<Product> afterFilter = criteriaAvailable.meetCriteria(products);
+        ArrayList<Product> afterFilter = filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).meetCriteria(products);
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
@@ -113,11 +117,11 @@ public class FilterTests {
     @Test
     public void nameFilterTest() {
         setAll();
-        CriteriaName criteriaName = new CriteriaName("book");
+        processor.filteringProcess("filter by name book");
         expectationFilter.add(product4);
         expectationFilter.add(product7);
         expectationFilter.add(product10);
-        ArrayList<Product> afterFilter = criteriaName.meetCriteria(products);
+        ArrayList<Product> afterFilter = filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).meetCriteria(products);
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
@@ -126,12 +130,12 @@ public class FilterTests {
     @Test
     public void priceFilterTest(){
         setAll();
-        CriteriaPrice criteriaPrice = new CriteriaPrice(50, 100);
+        processor.filteringProcess("filter by price from 50 to 100");
         expectationFilter.add(product5);
         expectationFilter.add(product6);
         expectationFilter.add(product9);
         expectationFilter.add(product10);
-        ArrayList<Product> afterFilter = criteriaPrice.meetCriteria(products);
+        ArrayList<Product> afterFilter = filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).meetCriteria(products);
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);

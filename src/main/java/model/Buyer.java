@@ -36,7 +36,6 @@ public class Buyer extends User {
     }
 
     public void viewPersonalInfo() {
-
     }
 
     public void editFields(String field, String newField) throws InvalidCommandException {

@@ -1,5 +1,7 @@
 package View;
 
+import model.InvalidCommandException;
+
 import java.util.HashMap;
 
 public class OffPanel extends Menu {
@@ -65,7 +67,11 @@ public class OffPanel extends Menu {
                 System.out.println("disable sort");
                 System.out.println("back");
                 String command = scanner.nextLine();
-                processor.sortingProcess(command);
+                try {
+                    processor.sortingProcess(command);
+                } catch (InvalidCommandException e){
+                    System.out.println(e.getMessage());
+                }
                 if (!command.equalsIgnoreCase("back"))
                     this.show();
             }

@@ -21,6 +21,7 @@ public class PurchaseTest {
     Product product1;
     Product product2;
     Product product3;
+    Product product4;
     Company company;
     CodedDiscount codedDiscount;
 
@@ -29,6 +30,7 @@ public class PurchaseTest {
         buyerProcessor = BuyerProcessor.getInstance();
         buyer = new Buyer("alireza", null);
         seller = new Seller("seller", null, "asus");
+        User.allUsers.add(seller);
         codedDiscount = new CodedDiscount(new Date(), new Date(), 20, 2);
         company = new Company("asus", "non");
         category1 = new Category("laptop", new ArrayList<String>());
@@ -37,6 +39,11 @@ public class PurchaseTest {
         product1 = new Product("gt570", company, 10, category1);
         product2 = new Product("tb1010", company, 40, category2);
         product3 = new Product("nokia1100", company, 50, category3);
+        product4 = new Product("iphoneX", company, 100, category3);
+        seller.getProductsNumber().put(product1, 5);
+        seller.getProductsNumber().put(product2, 5);
+        seller.getProductsNumber().put(product3, 5);
+        seller.getProductsNumber().put(product4, 5);
         buyer.addDiscountCode(codedDiscount);
         buyer.getNewBuyerCart().put(new Pair<Product, Seller>(product1, seller), 1);
         buyer.getNewBuyerCart().put(new Pair<Product, Seller>(product2, seller), 1);
@@ -48,14 +55,108 @@ public class PurchaseTest {
     public void purchaseTest() {
         setAll();
         Processor.user = buyer;
-        if(buyerProcessor.checkDiscountCode(codedDiscount.getDiscountCode())){
+        if (buyerProcessor.checkDiscountCode(codedDiscount.getDiscountCode())) {
             buyerProcessor.payment("address", "0912", codedDiscount.getDiscountAmount());
-            Assert.assertTrue(buyer.getBalance()==(100000-80) && seller.getBalance()==(100000+100));
-        } else{
+            Assert.assertTrue(buyer.getBalance() == (100000 - 80) && seller.getBalance() == (100000 + 100));
+        } else {
             buyerProcessor.payment("address", "0912", 0);
-            Assert.assertTrue((buyer.getBalance()==100000) && seller.getBalance()==100000);
+            Assert.assertTrue((buyer.getBalance() == 100000) && seller.getBalance() == 100000);
         }
     }
+
+    @Test
+    public void addToBuyerCartSellerPartTest() {
+        setAll();
+        Processor.user = buyer;
+        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product4, seller));
+        Assert.assertEquals(seller.getProductsNumber().get(product4), 4, 1);
+    }
+    @Test
+    public void addToBuyerCartBuyerPartTest(){
+        setAll();
+        Processor.user = buyer;
+        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product4, seller));
+        Assert.assertTrue(buyer.getNewBuyerCart().containsKey(new Pair<Product, Seller>(product4, seller)));
+    }
+
+    @Test
+    public void addToBuyerCartBuyerPart2Test(){
+        setAll();
+        Processor.user = buyer;
+        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product3, seller));
+        Assert.assertEquals(buyer.getNewBuyerCart().get(new Pair<>(product3, seller)), 2, 1);
+    }
+
+    @Test
+    public void rateProductTest(){
+        setAll();
+        Product.getAllProductsInList().add(product4);
+        Processor.user = buyer;
+        try {
+            buyerProcessor.manageOrders("rate "+product4.getProductId()+" 5");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
+        Assert.assertEquals(product4.getScore().getAvgScore(), 5, 1);
+    }
+
+    @Test
+    public void checkValiditySellerTest(){
+        setAll();
+        Assert.assertTrue(buyerProcessor.checkProductAndSellerValidation(product4.getProductId(), "no seller"));
+    }
+
+    @Test
+    public void checkValidityProductTest(){
+        setAll();
+        Assert.assertTrue(buyerProcessor.checkProductAndSellerValidation(product1.getProductId(), "seller"));
+    }
+
+    @Test
+    public void increaseCartProductTest(){
+        setAll();
+        Processor.user = buyer;
+        Product.allProductsInList.add(product1);
+        int availableCount = product1.getAvailableCount();
+        buyerProcessor.increaseProduct(product1.getProductId(), "seller");
+        Assert.assertEquals(product1.getAvailableCount(), availableCount-1);
+
+    }
+
+    @Test
+    public void increaseCartSellerTest(){
+        setAll();
+        Processor.user = buyer;
+        int availableCount = seller.getProductsNumber().get(product1);
+        Product.allProductsInList.add(product1);
+        buyerProcessor.increaseProduct(product1.getProductId(), "seller");
+        Assert.assertEquals(seller.getProductsNumber().get(product1),availableCount-1, 1);
+    }
+
+    @Test
+    public void isCartEmptyTest(){
+        setAll();
+        BuyerProcessor.getNewBuyerCart().clear();
+        Assert.assertTrue(buyerProcessor.isCartEmpty());
+    }
+    @Test
+    public void logoutUserTest(){
+        setAll();
+        Processor.user = buyer;
+        buyerProcessor.logout();
+        Assert.assertNull(Processor.user);
+    }
+
+    @Test
+    public void logoutBuyerCartTest(){
+        setAll();
+        Processor.user = buyer;
+        buyerProcessor.logout();
+        Assert.assertEquals(BuyerProcessor.getNewBuyerCart().size(), 0);
+    }
+
+
+
 }
 
 

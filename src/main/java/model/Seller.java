@@ -261,7 +261,7 @@ public class Seller extends User {
     public void loadProducts() {
         HashMap<Product, Integer> productIntegerHashMap = new HashMap<>();
         for (String productId : productsNumberWithId.keySet()) {
-            productIntegerHashMap.put(Product.getProductById(productId), productsNumberWithId.get(productId));
+            productIntegerHashMap.put(Product.getAllProductById(productId), productsNumberWithId.get(productId));
         }
         productsNumber = productIntegerHashMap;
     }

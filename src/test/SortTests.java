@@ -1,5 +1,6 @@
 package test;
 
+import Controller.Processor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,9 +22,11 @@ public class SortTests {
     Product product3;
     Product product4;
     Product product5;
+    Processor processor;
 
     @BeforeAll
     public void setAll() {
+        processor = new Processor();
         products = new ArrayList<>();
         expectationSort = new ArrayList<>();
         company = new Company("asus", "non");
@@ -54,7 +57,11 @@ public class SortTests {
         expectationSort.add(product1);
         expectationSort.add(product2);
         expectationSort.add(product4);
-        Sorting.setSortByView();
+        try {
+            processor.sortingProcess("sort by view");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Collections.sort(products, Sorting.getComparator());
         Object[] productsArray = products.toArray();
         Object[] expectationArray = expectationSort.toArray();
@@ -74,7 +81,11 @@ public class SortTests {
         expectationSort.add(product1);
         expectationSort.add(product3);
         expectationSort.add(product5);
-        Sorting.setSortByScore();
+        try {
+            processor.sortingProcess("sort by score");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Collections.sort(products, Sorting.getComparator());
         Object[] productsArray = products.toArray();
         Object[] expectationArray = expectationSort.toArray();
@@ -104,7 +115,11 @@ public class SortTests {
         expectationSort.add(product1);
         expectationSort.add(product4);
         expectationSort.add(product5);
-        Sorting.setSortByDate();
+        try {
+            processor.sortingProcess("sort by date");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Collections.sort(products, Sorting.getComparator());
         Object[] productsArray = products.toArray();
         Object[] expectationArray = expectationSort.toArray();
