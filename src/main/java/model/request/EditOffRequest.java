@@ -50,52 +50,52 @@ public class EditOffRequest extends Request {
     public static void save() throws IOException {
         ArrayList<EditOffRequest> editOffRequests = new ArrayList<>();
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit off")){
+            if (request.getRequestType().equals("edit off")) {
                 editOffRequests.add((EditOffRequest) request);
             }
         }
         Saver.save(editOffRequests, fileAddress);
     }
 
-    private void loadOff(){
+    private void loadOff() {
         this.off = Off.getAllOffById(offId);
     }
 
-    private void saveOff(){
+    private void saveOff() {
         this.offId = off.getOffId();
     }
 
-    private static void loadAllOffs(){
+    private static void loadAllOffs() {
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit off")){
-                ((EditOffRequest)request).loadOff();
+            if (request.getRequestType().equals("edit off")) {
+                ((EditOffRequest) request).loadOff();
             }
         }
     }
 
-    private static void saveAllOffs(){
+    private static void saveAllOffs() {
         for (Request request : allRequests) {
-            if (request.getRequestType().equals("edit off")){
-                ((EditOffRequest)request).saveOff();
+            if (request.getRequestType().equals("edit off")) {
+                ((EditOffRequest) request).saveOff();
             }
         }
     }
 
-    public static void loadFields(){
+    public static void loadFields() {
         loadAllOffs();
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
         saveAllOffs();
     }
 
     @Override
     public String toString() {
         return "EditOffRequest{" +
+                ", requestId='" + requestId + '\'' +
                 "off=" + off +
                 ", field='" + field + '\'' +
                 ", input='" + input + '\'' +
-                ", requestId='" + requestId + '\'' +
                 ", requestType='" + requestType + '\'' +
                 '}';
     }
