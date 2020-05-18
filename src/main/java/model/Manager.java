@@ -120,7 +120,7 @@ public class Manager extends User {
         Seller seller = request.getSeller();
         if (seller.getProductsNumber().containsKey(product)) {
             int numberOfProduct = seller.getProductsNumber().get(product);
-            seller.getProductsNumber().replace(product, numberOfProduct + request.getNumber());
+            seller.getProductsNumber().replace(product, numberOfProduct, numberOfProduct + request.getNumber());
         } else {
             seller.getProductsNumber().put(product, request.getNumber());
         }

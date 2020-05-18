@@ -299,6 +299,10 @@ public class Product {
     }
 
     public static void saveAllCategories() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.saveCategory();
         }
@@ -323,6 +327,10 @@ public class Product {
     }
 
     public static void saveAllSellers() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.saveSellers();
         }
