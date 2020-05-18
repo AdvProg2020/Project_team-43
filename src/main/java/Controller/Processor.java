@@ -5,7 +5,6 @@ import View.ShowAndCatch;
 import model.*;
 import model.filters.FilterManager;
 import model.request.SellerRequest;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 
 import java.util.ArrayList;

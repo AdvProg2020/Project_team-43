@@ -1,1 +1,1 @@
-[{"name":"phone","features":[],"productsId":["0"]}]
+[{"name":"phone","features":[],"productsId":["0","0"]},{"name":"laptop","features":["size","RAM","cpu","hard"],"productsId":["1"]}]

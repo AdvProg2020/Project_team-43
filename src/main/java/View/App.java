@@ -1,6 +1,5 @@
-package model;
+package View;
 
-import View.MainMenu;
 import model.database.Database;
 
 import java.io.FileNotFoundException;

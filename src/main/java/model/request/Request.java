@@ -4,6 +4,8 @@ package model.request;
 
 import model.Manager;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Request {
@@ -47,4 +49,26 @@ public abstract class Request {
                 ", requestType='" + requestType + '\'' +
                 '}';
     }
+
+    public static void load() throws FileNotFoundException {
+        EditProductRequest.load();
+        EditOffRequest.load();
+    }
+
+    public static void loadFields(){
+        EditOffRequest.loadFields();
+        EditProductRequest.loadFields();
+    }
+
+    public static void save() throws IOException {
+        EditProductRequest.save();
+        EditOffRequest.save();
+    }
+
+    public static void saveFields(){
+        EditOffRequest.saveFields();
+        EditProductRequest.saveFields();
+    }
+
+
 }

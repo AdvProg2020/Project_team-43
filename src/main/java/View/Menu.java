@@ -4,7 +4,6 @@ import Controller.BossProcessor;
 import Controller.BuyerProcessor;
 import Controller.Processor;
 import Controller.SellerProcessor;
-import model.App;
 
 import java.util.HashMap;
 import java.util.Scanner;

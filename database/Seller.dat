@@ -1,1 +1,1 @@
-[{"company":{"name":"dashagh","info":"none"},"productsNumberWithId":{"0":99999},"offsId":["0"],"sellOrdersId":["1"],"username":"parsa","userPersonalInfo":{"firstName":"parsa","lastName":"p","email":"p","phoneNumber":"p","password":"parsa"},"balance":100900.0,"userType":"SELLER"}]
+[{"company":{"name":"dashagh","info":"none"},"productsNumberWithId":{"0":99999,"1":0},"offsId":["0"],"sellOrdersId":["1","1"],"username":"parsa","userPersonalInfo":{"firstName":"parsa","lastName":"p","email":"p","phoneNumber":"p","password":"parsa"},"balance":100912.0,"userType":"SELLER"}]

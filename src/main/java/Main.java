@@ -1,9 +1,4 @@
-import View.MainMenu;
-import model.App;
-import model.Company;
-import model.database.Database;
-
-import java.io.FileNotFoundException;
+import View.App;
 
 public class Main {
     public static void main(String[] args) {
