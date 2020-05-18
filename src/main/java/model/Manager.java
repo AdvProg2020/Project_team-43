@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class Manager extends User {
     private static String fileAddress = "database/Manager.dat";
-    public static ArrayList<Request> allRequest = new ArrayList<>();
+    public static ArrayList<Request> allRequest = Request.getAllRequests();
 
     public Manager(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);

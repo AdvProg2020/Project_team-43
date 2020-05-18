@@ -20,7 +20,6 @@ public class SellerRequest extends Request {
     public SellerRequest(UserPersonalInfo personalInfo, String companyName, String username) {
         super("seller");
         seller = new Seller(username, personalInfo, companyName);
-        allRequests.add(this);
     }
 
     public static void addSellerRequest(UserPersonalInfo personalInfo, String username, String companyName) {
