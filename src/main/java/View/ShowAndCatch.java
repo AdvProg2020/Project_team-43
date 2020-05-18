@@ -49,9 +49,9 @@ public class ShowAndCatch {
         System.out.print("email : ");
         String email = Menu.getScanner().nextLine();
         personalInfo.setEmail(email);
-        System.out.print("phone number : +98");
+        System.out.print("phone number : +98...");
         String phoneNumber = Menu.getScanner().nextLine();
-        while (!phoneNumber.matches("\\+98(\\d){9}")) {
+        while (!phoneNumber.matches("(\\d){9}")) {
             System.out.println("invalid phone number");
             phoneNumber = Menu.getScanner().nextLine();
         }
@@ -108,7 +108,12 @@ public class ShowAndCatch {
 
     public String getCompanyNameMenuFromUser() {
         System.out.print("company name: ");
-        return Menu.getScanner().nextLine();
+        String companyName = Menu.getScanner().nextLine();
+        while (!Company.hasCompanyWithName(companyName)) {
+            System.out.println("invalid company name");
+            companyName = Menu.getScanner().nextLine();
+        }
+        return companyName;
     }
 
     public void viewPersonalInfo(UserPersonalInfo personalInfo) {
