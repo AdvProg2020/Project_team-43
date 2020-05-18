@@ -1,8 +1,8 @@
 package model.request;
 
 
-
 import model.Manager;
+import model.Product;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,9 +29,9 @@ public abstract class Request {
         return requestType;
     }
 
-    public static Request getRequestById(String requestId){
+    public static Request getRequestById(String requestId) {
         for (Request request : allRequests) {
-            if(request.requestId.equalsIgnoreCase(requestId)){
+            if (request.requestId.equalsIgnoreCase(requestId)) {
                 return request;
             }
         }
@@ -53,20 +53,24 @@ public abstract class Request {
     public static void load() throws FileNotFoundException {
         EditProductRequest.load();
         EditOffRequest.load();
+        ProductRequest.load();
     }
 
-    public static void loadFields(){
+    public static void loadFields() {
         EditOffRequest.loadFields();
         EditProductRequest.loadFields();
+        ProductRequest.loadFields();
     }
 
     public static void save() throws IOException {
         EditProductRequest.save();
         EditOffRequest.save();
+        ProductRequest.save();
     }
 
-    public static void saveFields(){
+    public static void saveFields() {
         EditOffRequest.saveFields();
+        ProductRequest.saveFields();
         EditProductRequest.saveFields();
     }
 
