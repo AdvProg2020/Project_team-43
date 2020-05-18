@@ -1,5 +1,6 @@
 package View;
 
+import Controller.SellerProcessor;
 import model.*;
 
 import java.util.ArrayList;
@@ -90,6 +91,36 @@ public class SellerShowAndCatch {
     public String getNewField(String field) {
         System.out.println("new " + field + ":");
         return Menu.getScanner().nextLine();
+    }
+
+    public void getProductsInformation(SellerProcessor sellerProcessor) {
+        System.out.println("Please enter product information\nname : ");
+        String name = Menu.getScanner().nextLine();
+        System.out.print("company : ");
+        String company = Menu.getScanner().nextLine();
+        System.out.print("category : ");
+        String category;
+        while (true) {
+            category = Menu.getScanner().nextLine();
+            if (Category.hasCategoryWithName(category))
+                break;
+            System.out.println("category name is invalid");
+        }
+        HashMap<String, String> features = new HashMap<>();
+        for (String feature : Category.getCategoryByName(category).getFeatures()) {
+            System.out.println(feature);
+            String featureValue = Menu.getScanner().nextLine();
+            features.put(feature, featureValue);
+        }
+        System.out.print("price : ");
+        String price = Menu.getScanner().nextLine();
+        System.out.print("number : ");
+        String number = Menu.getScanner().nextLine();
+        try {
+            System.out.println(sellerProcessor.addNewProduct(name, company, category, price, number, features));
+        } catch (NullPointerException | InvalidCommandException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

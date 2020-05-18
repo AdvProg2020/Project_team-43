@@ -104,8 +104,9 @@ public class Seller extends User {
         Product.allProductsInQueueEdit.add(product);
     }
 
-    public void addNewProduct(String name, Company company, Double price, Category category, int number) {
+    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features) {
         Product product = new Product(name, company, price, category);
+        product.setFeaturesMap(features);
         new ProductRequest(product, this, number);
     }
 
