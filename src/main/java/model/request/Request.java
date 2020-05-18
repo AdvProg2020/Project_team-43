@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Request {
-    public static int constructId = 0;
+    private static int constructId = 0;
     protected static ArrayList<Request> allRequests = new ArrayList<>();
     protected String requestId;
     protected String requestType;
@@ -19,6 +19,11 @@ public abstract class Request {
         this.requestType = requestType;
         constructId += 1;
         allRequests.add(this);
+    }
+
+    public static void addAll(ArrayList<Request> requests) {
+        allRequests.addAll(requests);
+        constructId += requests.size();
     }
 
     public static ArrayList<Request> getAllRequests() {
@@ -36,6 +41,10 @@ public abstract class Request {
             }
         }
         return null;
+    }
+
+    public String getRequestId() {
+        return requestId;
     }
 
     @Override

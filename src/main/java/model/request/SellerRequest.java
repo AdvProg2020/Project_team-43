@@ -33,8 +33,8 @@ public class SellerRequest extends Request {
     public static void load() throws FileNotFoundException {
         SellerRequest[] sellerRequests = (SellerRequest[]) Loader.load(SellerRequest[].class, fileAddress);
         if (sellerRequests != null) {
-            ArrayList<SellerRequest> requests = new ArrayList<>(Arrays.asList(sellerRequests));
-            allRequests.addAll(requests);
+            ArrayList<Request> requests = new ArrayList<>(Arrays.asList(sellerRequests));
+            Request.addAll(requests);
         }
     }
 
@@ -58,5 +58,14 @@ public class SellerRequest extends Request {
         User.removeUser(this.seller);
         this.seller = new Seller(this.seller.getUsername(), this.seller.getUserPersonalInfo(), this.seller.getCompany().getName());
 
+    }
+
+    @Override
+    public String toString() {
+        return "SellerRequest{" +
+                "seller=" + seller +
+                ", requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }

@@ -42,7 +42,7 @@ public class EditOffRequest extends Request {
     public static void load() throws FileNotFoundException {
         EditOffRequest[] editOffRequests = (EditOffRequest[]) Loader.load(EditOffRequest[].class, fileAddress);
         if (editOffRequests != null) {
-            allRequests.addAll(new ArrayList<>(Arrays.asList(editOffRequests)));
+            Request.addAll(new ArrayList<>(Arrays.asList(editOffRequests)));
         }
     }
 
@@ -89,4 +89,14 @@ public class EditOffRequest extends Request {
         saveAllOffs();
     }
 
+    @Override
+    public String toString() {
+        return "EditOffRequest{" +
+                "off=" + off +
+                ", field='" + field + '\'' +
+                ", input='" + input + '\'' +
+                ", requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
+    }
 }

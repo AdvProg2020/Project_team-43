@@ -42,7 +42,7 @@ public class EditProductRequest extends Request {
     public static void load() throws FileNotFoundException {
         EditProductRequest[] editProductRequests = (EditProductRequest[]) Loader.load(EditProductRequest[].class, fileAddress);
         if (editProductRequests != null) {
-            allRequests.addAll(new ArrayList<>(Arrays.asList(editProductRequests)));
+            Request.addAll(new ArrayList<>(Arrays.asList(editProductRequests)));
         }
     }
 
@@ -87,5 +87,17 @@ public class EditProductRequest extends Request {
 
     public static void saveFields(){
         saveAllProducts();
+    }
+
+    @Override
+    public String toString() {
+        return "EditProductRequest{" +
+                "product=" + product +
+                ", field='" + field + '\'' +
+                ", input='" + input + '\'' +
+                ", seller=" + seller +
+                ", requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }

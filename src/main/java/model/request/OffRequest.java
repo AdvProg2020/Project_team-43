@@ -18,7 +18,6 @@ public class OffRequest extends Request {
     public OffRequest(Off off) {
         super("off");
         this.off = off;
-        allRequests.add(this);
     }
 
     public Off getOff() {
@@ -28,7 +27,7 @@ public class OffRequest extends Request {
     public static void load() throws FileNotFoundException {
         OffRequest[] offRequests = (OffRequest[]) Loader.load(OffRequest[].class, fileAddress);
         if (offRequests != null) {
-            allRequests.addAll(new ArrayList<>(Arrays.asList(offRequests)));
+            Request.addAll(new ArrayList<>(Arrays.asList(offRequests)));
         }
     }
 
@@ -74,5 +73,14 @@ public class OffRequest extends Request {
 
     public void saveOff() {
         offId = off.getOffId();
+    }
+
+    @Override
+    public String toString() {
+        return "OffRequest{" +
+                "off=" + off +
+                ", requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }

@@ -42,7 +42,7 @@ public class ProductRequest extends Request {
     public static void load() throws FileNotFoundException {
         ProductRequest[] productRequests = (ProductRequest[]) Loader.load(ProductRequest[].class, fileAddress);
         if (productRequests != null) {
-            allRequests.addAll(new ArrayList<>(Arrays.asList(productRequests)));
+            Request.addAll(new ArrayList<>(Arrays.asList(productRequests)));
         }
     }
 
@@ -113,5 +113,16 @@ public class ProductRequest extends Request {
     public static void saveFields() {
         saveAllProducts();
         saveAllSellers();
+    }
+
+    @Override
+    public String toString() {
+        return "ProductRequest{" +
+                "product=" + product +
+                ", seller=" + seller +
+                ", number=" + number +
+                ", requestId='" + requestId + '\'' +
+                ", requestType='" + requestType + '\'' +
+                '}';
     }
 }
