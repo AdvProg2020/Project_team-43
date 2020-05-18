@@ -82,18 +82,18 @@ public class SortTests {
     }
 
     @Test
-    public void dateSortingTest()throws Exception{
+    public void dateSortingTest() throws Exception {
         setAll();
-        String sDate1="31/12/1998";
-        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-        String sDate2="30/10/1997";
-        Date date2=new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
-        String sDate3="05/8/1998";
-        Date date3=new SimpleDateFormat("dd/MM/yyyy").parse(sDate3);
-        String sDate4="16/01/2000";
-        Date date4=new SimpleDateFormat("dd/MM/yyyy").parse(sDate4);
-        String sDate5="17/01/2000";
-        Date date5=new SimpleDateFormat("dd/MM/yyyy").parse(sDate5);
+        String sDate1 = "31/12/1998";
+        Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+        String sDate2 = "30/10/1997";
+        Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate2);
+        String sDate3 = "05/8/1998";
+        Date date3 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate3);
+        String sDate4 = "16/01/2000";
+        Date date4 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate4);
+        String sDate5 = "17/01/2000";
+        Date date5 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate5);
         product1.setDate(date1);
         product2.setDate(date2);
         product3.setDate(date3);

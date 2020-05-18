@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class BossProcessor extends Processor {
     private final static BossProcessor instance = new BossProcessor();
+
     public static BossProcessor getInstance() {
         return instance;
     }

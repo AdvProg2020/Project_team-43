@@ -46,8 +46,10 @@ public class Product {
         this.company = company;
         this.price = price;
         this.category = category;
+        category.addProduct(this);
         sellers = new ArrayList<>();
         sellersName = new ArrayList<>();
+        featuresMap = new HashMap<>();
         this.date = new Date();
         score = new ProductScore();
         this.visit = 0;
@@ -100,10 +102,6 @@ public class Product {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public void setProductState(State.ProductState productState) {
         this.productState = productState;
     }
@@ -147,13 +145,6 @@ public class Product {
             }
         }
         return null;
-    }
-
-    private void fillFeaturesMap(ArrayList<String> features2) {
-        ArrayList<String> features1 = this.category.getFeatures();
-        for (int i = 0; i < features1.size(); i++) {
-            featuresMap.put(features1.get(i), features2.get(i));
-        }
     }
 
     public String getName() {
@@ -202,6 +193,7 @@ public class Product {
         } else if (field.equalsIgnoreCase("category")) {
             if (Category.hasCategoryWithName(newField)) {
                 category = Category.getCategoryByName(newField);
+                category.addProduct(this);
             } else {
                 throw new InvalidCommandException("invalid category");
             }
@@ -254,10 +246,6 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public void setFeaturesMap(Map<String, String> featuresMap) {
-        this.featuresMap = featuresMap;
     }
 
     public static void load() throws FileNotFoundException {

@@ -120,7 +120,7 @@ public class Category {
                 '}';
     }
 
-    private String stringProducts() {
+    public String stringProducts() {
         String res = "[";
         if (products.size() > 0) {
             res = res + products.get(0).getName();

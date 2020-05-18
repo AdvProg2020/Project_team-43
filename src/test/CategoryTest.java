@@ -13,7 +13,12 @@ public class CategoryTest {
     UserPersonalInfo userPersonalInfo;
     Company company;
     Category category;
+    Category category2;
     ArrayList<String> features;
+    Product product1;
+    Product product2;
+    Product product3;
+    Product product4;
 
 
     @BeforeAll
@@ -26,6 +31,11 @@ public class CategoryTest {
         features.add("size");
         features.add("price");
         category = new Category("categoryName", features);
+        category2 = new Category("category2Name", features);
+        product1 = new Product("a", company, 1, category);
+        product2 = new Product("b", company, 2, category);
+        product3 = new Product("c", company, 3, category2);
+        product4 = new Product("d", company, 4, category2);
         Processor.user = manager;
     }
 
@@ -38,23 +48,77 @@ public class CategoryTest {
     }
 
     @Test
-    public void editCategoryFeatureTest() throws InvalidCommandException{
+    public void editCategoryFeatureTest() {
         setAll();
-        manager.editFeatureName(category, "size", "new size");
+        try {
+            manager.editFeatureName(category, "size", "new size");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertEquals(category.getFeatures().get(1), "new size");
     }
 
     @Test
-    public void removeCategoryFeatureTest(){
+    public void removeCategoryFeatureTest() {
         setAll();
         manager.deleteFeature(category, "size");
         Assert.assertFalse(category.hasFeature("size"));
     }
 
     @Test
-    public void removeCategoryTest()throws InvalidCommandException{
+    public void removeCategoryTest() {
         setAll();
-        bossProcessor.manageCategories("remove category "+category.getName());
+        try {
+            bossProcessor.manageCategories("remove category " + category.getName());
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
         Assert.assertFalse(Category.hasCategoryWithName(category.getName()));
+    }
+
+    @Test
+    public void hasProductCategoryTest() {
+        setAll();
+        Assert.assertTrue(category.hasProduct(product1) && !category.hasProduct(product4));
+    }
+
+    @Test
+    public void addAndRemoveProductCategoryTest() {
+        setAll();
+        Product newProduct = new Product("new product", company, 20, category2);
+        category2.removeProduct(newProduct);
+        category.addProduct(newProduct);
+        newProduct.setCategory(category);
+        Assert.assertTrue(category.hasProduct(newProduct) && !category2.hasProduct(newProduct));
+    }
+
+    @Test
+    public void hasAndAddFeaturesTest() {
+        setAll();
+        category.addFeatures("newFeatures1");
+        Assert.assertTrue(category.hasFeature("newFeatures1") && category2.hasFeature("size") && !category2.hasFeature("newFeatures1"));
+    }
+
+    @Test
+    public void stringProductsTest(){
+        setAll();
+        Assert.assertEquals("[a, b]", category.stringProducts());
+    }
+
+    @Test
+    public void toStringCategoryTest(){
+        setAll();
+        Assert.assertEquals(category.toString(), "Category{name='categoryName', features=[size, price], products=[a, b]}");
+    }
+
+    @Test
+    public void addFeatureCategoryTest(){
+        setAll();
+        try {
+            manager.addCategoryFeature(category, "new feature1");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
+        Assert.assertTrue(category.hasFeature("new feature1"));
     }
 }
