@@ -238,9 +238,6 @@ public class Product {
         this.price = price;
     }
 
-    public void setVisit(int visit) {
-        this.visit = visit;
-    }
 
     public void setAvailableCount(int availableCount) {
         this.availableCount = availableCount;

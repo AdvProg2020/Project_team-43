@@ -21,14 +21,6 @@ public class Processor {
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
     protected FilterManager productFilter;
 
-    public FilterManager getProductFilter() {
-        return productFilter;
-    }
-
-    public static void setIsLogin(boolean isLogin) {
-        Processor.isLogin = isLogin;
-    }
-
     public User getUser() {
         return user;
     }
