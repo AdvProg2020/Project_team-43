@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class OffRequest extends Request {
     private static final String fileAddress = "database/OffRequest.dat";
-    private Off off;
+    private transient Off off;
     private String offId;
 
     public OffRequest(Off off) {
