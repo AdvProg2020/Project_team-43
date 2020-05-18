@@ -15,6 +15,7 @@ public class Database {
         Category.load();
         CodedDiscount.load();
         Order.load();
+        Product.load();
 
 
         Buyer.loadFields();
@@ -33,18 +34,18 @@ public class Database {
         Off.saveFields();
         Comment.saveFields();
         Order.saveAllFields();
+        Product.saveFields();
 
 
 
+        CodedDiscount.save();
         Company.save();
         Product.save();
-
         Order.save();
         User.save();
         Comment.save();
         Off.save();
         Category.save();
-        CodedDiscount.save();
-        Product.saveFields();
+
     }
 }
