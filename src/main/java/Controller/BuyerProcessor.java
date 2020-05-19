@@ -27,13 +27,13 @@ public class BuyerProcessor extends Processor {
         return newBuyerCart;
     }
 
-    public String editBuyerField(String command) throws InvalidCommandException {
+    public String editBuyerField(String command) {
         Pattern pattern = Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
         if (command.equalsIgnoreCase("back"))
             return null;
         if (!matcher.find())
-            throw new InvalidCommandException("invalid command");
+            errorMessage("invalid command");
         String field = matcher.group(1);
         String newField = buyerViewManager.getNewField(field);
         try {
@@ -83,22 +83,22 @@ public class BuyerProcessor extends Processor {
                 viewManager.showErrorMessage(e.getMessage());
             }
         } else {
-            throw new InvalidCommandException("invalid command");
+            errorMessage("invalid command");
         }
     }
 
-    public void showOrder(String orderId) throws NullPointerException {
+    public void showOrder(String orderId) {
         BuyOrder order = (BuyOrder) Order.getOrderById(orderId);
         if (order == null) {
-            throw new NullPointerException("order with this Id doesn't exist");
+            errorMessage("order with this Id doesn't exist");
         }
         buyerViewManager.showBuyOrder(order);
     }
 
-    public void rateProduct(String productId, int score) throws NullPointerException {
+    public void rateProduct(String productId, int score) {
         Product product = Product.getProductById(productId);
         if (product == null) {
-            throw new NullPointerException("product with this Id doesn't exist");
+            errorMessage("product with this Id doesn't exist");
         }
         product.rateProduct(score);
     }

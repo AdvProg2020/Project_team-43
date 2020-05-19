@@ -17,9 +17,34 @@ public class Sorting {
         comparator = SortingByDate.getInstance();
     }
 
+    public static void setSortByPrice() {
+        comparator = SortingByPrice.getInstance();
+    }
+
+    public static void setSortByPriceDescending() {
+        comparator = SortingByPrice.getInstance().reversed();
+    }
+
 
     public static Comparator<Product> getComparator() {
         return comparator;
+    }
+}
+
+class SortingByPrice implements Comparator<Product> {
+    private static final SortingByPrice instance = new SortingByPrice();
+
+    private SortingByPrice() {
+
+    }
+
+    public static SortingByPrice getInstance() {
+        return instance;
+    }
+
+    @Override
+    public int compare(Product o1, Product o2) {
+        return Double.compare(o1.getPrice(), o2.getPrice());
     }
 }
 
