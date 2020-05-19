@@ -228,11 +228,5 @@ public class EditFieldsTest {
         sellerProcessor.editSellerField("invalid command");
     }
 
-    @Test(expected = InvalidCommandException.class)
-    public void buyerEditFieldExceptionTest() throws InvalidCommandException {
-        setAll();
-        buyerProcessor.editBuyerField("invalid command");
-    }
-
 
 }

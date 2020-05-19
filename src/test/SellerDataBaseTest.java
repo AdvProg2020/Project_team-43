@@ -1,8 +1,10 @@
 import model.*;
+import model.database.Database;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -57,12 +59,16 @@ public class SellerDataBaseTest {
     }
 
     @Test
-    public void loadAllProductsTest(){
+    public void loadAllProductsTest() {
         setAll();
+        seller.saveOffs();
         seller.saveProducts();
-        seller.getProductsNumber().clear();
-        seller.loadAllProducts();
-        Assert.assertTrue(seller.getProductsNumber().containsKey(product1));
+        seller.saveSellOrders();
+        seller.loadOffs();
+        seller.loadProducts();
+        seller.loadSellOrders();
+        Assert.assertTrue(seller.getOffs().contains(off) && seller.getProductsNumber().containsKey(product1) && seller.getOrders().contains(sellOrder));
+
     }
 
 

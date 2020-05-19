@@ -28,6 +28,10 @@ public class Processor {
     public Processor() {
     }
 
+    public FilterManager getProductFilter() {
+        return productFilter;
+    }
+
     public void newProductFilter() {
         productFilter = new FilterManager();
     }
@@ -38,6 +42,10 @@ public class Processor {
         } catch (Exception e) {
             viewManager.showErrorMessage(e.getMessage());
         }
+    }
+
+    public static void setIsLogin(boolean isLogin) {
+        Processor.isLogin = isLogin;
     }
 
     public boolean isUserLoggedIn() {
@@ -144,7 +152,6 @@ public class Processor {
     }
 
     public void sortingProcess(String command) throws InvalidCommandException {
-        //TODO : error handling
         if (command.equals("back")) {
             return;
         }
@@ -182,6 +189,10 @@ public class Processor {
             Sorting.setSortByScore();
         } else if (selectedSort.equalsIgnoreCase("by date")) {
             Sorting.setSortByDate();
+        } else if (selectedSort.equalsIgnoreCase("by price")) {
+            Sorting.setSortByPrice();
+        } else if (selectedSort.equalsIgnoreCase("by price -d")) {
+            Sorting.setSortByPriceDescending();
         } else {
             viewManager.showErrorMessage("invalid command");
         }

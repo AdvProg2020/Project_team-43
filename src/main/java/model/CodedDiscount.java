@@ -68,8 +68,10 @@ public class CodedDiscount {
         return startTime;
     }
 
-    public boolean checkTime(){
-        return true;
+    public boolean checkTime() {
+        Date now = new Date();
+        return now.compareTo(startTime) > 0 && endTime.compareTo(now) > 0;
+
     }
 
     public double getDiscountAmount() {

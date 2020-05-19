@@ -25,11 +25,7 @@ public class BuyerRolesMenu extends Menu {
                 System.out.println("edit [field]");
                 System.out.println("back");
                 String command = scanner.nextLine();
-                try {
-                    System.out.println(buyerProcessor.editBuyerField(command));
-                } catch (InvalidCommandException e) {
-                    System.out.println(e.getMessage());
-                }
+                System.out.println(buyerProcessor.editBuyerField(command));
             }
 
             @Override

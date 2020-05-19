@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public abstract class Order {
     public static int constructId = 0;
-    protected static ArrayList<Order> allOrders = new ArrayList<Order>();
+    public static ArrayList<Order> allOrders = new ArrayList<Order>();
     protected String orderId;
     private Date date;
     protected String orderType;

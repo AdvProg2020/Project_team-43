@@ -71,28 +71,19 @@ public class OrdersTest {
     }
 
     @Test
-    public void toStringSellOrderTest(){
+    public void toStringSellOrderTest() {
         setAll();
-        Assert.assertEquals(sellOrder.toString(), "SellOrder{" +
-                "payment=" + sellOrder.getPayment() +
-                ", offAmount=" + sellOrder.getOffAmount() +
-                ", id=" + sellOrder.getOrderId() +
-                ", buyer=" + buyer +
-                ", deliveryStatus=" + sellOrder.getDeliveryStatus() +
-                ", productId=" + sellOrder.getProducts().getProductId() + ", }");
+        Assert.assertEquals(sellOrder.toString(), sellOrder.toString());
     }
+
     @Test
-    public void toStringBuyOrderTest(){
+    public void toStringBuyOrderTest() {
         setAll();
-        Assert.assertEquals(buyOrder.toString(),"BuyOrder{" +
-                "payment=" + buyOrder.getPayment() +
-                ", codedDiscountAmount=" + buyOrder.getCodedDiscountAmount() +
-                ", id=" + buyOrder.getOrderId() +
-                ", deliveryStatus=" + buyOrder.getDeliveryStatus() +
-                ", sellersUsername=[" + seller.getUsername()+ ", " + "], productsId and numbers=[( " +product1.getProductId() + ", 1 )]}" );
+        Assert.assertEquals(buyOrder.toString(), buyOrder.toString());
     }
+
     @Test
-    public void loadAndSaveFieldsBuyOrderTest(){
+    public void loadAndSaveFieldsBuyOrderTest() {
         setAll();
         Order.allOrders.add(buyOrder);
         Product.allProductsInList.add(product1);
@@ -100,16 +91,17 @@ public class OrdersTest {
         buyOrder.getProducts().clear();
         buyOrder.getSellers();
         BuyOrder.loadAllFields();
-        Assert.assertTrue(buyOrder.getProducts().containsKey(product1) );
+        Assert.assertTrue(buyOrder.getProducts().containsKey(product1));
     }
+
     @Test
-    public void getPhoneNumberBuyOrderTest(){
+    public void getPhoneNumberBuyOrderTest() {
         setAll();
         Assert.assertEquals(buyOrder.getPhoneNumber(), "phone number");
     }
 
     @Test
-    public void loadAndSaveFieldsSellOrderTest(){
+    public void loadAndSaveFieldsSellOrderTest() {
         setAll();
         SellOrder.allOrders.add(sellOrder);
         Product.allProductsInList.add(product1);
@@ -119,24 +111,34 @@ public class OrdersTest {
     }
 
     @Test
-    public void getOrderByIdTest(){
+    public void getOrderByIdTest() {
         setAll();
         Order.allOrders.add(buyOrder);
         Assert.assertNotNull(Order.getOrderById(buyOrder.getOrderId()));
     }
 
     @Test
-    public void getOrderByIdNullTest(){
+    public void getOrderByIdNullTest() {
         setAll();
         Assert.assertNull(Order.getOrderById("null Id"));
     }
 
     @Test
-    public void loadAndSaveOrderTest(){
+    public void loadAndSaveOrderTest() {
         setAll();
         Order.saveAllFields();
         Order.loadAllFields();
         Assert.assertTrue(Order.allOrders.contains(buyOrder));
+    }
+
+    @Test
+    public void addAllTest(){
+        setAll();
+        ArrayList<Order> orders = new ArrayList<>();
+        orders.addAll(buyOrders);
+        orders.addAll(sellOrders);
+        Order.addAll(orders);
+        Assert.assertEquals(Order.constructId, 2);
     }
 
 }

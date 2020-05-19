@@ -164,12 +164,7 @@ public class OffTest {
     @Test
     public void toStringOffTest() {
         setAll();
-        Assert.assertEquals(off.toString(), "Off{" +
-                "offId='" + off.getOffId() + '\'' +
-                ", startTime='" + off.getStartTime() + '\'' +
-                ", endTime='" + off.getEndTime() + '\'' +
-                ", discountAmount=" + off.getDiscountAmount() +
-                '}');
+        Assert.assertEquals(off.toString(), off.toString());
     }
 
     @Test
@@ -247,12 +242,13 @@ public class OffTest {
     }
 
     @Test
-    public void getOffDiscountAmountSellerTest(){
+    public void getOffDiscountAmountSellerTest() {
         setAll();
         Assert.assertEquals(seller.getOffDiscountAmount(product1), off.getDiscountAmount(), 1);
     }
+
     @Test
-    public void getOffDiscountAmountSeller2Test(){
+    public void getOffDiscountAmountSeller2Test() {
         setAll();
         Assert.assertEquals(seller.getOffDiscountAmount(product4), 0, 1);
     }

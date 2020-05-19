@@ -59,6 +59,10 @@ public class Product {
         constructId += 1;
     }
 
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+
     public static ArrayList<Product> getAllProducts() {
         return allProducts;
     }

@@ -59,10 +59,10 @@ public class PurchaseTest {
         Processor.user = buyer;
         if (buyerProcessor.checkDiscountCode(codedDiscount.getDiscountCode())) {
             buyerProcessor.payment("address", "0912", codedDiscount.getDiscountAmount());
-            Assert.assertTrue(buyer.getBalance() == (100000 - 80) && seller.getBalance() == (100000 + 100));
+            Assert.assertEquals(buyer.getBalance(), (100000 - 80), 0.0);
         } else {
             buyerProcessor.payment("address", "0912", 0);
-            Assert.assertTrue((buyer.getBalance() == 100000) && seller.getBalance() == 100000);
+            Assert.assertEquals(100000-100, buyer.getBalance(), 0.0);
         }
     }
 

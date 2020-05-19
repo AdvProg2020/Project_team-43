@@ -9,8 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Manager extends User {
@@ -71,10 +74,14 @@ public class Manager extends User {
         CodedDiscount codedDiscount = new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
         for (User user : allUsers) {
             if (user instanceof Buyer) {
-                ((Buyer) user).addDiscountCode(codedDiscount);
+                double probability = Math.random();
+                if (probability > 0.3)
+                    ((Buyer) user).addDiscountCode(codedDiscount);
             }
         }
     }
+
+
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {
         CodedDiscount.remove(codedDiscount);
