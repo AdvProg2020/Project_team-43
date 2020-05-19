@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class EditFieldsTest {
     Company company;
+    Company company2;
     Buyer buyer;
     Seller seller;
     Manager manager;
@@ -23,6 +24,7 @@ public class EditFieldsTest {
     @BeforeAll
     public void setAll() {
         company = new Company("asus", "none");
+        company2 = new Company("lenovo", "none");
         userPersonalInfo = new UserPersonalInfo("first name", "last name", "email", "phone number", "password");
         buyer = new Buyer("alireza", userPersonalInfo);
         seller = new Seller("parsa", userPersonalInfo, "asus");
@@ -97,7 +99,7 @@ public class EditFieldsTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
-        Assert.assertEquals(buyer.getUserPersonalInfo().getFirstName(), ("new name"));
+        Assert.assertEquals(seller.getUserPersonalInfo().getFirstName(), ("new name"));
     }
 
     @Test
@@ -108,7 +110,7 @@ public class EditFieldsTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
-        Assert.assertEquals(buyer.getUserPersonalInfo().getLastName(), ("new name"));
+        Assert.assertEquals(seller.getUserPersonalInfo().getLastName(), ("new name"));
     }
 
     @Test
@@ -119,7 +121,7 @@ public class EditFieldsTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
-        Assert.assertEquals(buyer.getUserPersonalInfo().getEmail(), ("new email"));
+        Assert.assertEquals(seller.getUserPersonalInfo().getEmail(), ("new email"));
     }
 
     @Test
@@ -130,7 +132,7 @@ public class EditFieldsTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
-        Assert.assertEquals(buyer.getUserPersonalInfo().getPhoneNumber(), ("new phone number"));
+        Assert.assertEquals(seller.getUserPersonalInfo().getPhoneNumber(), ("new phone number"));
     }
 
     @Test
@@ -141,7 +143,24 @@ public class EditFieldsTest {
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
-        Assert.assertEquals(buyer.getUserPersonalInfo().getPassword(), ("new password"));
+        Assert.assertEquals(seller.getUserPersonalInfo().getPassword(), ("new password"));
+    }
+
+    @Test
+    public void sellerEditFieldTestCompany() {
+        setAll();
+        try {
+            seller.editFields("company", "lenovo");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
+        Assert.assertEquals(seller.getCompany().getName(), "lenovo");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void sellerInvalidFieldEditFieldTest() throws InvalidCommandException {
+        setAll();
+        seller.editFields("invalid field", "invalid new field");
     }
 
     @Test
@@ -211,9 +230,9 @@ public class EditFieldsTest {
     }
 
     @Test(expected = InvalidCommandException.class)
-    public void buyerEditFieldExceptionTest() throws InvalidCommandException {
+    public void BuyerEditFieldExceptionTest() throws InvalidCommandException {
         setAll();
-        buyerProcessor.editBuyerField("invalid command");
+        buyer.editFields("invalid command", "invalid new field");
     }
 
 

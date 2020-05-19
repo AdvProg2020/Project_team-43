@@ -34,7 +34,7 @@ public class ShowAndCatch {
 
     public void showProducts(ArrayList<Product> products) {
         for (Product product : products) {
-            System.out.println(product.getName());
+            System.out.println(product.getName() + " , product id : " + product.getProductId());
         }
     }
 
@@ -153,13 +153,14 @@ public class ShowAndCatch {
         System.out.println("filter by price from [price] to [price]");
         System.out.println("filter by availability");
         System.out.println("filter by name [name]");
-        System.out.println("filter by [category name] features");
+        System.out.println("filter by category features");
     }
 
     public void showAvailableSorts() {
         System.out.println("sort by view");
         System.out.println("sort by score");
         System.out.println("sort by date");
+        System.out.println("sort by price [-d for descending]");
     }
 
     public HashMap<String, String> addFilterByCategoryFeatures(FilterManager filterManager) {
@@ -181,6 +182,9 @@ public class ShowAndCatch {
     public void showCurrentFilters(FilterManager filterManager) {
         for (Criteria filter : filterManager.getCurrentFilters()) {
             System.out.println(filter.getName());
+        }
+        if (filterManager.getCriteriaCategoryFeatures() != null) {
+            System.out.println(filterManager.getCriteriaCategoryFeatures());
         }
     }
 

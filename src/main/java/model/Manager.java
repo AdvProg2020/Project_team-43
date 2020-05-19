@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
 
 public class Manager extends User {
     private static String fileAddress = "database/Manager.dat";
@@ -71,10 +74,13 @@ public class Manager extends User {
         CodedDiscount codedDiscount = new CodedDiscount(startTimeDate, endTimeDate, discountAmount, repeat);
         for (User user : allUsers) {
             if (user instanceof Buyer) {
-                ((Buyer) user).addDiscountCode(codedDiscount);
+                double probability = Math.random();
+                if (probability > 0.3)
+                    ((Buyer) user).addDiscountCode(codedDiscount);
             }
         }
     }
+
 
     public void removeCodedDiscount(CodedDiscount codedDiscount) {
         CodedDiscount.remove(codedDiscount);

@@ -28,6 +28,10 @@ public class Processor {
     public Processor() {
     }
 
+    public FilterManager getProductFilter() {
+        return productFilter;
+    }
+
     public void newProductFilter() {
         productFilter = new FilterManager();
     }
@@ -38,6 +42,10 @@ public class Processor {
         } catch (Exception e) {
             viewManager.showErrorMessage(e.getMessage());
         }
+    }
+
+    public static void setIsLogin(boolean isLogin) {
+        Processor.isLogin = isLogin;
     }
 
     public boolean isUserLoggedIn() {
@@ -144,7 +152,6 @@ public class Processor {
     }
 
     public void sortingProcess(String command) throws InvalidCommandException {
-        //TODO : error handling
         if (command.equals("back")) {
             return;
         }
@@ -182,6 +189,10 @@ public class Processor {
             Sorting.setSortByScore();
         } else if (selectedSort.equalsIgnoreCase("by date")) {
             Sorting.setSortByDate();
+        } else if (selectedSort.equalsIgnoreCase("by price")) {
+            Sorting.setSortByPrice();
+        } else if (selectedSort.equalsIgnoreCase("by price -d")) {
+            Sorting.setSortByPriceDescending();
         } else {
             viewManager.showErrorMessage("invalid command");
         }
@@ -275,7 +286,6 @@ public class Processor {
     }
 
     public void addComment(Product product) {
-        //TODO : error handling
         ArrayList<String> commentInfo = new ArrayList<>();
         viewManager.getCommentInfo(commentInfo);
         boolean isBuy = false;
@@ -285,8 +295,8 @@ public class Processor {
                 break;
             }
         }
-        new Comment(product, commentInfo.get(1), isBuy, (Buyer) user);
-        //handle commente gerefte shode
+        Comment comment = new Comment(product, commentInfo.get(1), isBuy, (Buyer) user);
+        product.addComment(comment);
 
     }
 
@@ -295,8 +305,17 @@ public class Processor {
         if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
-        ArrayList<Comment> comments = product.getComments();
+        ArrayList<Comment> comments = new ArrayList<>();
+        for (Comment comment : product.getComments()) {
+            if (comment.getOpinionState() == State.OpinionState.CONFIRMED) {
+                comments.add(comment);
+            }
+        }
         viewManager.showComments(comments);
+    }
+
+    public void showInQueueComments() {
+        viewManager.showComments(Comment.getInQueueExpectation());
     }
 
     public void showOffs() {

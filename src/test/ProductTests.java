@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class ProductTests {
     Manager manager;
     UserPersonalInfo userPersonalInfo;
+    UserPersonalInfo userPersonalInfo2;
     Buyer buyer;
     Company company;
     Company company2;
@@ -26,9 +27,11 @@ public class ProductTests {
     BossProcessor bossProcessor;
     SellerProcessor sellerProcessor;
     Processor processor;
+    Comment comment;
 
     @BeforeAll
     public void setAll() {
+        userPersonalInfo2 = new UserPersonalInfo();
         processor = new Processor();
         sellerProcessor = SellerProcessor.getInstance();
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
@@ -51,7 +54,14 @@ public class ProductTests {
         Product.allProductsInList.add(product1);
         Product.allProductsInList.add(product2);
         Product.allProductsInList.add(product3);
+        product1.setProductState(State.ProductState.CONFIRMED);
+        product2.setProductState(State.ProductState.EDITING_PROCESS);
+        product3.setProductState(State.ProductState.CREATING_PROCESS);
+        Product.getAllProducts().add(product1);
+        Product.getAllProducts().add(product2);
+        Product.getAllProducts().add(product3);
         Processor.user = manager;
+        comment = new Comment(product1, "opinionText", true, buyer);
     }
 
     @Test
@@ -157,6 +167,12 @@ public class ProductTests {
         Assert.assertEquals(product1.getCompany(), company2);
     }
 
+    @Test(expected = InvalidCommandException.class)
+    public void editFieldCompanyExceptionTest() throws InvalidCommandException {
+        setAll();
+        product1.editField("company", "null company");
+    }
+
 
     @Test
     public void editFieldTestPrice() {
@@ -169,6 +185,12 @@ public class ProductTests {
         Assert.assertEquals(product1.getPrice(), 40, 1);
     }
 
+    @Test(expected = InvalidCommandException.class)
+    public void editFieldPriceExceptionTest() throws InvalidCommandException {
+        setAll();
+        product1.editField("price", "not a number");
+    }
+
 
     @Test
     public void editFieldTestCategory() {
@@ -179,6 +201,18 @@ public class ProductTests {
             Assert.assertTrue(true);
         }
         Assert.assertEquals(product1.getCategory(), category2);
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void editFieldCategoryExceptionTest() throws InvalidCommandException {
+        setAll();
+        product1.editField("category", "null category");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void editFieldInvalidCommandTest() throws InvalidCommandException {
+        setAll();
+        product1.editField("invalid field", "invalid new field");
     }
 
     @Test
@@ -288,7 +322,7 @@ public class ProductTests {
         Assert.assertEquals(sellerProcessor.addNewProduct("new name", "asus", "laptop", "15", "2", null), "Product add successfully\nWaiting for manager to confirm");
     }
 
-    @Test (expected = InvalidCommandException.class)
+    @Test(expected = InvalidCommandException.class)
     public void addNewProductCompanyTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
@@ -317,26 +351,28 @@ public class ProductTests {
     }
 
     @Test
-    public void addExistingProductTest()throws InvalidCommandException{
+    public void addExistingProductTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
         Assert.assertEquals(sellerProcessor.addExistingProduct(product1.getProductId(), "1"), "Product add successfully\nWaiting for manger to confirm");
     }
+
     @Test(expected = InvalidCommandException.class)
-    public void addExistingProductExceptionNumberTest()throws InvalidCommandException{
+    public void addExistingProductExceptionNumberTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
         sellerProcessor.addExistingProduct(product1.getProductId(), "not a number");
     }
+
     @Test(expected = InvalidCommandException.class)
-    public void addExistingProductNullProductExceptionTest()throws InvalidCommandException{
+    public void addExistingProductNullProductExceptionTest() throws InvalidCommandException {
         setAll();
         Processor.user = seller;
         sellerProcessor.addExistingProduct("null product", "1");
     }
 
     @Test
-    public void removeProductSellerProcessorTest(){
+    public void removeProductSellerProcessorTest() {
         setAll();
         Processor.user = seller;
         seller.getProductsNumber().put(product1, 2);
@@ -345,9 +381,65 @@ public class ProductTests {
     }
 
     @Test(expected = NullPointerException.class)
-    public void removeProductExceptionTest(){
+    public void removeProductExceptionTest() {
         setAll();
         Processor.user = seller;
         sellerProcessor.removeProduct("null product");
+    }
+
+    @Test
+    public void getCommentsTest() {
+        setAll();
+        Assert.assertEquals(product2.getComments().size(), 0, 1);
+    }
+
+    @Test
+    public void getDescriptionTest() {
+        setAll();
+        Assert.assertEquals(product2.getDescription().length(), 0, 1);
+    }
+
+    @Test
+    public void loadAndSaveFieldsTest() {
+        setAll();
+        product1.addSeller(seller);
+        product1.addSeller(seller2);
+        ArrayList<Seller> keepSellers = new ArrayList<>();
+        keepSellers.add(seller);
+        keepSellers.add(seller2);
+        Product.saveFields();
+        product1.getSellers().clear();
+        Product.loadFields();
+        Assert.assertArrayEquals(product1.getSellers().toArray(), keepSellers.toArray());
+    }
+
+    @Test
+    public void loadProductsTest() {
+        setAll();
+        Product.loadProducts();
+        Assert.assertTrue(Product.allProductsInQueueEdit.contains(product2));
+
+    }
+
+    @Test
+    public void getProductByIdSellerTestNull() {
+        setAll();
+        seller.getProductById("null product");
+        Assert.assertNull(seller.getProductById("null product"));
+    }
+
+    @Test
+    public void editProductSellerTest() {
+        setAll();
+        seller.editProduct(product1, "name", "new name");
+        Assert.assertTrue(Product.allProductsInQueueEdit.contains(product1) && !Product.allProductsInList.contains(product1));
+    }
+
+    @Test
+    public void increaseProductSellerTest(){
+        setAll();
+        seller.getProductsNumber().put(product1, 1);
+        seller.increaseProduct(product1);
+        Assert.assertEquals(seller.getProductsNumber().get(product1), 2, 1);
     }
 }

@@ -46,6 +46,12 @@ public class SellOrder extends Order {
     }
 
     @Override
+    public String getOrderId() {
+        return super.getOrderId();
+    }
+
+
+    @Override
     public String toString() {
         return "SellOrder{" +
                 "orderId=" + orderId +

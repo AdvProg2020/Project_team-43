@@ -15,6 +15,7 @@ public class CategoryTest {
     Category category;
     Category category2;
     ArrayList<String> features;
+    ArrayList<Product> products;
     Product product1;
     Product product2;
     Product product3;
@@ -36,6 +37,9 @@ public class CategoryTest {
         product2 = new Product("b", company, 2, category);
         product3 = new Product("c", company, 3, category2);
         product4 = new Product("d", company, 4, category2);
+        products = new ArrayList<>();
+        products.add(product1);
+        products.add(product2);
         Processor.user = manager;
     }
 
@@ -138,5 +142,14 @@ public class CategoryTest {
     public void editCategoryFeatureExceptionTest() throws InvalidCommandException {
         setAll();
         manager.editFeatureName(category, "old feature", "new feature");
+    }
+
+    @Test
+    public void loadAndSaveFieldsTest(){
+        setAll();
+        Category.saveFields();
+        category.getProducts().clear();
+        Category.loadFields();
+        Assert.assertArrayEquals(category.getProducts().toArray(), products.toArray());
     }
 }

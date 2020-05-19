@@ -10,7 +10,4 @@ public enum State {;
     public enum OpinionState{
         UNCONFIRMED, CONFIRMED, WAITING_CONFIRMATION
     }
-    public enum offRequestState{
-        EDIT, ADD
-    }
 }

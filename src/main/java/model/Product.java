@@ -47,6 +47,7 @@ public class Product {
         this.price = price;
         this.category = category;
         category.addProduct(this);
+        this.description = "";
         sellers = new ArrayList<>();
         sellersName = new ArrayList<>();
         featuresMap = new HashMap<>();
@@ -56,6 +57,14 @@ public class Product {
         comments = new ArrayList<>();
         allProductsInQueueExpect.add(this);
         constructId += 1;
+    }
+
+    public void setVisit(int visit) {
+        this.visit = visit;
+    }
+
+    public static ArrayList<Product> getAllProducts() {
+        return allProducts;
     }
 
     public ArrayList<Seller> getSellers() {
@@ -76,6 +85,11 @@ public class Product {
 
     public ArrayList<Comment> getComments() {
         return comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+
     }
 
     public Map<String, String> getFeaturesMap() {
@@ -194,15 +208,19 @@ public class Product {
             try {
                 price = Double.parseDouble(newField);
             } catch (Exception e) {
+
                 throw new InvalidCommandException("price must be double");
             }
         } else if (field.equalsIgnoreCase("category")) {
             if (Category.hasCategoryWithName(newField)) {
+                category.removeProduct(this);
                 category = Category.getCategoryByName(newField);
                 category.addProduct(this);
             } else {
                 throw new InvalidCommandException("invalid category");
             }
+        } else if (featuresMap.containsKey(field)) {
+            featuresMap.replace(field, featuresMap.get(field), newField);
         } else {
             throw new InvalidCommandException("invalid field");
         }
@@ -260,7 +278,7 @@ public class Product {
     }
 
 
-    private static void loadProducts() {
+    public static void loadProducts() {
         for (Product product : allProducts) {
             if (product.getProductState() == State.ProductState.CREATING_PROCESS) {
                 allProductsInQueueExpect.add(product);

@@ -59,10 +59,10 @@ public class PurchaseTest {
         Processor.user = buyer;
         if (buyerProcessor.checkDiscountCode(codedDiscount.getDiscountCode())) {
             buyerProcessor.payment("address", "0912", codedDiscount.getDiscountAmount());
-            Assert.assertTrue(buyer.getBalance() == (100000 - 80) && seller.getBalance() == (100000 + 100));
+            Assert.assertEquals(buyer.getBalance(), (100000 - 80), 0.0);
         } else {
             buyerProcessor.payment("address", "0912", 0);
-            Assert.assertTrue((buyer.getBalance() == 100000) && seller.getBalance() == 100000);
+            Assert.assertEquals(100000-100, buyer.getBalance(), 0.0);
         }
     }
 
@@ -166,6 +166,22 @@ public class PurchaseTest {
 
     }
 
+    @Test
+    public void increaseAndDecreaseCartTest(){
+        setAll();
+        Pair<Product, Seller> pair = new Pair<>(product1, seller);
+        buyer.increaseCart(product1, seller);
+        buyer.decreaseCart(product1, seller);
+        Assert.assertTrue(buyer.getNewBuyerCart().containsKey(pair));
+    }
+
+    @Test
+    public void justDecreaseCartTest(){
+        setAll();
+        Pair<Product, Seller> pair = new Pair<>(product1, seller);
+        buyer.decreaseCart(product1, seller);
+        Assert.assertFalse(buyer.getNewBuyerCart().containsKey(pair));
+    }
 
 
 }

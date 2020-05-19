@@ -70,6 +70,8 @@ public abstract class Menu {
                 if (this.parent == null) {
                     App.getInstance().close();
                 } else {
+                    if (this instanceof ProductPanel)
+                        ((ProductPanel) this).setProductId();
                     parent.show();
                     parent.run();
                 }

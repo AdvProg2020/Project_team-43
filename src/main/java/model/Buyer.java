@@ -6,10 +6,13 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
+
+    private double sumOfPaymentForCoddedDiscount;
 
     private transient HashMap<CodedDiscount, Integer> codedDiscounts = new HashMap<>();
     private HashMap<String, Integer> codedDiscountsId = new HashMap<>();
@@ -22,6 +25,7 @@ public class Buyer extends User {
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
         newBuyerCart = new HashMap<>();
+        sumOfPaymentForCoddedDiscount = 0;
         codedDiscounts = new HashMap<CodedDiscount, Integer>();
         orders = new ArrayList<BuyOrder>();
         codedDiscountsId = new HashMap<String, Integer>();
@@ -106,8 +110,17 @@ public class Buyer extends User {
                 this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
+        this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
+        this.checkSumPaymentForOff();
         makingSellOrders();
         this.newBuyerCart.clear();
+    }
+
+    public void checkSumPaymentForOff() {
+        if (sumOfPaymentForCoddedDiscount > 100000) {
+            this.makeSpecialCoddedDiscount();
+            sumOfPaymentForCoddedDiscount = 0;
+        }
     }
 
     public void makingSellOrders() {
@@ -143,7 +156,7 @@ public class Buyer extends User {
             return false;
         if (!discount.checkTime())
             return false;
-        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) - 1);
+        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) + 1);
         if (codedDiscounts.get(discount) == discount.getRepeat()) {
             codedDiscounts.remove(discount);
         }
@@ -157,6 +170,11 @@ public class Buyer extends User {
 
     public void addDiscountCode(CodedDiscount discount) {
         codedDiscounts.put(discount, 0);
+    }
+
+    public void makeSpecialCoddedDiscount() {
+        CodedDiscount codedDiscount = new CodedDiscount(new Date(), Date.from(ZonedDateTime.now().plusMonths(1).toInstant()), 10, 3);
+        this.addDiscountCode(codedDiscount);
     }
 
     public ArrayList<Seller> getSellerOfCartProducts() {
@@ -208,7 +226,7 @@ public class Buyer extends User {
         return buyers;
     }
 
-    private void codedDiscountsLoad() {
+    public void codedDiscountsLoad() {
         HashMap<CodedDiscount, Integer> codedDiscountsFromDataBase = new HashMap<>();
         for (String codedDiscountId : codedDiscountsId.keySet()) {
             codedDiscountsFromDataBase.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
@@ -216,7 +234,7 @@ public class Buyer extends User {
         this.codedDiscounts = codedDiscountsFromDataBase;
     }
 
-    private void codedDiscountsSave() {
+    public void codedDiscountsSave() {
         codedDiscountsId.clear();
         for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
             codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));

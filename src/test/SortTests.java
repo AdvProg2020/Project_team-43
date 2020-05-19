@@ -126,4 +126,22 @@ public class SortTests {
         Assert.assertArrayEquals(expectationArray, productsArray);
     }
 
+    @Test
+    public void priceSortingTest(){
+        setAll();
+        expectationSort.add(product1);
+        expectationSort.add(product2);
+        expectationSort.add(product3);
+        expectationSort.add(product4);
+        expectationSort.add(product5);
+        try {
+            processor.sortingProcess("sort by price");
+        } catch (InvalidCommandException e) {
+            Assert.assertTrue(true);
+        }
+        Collections.sort(products, Sorting.getComparator());
+        Object[] productsArray = products.toArray();
+        Object[] expectationArray = expectationSort.toArray();
+        Assert.assertArrayEquals(expectationArray, productsArray);
+    }
 }
