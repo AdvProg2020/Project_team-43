@@ -46,6 +46,7 @@ public class Purchase extends Menu {
         while (!discountCode.equals("none") && !isDiscountCodeValid) {
             if (buyerProcessor.checkDiscountCode(discountCode)) {
                 isDiscountCodeValid = true;
+                break;
             } else {
                 System.out.println("discount code is invalid");
             }

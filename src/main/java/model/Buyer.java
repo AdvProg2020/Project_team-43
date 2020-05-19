@@ -143,7 +143,7 @@ public class Buyer extends User {
             return false;
         if (!discount.checkTime())
             return false;
-        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) - 1);
+        codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) + 1);
         if (codedDiscounts.get(discount) == discount.getRepeat()) {
             codedDiscounts.remove(discount);
         }

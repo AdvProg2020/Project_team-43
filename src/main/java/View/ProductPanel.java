@@ -10,6 +10,7 @@ public class ProductPanel extends Menu {
 
     public ProductPanel(Menu parent, String name) {
         super(parent, name);
+        productId = null;
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
         submenus.put(1, getDigest());
         submenus.put(2, getAttributes());
@@ -121,13 +122,18 @@ public class ProductPanel extends Menu {
         product.addVisit();
     }
 
+    public void setProductId() {
+        productId = null;
+    }
+
     public void show() {
-        getIdProductFromUser();
+        if (productId == null)
+            getIdProductFromUser();
         System.out.println(this.name + ":");
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
         }
-        if (processor.isUserLoggedIn()) {//////////////////////////////////////////////chi shode in error dare??
+        if (processor.isUserLoggedIn()) {
             System.out.println((submenus.size() + 1) + ". logout");
         } else {
             System.out.println((submenus.size() + 1) + ". login");

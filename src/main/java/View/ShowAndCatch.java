@@ -34,7 +34,7 @@ public class ShowAndCatch {
 
     public void showProducts(ArrayList<Product> products) {
         for (Product product : products) {
-            System.out.println(product.getName());
+            System.out.println(product.getName() + " , product id : " + product.getProductId());
         }
     }
 
