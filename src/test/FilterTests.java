@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FilterTests {
 
@@ -95,6 +96,14 @@ public class FilterTests {
     }
 
     @Test
+    public void getAvailableNameTest(){
+        setAll();
+        processor.filteringProcess("filter by availability");
+        Assert.assertEquals(filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).getName(), "available");
+
+    }
+
+    @Test
     public void categoryFilterTest() {
         setAll();
         CriteriaCategory criteriaCategory = new CriteriaCategory(category1);
@@ -109,9 +118,43 @@ public class FilterTests {
     }
 
     @Test
+    public void categoryFilterGetNameAndSetCategoryTest(){
+        setAll();
+        CriteriaCategory criteriaCategory = new CriteriaCategory(category2);
+        filterManager.setCategory(category2);
+        criteriaCategory.setCategory(category2);
+        Assert.assertEquals(criteriaCategory.getName(), "category : " + filterManager.getCategory().getName());
+
+    }
+    @Test
     public void categoryFeatureFilterTest() {
         setAll();
-        //TODO : dastan dare in baadan mizanam
+        category1.addFeatures("color");
+        product1.getFeaturesMap().replace("color", "red");
+        product4.getFeaturesMap().replace("color", "blue");
+        product7.getFeaturesMap().replace("color", "red");
+        product10.getFeaturesMap().replace("color", "yellow");
+        filterManager.setCategory(category1);
+        CriteriaCategoryFeatures criteriaCategoryFeatures = filterManager.getCriteriaCategoryFeatures();
+        criteriaCategoryFeatures.getFeatures().put("new junk feature", "junk value");
+        filterManager.disableFeature("new junk feature");
+        criteriaCategoryFeatures.addFeature("color", "red");
+        expectationFilter.add(product1);
+        expectationFilter.add(product7);
+        ArrayList<Product> afterFilter = criteriaCategoryFeatures.meetCriteria(products);
+        Object[] afterFilterArray = afterFilter.toArray();
+        Object[] expectationArray = expectationFilter.toArray();
+        Assert.assertArrayEquals(expectationArray, afterFilterArray);
+    }
+
+    @Test
+    public void addFeatureFromFilterManagerTest(){
+        setAll();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("color", "black");
+        filterManager.setCategory(category1);
+        filterManager.addFeaturesToCategoryFeaturesFilter(hashMap);
+        Assert.assertTrue(filterManager.getCriteriaCategoryFeatures().getFeatures().containsKey("color"));
     }
 
     @Test
@@ -126,6 +169,12 @@ public class FilterTests {
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
     }
+    @Test
+    public void nameFilterToStringTest(){
+        setAll();
+        processor.filteringProcess("filter by name newName");
+        Assert.assertEquals(filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).getName(), "name filter : newName");
+    }
 
     @Test
     public void priceFilterTest(){
@@ -139,6 +188,15 @@ public class FilterTests {
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
+    }
+
+    @Test
+    public void getPriceFilterNameTest(){
+        setAll();
+        processor.filteringProcess("filter by price from 50 to 100");
+        Assert.assertEquals(filterManager.getCurrentFilters().get(filterManager.getCurrentFilters().size()-1).getName(), "price from " + "50.0" + " to " + "100.0");
+
+
     }
 
 }
