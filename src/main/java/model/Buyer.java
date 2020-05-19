@@ -226,7 +226,7 @@ public class Buyer extends User {
         return buyers;
     }
 
-    private void codedDiscountsLoad() {
+    public void codedDiscountsLoad() {
         HashMap<CodedDiscount, Integer> codedDiscountsFromDataBase = new HashMap<>();
         for (String codedDiscountId : codedDiscountsId.keySet()) {
             codedDiscountsFromDataBase.put(CodedDiscount.getDiscountById(codedDiscountId), codedDiscountsId.get(codedDiscountId));
@@ -234,7 +234,7 @@ public class Buyer extends User {
         this.codedDiscounts = codedDiscountsFromDataBase;
     }
 
-    private void codedDiscountsSave() {
+    public void codedDiscountsSave() {
         codedDiscountsId.clear();
         for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
             codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));

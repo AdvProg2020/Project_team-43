@@ -50,17 +50,6 @@ public class SellOrder extends Order {
         return super.getOrderId();
     }
 
-    public double getPayment() {
-        return payment;
-    }
-
-    public double getOffAmount() {
-        return offAmount;
-    }
-
-    public DeliveryStatus getDeliveryStatus() {
-        return deliveryStatus;
-    }
 
     @Override
     public String toString() {

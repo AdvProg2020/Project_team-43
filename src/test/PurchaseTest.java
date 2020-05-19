@@ -166,6 +166,22 @@ public class PurchaseTest {
 
     }
 
+    @Test
+    public void increaseAndDecreaseCartTest(){
+        setAll();
+        Pair<Product, Seller> pair = new Pair<>(product1, seller);
+        buyer.increaseCart(product1, seller);
+        buyer.decreaseCart(product1, seller);
+        Assert.assertTrue(buyer.getNewBuyerCart().containsKey(pair));
+    }
+
+    @Test
+    public void justDecreaseCartTest(){
+        setAll();
+        Pair<Product, Seller> pair = new Pair<>(product1, seller);
+        buyer.decreaseCart(product1, seller);
+        Assert.assertFalse(buyer.getNewBuyerCart().containsKey(pair));
+    }
 
 
 }

@@ -107,4 +107,56 @@ public class AcceptRequestsTests {
         Assert.assertTrue(newProduct.getName().equalsIgnoreCase("new name") && newProduct.getProductState().equals(State.ProductState.CONFIRMED) && Product.allProductsInList.contains(newProduct) && !Product.allProductsInQueueEdit.contains(newProduct));
     }
 
+    @Test
+    public void addSellerRequestTest(){
+        setAll();
+        Request.getAllRequests().clear();
+        SellerRequest.addSellerRequest(userPersonalInfo, "parsa", "asus");
+        Assert.assertFalse(Request.getAllRequests().isEmpty());
+    }
+    @Test
+    public void addAllTest(){
+        setAll();
+        ArrayList<Request> requests = new ArrayList<>();
+        requests.add(sellerRequest);
+        requests.add(offRequest);
+        requests.add(productRequest);
+        Request.getAllRequests().clear();
+        Request.addAll(requests);
+        Assert.assertArrayEquals(Request.getAllRequests().toArray(), requests.toArray());
+    }
+
+
+
+    @Test
+    public void loadAndSaveFieldOffTest(){
+        setAll();
+        Request.saveFields();
+        Request.loadFields();
+        Assert.assertEquals(((OffRequest)offRequest).getOff(), off);
+    }
+    @Test
+    public void loadAndSaveFieldProductTest(){
+        setAll();
+        Request.saveFields();
+        Request.loadFields();
+        Assert.assertEquals(((ProductRequest)productRequest).getProduct(), product);
+    }
+
+    @Test
+    public void loadAndSaveFieldEditOffTest(){
+        setAll();
+        Request.saveFields();
+        Request.loadFields();
+        Assert.assertEquals(((EditOffRequest)editOffRequest).getOff(), off);
+    }
+    @Test
+    public void loadAndSaveFieldEditProductTest(){
+        setAll();
+        Request.saveFields();
+        Request.loadFields();
+        Assert.assertEquals(((EditProductRequest)editProductRequest).getProduct(), product);
+    }
+
+
 }

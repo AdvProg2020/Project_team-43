@@ -54,6 +54,7 @@ public class OrdersTest {
         seller.addOrder(sellOrder);
         buyOrders = new ArrayList<>();
         buyOrders.add(buyOrder);
+        buyer.getOrders().add(buyOrder);
     }
 
     @Test
@@ -121,6 +122,13 @@ public class OrdersTest {
     public void getOrderByIdNullTest() {
         setAll();
         Assert.assertNull(Order.getOrderById("null Id"));
+    }
+
+    @Test
+    public void getBuyerOrderTest(){
+        setAll();
+        Assert.assertArrayEquals(buyer.getOrders().toArray(), buyOrders.toArray());
+
     }
 
     @Test

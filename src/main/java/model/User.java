@@ -68,7 +68,6 @@ public abstract class User {
     }
 
     public void viewPersonalInfo() {
-
     }
 
     public static boolean hasManager() {
@@ -78,18 +77,6 @@ public abstract class User {
         }
         return false;
 
-    }
-
-    public void editFields(String field) {
-
-    }
-
-    public void viewCredit() {
-
-    }
-
-    public static void addUser(User user) {
-        allUsers.add(user);
     }
 
     public static void removeUser(User user) {

@@ -145,6 +145,7 @@ public class EditFieldsTest {
         }
         Assert.assertEquals(seller.getUserPersonalInfo().getPassword(), ("new password"));
     }
+
     @Test
     public void sellerEditFieldTestCompany() {
         setAll();
@@ -226,6 +227,12 @@ public class EditFieldsTest {
     public void sellerEditFieldExceptionTest() throws InvalidCommandException {
         setAll();
         sellerProcessor.editSellerField("invalid command");
+    }
+
+    @Test(expected = InvalidCommandException.class)
+    public void BuyerEditFieldExceptionTest() throws InvalidCommandException {
+        setAll();
+        buyer.editFields("invalid command", "invalid new field");
     }
 
 

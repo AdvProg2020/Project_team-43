@@ -157,5 +157,20 @@ public class CodedDiscountTest {
         Assert.assertNotNull(CodedDiscount.allCodedDiscount.get(CodedDiscount.allCodedDiscount.size() - 1));
     }
 
+    @Test
+    public void addAndGetCodedDiscountBuyerTest(){
+        setAll();
+        buyer.addDiscountCode(codedDiscount);
+        Assert.assertTrue(buyer.getDiscounts().contains(codedDiscount));
+    }
+
+    @Test
+    public void makeSpecialCodedDiscountBuyerTest(){
+        setAll();
+        buyer.getDiscounts().clear();
+        buyer.makeSpecialCoddedDiscount();
+        Assert.assertFalse(buyer.getDiscounts().isEmpty());
+    }
+
 
 }
