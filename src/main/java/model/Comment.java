@@ -15,6 +15,8 @@ public class Comment {
     public static ArrayList<Comment> inQueueExpectation = new ArrayList<Comment>();
     public static ArrayList<Comment> declineComments = new ArrayList<>();
     private transient Buyer buyer;
+
+
     private String buyerUserName;
     private transient Product product;
     private String productId;
@@ -22,9 +24,16 @@ public class Comment {
     private State.OpinionState opinionState;
     private boolean isBuy;
 
+    public static ArrayList<Comment> getInQueueExpectation() {
+        return inQueueExpectation;
+    }
+
+    public State.OpinionState getOpinionState() {
+        return opinionState;
+    }
+
     public Comment(Product product, String opinionText, boolean isBuy, Buyer buyer) {
         this.product = product;
-        // TODO : nabayad be product.comments add beshe???
         this.productId = product.getProductId();
         this.buyer = buyer;
         this.buyerUserName = this.buyer.getUsername();
@@ -54,6 +63,19 @@ public class Comment {
         this.buyer = (Buyer) (User.getUserByUserName(this.buyerUserName));
     }
 
+    public void accept() {
+        this.opinionState = State.OpinionState.CONFIRMED;
+        acceptedComments.add(this);
+        inQueueExpectation.remove(this);
+    }
+
+    public void decline() {
+        this.opinionState = State.OpinionState.UNCONFIRMED;
+        declineComments.add(this);
+        inQueueExpectation.remove(this);
+
+    }
+
     private static void loadAllProduct() {
         for (Comment comment : allComments) {
             comment.loadProduct();
@@ -71,7 +93,8 @@ public class Comment {
         loadAllBuyer();
     }
 
-    public static void saveFields() { }
+    public static void saveFields() {
+    }
 
     public static void load() throws FileNotFoundException {
         Comment[] comments = (Comment[]) Loader.load(Comment[].class, fileAddress);

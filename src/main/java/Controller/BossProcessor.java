@@ -416,5 +416,16 @@ public class BossProcessor extends Processor {
         ((Manager) user).removeCategory(category);
     }
 
+    public void manageComments(String command) {
+        if (command.matches("accept comment (\\d+)")) {
+            Comment.getInQueueExpectation().get(Integer.parseInt(command.split(" ")[2])).accept();
+        } else if (command.matches("decline comment (\\d+)")) {
+            Comment.getInQueueExpectation().get(Integer.parseInt(command.split(" ")[2])).decline();
+        } else if (command.matches("back")) {
+            return;
+        } else
+            errorMessage("invalid command");
+    }
+
 
 }

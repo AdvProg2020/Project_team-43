@@ -12,6 +12,7 @@ public class BossRolesMenu extends Menu {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     private Scanner scannerView = new Scanner(System.in);
 
     public BossRolesMenu(Menu parent, String name) {
@@ -26,8 +27,29 @@ public class BossRolesMenu extends Menu {
         submenus.put(7, getAddCompany());
         submenus.put(8, getManageRequests());
         submenus.put(9, getManageCategories());
+        submenus.put(10, getComments());
         this.setSubmenus(submenus);
 
+    }
+
+    private Menu getComments() {
+        return new Menu(this, "comments menu") {
+            @Override
+            public void show() {
+                processor.showInQueueComments();
+                System.out.println("accept comment [comment number]");
+                System.out.println("decline comment [comment number]");
+                System.out.println("back");
+                String command = scanner.nextLine();
+                bossProcessor.manageComments(command);
+            }
+
+            @Override
+            public void run() {
+                this.parent.show();
+                this.parent.run();
+            }
+        };
     }
 
     private Menu getPersonalInfo() {
@@ -203,7 +225,7 @@ public class BossRolesMenu extends Menu {
         };
     }
 
-    private Menu getAddCompany(){
+    private Menu getAddCompany() {
         return new Menu(this, "add company") {
             @Override
             public void show() {
@@ -212,7 +234,7 @@ public class BossRolesMenu extends Menu {
                 String command = scanner.nextLine();
                 try {
                     bossProcessor.addCompany(command.trim());
-                } catch (InvalidCommandException e){
+                } catch (InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
             }

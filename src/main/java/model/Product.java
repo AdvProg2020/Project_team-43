@@ -87,6 +87,11 @@ public class Product {
         return comments;
     }
 
+    public void addComment(Comment comment) {
+        comments.add(comment);
+
+    }
+
     public Map<String, String> getFeaturesMap() {
         return featuresMap;
     }
