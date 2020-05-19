@@ -286,7 +286,6 @@ public class Processor {
     }
 
     public void addComment(Product product) {
-        //TODO : error handling
         ArrayList<String> commentInfo = new ArrayList<>();
         viewManager.getCommentInfo(commentInfo);
         boolean isBuy = false;
@@ -296,8 +295,8 @@ public class Processor {
                 break;
             }
         }
-        new Comment(product, commentInfo.get(1), isBuy, (Buyer) user);
-        //handle commente gerefte shode
+        Comment comment = new Comment(product, commentInfo.get(1), isBuy, (Buyer) user);
+        product.addComment(comment);
 
     }
 
@@ -306,8 +305,17 @@ public class Processor {
         if (product == null) {
             throw new NullPointerException("product with this Id doesn't exist");
         }
-        ArrayList<Comment> comments = product.getComments();
+        ArrayList<Comment> comments = new ArrayList<>();
+        for (Comment comment : product.getComments()) {
+            if (comment.getOpinionState() == State.OpinionState.CONFIRMED) {
+                comments.add(comment);
+            }
+        }
         viewManager.showComments(comments);
+    }
+
+    public void showInQueueComments() {
+        viewManager.showComments(Comment.getInQueueExpectation());
     }
 
     public void showOffs() {
