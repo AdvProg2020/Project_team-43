@@ -5,9 +5,15 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('m.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ProgressBar layoutX="200.0" layoutY="189.0" prefWidth="200.0" progress="0.0" />
-   </children>
+<AnchorPane fx:controller="Controller.Graphic.MainMenuController" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-image: url('m.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 "
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Button fx:id="userPanelButton" layoutX="87.0" layoutY="126.0" mnemonicParsing="false"
+                onAction="#userPanelButtonClicked" text="Button"/>
+        <Button layoutX="87.0" layoutY="185.0" mnemonicParsing="false" text="Button"/>
+        <Button layoutX="87.0" layoutY="253.0" mnemonicParsing="false" text="Button"/>
+        <Button layoutX="490.0" layoutY="35.0" mnemonicParsing="false" text="Button"/>
+    </children>
 </AnchorPane>

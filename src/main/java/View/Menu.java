@@ -26,9 +26,16 @@ public class Menu extends Application {
 
     public static BossProcessor bossProcessor = BossProcessor.getInstance();
     String name;
+    protected String fileAddress;
     protected Menu parent;
     protected static Scanner scanner = new Scanner(System.in);
     protected HashMap<Integer, Menu> submenus;
+
+    public Menu(Menu parent, String name, String fileAddress) {
+        this.parent = parent;
+        this.name = name;
+        this.fileAddress = fileAddress;
+    }
 
     public Menu(Menu parent, String name) {
         this.parent = parent;
@@ -51,11 +58,10 @@ public class Menu extends Application {
     public void show() {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource(fileAddress));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
