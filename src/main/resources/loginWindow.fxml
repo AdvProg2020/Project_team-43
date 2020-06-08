@@ -44,11 +44,6 @@
             </font>
         </Label>
         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" text="Login" />
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="back" textAlignment="CENTER">
-         <VBox.margin>
-            <Insets top="100.0" />
-         </VBox.margin>
-      </Button>
     </children>
     <opaqueInsets>
         <Insets />
