@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 
 public class LoginWindow extends Application {
     private static LoginWindow instance = new LoginWindow();
-    private Stage stage = new Stage();
 
     public static LoginWindow getInstance() {
         return instance;
@@ -21,12 +20,15 @@ public class LoginWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("loginWindow.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Login");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(primaryStage);
+        stage.setResizable(false);
         stage.show();
-
     }
+
 }

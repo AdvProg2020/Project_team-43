@@ -23,6 +23,8 @@ public class MainWindow extends Application {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Bamazon");
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -7,9 +8,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('m.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.MainMenuController">
     <children>
-        <Button fx:id="userPanelButton" layoutX="87.0" layoutY="126.0" mnemonicParsing="false" onAction="#userPanelButtonClicked" text="Button" />
-        <Button layoutX="87.0" layoutY="185.0" mnemonicParsing="false" text="Button" />
-        <Button layoutX="87.0" layoutY="253.0" mnemonicParsing="false" text="Button" />
-        <Button fx:id="loginButton" layoutX="490.0" layoutY="35.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="login" />
+        <Button fx:id="userPanelButton" layoutX="54.0" layoutY="173.0" mnemonicParsing="false" onAction="#userPanelButtonClicked" prefHeight="44.0" prefWidth="159.0" text="User Panel">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button layoutX="54.0" layoutY="276.0" mnemonicParsing="false" text="Products Panel">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button layoutX="54.0" layoutY="384.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="159.0" text="Off Panel">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button fx:id="loginButton" layoutX="813.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="login">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
     </children>
 </AnchorPane>
