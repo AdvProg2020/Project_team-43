@@ -4,7 +4,13 @@ import javafx.fxml.FXML;
 
 public class MainMenuController {
     @FXML
-    private void userPanelButtonClicked() {
+    public void userPanelButtonClicked() {
+
+    }
+
+    @FXML
+    public void loginButtonClicked() {
+        System.out.println("fuck");
 
     }
 }
