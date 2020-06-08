@@ -24,9 +24,6 @@ public class App {
             e.printStackTrace();
             System.exit(-1);
         }
-        MainMenu mainMenu = new MainMenu("main menu");
-        mainMenu.show();
-        mainMenu.run();
     }
 
     public void close() {
