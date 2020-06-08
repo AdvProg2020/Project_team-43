@@ -8,7 +8,8 @@ public class Kir extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 600, 800);
+
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
