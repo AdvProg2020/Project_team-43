@@ -1,7 +1,6 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
