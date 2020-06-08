@@ -15,4 +15,9 @@ public class LoginMenuController {
     public void loginButtonClicked() {
         System.out.println(passwordField.getText());
     }
+
+    @FXML
+    public void goBack() {
+
+    }
 }
