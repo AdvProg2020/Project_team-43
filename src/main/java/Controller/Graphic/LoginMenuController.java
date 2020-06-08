@@ -10,6 +10,7 @@ public class LoginMenuController {
     public TextField usernameTextField;
     @FXML
     public PasswordField passwordField;
+
     @FXML
     public void loginButtonClicked() {
         System.out.println(passwordField.getText());

@@ -1,8 +1,14 @@
 package Controller.Graphic;
 
+import View.graphic.LoginWindow;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class MainMenuController {
+    @FXML
+    public Button loginButton;
+
     @FXML
     public void userPanelButtonClicked() {
 
@@ -10,7 +16,10 @@ public class MainMenuController {
 
     @FXML
     public void loginButtonClicked() {
-        System.out.println("fuck");
-
+        try {
+            LoginWindow.getInstance().start((Stage) loginButton.getScene().getWindow());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
