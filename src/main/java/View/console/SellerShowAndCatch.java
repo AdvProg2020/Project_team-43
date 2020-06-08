@@ -1,6 +1,6 @@
 package View.console;
 
-import Controller.SellerProcessor;
+import Controller.console.SellerProcessor;
 import model.*;
 
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
-import Controller.Processor;
-import Controller.SellerProcessor;
+import Controller.console.Processor;
+import Controller.console.SellerProcessor;
 import model.*;
 import model.request.OffRequest;
 import model.request.Request;
