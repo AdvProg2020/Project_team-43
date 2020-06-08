@@ -2,7 +2,7 @@ import Controller.BossProcessor;
 import Controller.BuyerProcessor;
 import Controller.Processor;
 import Controller.SellerProcessor;
-import View.BuyerShowAndCatch;
+import View.console.BuyerShowAndCatch;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;

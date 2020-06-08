@@ -1,13 +1,9 @@
-import View.App;
-import View.MainMenu;
-import View.Menu;
+import View.console.App;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class View extends Application {
     @Override

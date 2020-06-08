@@ -1,4 +1,4 @@
-package View;
+package View.console;
 
 import Controller.Processor;
 import model.InvalidCommandException;

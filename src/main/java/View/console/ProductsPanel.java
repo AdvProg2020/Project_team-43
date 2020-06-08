@@ -1,27 +1,28 @@
-package View;
+package View.console;
 
 import model.InvalidCommandException;
 
 import java.util.HashMap;
 
-public class OffPanel extends Menu {
-    public OffPanel(Menu parent, String name) {
+public class ProductsPanel extends Menu {
+    public ProductsPanel(Menu parent, String name) {
         super(parent, name);
         HashMap<Integer, Menu> submenus = new HashMap<Integer, Menu>();
-        submenus.put(1, getOffs());
-        submenus.put(2, new ProductPanel(this, "product Panel"));
-        submenus.put(3, getFiltering());
-        submenus.put(4, getSorting());
-        setSubmenus(submenus);
+        submenus.put(1, viewCategory());
+        submenus.put(2, getFiltering());
+        submenus.put(3, getSorting());
+        submenus.put(4, showProducts());
+        submenus.put(5, new ProductPanel(this, "show product with Id"));
+        this.setSubmenus(submenus);
     }
 
-    private Menu getOffs() {
+    private Menu viewCategory() {
 
-        return new Menu(this, "Offs") {
+        return new Menu(this, "view categories") {
+
             @Override
             public void show() {
-                processor.showOffs();
-
+                processor.viewCategories();
             }
 
             @Override
@@ -33,6 +34,7 @@ public class OffPanel extends Menu {
     }
 
     public Menu getFiltering() {
+
         return new Menu(this, "filtering") {
             @Override
             public void show() {
@@ -69,7 +71,7 @@ public class OffPanel extends Menu {
                 String command = scanner.nextLine();
                 try {
                     processor.sortingProcess(command);
-                } catch (InvalidCommandException e){
+                } catch (InvalidCommandException e) {
                     System.out.println(e.getMessage());
                 }
                 if (!command.equalsIgnoreCase("back"))
@@ -84,4 +86,20 @@ public class OffPanel extends Menu {
         };
     }
 
+    private Menu showProducts() {
+        return new Menu(this, "show products") {
+            @Override
+            public void show() {
+                processor.showProducts();
+            }
+
+            @Override
+            public void run() {
+                this.parent.show();
+                this.parent.run();
+            }
+        };
+    }
+
 }
+

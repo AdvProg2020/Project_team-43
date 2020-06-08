@@ -1,7 +1,7 @@
 package Controller;
 
 import javafx.util.Pair;
-import View.ShowAndCatch;
+import View.console.ShowAndCatch;
 import model.*;
 import model.filters.FilterManager;
 import model.request.SellerRequest;

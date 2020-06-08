@@ -1,7 +1,7 @@
 package Controller;
 
 import model.*;
-import View.SellerShowAndCatch;
+import View.console.SellerShowAndCatch;
 
 
 import java.text.ParseException;
