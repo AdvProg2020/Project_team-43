@@ -1,25 +1,48 @@
 package Controller.Graphic;
 
+import Controller.console.BuyerProcessor;
+import View.console.LoggedOutStatus;
+import View.graphic.LoggedOutStatusWindow;
 import View.graphic.LoginWindow;
+import View.graphic.MainWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class MainMenuController {
+    private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
+    private Stage stage = MainWindow.getInstance().getStage();
     @FXML
-    public Button loginButton;
+    private Button loginButton;
 
     @FXML
     public void userPanelButtonClicked() {
+        if (!(buyerProcessor.isUserLoggedIn())) {
+            LoggedOutStatusWindow.getInstance().start(stage);
+        }
+    }
 
+    public void setLoginButtonText() {
+        if (buyerProcessor.isUserLoggedIn()) {
+            loginButton.setText("Logout");
+        } else {
+            loginButton.setText("Login");
+        }
     }
 
     @FXML
     public void loginButtonClicked() {
-        try {
-            LoginWindow.getInstance().start((Stage) loginButton.getScene().getWindow());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!(buyerProcessor.isUserLoggedIn())) {
+            LoginWindow.getInstance().start(stage);
+        } else {
+            buyerProcessor.logout();
+            loginButton.setText("Login");
         }
     }
+
+    @FXML
+    public void initialize() {
+        setLoginButtonText();
+    }
+
 }
