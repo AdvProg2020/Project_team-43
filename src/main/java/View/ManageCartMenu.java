@@ -13,7 +13,6 @@ public class ManageCartMenu extends Menu {
         submenus.put(5, showTotalPrice());
         submenus.put(6, new Purchase(this, "purchase"));
         this.setSubmenus(submenus);
-
     }
 
     private Menu showProducts() {

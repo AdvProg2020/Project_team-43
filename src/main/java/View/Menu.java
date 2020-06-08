@@ -1,17 +1,29 @@
 package View;
 
-import Controller.console.BossProcessor;
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
-import Controller.console.SellerProcessor;
+import Controller.BossProcessor;
+import Controller.BuyerProcessor;
+import Controller.Processor;
+import Controller.SellerProcessor;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public abstract class Menu {
+public class Menu extends Application {
+    protected static Stage stage;
     public static Processor processor = new Processor();
     public static BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public static SellerProcessor sellerProcessor = SellerProcessor.getInstance();
+
+    public static void setStage(Stage stage) {
+        Menu.stage = stage;
+    }
+
     public static BossProcessor bossProcessor = BossProcessor.getInstance();
     String name;
     protected Menu parent;
@@ -22,6 +34,7 @@ public abstract class Menu {
         this.parent = parent;
         this.name = name;
     }
+
 
     public static Scanner getScanner() {
         return scanner;
@@ -36,6 +49,17 @@ public abstract class Menu {
     }
 
     public void show() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        /*
         System.out.println(name + ":");
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
@@ -48,12 +72,11 @@ public abstract class Menu {
         if (this.parent != null)
             System.out.println((submenus.size() + 2) + ". Back");
         else
-            System.out.println((submenus.size() + 2) + ". Save And Exit");
+            System.out.println((submenus.size() + 2) + ". Save And Exit");*/
     }
 
     public void run() {
-
-        /*String command;
+        String command;
         while (true) {
             command = scanner.nextLine();
             if (command.matches("\\d+")) {
@@ -112,6 +135,10 @@ public abstract class Menu {
                     }.run();
                 }
             }
-        }*/
+        }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
     }
 }
