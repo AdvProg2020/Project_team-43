@@ -16,9 +16,6 @@ public class View extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-        Menu.setStage(primaryStage);
-        MainMenu mainMenu = new MainMenu("main menu");
-        mainMenu.show();
     }
 
     public static void main(String[] args) {
