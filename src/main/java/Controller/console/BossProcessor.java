@@ -21,7 +21,7 @@ public class BossProcessor extends Processor {
 
     private BossView bossViewManager;
 
-    public BossProcessor() {
+    private BossProcessor() {
         bossViewManager = new BossView();
     }
 

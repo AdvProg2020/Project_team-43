@@ -1,11 +1,14 @@
 package Controller.Graphic;
 
+import Controller.console.BuyerProcessor;
+import Controller.console.Processor;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 
 public class LoginMenuController {
+    private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     @FXML
     public TextField usernameTextField;
     @FXML
@@ -13,6 +16,6 @@ public class LoginMenuController {
 
     @FXML
     public void loginButtonClicked() {
-        System.out.println(passwordField.getText());
+        System.out.println(buyerProcessor.login(usernameTextField.getText(), passwordField.getText()));
     }
 }

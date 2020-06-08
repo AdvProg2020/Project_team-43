@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 
 public class Processor {
+
     protected static boolean isLogin;
     public static User user;
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
