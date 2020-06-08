@@ -7,48 +7,52 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.LoginMenuController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="Controller.Graphic.LoginMenuController">
     <children>
-        <Label contentDisplay="CENTER" prefHeight="30.0" prefWidth="75.0" text="Username" textAlignment="CENTER" />
+        <Label contentDisplay="CENTER" prefHeight="30.0" prefWidth="75.0" text="Username" textAlignment="CENTER"/>
         <TextField fx:id="usernameTextField" prefHeight="31.0" prefWidth="241.0">
             <effect>
-                <InnerShadow />
+                <InnerShadow/>
             </effect>
             <VBox.margin>
-                <Insets left="350.0" right="350.0" />
+                <Insets left="350.0" right="350.0"/>
             </VBox.margin>
-         <padding>
-            <Insets left="50.0" right="50.0" />
-         </padding>
+            <padding>
+                <Insets left="50.0" right="50.0"/>
+            </padding>
         </TextField>
-        <Label fx:id="wrongUsername" alignment="CENTER" text="Wrong username" textAlignment="CENTER" textFill="RED" visible="false">
+        <Label fx:id="wrongUsername" alignment="CENTER" text="Wrong username" textAlignment="CENTER" textFill="RED"
+               visible="false">
             <font>
-                <Font size="13.0" />
+                <Font size="13.0"/>
             </font>
         </Label>
-        <Label contentDisplay="CENTER" prefHeight="30.0" prefWidth="75.0" text="Password" textAlignment="CENTER" />
+        <Label contentDisplay="CENTER" prefHeight="30.0" prefWidth="75.0" text="Password" textAlignment="CENTER"/>
         <PasswordField fx:id="passwordField">
             <VBox.margin>
-                <Insets left="350.0" right="350.0" />
+                <Insets left="350.0" right="350.0"/>
             </VBox.margin>
             <effect>
-                <InnerShadow />
+                <InnerShadow/>
             </effect>
         </PasswordField>
-        <Label fx:id="wrongPassword" alignment="CENTER" text="Wrong password" textAlignment="CENTER" textFill="RED" visible="false">
+        <Label fx:id="wrongPassword" alignment="CENTER" text="Wrong password" textAlignment="CENTER" textFill="RED"
+               visible="false">
             <VBox.margin>
-                <Insets bottom="10.0" />
+                <Insets bottom="10.0"/>
             </VBox.margin>
             <font>
-                <Font size="13.0" />
+                <Font size="13.0"/>
             </font>
         </Label>
-        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" text="Login" />
+        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" text="Login"/>
     </children>
     <opaqueInsets>
-        <Insets />
+        <Insets/>
     </opaqueInsets>
     <effect>
-        <InnerShadow />
+        <InnerShadow/>
     </effect>
 </VBox>
