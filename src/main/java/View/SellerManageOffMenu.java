@@ -1,9 +1,8 @@
 package View;
 
-import Controller.Processor;
+import Controller.console.Processor;
 import model.InvalidCommandException;
 import model.Off;
-import model.Product;
 import model.Seller;
 
 import java.text.ParseException;

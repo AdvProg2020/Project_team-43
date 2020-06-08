@@ -1,9 +1,9 @@
 package View;
 
-import Controller.BossProcessor;
-import Controller.BuyerProcessor;
-import Controller.Processor;
-import Controller.SellerProcessor;
+import Controller.console.BossProcessor;
+import Controller.console.BuyerProcessor;
+import Controller.console.Processor;
+import Controller.console.SellerProcessor;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -52,7 +52,8 @@ public abstract class Menu {
     }
 
     public void run() {
-        String command;
+
+        /*String command;
         while (true) {
             command = scanner.nextLine();
             if (command.matches("\\d+")) {
@@ -111,6 +112,6 @@ public abstract class Menu {
                     }.run();
                 }
             }
-        }
+        }*/
     }
 }
