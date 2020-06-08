@@ -1,4 +1,4 @@
-package Controller.console;
+package Controller;
 
 import javafx.util.Pair;
 import View.ShowAndCatch;

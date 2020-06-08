@@ -1,6 +1,6 @@
 package View;
 
-import Controller.console.Processor;
+import Controller.Processor;
 import model.InvalidCommandException;
 import model.Off;
 import model.Seller;

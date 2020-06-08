@@ -1,4 +1,4 @@
-package Controller.console;
+package Controller;
 
 import model.*;
 import View.SellerShowAndCatch;

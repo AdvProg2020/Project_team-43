@@ -1,6 +1,6 @@
 package test;
 
-import Controller.console.Processor;
+import Controller.Processor;
 import model.Category;
 import model.Company;
 import model.Product;

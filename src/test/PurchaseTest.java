@@ -1,5 +1,5 @@
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
+import Controller.BuyerProcessor;
+import Controller.Processor;
 import javafx.util.Pair;
 import model.*;
 import org.junit.Assert;

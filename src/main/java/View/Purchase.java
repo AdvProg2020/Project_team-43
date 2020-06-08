@@ -1,7 +1,7 @@
 package View;
 
 
-import Controller.console.BuyerProcessor;
+import Controller.BuyerProcessor;
 import model.CodedDiscount;
 
 public class Purchase extends Menu {

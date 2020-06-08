@@ -1,6 +1,6 @@
-import Controller.console.BossProcessor;
-import Controller.console.Processor;
-import Controller.console.SellerProcessor;
+import Controller.BossProcessor;
+import Controller.Processor;
+import Controller.SellerProcessor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
