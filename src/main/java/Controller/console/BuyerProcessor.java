@@ -1,6 +1,6 @@
-package Controller;
+package Controller.console;
 
-import View.BuyerShowAndCatch;
+import View.console.BuyerShowAndCatch;
 import javafx.util.Pair;
 import model.*;
 

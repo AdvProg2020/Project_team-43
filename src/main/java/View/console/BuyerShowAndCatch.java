@@ -1,11 +1,10 @@
-package View;
+package View.console;
 
 import javafx.util.Pair;
 import model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class BuyerShowAndCatch {
     private static BuyerShowAndCatch ourInstance = new BuyerShowAndCatch();

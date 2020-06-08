@@ -1,4 +1,4 @@
-import Controller.Processor;
+import Controller.console.Processor;
 import model.Buyer;
 import model.UserPersonalInfo;
 import org.junit.Assert;

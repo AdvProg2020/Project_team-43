@@ -1,4 +1,4 @@
-package View;
+package View.console;
 
 import model.database.Database;
 

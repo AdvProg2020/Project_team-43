@@ -1,6 +1,6 @@
-package Controller;
+package Controller.console;
 
-import View.BossView;
+import View.console.BossView;
 import model.*;
 import model.request.Request;
 

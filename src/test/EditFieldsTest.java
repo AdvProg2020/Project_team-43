@@ -1,8 +1,8 @@
-import Controller.BossProcessor;
-import Controller.BuyerProcessor;
-import Controller.Processor;
-import Controller.SellerProcessor;
-import View.BuyerShowAndCatch;
+import Controller.console.BossProcessor;
+import Controller.console.BuyerProcessor;
+import Controller.console.Processor;
+import Controller.console.SellerProcessor;
+import View.console.BuyerShowAndCatch;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
