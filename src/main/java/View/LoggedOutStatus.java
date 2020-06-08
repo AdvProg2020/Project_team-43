@@ -63,9 +63,9 @@ public class LoggedOutStatus extends Menu {
         String command;
         while (true) {
             command = scanner.nextLine();
-            if(command.matches("\\d+")){
+            if (command.matches("\\d+")) {
                 break;
-            } else{
+            } else {
                 System.out.println("invalid command! please enter a number");
             }
         }

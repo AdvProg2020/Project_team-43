@@ -14,28 +14,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Menu extends Application {
-    protected static Stage stage;
+public class Menu {
     public static Processor processor = new Processor();
     public static BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public static SellerProcessor sellerProcessor = SellerProcessor.getInstance();
 
-    public static void setStage(Stage stage) {
-        Menu.stage = stage;
-    }
 
     public static BossProcessor bossProcessor = BossProcessor.getInstance();
     String name;
-    protected String fileAddress;
     protected Menu parent;
     protected static Scanner scanner = new Scanner(System.in);
     protected HashMap<Integer, Menu> submenus;
-
-    public Menu(Menu parent, String name, String fileAddress) {
-        this.parent = parent;
-        this.name = name;
-        this.fileAddress = fileAddress;
-    }
 
     public Menu(Menu parent, String name) {
         this.parent = parent;
@@ -56,16 +45,6 @@ public class Menu extends Application {
     }
 
     public void show() {
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource(fileAddress));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        /*
         System.out.println(name + ":");
         for (Integer menuNum : submenus.keySet()) {
             System.out.println(menuNum + ". " + submenus.get(menuNum).name);
@@ -78,7 +57,7 @@ public class Menu extends Application {
         if (this.parent != null)
             System.out.println((submenus.size() + 2) + ". Back");
         else
-            System.out.println((submenus.size() + 2) + ". Save And Exit");*/
+            System.out.println((submenus.size() + 2) + ". Save And Exit");
     }
 
     public void run() {
@@ -144,7 +123,4 @@ public class Menu extends Application {
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-    }
 }
