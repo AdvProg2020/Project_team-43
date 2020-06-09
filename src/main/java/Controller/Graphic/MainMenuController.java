@@ -8,6 +8,7 @@ import View.graphic.MainWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.UserType;
 
 public class MainMenuController {
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
@@ -19,6 +20,12 @@ public class MainMenuController {
     public void userPanelButtonClicked() {
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoggedOutStatusWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
+
+        } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
+
+        } else {
+
         }
     }
 
