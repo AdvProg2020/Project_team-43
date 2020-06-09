@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-background-image: url('login.jfif'); -fx-background-repeat: stretch; -fx-background-position: center center;-fx-background-size: 600 400;"
             fx:controller="Controller.Graphic.RegisterMenuController">
     <children>
         <VBox layoutX="127.0" layoutY="72.0" prefHeight="261.0" prefWidth="328.0">
@@ -18,7 +20,10 @@
                 <TextField fx:id="email" promptText="email"/>
                 <TextField fx:id="companyName" promptText="company name (if you are buyer)"/>
                 <PasswordField fx:id="passWord" promptText="password"/>
-                <Button mnemonicParsing="false" text="Register" onAction="#register"/>
+                <Button mnemonicParsing="false" onAction="#registerButtonClicked" text="Register"/>
+                <Label fx:id="invalidUserName" text="there is a user with this user name" textFill="RED"
+                       visible="false"/>
+                <Label fx:id="invalidPassWord" text="invalid password" textFill="RED" visible="false"/>
             </children>
         </VBox>
     </children>
