@@ -2,9 +2,7 @@ package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import View.console.LoggedOutStatus;
-import View.graphic.LoggedOutStatusWindow;
-import View.graphic.LoginWindow;
-import View.graphic.MainWindow;
+import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -21,11 +19,11 @@ public class MainMenuController {
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoggedOutStatusWindow.getInstance().start(stage);
         } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
-
-        } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
-
+            ManagerUserWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
+            SellerUserWindow.getInstance().start(stage);
         } else {
-
+            BuyerUserWindow.getInstance().start(stage);
         }
     }
 
