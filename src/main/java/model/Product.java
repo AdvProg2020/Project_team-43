@@ -208,15 +208,19 @@ public class Product {
             try {
                 price = Double.parseDouble(newField);
             } catch (Exception e) {
+
                 throw new InvalidCommandException("price must be double");
             }
         } else if (field.equalsIgnoreCase("category")) {
             if (Category.hasCategoryWithName(newField)) {
+                category.removeProduct(this);
                 category = Category.getCategoryByName(newField);
                 category.addProduct(this);
             } else {
                 throw new InvalidCommandException("invalid category");
             }
+        } else if (featuresMap.containsKey(field)) {
+            featuresMap.replace(field, featuresMap.get(field), newField);
         } else {
             throw new InvalidCommandException("invalid field");
         }
