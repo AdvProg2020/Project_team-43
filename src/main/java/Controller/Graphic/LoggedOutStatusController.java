@@ -2,6 +2,7 @@ package Controller.Graphic;
 
 import View.graphic.LoginWindow;
 import View.graphic.MainWindow;
+import View.graphic.RegisterWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ public class LoggedOutStatusController {
 
     @FXML
     public void registerButtonClicked() {
-
+        RegisterWindow.getInstance().start(stage);
     }
 
     @FXML

@@ -341,7 +341,6 @@ public class Processor {
             viewManager.getPersonalInfo(personalInfo);
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
-
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
             UserPersonalInfo personalInfo = new UserPersonalInfo();
@@ -358,6 +357,19 @@ public class Processor {
             return "there is a manger";
         }
         return ("invalid type");
+
+    }
+
+    public String register(UserPersonalInfo userPersonalInfo, String userName, String companyName) {
+        if (User.hasUserWithUserName(userName)) {
+            return "there is a user with this username";
+        }
+        if (companyName.equals("")) {
+            Buyer.addBuyer(userPersonalInfo, userName);
+        } else {
+            SellerRequest.addSellerRequest(userPersonalInfo, userName, companyName);
+        }
+        return "done";
 
     }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.Graphic.RegisterMenuController">
+    <children>
+        <VBox layoutX="127.0" layoutY="72.0" prefHeight="261.0" prefWidth="328.0">
+            <children>
+                <TextField fx:id="userName" prefHeight="31.0" prefWidth="266.0" promptText="username"/>
+                <TextField fx:id="firstName" promptText="first name"/>
+                <TextField fx:id="lastName" promptText="last name"/>
+                <TextField fx:id="phoneNumber" promptText="phone number"/>
+                <TextField fx:id="email" promptText="email"/>
+                <TextField fx:id="companyName" promptText="company name (if you are buyer)"/>
+                <PasswordField fx:id="passWord" promptText="password"/>
+                <Button mnemonicParsing="false" text="Register" onAction="#register"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

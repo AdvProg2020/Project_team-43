@@ -1,5 +1,5 @@
 package Controller.Graphic;
 
-public interface Loginable {
+public interface LoginAble {
     void setLoginButtonText();
 }
