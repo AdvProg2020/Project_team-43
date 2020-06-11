@@ -37,11 +37,7 @@ public class SellerAddProductMenu extends Menu {
                 String id = scanner.nextLine();
                 System.out.println("amount : ");
                 String number = scanner.nextLine();
-                try {
-                    System.out.println(sellerProcessor.addExistingProduct(id, number));
-                } catch (NullPointerException | InvalidCommandException e) {
-                    System.out.println(e.getMessage());
-                }
+                System.out.println(sellerProcessor.addExistingProduct(id, number));
             }
 
             @Override

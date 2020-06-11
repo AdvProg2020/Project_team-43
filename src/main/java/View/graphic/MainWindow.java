@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.database.Database;
@@ -36,6 +37,7 @@ public class MainWindow extends Application {
                 e.printStackTrace();
             }
         });
+        stage.getIcons().add(new Image("file:src/main/resources/fuck.jpeg"));
 
         Parent root = null;
         try {

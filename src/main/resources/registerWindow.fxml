@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.paint.*?>
 <?import java.lang.*?>
@@ -42,16 +43,22 @@
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></PasswordField>
+            <Text fx:id="alertMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="326.6708984375">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Text>
                 <TextField fx:id="companyName" promptText="company name" visible="false">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></TextField>
                 <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerButtonClicked" text="Register">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin></Button>
-                <Label fx:id="invalidUserName" text="there is a user with this user name" textFill="RED" visible="false" />
-                <Label fx:id="invalidPassWord" text="invalid password" textFill="RED" visible="false" />
             </children>
         </VBox>
     </children>
