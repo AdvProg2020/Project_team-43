@@ -44,6 +44,10 @@ public class BuyerProcessor extends Processor {
         }
     }
 
+    public void editBuyerField(UserPersonalInfo userPersonalInfo) {
+        user.setUserPersonalInfo(userPersonalInfo);
+    }
+
     public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
         if (newBuyerCart.containsKey(productSellerPair)) {
             newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);

@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class LoggedOutStatusController {
+public class LoggedOutStatusController extends Controller {
     private Stage stage = MainWindow.getInstance().getStage();
     @FXML
     private Button registerButton;
@@ -22,8 +22,5 @@ public class LoggedOutStatusController {
         LoginWindow.getInstance().start(stage);
     }
 
-    @FXML
-    public void goBack() {
-        MainWindow.getInstance().start(stage);
-    }
+
 }
