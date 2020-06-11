@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.database.Database;
 
 import java.io.IOException;
 
@@ -37,6 +38,15 @@ public class MainWindow extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
+    }
+
+    @Override
+    public void stop() {
+        try {
+            Database.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Stage getStage() {
