@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
@@ -111,11 +110,11 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="existingProductId1" layoutX="559.0" layoutY="85.0" />
-                  <TextField fx:id="existingProductId11" layoutX="559.0" layoutY="130.0" />
-                  <TextField fx:id="existingProductId111" layoutX="559.0" layoutY="177.0" />
-                  <TextField fx:id="existingProductId1111" layoutX="559.0" layoutY="218.0" />
-                  <TextField fx:id="existingProductId11111" layoutX="559.0" layoutY="260.0" />
+                  <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0" />
+                  <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
+                  <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
+                  <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
+                  <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0" />
                   <Button layoutX="559.0" layoutY="317.0" mnemonicParsing="false" onAction="#addNewProduct" text="Apply" />
                </children>
             </AnchorPane>
