@@ -29,14 +29,11 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    Database.save();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        stage.setOnCloseRequest((a) -> {
+            try {
+                Database.save();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
