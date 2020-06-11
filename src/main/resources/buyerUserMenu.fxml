@@ -60,7 +60,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
                         <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="58.0" layoutY="236.0"/>
-                        <ListView layoutX="15.0" layoutY="13.0" prefHeight="574.0" prefWidth="751.0"/>
+                        <ListView fx:id="products" layoutX="15.0" layoutY="13.0" prefHeight="574.0" prefWidth="751.0"/>
                     </children>
                 </AnchorPane>
             </content>

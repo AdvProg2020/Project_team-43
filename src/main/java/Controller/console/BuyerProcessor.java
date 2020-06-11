@@ -27,7 +27,7 @@ public class BuyerProcessor extends Processor {
         return newBuyerCart;
     }
 
-    public String editBuyerField(String command) {
+    public String editField(String command) {
         Pattern pattern = Pattern.compile("edit (\\S+)");
         Matcher matcher = pattern.matcher(command);
         if (command.equalsIgnoreCase("back"))
@@ -44,7 +44,7 @@ public class BuyerProcessor extends Processor {
         }
     }
 
-    public void editBuyerField(UserPersonalInfo userPersonalInfo) {
+    public void editField(UserPersonalInfo userPersonalInfo) {
         user.setUserPersonalInfo(userPersonalInfo);
     }
 
