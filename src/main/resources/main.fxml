@@ -6,23 +6,34 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('m.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.MainMenuController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-image: url('fuck.jpeg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 "
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.Graphic.MainMenuController">
     <children>
-        <Button fx:id="userPanelButton" layoutX="54.0" layoutY="173.0" mnemonicParsing="false" onAction="#userPanelButtonClicked" prefHeight="44.0" prefWidth="159.0" text="User Panel">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
+        <Button fx:id="userPanelButton" layoutX="54.0" layoutY="173.0" mnemonicParsing="false"
+                onAction="#userPanelButtonClicked" prefHeight="44.0" prefWidth="159.0" text="User Panel">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Button>
         <Button layoutX="54.0" layoutY="276.0" mnemonicParsing="false" text="Products Panel">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
-        <Button layoutX="54.0" layoutY="384.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="159.0" text="Off Panel">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
-        <Button fx:id="loginButton" layoutX="789.0" layoutY="14.0" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="44.0" prefWidth="97.0" text="Login">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Button>
+        <Button layoutX="54.0" layoutY="384.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="159.0"
+                text="Off Panel">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Button>
+        <Button fx:id="loginButton" layoutX="789.0" layoutY="14.0" mnemonicParsing="false"
+                onAction="#loginButtonClicked" prefHeight="44.0" prefWidth="97.0" text="Login">
+            <font>
+                <Font size="20.0"/>
+            </font>
+        </Button>
     </children>
 </AnchorPane>
