@@ -2,10 +2,12 @@ package View.graphic;
 
 import View.console.MainMenu;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.database.Database;
 
 import java.io.IOException;
@@ -26,6 +28,18 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    Database.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("main.fxml"));
@@ -40,14 +54,6 @@ public class MainWindow extends Application {
 
     }
 
-    @Override
-    public void stop() {
-        try {
-            Database.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Stage getStage() {
         return stage;
