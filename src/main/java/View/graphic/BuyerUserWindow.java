@@ -37,4 +37,5 @@ public class BuyerUserWindow extends Application {
         primaryStage.show();
 
     }
+
 }
