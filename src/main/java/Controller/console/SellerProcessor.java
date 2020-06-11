@@ -182,4 +182,9 @@ public class SellerProcessor extends Processor {
         ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);
     }
 
+    public void editField(UserPersonalInfo userPersonalInfo, String companyName) {
+        super.editField(userPersonalInfo);
+        ((Seller) user).setCompany(Company.getCompanyByName(companyName));
+    }
+
 }
