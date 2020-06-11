@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="code" />
         <module name="project" />
+        <module name="fuck" />
         <module name="Project_team-43" />
         <module name="maven" />
         <module name="Project_team-43New" />

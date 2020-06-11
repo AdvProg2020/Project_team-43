@@ -14,8 +14,6 @@ public class View extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("hello");
-        System.out.println("hello");
         App.getInstance().open();
         launch(args);
 
