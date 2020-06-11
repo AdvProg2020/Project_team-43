@@ -26,7 +26,7 @@ public class BuyerUserWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource(""));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("buyerUserMenu.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
