@@ -72,6 +72,10 @@ public class Seller extends User {
         return false;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public Product getProductById(String productId) {
         for (Product product : productsNumber.keySet()) {
             if (product.getProductId().equals(productId)) {

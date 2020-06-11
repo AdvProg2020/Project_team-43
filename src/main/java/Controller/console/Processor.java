@@ -389,4 +389,8 @@ public class Processor {
         BuyerProcessor.getInstance().logout();
     }
 
+    public void editField(UserPersonalInfo userPersonalInfo) {
+        user.setUserPersonalInfo(userPersonalInfo);
+    }
+
 }
