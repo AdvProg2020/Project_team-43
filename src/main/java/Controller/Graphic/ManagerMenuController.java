@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import model.Product;
 import model.Seller;
 import model.User;
 import model.UserPersonalInfo;
@@ -24,6 +25,9 @@ public class ManagerMenuController extends Controller {
     public Text lastName2;
     public Text email2;
     public Text phoneNumber2;
+    public Text productName;
+    public Text productPrice;
+    public Text productScore;
     public TextField userNameCreateManager;
     public TextField firstNameCreateManager;
     public TextField lastNameCreateManager;
@@ -31,14 +35,18 @@ public class ManagerMenuController extends Controller {
     public TextField passwordCreateManager;
     public TextField phoneCreateManager;
     public ListView usersListView;
+    public ListView productsListView;
     ObservableList<String> users;
+    ObservableList<String> products;
     public Pane userInfoPane;
+    public Pane productInfoPane;
 
-    public void showUserInfo(){
+    public void showUserInfo() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
         showUser(User.getUserByUserName(userName));
     }
-    public void showUser(User user){
+
+    public void showUser(User user) {
         userName2.setText(user.getUsername());
         firstName2.setText(user.getUserPersonalInfo().getFirstName());
         lastName2.setText(user.getUserPersonalInfo().getLastName());
@@ -48,15 +56,33 @@ public class ManagerMenuController extends Controller {
 
     }
 
-    public void createManagerProfile(){
+    public void showProductInfo() {
+        String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
+        String productId = productNameAndId.split(" / ")[1];
+        Product product = Product.getProductById(productId);
+        showProduct(product);
+    }
+
+    public void showProduct(Product product) {
+        productName.setText(product.getName());
+        productPrice.setText("" + product.getPrice());
+        productScore.setText("" + product.getScore());
+        productInfoPane.setVisible(true);
+    }
+
+    public void createManagerProfile() {
 
     }
 
-    public void closeUserInfo(){
+    public void closeProductInfo(){
+        productInfoPane.setVisible(false);
+    }
+
+    public void closeUserInfo() {
         userInfoPane.setVisible(false);
     }
 
-    public void deleteUser(){
+    public void deleteUser() {
 
     }
 
@@ -72,6 +98,10 @@ public class ManagerMenuController extends Controller {
             users.add(user.getUsername());
         }
         usersListView.setItems(users);
+        for (Product product : Product.allProductsInList) {
+            products.add(product.getName() + " / " + product.getProductId());
+        }
+        productsListView.setItems(products);
     }
 
     /*public void update(ActionEvent actionEvent) {
