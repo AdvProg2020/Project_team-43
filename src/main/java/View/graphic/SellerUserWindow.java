@@ -20,8 +20,9 @@ public class SellerUserWindow extends Application {
     private SellerUserWindow() {
 
     }
+
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("sellerUserMenu.fxml"));
