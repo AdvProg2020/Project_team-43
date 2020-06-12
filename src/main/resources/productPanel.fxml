@@ -163,8 +163,6 @@
                         </Pane>
                     </children>
                 </VBox>
-            </children>
-            <children>
                 <VBox layoutX="276.0" layoutY="108.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">
@@ -211,8 +209,6 @@
                         </Pane>
                     </children>
                 </VBox>
-            </children>
-            <children>
                 <VBox layoutX="536.0" layoutY="108.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">

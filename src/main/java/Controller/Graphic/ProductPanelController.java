@@ -15,6 +15,10 @@ import java.util.ResourceBundle;
 public class ProductPanelController implements Initializable {
 
     @FXML
+    private ListView<String> categoryListView;
+
+    ObservableList<String> categories;
+    @FXML
     ImageView image1;
     @FXML
     ImageView image2;
@@ -112,10 +116,7 @@ public class ProductPanelController implements Initializable {
 
     }
 
-    @FXML
-    private ListView<String> categoryListView;
 
-    ObservableList<String> categories;
 
     public ProductPanelController() {
         categories = FXCollections.observableArrayList();
