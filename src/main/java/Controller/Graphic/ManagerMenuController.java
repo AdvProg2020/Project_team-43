@@ -1,10 +1,15 @@
 package Controller.Graphic;
 
 import Controller.console.BossProcessor;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import model.Seller;
+import model.User;
 import model.UserPersonalInfo;
 
 public class ManagerMenuController extends Controller {
@@ -14,6 +19,46 @@ public class ManagerMenuController extends Controller {
     public TextField email;
     public TextField password;
     public TextField phoneNumber;
+    public Text userName2;
+    public Text firstName2;
+    public Text lastName2;
+    public Text email2;
+    public Text phoneNumber2;
+    public TextField userNameCreateManager;
+    public TextField firstNameCreateManager;
+    public TextField lastNameCreateManager;
+    public TextField emailCreateManager;
+    public TextField passwordCreateManager;
+    public TextField phoneCreateManager;
+    public ListView usersListView;
+    ObservableList<String> users;
+    public Pane userInfoPane;
+
+    public void showUserInfo(){
+        String userName = usersListView.getSelectionModel().getSelectedItem().toString();
+        showUser(User.getUserByUserName(userName));
+    }
+    public void showUser(User user){
+        userName2.setText(user.getUsername());
+        firstName2.setText(user.getUserPersonalInfo().getFirstName());
+        lastName2.setText(user.getUserPersonalInfo().getLastName());
+        email2.setText(user.getUserPersonalInfo().getEmail());
+        phoneNumber2.setText(user.getUserPersonalInfo().getPhoneNumber());
+        userInfoPane.setVisible(true);
+
+    }
+
+    public void createManagerProfile(){
+
+    }
+
+    public void closeUserInfo(){
+        userInfoPane.setVisible(false);
+    }
+
+    public void deleteUser(){
+
+    }
 
     @FXML
     public void initialize() {
@@ -23,11 +68,15 @@ public class ManagerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        for (User user : User.allUsers) {
+            users.add(user.getUsername());
+        }
+        usersListView.setItems(users);
     }
 
-    public void update(ActionEvent actionEvent) {
+    /*public void update(ActionEvent actionEvent) {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
-    }
+    }*/
 }
