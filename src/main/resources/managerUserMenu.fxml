@@ -6,7 +6,7 @@
 <?import javafx.scene.media.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.BuyerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ManagerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
@@ -32,7 +32,7 @@
                                 <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="51.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
+                        <Text layoutX="50.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
                             <font>
                                 <Font size="17.0" />
                             </font>
@@ -44,16 +44,6 @@
                         </Text>
                         <Button fx:id="update" layoutX="190.0" layoutY="300.0" mnemonicParsing="false" onAction="#update" text="update" />
                         <Button layoutX="796.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="back" />
-                    </children>
-                </AnchorPane>
-            </content>
-        </Tab>
-        <Tab text="Cart">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="58.0" layoutY="236.0" />
-                        <ListView fx:id="products" layoutX="15.0" layoutY="13.0" prefHeight="574.0" prefWidth="751.0" />
                     </children>
                 </AnchorPane>
             </content>

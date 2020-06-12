@@ -8,10 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="code" />
-        <module name="project" />
+        <module name="fuck" />
         <module name="Project_team-43" />
         <module name="maven" />
         <module name="Project_team-43New" />
+        <module name="project" />
         <module name="newPro" />
         <module name="porojectAP" />
       </profile>

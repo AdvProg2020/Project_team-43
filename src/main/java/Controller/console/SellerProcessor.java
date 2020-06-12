@@ -109,17 +109,17 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public String addExistingProduct(String id, String number) throws InvalidCommandException {
+    public String addExistingProduct(String id, String number) {
         if (number.matches("(\\d)+")) {
             int numberInt = Integer.parseInt(number);
             if (Product.hasProductWithId(id)) {
                 ((Seller) user).addExistingProduct(id, numberInt);
                 return "Product add successfully\nWaiting for manger to confirm";
             } else {
-                throw new InvalidCommandException("product with this Id doesn't exist");
+                return "product with this Id doesn't exist";
             }
         } else {
-            throw new InvalidCommandException("number must be an integer");
+            return "number must be an integer";
         }
     }
 
@@ -180,6 +180,11 @@ public class SellerProcessor extends Processor {
             throw new InvalidCommandException("startTime must be before endTime");
         }
         ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);
+    }
+
+    public void editField(UserPersonalInfo userPersonalInfo, String companyName) {
+        super.editField(userPersonalInfo);
+        ((Seller) user).setCompany(Company.getCompanyByName(companyName));
     }
 
 }

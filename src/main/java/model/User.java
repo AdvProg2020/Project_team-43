@@ -116,4 +116,8 @@ public abstract class User {
     public String toString() {
         return username + ":" + userPersonalInfo.toString();
     }
+
+    public void setUserPersonalInfo(UserPersonalInfo userPersonalInfo) {
+        this.userPersonalInfo = userPersonalInfo;
+    }
 }
