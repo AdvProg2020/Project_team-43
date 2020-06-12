@@ -1,160 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0"
-      prefWidth="1074.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="Controller.Graphic.ProductPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductPanelController">
     <children>
-        <Pane layoutX="809.0" layoutY="111.0" prefHeight="699.0" prefWidth="229.0"
-              style="-fx-background-color: #e8ede4; -fx-background-radius: 10;">
+        <Pane layoutX="809.0" layoutY="111.0" prefHeight="699.0" prefWidth="229.0" style="-fx-background-color: #e8ede4; -fx-background-radius: 10;">
             <effect>
-                <DropShadow/>
+                <DropShadow />
             </effect>
             <children>
                 <TextArea layoutX="48.0" layoutY="14.0" prefHeight="43.0" prefWidth="167.0" text="categories">
                     <font>
-                        <Font name="Arial Black" size="15.0"/>
+                        <Font name="Arial Black" size="15.0" />
                     </font>
                 </TextArea>
-                <ImageView fitHeight="43.0" fitWidth="34.0" layoutX="14.0" layoutY="14.0"
-                           onMouseMoved="#showCategories">
+                <ImageView fitHeight="43.0" fitWidth="34.0" layoutX="14.0" layoutY="14.0" onMouseMoved="#showCategories">
                     <image>
-                        <Image url="@transparentLight22.png"/>
+                        <Image url="@transparentLight22.png" />
                     </image>
                 </ImageView>
-                <CheckBox layoutX="48.0" layoutY="102.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="167.0"
-                          text="Available Items">
+                <CheckBox layoutX="48.0" layoutY="102.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="167.0" text="Available Items">
                     <font>
-                        <Font name="Algerian" size="15.0"/>
+                        <Font name="Algerian" size="15.0" />
                     </font>
                 </CheckBox>
-                <TextArea layoutX="48.0" layoutY="139.0" prefHeight="37.0" prefWidth="167.0"
-                          promptText="search by name"/>
-                <TextArea layoutX="48.0" layoutY="182.0" prefHeight="37.0" prefWidth="167.0"
-                          promptText="category features"/>
-                <Text layoutX="20.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filters :"
-                      wrappingWidth="189.0">
+                <TextArea layoutX="48.0" layoutY="139.0" prefHeight="37.0" prefWidth="167.0" promptText="search by name" />
+                <TextArea layoutX="48.0" layoutY="182.0" prefHeight="37.0" prefWidth="167.0" promptText="category features" />
+                <Text layoutX="20.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filters :" wrappingWidth="189.0">
                     <font>
-                        <Font size="25.0"/>
+                        <Font size="25.0" />
                     </font>
                 </Text>
-                <Text layoutX="14.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorts :"
-                      wrappingWidth="179.6708984375">
+                <Text layoutX="14.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sorts :" wrappingWidth="179.6708984375">
                     <font>
-                        <Font size="25.0"/>
+                        <Font size="25.0" />
                     </font>
                 </Text>
-                <Text layoutX="27.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date : "/>
-                <TextField layoutX="31.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="YYYY"/>
-                <TextField layoutX="104.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="MM"/>
-                <TextField layoutX="170.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="dd"/>
-                <Text layoutX="87.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/"
-                      wrappingWidth="10.0"/>
-                <Text layoutX="156.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/"
-                      wrappingWidth="10.0"/>
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="365.0"
-                           onMouseClicked="#sortByDate">
+                <Text layoutX="27.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date : " />
+                <TextField layoutX="31.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="YYYY" />
+                <TextField layoutX="104.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="MM" />
+                <TextField layoutX="170.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="dd" />
+                <Text layoutX="87.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="10.0" />
+                <Text layoutX="156.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="10.0" />
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="365.0" onMouseClicked="#sortByDate">
                     <image>
-                        <Image url="@button_sort.png"/>
+                        <Image url="@button_sort.png" />
                     </image>
                 </ImageView>
                 <Slider layoutX="27.0" layoutY="442.0" prefHeight="17.0" prefWidth="189.0" showTickLabels="true">
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                 </Slider>
-                <Slider layoutX="27.0" layoutY="549.0" prefHeight="17.0" prefWidth="189.0" showTickLabels="true"/>
-                <Text layoutX="25.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price :"/>
-                <Text layoutX="26.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :"/>
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="473.0"
-                           onMouseClicked="#sortByPrice">
+                <Slider layoutX="27.0" layoutY="549.0" prefHeight="17.0" prefWidth="189.0" showTickLabels="true" />
+                <Text layoutX="25.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" />
+                <Text layoutX="26.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :" />
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="473.0" onMouseClicked="#sortByPrice">
                     <image>
-                        <Image url="@button_sort.png"/>
+                        <Image url="@button_sort.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="582.0"
-                           onMouseClicked="#sortByScore">
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="582.0" onMouseClicked="#sortByScore">
                     <image>
-                        <Image url="@button_sort.png"/>
+                        <Image url="@button_sort.png" />
                     </image>
                 </ImageView>
                 <ImageView layoutX="44.0" layoutY="639.0" onMouseClicked="#sortByView">
                     <image>
-                        <Image url="@button_sort-by-view.png"/>
+                        <Image url="@button_sort-by-view.png" />
                     </image>
                 </ImageView>
                 <ImageView fitHeight="31.0" fitWidth="59.0" layoutX="156.0" layoutY="227.0" onMouseClicked="#filter">
                     <image>
-                        <Image url="@button_filter.png"/>
+                        <Image url="@button_filter.png" />
                     </image>
                 </ImageView>
             </children>
         </Pane>
-        <AmbientLight color="CHARTREUSE" lightOn="true"/>
+        <AmbientLight color="CHARTREUSE" lightOn="true" />
         <ImageView fitHeight="56.0" fitWidth="661.0" layoutX="205.0" layoutY="14.0">
             <image>
-                <Image url="@button_product-panel.png"/>
+                <Image url="@button_product-panel.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="27.0" layoutY="71.0">
             <image>
-                <Image url="@user.png"/>
+                <Image url="@user.png" />
             </image>
         </ImageView>
-        <Text layoutX="80.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name"
-              wrappingWidth="117.6708984375"/>
-        <ListView fx:id="categoryListView" layoutX="601.0" layoutY="111.0" prefHeight="310.0" prefWidth="200.0"
-                  visible="false"/>
-        <Pane>
+        <Text layoutX="80.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name" wrappingWidth="117.6708984375" />
+        <ListView fx:id="categoryListView" layoutX="601.0" layoutY="111.0" prefHeight="310.0" prefWidth="200.0" visible="false" />
+        <Pane prefHeight="779.0" prefWidth="765.0">
             <children>
                 <VBox layoutX="47.0" layoutY="116.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image1" fitHeight="170.0" fitWidth="189.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image1" fitHeight="170.0" fitWidth="189.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name1" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price1" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name1" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price1" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image4" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image4" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name4" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price4" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name4" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price4" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image7" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image7" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name7" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price7" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name7" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price7" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                     </children>
@@ -165,44 +144,35 @@
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image2" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image2" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name2" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price2" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name2" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price2" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image5" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image5" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name5" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price5" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name5" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price5" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image8" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image8" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name8" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price8" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name8" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price8" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                     </children>
@@ -213,44 +183,35 @@
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image3" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image3" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name3" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price3" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name3" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price3" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image6" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image6" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name6" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price6" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name6" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price6" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image9" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0"
-                                           layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image9" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@product.jpg"/>
+                                        <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name9" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="name"/>
-                                <Label fx:id="price9" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0"
-                                       text="price"/>
+                                <Label fx:id="name9" layoutX="4.0" layoutY="171.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price9" layoutX="4.0" layoutY="198.0" prefHeight="31.0" prefWidth="220.0" text="price" />
                             </children>
                         </Pane>
                     </children>
@@ -259,12 +220,12 @@
         </Pane>
         <ImageView fitHeight="31.0" fitWidth="75.0" layoutX="722.0" layoutY="780.0" onMouseClicked="#nextPage">
             <image>
-                <Image url="@button_next.png"/>
+                <Image url="@button_next.png" />
             </image>
         </ImageView>
         <ImageView fitHeight="31.0" fitWidth="75.0" layoutX="640.0" layoutY="779.0" onMouseClicked="#previousPage">
             <image>
-                <Image url="@button_previous.png"/>
+                <Image url="@button_previous.png" />
             </image>
         </ImageView>
     </children>
