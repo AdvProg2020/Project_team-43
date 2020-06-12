@@ -91,7 +91,7 @@ public class ProductPanelController implements Initializable {
     }
 
     public void nextPage() {
-
+        
     }
 
     public void previousPage() {
