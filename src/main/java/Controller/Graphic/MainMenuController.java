@@ -3,9 +3,11 @@ package Controller.Graphic;
 import Controller.console.BuyerProcessor;
 import View.console.LoggedOutStatus;
 import View.graphic.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.Product;
 import model.UserType;
 
 public class MainMenuController {
@@ -50,4 +52,7 @@ public class MainMenuController {
         setLoginButtonText();
     }
 
+    public void productsPanelButtonClicked(ActionEvent actionEvent) {
+        ProductPanelWindow.getInstance().start(stage);
+    }
 }
