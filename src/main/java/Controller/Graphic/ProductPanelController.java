@@ -64,5 +64,4 @@ public class ProductPanelController implements Initializable {
         }
         categoryListView.setItems(categories);
     }
-
 }
