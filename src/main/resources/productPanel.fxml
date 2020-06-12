@@ -87,7 +87,6 @@
          </children>
       </Pane>
       <AmbientLight color="CHARTREUSE" lightOn="true" />
-      <ScrollPane layoutX="7.0" layoutY="113.0" prefHeight="699.0" prefWidth="786.0" />
       <ImageView fitHeight="56.0" fitWidth="661.0" layoutX="205.0" layoutY="14.0">
          <image>
             <Image url="@/button_product-panel.png" />
@@ -99,5 +98,6 @@
          </image>
       </ImageView>
       <Text layoutX="80.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name" wrappingWidth="117.6708984375" />
+      <ListView fx:id="categoryListView" layoutX="601.0" layoutY="111.0" prefHeight="400.0" prefWidth="200.0" onMouseClicked="#selectedCategory"/>
    </children>
 </Pane>
