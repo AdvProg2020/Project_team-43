@@ -45,12 +45,15 @@ public class BuyerMenuController extends Controller {
     }
 
     public void setCart() {
+        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(Product.getProductById("1"),
+                Product.getProductById("1").getSellers().get(0)));
         HashMap<Pair<Product, Seller>, Integer> cart = user.getNewBuyerCart();
         for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
-            products.getItems().add(productSellerPair.getKey() + " " +
-                    productSellerPair.getValue() + " " + cart.get(productSellerPair));
+            products.getItems().add(productSellerPair.getKey().getName() + " " +
+                    productSellerPair.getValue().getUsername() + " " + cart.get(productSellerPair));
         }
         products.setCellFactory(param -> (ListCell) new XCell(user));
+
 
     }
 
@@ -91,7 +94,6 @@ public class BuyerMenuController extends Controller {
             super.updateItem(item, empty);
             setText(null);
             setGraphic(null);
-
             if (item != null && !empty) {
                 label.setText(item);
                 setGraphic(hbox);
@@ -104,7 +106,10 @@ public class BuyerMenuController extends Controller {
             for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
                 if (productSellerPair.getKey().getName().equals(productName) &&
                         productSellerPair.getValue().getUsername().equals(sellerName)) {
-                    buyer.increaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                    BuyerProcessor.getInstance().increaseProduct(productSellerPair.getKey().getProductId(),
+                            productSellerPair.getValue().getUsername());
+                    label.setText(productSellerPair.getKey().getName() + " " + productSellerPair.getValue().getUsername() + " " +
+                            buyer.getNewBuyerCart().get(productSellerPair));
                 }
             }
 
@@ -116,10 +121,16 @@ public class BuyerMenuController extends Controller {
             for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
                 if (productSellerPair.getKey().getName().equals(productName) &&
                         productSellerPair.getValue().getUsername().equals(sellerName)) {
-                    buyer.decreaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                    BuyerProcessor.getInstance().decreaseProduct(productSellerPair.getKey().getProductId(),
+                            productSellerPair.getValue().getUsername());
+                    if (buyer.getNewBuyerCart().containsKey(productSellerPair)) {
+                        label.setText(productSellerPair.getKey().getName() + " " + productSellerPair.getValue().getUsername() + " " +
+                                buyer.getNewBuyerCart().get(productSellerPair));
+                    } else {
+                        getListView().getItems().remove(getItem());
+                    }
                 }
             }
-
         }
     }
 }

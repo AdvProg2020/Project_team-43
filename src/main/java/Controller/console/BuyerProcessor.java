@@ -50,12 +50,14 @@ public class BuyerProcessor extends Processor {
 
     public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
         if (newBuyerCart.containsKey(productSellerPair)) {
-            newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
+            increaseProduct(productSellerPair.getKey().getProductId(), productSellerPair.getValue().getUsername());
+            //newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
         } else {
-            newBuyerCart.put(productSellerPair, 1);
+            if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey()))
+                newBuyerCart.put(productSellerPair, 1);
         }
-        productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
-        productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
+        //productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
+        //productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
         if (user != null)
             setNewBuyerCart();
     }
@@ -137,10 +139,11 @@ public class BuyerProcessor extends Processor {
             return;
         Product product = Product.getProductById(productId);
         Seller seller = (Seller) User.getUserByUserName(sellerName);
-        if (Objects.requireNonNull(seller).isProductAvailable(product)) {
+        int inCart = ((Buyer) user).getNewBuyerCart().get(new Pair<>(product, seller));
+        if (Objects.requireNonNull(seller).productNumber(product) > inCart) {
             ((Buyer) user).increaseCart(product, (Seller) User.getUserByUserName(sellerName));
-            Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() - 1);
-            seller.decreaseProduct(product);
+            //Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() - 1);
+            //seller.decreaseProduct(product);
         } else
             errorMessage("not available any more");
     }
@@ -152,8 +155,8 @@ public class BuyerProcessor extends Processor {
         Product product = Product.getProductById(productId);
         Seller seller = (Seller) User.getUserByUserName(sellerName);
         ((Buyer) user).decreaseCart(product, (Seller) User.getUserByUserName(sellerName));
-        Objects.requireNonNull(seller).increaseProduct(product);
-        Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() + 1);
+        //Objects.requireNonNull(seller).increaseProduct(product);
+        //Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() + 1);
     }
 
     public double showTotalPrice() {

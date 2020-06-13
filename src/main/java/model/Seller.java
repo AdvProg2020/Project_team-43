@@ -201,6 +201,11 @@ public class Seller extends User {
         return productsNumber.get(product) > 0;
     }
 
+    public int productNumber(Product product) {
+        return productsNumber.get(product);
+
+    }
+
     public void decreaseProduct(Product product) {
         productsNumber.replace(product, productsNumber.get(product), productsNumber.get(product) - 1);
     }
