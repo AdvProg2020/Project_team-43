@@ -22,6 +22,7 @@ import java.util.HashMap;
 public class BuyerMenuController extends Controller {
     public ListView<String> products;
     public Text userName;
+    public Text totalPrice;
     BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -41,6 +42,9 @@ public class BuyerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        if (user.getImagePath() != null) {
+            profilePhoto.setImage(new Image("file:" + user.getImagePath()));
+        }
         setCart();
     }
 
@@ -52,9 +56,12 @@ public class BuyerMenuController extends Controller {
             products.getItems().add(productSellerPair.getKey().getName() + " " +
                     productSellerPair.getValue().getUsername() + " " + cart.get(productSellerPair));
         }
-        products.setCellFactory(param -> (ListCell) new XCell(user));
+        products.setCellFactory(param -> new XCell(user));
+        setTotalPrice(Double.toString(user.getNewCartPrice()));
+    }
 
-
+    public void setTotalPrice(String text) {
+        this.totalPrice.setText(text);
     }
 
     public void update() {
@@ -72,7 +79,7 @@ public class BuyerMenuController extends Controller {
         }
     }
 
-    static class XCell extends ListCell<String> {
+    private class XCell extends ListCell<String> {
         Buyer buyer;
         HBox hbox = new HBox();
         Label label = new Label("");
@@ -112,6 +119,8 @@ public class BuyerMenuController extends Controller {
                             buyer.getNewBuyerCart().get(productSellerPair));
                 }
             }
+            setTotalPrice(Double.toString(user.getNewCartPrice()));
+
 
         }
 
@@ -131,6 +140,7 @@ public class BuyerMenuController extends Controller {
                     }
                 }
             }
+            setTotalPrice(Double.toString(user.getNewCartPrice()));
         }
     }
 }
