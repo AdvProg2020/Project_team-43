@@ -1,17 +1,22 @@
 package Controller.Graphic;
 
 import Controller.console.BossProcessor;
+import com.sun.org.apache.bcel.internal.classfile.Code;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import model.Product;
-import model.Seller;
-import model.User;
-import model.UserPersonalInfo;
+import javafx.stage.FileChooser;
+import model.*;
+
+import java.io.File;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -34,12 +39,55 @@ public class ManagerMenuController extends Controller {
     public TextField emailCreateManager;
     public TextField passwordCreateManager;
     public TextField phoneCreateManager;
+    public TextField discountCode;
+    public TextField startYear;
+    public TextField startMonth;
+    public TextField startDay;
+    public TextField endYear;
+    public TextField endMonth;
+    public TextField endDay;
+    public TextField discountAmount;
+    public TextField repeat;
+    public TextField createStartYear;
+    public TextField createStartMonth;
+    public TextField createStartDay;
+    public TextField createEndYear;
+    public TextField createEndMonth;
+    public TextField createEndDay;
+    public TextField createDiscountAmount;
+    public TextField createRepeat;
+    public TextField categoryName;
+    public TextField newFeature;
+    public TextField createCategoryName;
+    public TextField createCategoryAddFeature;
     public ListView usersListView;
     public ListView productsListView;
+    public ListView codedDiscountListView;
+    public ListView categoryListView;
+    public ListView featuresListView;
+    public ListView createCategoryFeaturesListView;
     ObservableList<String> users;
     ObservableList<String> products;
+    ObservableList<String> codedDiscounts;
+    ObservableList<String> categories;
+    ObservableList<String> createCategoryFeatures;
     public Pane userInfoPane;
     public Pane productInfoPane;
+    public Pane codedDiscountInfoPane;
+    public Pane categoryInfoPane;
+    public Pane changeFeaturePane;
+    public Pane createCategoryPane;
+    public String selectedFeature;
+    public ImageView profilePhoto;
+    private Manager user;
+
+    public ManagerMenuController() {
+        users = FXCollections.observableArrayList();
+        products = FXCollections.observableArrayList();
+        codedDiscounts = FXCollections.observableArrayList();
+        categories = FXCollections.observableArrayList();
+        createCategoryFeatures = FXCollections.observableArrayList();
+    }
 
     public void showUserInfo() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
@@ -70,6 +118,43 @@ public class ManagerMenuController extends Controller {
         productInfoPane.setVisible(true);
     }
 
+    public void showCodedDiscountInfo() {
+        String discountCode = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
+        showCodedDiscount(codedDiscount);
+    }
+
+    public void showCodedDiscount(CodedDiscount codedDiscount) {
+        //TODO : set date
+        discountCode.setPromptText(codedDiscount.getDiscountCode());
+        discountAmount.setPromptText("" + codedDiscount.getDiscountAmount());
+        repeat.setPromptText("" + codedDiscount.getRepeat());
+        codedDiscountInfoPane.setVisible(true);
+    }
+
+    public void showCategoryInfo() {
+        String categoryName = categoryListView.getSelectionModel().getSelectedItems().toString();
+        Category category = Category.getCategoryByName(categoryName);
+        showCategory(category);
+    }
+
+    public void showCategory(Category category) {
+        categoryName.setPromptText(category.getName());
+        ObservableList<String> features = FXCollections.observableArrayList();
+        for (String feature : category.getFeatures()) {
+            features.add(feature);
+        }
+        featuresListView.setItems(features);
+        createCategoryPane.setVisible(false);
+        categoryInfoPane.setVisible(true);
+    }
+
+    public void showChangeToPane() {
+        selectedFeature = featuresListView.getSelectionModel().getSelectedItems().toString();
+        changeFeaturePane.setVisible(true);
+
+    }
+
     public void createManagerProfile() {
 
     }
@@ -78,22 +163,85 @@ public class ManagerMenuController extends Controller {
         productInfoPane.setVisible(false);
     }
 
+
     public void closeUserInfo() {
         userInfoPane.setVisible(false);
+    }
+
+    public void closeCodedDiscountInfo() {
+        codedDiscountInfoPane.setVisible(false);
+    }
+
+    public void closeCategoryInfo() {
+        categoryInfoPane.setVisible(false);
+        createCategoryPane.setVisible(true);
+    }
+
+    public void closeChangeTo() {
+        changeFeaturePane.setVisible(false);
     }
 
     public void deleteUser() {
 
     }
 
+    public void editCategory() {
+
+    }
+
+    public void createAddFeature() {
+        String feature = createCategoryAddFeature.getText();
+        createCategoryFeatures.add(feature);
+        createCategoryFeaturesListView.setItems(createCategoryFeatures);
+        createCategoryAddFeature.clear();
+    }
+
+    public void createRemoveFeature() {
+        String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItems().toString();
+        createCategoryFeatures.remove(selectedFeature);
+        createCategoryFeaturesListView.setItems(createCategoryFeatures);
+    }
+
+    public void createCategory(){
+
+    }
+
+
+    public void createCodedDiscount() {
+
+    }
+
+    public void editCodedDiscount() {
+
+    }
+
+    public void removeCodedDiscount() {
+
+    }
+
+    public void removeCategory() {
+
+    }
+
+    public void changeFeature() {
+        //TODO
+
+        changeFeaturePane.setVisible(false);
+    }
+
+
     @FXML
     public void initialize() {
-        UserPersonalInfo userPersonalInfo = bossProcessor.getUser().getUserPersonalInfo();
+        user = (Manager)bossProcessor.getUser();
+        UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
         lastName.setText(userPersonalInfo.getLastName());
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        if (user.getImagePath() != null) {
+            profilePhoto.setImage(new Image("file:" + user.getImagePath()));
+        }
         for (User user : User.allUsers) {
             users.add(user.getUsername());
         }
@@ -102,11 +250,28 @@ public class ManagerMenuController extends Controller {
             products.add(product.getName() + " / " + product.getProductId());
         }
         productsListView.setItems(products);
+        for (CodedDiscount discount : CodedDiscount.allCodedDiscount) {
+            codedDiscounts.add(discount.getDiscountCode());
+        }
+        codedDiscountListView.setItems(codedDiscounts);
+        for (Category category : Category.getAllCategories()) {
+            categories.add(category.getName());
+        }
+        categoryListView.setItems(categories);
     }
 
-    /*public void update() {
+    public void update() {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
-    }*/
+    }
+
+    public void browsePhotoUser() {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            user.setImagePath(file.getAbsolutePath());
+            profilePhoto.setImage(new Image(file.toURI().toString()));
+        }
+    }
 }
