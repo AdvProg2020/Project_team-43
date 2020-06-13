@@ -113,8 +113,18 @@ public class Buyer extends User {
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
         this.checkSumPaymentForOff();
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
+        }
         makingSellOrders();
         this.newBuyerCart.clear();
+    }
+
+    public void decreaseInSeller(Pair<Product, Seller> productSellerPair, int decreaseNumber) {
+        for (int i = 0; i < decreaseNumber; i++) {
+            productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
+        }
+
     }
 
     public void checkSumPaymentForOff() {
