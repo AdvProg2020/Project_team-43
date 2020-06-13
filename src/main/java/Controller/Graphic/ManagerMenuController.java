@@ -9,9 +9,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import model.*;
+
+import java.io.File;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -73,6 +78,8 @@ public class ManagerMenuController extends Controller {
     public Pane changeFeaturePane;
     public Pane createCategoryPane;
     public String selectedFeature;
+    public ImageView profilePhoto;
+    private Manager user;
 
     public ManagerMenuController() {
         users = FXCollections.observableArrayList();
@@ -225,12 +232,16 @@ public class ManagerMenuController extends Controller {
 
     @FXML
     public void initialize() {
-        UserPersonalInfo userPersonalInfo = bossProcessor.getUser().getUserPersonalInfo();
+        user = (Manager)bossProcessor.getUser();
+        UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
         lastName.setText(userPersonalInfo.getLastName());
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        if (user.getImagePath() != null) {
+            profilePhoto.setImage(new Image("file:" + user.getImagePath()));
+        }
         for (User user : User.allUsers) {
             users.add(user.getUsername());
         }
@@ -249,9 +260,18 @@ public class ManagerMenuController extends Controller {
         categoryListView.setItems(categories);
     }
 
-    /*public void update() {
+    public void update() {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
-    }*/
+    }
+
+    public void browsePhotoUser() {
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            user.setImagePath(file.getAbsolutePath());
+            profilePhoto.setImage(new Image(file.toURI().toString()));
+        }
+    }
 }
