@@ -55,11 +55,7 @@ public class SellerManageProductMenu extends Menu {
                 String id = scanner.nextLine();
                 System.out.println("edit [field]");
                 String field = scanner.nextLine();
-                try {
-                    System.out.println(sellerProcessor.editProductInfo(id, field));
-                } catch (InvalidCommandException e) {
-                    System.out.println(e.getMessage());
-                }
+                System.out.println(sellerProcessor.editProductInfo(id, field));
             }
 
             @Override

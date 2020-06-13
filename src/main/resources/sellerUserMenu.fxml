@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.media.*?>
 <?import java.lang.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
@@ -104,7 +105,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
                                 <TextField fx:id="productIdTextField" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" />
                                 <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="product id" textAlignment="CENTER">
@@ -113,14 +114,11 @@
                                     </font>
                                 </Text>
                                 <Text fx:id="invalidIdProduct" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
-                                <ImageView fitHeight="34.0" fitWidth="87.0" layoutX="102.0" layoutY="86.0" onMouseClicked="#showProduct" style="-fx-cursor: hand;">
-                                    <image>
-                                        <Image url="@button_apply.png" />
-                                    </image>
-                                    <effect>
-                                        <InnerShadow />
-                                    </effect>
-                                </ImageView>
+                        <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
                             </children>
                         </Pane>
                         <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="550.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -128,7 +126,7 @@
                                 <Image url="@user.png" />
                             </image>
                         </ImageView>
-                        <ListView fx:id="productFeaturesList" layoutX="525.0" layoutY="200.0" prefHeight="200.0" prefWidth="200.0" visible="false" />
+                        <ListView fx:id="productFeaturesList" layoutX="525.0" layoutY="193.0" prefHeight="224.0" prefWidth="200.0" visible="false" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
@@ -137,6 +135,17 @@
                                 <Image url="@button_back.png" />
                             </image>
                         </ImageView>
+                  <Text fx:id="buyerText" layoutX="370.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyers" textAlignment="CENTER" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <ListView fx:id="buyersListView" layoutX="295.0" layoutY="265.0" prefHeight="163.0" prefWidth="200.0" visible="false" />
+                  <Text fx:id="statusText" layoutX="62.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="168.21826171875">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
                     </children>
                 </AnchorPane>
             </content>
