@@ -1,7 +1,6 @@
 package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -13,7 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import model.*;
 
-import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 
@@ -37,6 +35,10 @@ public class SellerMenuController extends Controller {
     public Text messageText;
     public Text usernameText;
     public ImageView profilePhoto;
+    public TextField productIdTextField;
+    public Text invalidIdProduct;
+    public ImageView productPhoto;
+    public ListView<String> productFeaturesList;
     private Seller user;
     private String productPhotoPath;
 
@@ -116,5 +118,30 @@ public class SellerMenuController extends Controller {
             productPhotoPath = file.getAbsolutePath();
         }
 
+    }
+
+    public void showProduct() {
+        productFeaturesList.getItems().clear();
+        String id = productIdTextField.getText();
+        if (sellerProcessor.checkProduct(id)) {
+            Product product = Product.getProductById(id);
+
+            if (product.getImagePath() != null) {
+                productPhoto.setImage(new Image("file:" + product.getImagePath()));
+            }
+            productPhoto.setVisible(true);
+            productFeaturesList.setVisible(true);
+            invalidIdProduct.setVisible(false);
+            productFeaturesList.getItems().add("Name: " + product.getName());
+            productFeaturesList.getItems().add("Price: " + product.getPrice());
+            productFeaturesList.getItems().add("Category: " + product.getCategory().getName());
+            productFeaturesList.getItems().add("Company: " + product.getCompany().getName());
+            for (String feature : product.getFeaturesMap().keySet()) {
+                productFeaturesList.getItems().add(feature + ": " + product.getFeaturesMap().get(feature));
+            }
+
+        } else {
+            invalidIdProduct.setVisible(true);
+        }
     }
 }
