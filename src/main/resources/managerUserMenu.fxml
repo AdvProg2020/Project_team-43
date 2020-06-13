@@ -11,7 +11,7 @@
     <tabs>
         <Tab text="personal Info">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                     <children>
                         <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
@@ -340,7 +340,7 @@
         </Tab>
       <Tab text="manage requests">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" prefHeight="570.0" prefWidth="312.0">
                      <children>
@@ -549,7 +549,7 @@
       </Tab>
       <Tab text="manage categories">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                <children>
                   <Pane fx:id="categoryInfoPane" layoutX="335.0" layoutY="92.0" prefHeight="372.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
                      <children>
