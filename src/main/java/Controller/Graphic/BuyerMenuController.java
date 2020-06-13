@@ -44,6 +44,12 @@ public class BuyerMenuController extends Controller {
                     productSellerPair.getValue() + " " + cart.get(productSellerPair));
         }
         products.setCellFactory(param -> (ListCell) new XCell((Buyer) buyerProcessor.getUser()));
+        /*
+        for (Product product : Product.allProductsInList) {
+            products.getItems().add(product.getName());
+        }
+        products.setCellFactory(param -> (ListCell) new XCell((Buyer) buyerProcessor.getUser()));
+        */
 
     }
 
@@ -66,7 +72,8 @@ public class BuyerMenuController extends Controller {
             this.buyer = buyer;
             hbox.getChildren().addAll(label, pane, addButton, removeButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            System.out.println(getItem());
+            addButton.setOnAction(event -> addItem(getItem()));
+            removeButton.setOnAction(event -> removeItem(getItem()));
         }
 
         @Override
@@ -74,10 +81,30 @@ public class BuyerMenuController extends Controller {
             super.updateItem(item, empty);
             setText(null);
             setGraphic(null);
-
             if (item != null && !empty) {
                 label.setText(item);
                 setGraphic(hbox);
+            }
+        }
+
+        private void addItem(String item) {
+            String productName = item.split(" ")[0];
+            String sellerName = item.split(" ")[1];
+            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) && productSellerPair.getValue().equals(sellerName)) {
+                    buyer.increaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                }
+            }
+
+        }
+
+        private void removeItem(String item) {
+            String productName = item.split(" ")[0];
+            String sellerName = item.split(" ")[1];
+            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) && productSellerPair.getValue().equals(sellerName)) {
+                    buyer.decreaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                }
             }
         }
     }
