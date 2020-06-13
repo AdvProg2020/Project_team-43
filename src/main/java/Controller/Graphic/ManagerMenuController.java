@@ -74,7 +74,7 @@ public class ManagerMenuController extends Controller {
 
     }
 
-    public void closeProductInfo(){
+    public void closeProductInfo() {
         productInfoPane.setVisible(false);
     }
 
