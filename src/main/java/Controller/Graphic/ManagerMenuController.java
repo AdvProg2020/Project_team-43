@@ -138,6 +138,7 @@ public class ManagerMenuController extends Controller {
             features.add(feature);
         }
         featuresListView.setItems(features);
+        createCategoryPane.setVisible(false);
         categoryInfoPane.setVisible(true);
     }
 
@@ -166,6 +167,7 @@ public class ManagerMenuController extends Controller {
 
     public void closeCategoryInfo() {
         categoryInfoPane.setVisible(false);
+        createCategoryPane.setVisible(true);
     }
 
     public void closeChangeTo() {
