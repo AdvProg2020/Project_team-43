@@ -1,1 +1,1 @@
-[{"company":{"name":"samsung","info":"none"},"productsNumberWithId":{},"offsId":[],"sellOrdersId":[],"username":"parsa","userPersonalInfo":{"firstName":"p","lastName":"p","email":"p","phoneNumber":"9109003899","password":"parsa"},"balance":100000.0,"userType":"SELLER"}]
+[{"company":{"name":"samsung","info":"none"},"productsNumberWithId":{"0":4},"offsId":[],"sellOrdersId":[],"username":"parsa","userPersonalInfo":{"firstName":"p","lastName":"p","email":"p","phoneNumber":"9109003899","password":"parsa"},"balance":100000.0,"userType":"SELLER"}]
