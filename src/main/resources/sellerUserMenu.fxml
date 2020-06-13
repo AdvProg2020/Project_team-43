@@ -5,129 +5,158 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+         prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <TextField fx:id="firstName" layoutX="190.0" layoutY="39.0" />
-                        <TextField fx:id="lastName" layoutX="190.0" layoutY="90.0" />
-                        <TextField fx:id="email" layoutX="190.0" layoutY="145.0" />
-                        <TextField fx:id="password" layoutX="190.0" layoutY="197.0" />
-                        <TextField fx:id="phoneNumber" layoutX="190.0" layoutY="248.0" />
-                        <Text layoutX="50.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
+                        <TextField fx:id="firstName" layoutX="190.0" layoutY="39.0"/>
+                        <TextField fx:id="lastName" layoutX="190.0" layoutY="90.0"/>
+                        <TextField fx:id="email" layoutX="190.0" layoutY="145.0"/>
+                        <TextField fx:id="password" layoutX="190.0" layoutY="197.0"/>
+                        <TextField fx:id="phoneNumber" layoutX="190.0" layoutY="248.0"/>
+                        <Text layoutX="50.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name"
+                              textAlignment="CENTER">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Text>
-                        <Text layoutX="50.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
+                        <Text layoutX="50.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name"
+                              textAlignment="CENTER">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Text>
-                        <Text layoutX="50.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER">
+                        <Text layoutX="50.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email"
+                              textAlignment="CENTER">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Text>
-                        <Text layoutX="50.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
+                        <Text layoutX="50.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password"
+                              textAlignment="CENTER">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Text>
-                        <Text layoutX="50.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
+                        <Text layoutX="50.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number"
+                              textAlignment="CENTER">
                             <font>
-                                <Font size="17.0" />
+                                <Font size="17.0"/>
                             </font>
                         </Text>
-                        <Button layoutX="190.0" layoutY="350.0" mnemonicParsing="false" onAction="#update" text="update" />
-                  <Text layoutX="50.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="company" layoutX="190.0" layoutY="305.0" />
-                  <Button layoutX="796.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="back" />
-                    </children></AnchorPane>
+                        <Button layoutX="190.0" layoutY="350.0" mnemonicParsing="false" onAction="#update"
+                                text="update"/>
+                        <Text layoutX="50.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <TextField fx:id="company" layoutX="190.0" layoutY="305.0"/>
+                        <Button layoutX="796.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="back"/>
+                    </children>
+                </AnchorPane>
             </content>
         </Tab>
         <Tab text="Manage Product">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <ListView fx:id="productsList" layoutX="14.0" layoutY="14.0" prefHeight="574.0" prefWidth="837.0" />
-               </children></AnchorPane>
+                    <children>
+                        <ListView fx:id="productsList" layoutX="14.0" layoutY="14.0" prefHeight="574.0"
+                                  prefWidth="837.0"/>
+                    </children>
+                </AnchorPane>
             </content>
         </Tab>
-      <Tab text="Add Product">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
-                  <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0" />
-                  <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add existing product" wrappingWidth="166.94287109375">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0" />
-                  <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new product" wrappingWidth="166.94287109375">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0" />
-                  <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
-                  <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
-                  <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
-                  <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0" />
-                  <Button layoutX="559.0" layoutY="322.0" mnemonicParsing="false" onAction="#addNewProduct" text="Apply" />
-                  <Text fx:id="invalidCategory" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
-                  <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
-               </children>
-            </AnchorPane>
-        </content>
-      </Tab>
-      <Tab text="Manage Off">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
+        <Tab text="Add Product">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct"
+                                text="Apply"/>
+                        <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0"/>
+                        <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Add existing product" wrappingWidth="166.94287109375">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0"/>
+                        <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Add new product" wrappingWidth="166.94287109375">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="17.0"/>
+                            </font>
+                        </Text>
+                        <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0"/>
+                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0"/>
+                        <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0"/>
+                        <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0"/>
+                        <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0"/>
+                        <Button layoutX="559.0" layoutY="322.0" mnemonicParsing="false" onAction="#addNewProduct"
+                                text="Apply"/>
+                        <Text fx:id="invalidCategory" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false"
+                              wrappingWidth="181.6708984375"/>
+                        <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false"
+                              wrappingWidth="182.6708984375"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Manage Off">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
     </tabs>
 </TabPane>
