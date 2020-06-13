@@ -147,7 +147,7 @@ public class ManagerMenuController extends Controller {
 
     public void showCodedDiscountInfo() {
         String discountCode = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
-        selectedCodedDiscount= CodedDiscount.getDiscountById(discountCode);
+        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCode);
         showCodedDiscount(selectedCodedDiscount);
     }
 
@@ -247,15 +247,36 @@ public class ManagerMenuController extends Controller {
 
     public void acceptRequest() throws InvalidCommandException, ParseException {
         ((Manager) Processor.user).acceptRequest(selectedRequest);
+        closeRequestInfo();
+        updateRequestListView();
     }
 
     public void declineRequest() {
         ((Manager) Processor.user).declineRequest(selectedRequest);
+        closeRequestInfo();
+        updateRequestListView();
+    }
+
+    public void updateRequestListView() {
+        requests.clear();
+        for (Request request : Request.getAllRequests()) {
+            requests.add(request.getRequestId());
+        }
+        requestsListView.setItems(requests);
     }
 
     public void deleteUser() {
         ((Manager) Processor.user).deleteUser(selectedUser);
+        closeUserInfo();
+        updateUsersListView();
+    }
 
+    public void updateUsersListView() {
+        users.clear();
+        for (User user : User.allUsers) {
+            users.add(user.getUsername());
+        }
+        usersListView.setItems(users);
     }
 
     public void editCategory() {
@@ -290,11 +311,11 @@ public class ManagerMenuController extends Controller {
 
     public void removeCodedDiscount() {
         ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
-        codedDiscountInfoPane.setVisible(false);
+        closeCodedDiscountInfo();
         updateCodedDiscountListView();
     }
 
-    public void updateCodedDiscountListView(){
+    public void updateCodedDiscountListView() {
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : CodedDiscount.allCodedDiscount) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -304,11 +325,11 @@ public class ManagerMenuController extends Controller {
 
     public void removeCategory() {
         ((Manager) Processor.user).removeCategory(selectedCategory);
-        categoryInfoPane.setVisible(false);
+        closeCategoryInfo();
         updateCategoryListView();
     }
 
-    public void updateCategoryListView(){
+    public void updateCategoryListView() {
         categories.clear();
         for (Category category : Category.getAllCategories()) {
             categories.add(category.getName());
