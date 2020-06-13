@@ -27,7 +27,7 @@ public class BuyerMenuController extends Controller {
         products.getItems().add("heeloo");
     }
 
-    public void update(ActionEvent actionEvent) {
+    public void update() {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         buyerProcessor.editField(userPersonalInfo);

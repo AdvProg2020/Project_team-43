@@ -104,7 +104,7 @@ public class ManagerMenuController extends Controller {
         productsListView.setItems(products);
     }
 
-    /*public void update(ActionEvent actionEvent) {
+    /*public void update() {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);

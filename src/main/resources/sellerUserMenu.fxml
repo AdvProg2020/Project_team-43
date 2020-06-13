@@ -1,107 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-         prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0"
-                            style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0">
                     <children>
-                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0"
-                              style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0"
-                                           prefWidth="188.0" promptText="first name"/>
-                                <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0"
-                                           prefWidth="187.0" promptText="last name"/>
-                                <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="phone number" textAlignment="CENTER">
+                                <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
+                                <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
+                                <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="38.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email"
-                                      textAlignment="CENTER">
+                                <Text layoutX="38.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0"
-                                           prefWidth="186.0" promptText="phone number"/>
-                                <Text layoutX="35.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="password" textAlignment="CENTER">
+                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0" prefWidth="186.0" promptText="phone number" />
+                                <Text layoutX="35.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="35.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="last name" textAlignment="CENTER">
+                                <Text layoutX="35.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="first name" textAlignment="CENTER">
+                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0"
-                                           prefWidth="187.0" promptText="email"/>
-                                <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password"/>
-                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="328.0">
+                                <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0" prefWidth="187.0" promptText="email" />
+                                <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password" />
+                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="328.0" onMouseClicked="#update" style="-fx-cursor: hand;">
                                     <image>
-                                        <Image url="@button_update.png"/>
+                                        <Image url="@button_update.png" />
                                     </image>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
                                 </ImageView>
-                                <TextField fx:id="company" layoutX="178.0" layoutY="278.0" promptText="company"/>
-                                <Text layoutX="37.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="company" textAlignment="CENTER">
+                                <TextField fx:id="company" layoutX="177.0" layoutY="274.0" promptText="company" />
+                                <Text layoutX="37.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
                             </children>
                         </Pane>
-                        <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0"
-                              style="-fx-background-color: #448760; -fx-background-radius: 10;">
+                        <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0" style="-fx-background-color: #448760; -fx-background-radius: 10;">
                             <children>
-                                <ImageView fitHeight="179.0" fitWidth="179.0" layoutX="4.0" layoutY="6.0"
-                                           pickOnBounds="true" preserveRatio="true">
+                                <Text fx:id="usernameText" fontSmoothingType="LCD" layoutX="12.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="163.6708984375">
+                                    <font>
+                                        <Font name="Century" size="20.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="11.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyer" wrappingWidth="166.6708984375">
+                                    <font>
+                                        <Font name="Century" size="17.0" />
+                                    </font>
+                                </Text>
+                                <ImageView fitHeight="33.0" fitWidth="119.0" layoutX="64.0" layoutY="257.0" onMouseClicked="#browsePhotoUser" style="-fx-cursor: hand;">
                                     <image>
-                                        <Image url="@user.png"/>
+                                        <Image url="@button_browse-photo.png" />
                                     </image>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
                                 </ImageView>
-                                <Text fontSmoothingType="LCD" layoutX="12.0" layoutY="218.0" strokeType="OUTSIDE"
-                                      strokeWidth="0.0" text="user name" wrappingWidth="163.6708984375">
-                                    <font>
-                                        <Font name="Century" size="20.0"/>
-                                    </font>
-                                </Text>
-                                <Text layoutX="11.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyer"
-                                      wrappingWidth="166.6708984375">
-                                    <font>
-                                        <Font name="Century" size="17.0"/>
-                                    </font>
-                                </Text>
-                                <ImageView fitHeight="33.0" fitWidth="119.0" layoutX="64.0" layoutY="257.0">
+                                <ImageView fx:id="profilePhoto" fitHeight="179.0" fitWidth="179.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@button_browse-photo.png"/>
+                                        <Image url="@user.png" />
                                     </image>
                                 </ImageView>
                             </children>
                         </Pane>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
                         </ImageView>
                     </children>
                 </AnchorPane>
@@ -111,8 +104,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ListView fx:id="productsList" layoutX="14.0" layoutY="14.0" prefHeight="574.0"
-                                  prefWidth="837.0"/>
+                        <ListView fx:id="productsList" layoutX="14.0" layoutY="14.0" prefHeight="574.0" prefWidth="837.0" />
                     </children>
                 </AnchorPane>
             </content>
@@ -121,84 +113,70 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct"
-                                text="Apply"/>
-                        <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"
-                              textAlignment="CENTER">
+                        <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
+                        <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0"/>
-                        <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Add existing product" wrappingWidth="166.94287109375">
+                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0" />
+                        <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add existing product" wrappingWidth="166.94287109375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
-                              textAlignment="CENTER">
+                        <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0"/>
-                        <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Add new product" wrappingWidth="166.94287109375">
+                        <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0" />
+                        <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new product" wrappingWidth="166.94287109375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0"/>
-                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0"/>
-                        <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0"/>
-                        <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0"/>
-                        <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0"/>
-                        <Button layoutX="559.0" layoutY="322.0" mnemonicParsing="false" onAction="#addNewProduct"
-                                text="Apply"/>
-                        <Text fx:id="invalidCategory" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false"
-                              wrappingWidth="181.6708984375"/>
-                        <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false"
-                              wrappingWidth="182.6708984375"/>
+                        <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0" />
+                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
+                        <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
+                        <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
+                        <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0" />
+                        <Button layoutX="559.0" layoutY="351.0" mnemonicParsing="false" onAction="#addNewProduct" text="Apply" />
+                        <Text fx:id="invalidCategory" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
+                        <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
+                  <Button layoutX="503.0" layoutY="303.0" mnemonicParsing="false" onAction="#browsePhotoProduct" style="-fx-background-radius: 25;" text="browse photo" />
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
         <Tab text="Manage Off">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
         </Tab>
     </tabs>
