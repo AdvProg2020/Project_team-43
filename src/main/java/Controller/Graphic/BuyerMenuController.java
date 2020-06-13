@@ -33,7 +33,7 @@ public class BuyerMenuController extends Controller {
 
     @FXML
     public void initialize() {
-        user = (Buyer)buyerProcessor.getUser();
+        user = (Buyer) buyerProcessor.getUser();
         userName.setText(user.getUsername());
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
@@ -45,7 +45,7 @@ public class BuyerMenuController extends Controller {
     }
 
     public void setCart() {
-        HashMap<Pair<Product, Seller>, Integer> cart =  user.getNewBuyerCart();
+        HashMap<Pair<Product, Seller>, Integer> cart = user.getNewBuyerCart();
         for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
             products.getItems().add(productSellerPair.getKey() + " " +
                     productSellerPair.getValue() + " " + cart.get(productSellerPair));
@@ -82,7 +82,8 @@ public class BuyerMenuController extends Controller {
             this.buyer = buyer;
             hbox.getChildren().addAll(label, pane, addButton, removeButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            System.out.println(getItem());
+            addButton.setOnAction(event -> addItem(getItem()));
+            removeButton.setOnAction(event -> removeItem(getItem()));
         }
 
         @Override
@@ -95,6 +96,30 @@ public class BuyerMenuController extends Controller {
                 label.setText(item);
                 setGraphic(hbox);
             }
+        }
+
+        private void addItem(String item) {
+            String productName = item.split(" ")[0];
+            String sellerName = item.split(" ")[1];
+            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) &&
+                        productSellerPair.getValue().getUsername().equals(sellerName)) {
+                    buyer.increaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                }
+            }
+
+        }
+
+        private void removeItem(String item) {
+            String productName = item.split(" ")[0];
+            String sellerName = item.split(" ")[1];
+            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) &&
+                        productSellerPair.getValue().getUsername().equals(sellerName)) {
+                    buyer.decreaseCart(productSellerPair.getKey(), productSellerPair.getValue());
+                }
+            }
+
         }
     }
 }
