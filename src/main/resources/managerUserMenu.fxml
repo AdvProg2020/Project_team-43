@@ -436,7 +436,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane layoutX="345.0" layoutY="147.0" prefHeight="293.0" prefWidth="305.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
+                  <Pane fx:id="productRequestPane" layoutX="353.0" layoutY="164.0" prefHeight="293.0" prefWidth="305.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
                      <children>
                         <Text fill="#097dc9" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request info" wrappingWidth="241.6708984375">
                            <font>
@@ -490,7 +490,7 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Pane layoutX="366.0" layoutY="170.0" prefHeight="293.0" prefWidth="305.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
+                  <Pane fx:id="offRequestPane" layoutX="353.0" layoutY="164.0" prefHeight="293.0" prefWidth="305.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
                      <children>
                         <Text fill="#097dc9" layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request info" wrappingWidth="241.6708984375">
                            <font>
@@ -517,7 +517,7 @@
                               <Font size="19.0" />
                            </font>
                         </Text>
-                        <Text fx:id="offID" layoutX="100.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off Id">
+                        <Text fx:id="offId" layoutX="100.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off Id">
                            <font>
                               <Font size="19.0" />
                            </font>
