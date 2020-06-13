@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
          prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.BuyerMenuController">
@@ -59,10 +59,14 @@
                                 <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0"
                                            prefWidth="187.0" promptText="email"/>
                                 <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password"/>
-                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="291.0">
+                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="291.0"
+                                           onMouseClicked="#update" style="-fx-cursor: hand;">
                                     <image>
                                         <Image url="@button_update.png"/>
                                     </image>
+                                    <effect>
+                                        <InnerShadow/>
+                                    </effect>
                                 </ImageView>
                             </children>
                         </Pane>
@@ -75,14 +79,15 @@
                                         <Image url="@user.png"/>
                                     </image>
                                 </ImageView>
-                                <Text fontSmoothingType="LCD" layoutX="12.0" layoutY="218.0" strokeType="OUTSIDE"
-                                      strokeWidth="0.0" text="user name" wrappingWidth="163.6708984375">
+                                <Text fx:id="userName" fontSmoothingType="LCD" layoutX="12.0" layoutY="218.0"
+                                      strokeType="OUTSIDE" strokeWidth="0.0" text="username"
+                                      wrappingWidth="163.6708984375">
                                     <font>
                                         <Font name="Century" size="20.0"/>
                                     </font>
                                 </Text>
-                                <Text layoutX="11.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="Buyer" wrappingWidth="166.6708984375">
+                                <Text layoutX="11.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyer"
+                                      wrappingWidth="166.6708984375">
                                     <font>
                                         <Font name="Century" size="17.0"/>
                                     </font>
@@ -94,10 +99,14 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0"
+                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png"/>
                             </image>
+                            <effect>
+                                <InnerShadow/>
+                            </effect>
                         </ImageView>
                     </children>
                 </AnchorPane>

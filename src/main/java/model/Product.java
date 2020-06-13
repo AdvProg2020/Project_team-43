@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.image.Image;
 import model.database.Loader;
 import model.database.Saver;
 
