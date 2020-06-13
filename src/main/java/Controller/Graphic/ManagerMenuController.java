@@ -1,6 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BossProcessor;
+import Controller.console.Processor;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ import model.request.Request;
 import model.request.SellerRequest;
 
 import java.io.File;
+import java.text.ParseException;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -95,8 +97,12 @@ public class ManagerMenuController extends Controller {
     public Pane sellerRequestPane;
     public Pane offRequestPane;
     public Pane productRequestPane;
-    public String selectedFeature;
-    public Request selectedRequest;
+    private String selectedFeature;
+    private Request selectedRequest;
+    private Category selectedCategory;
+    private CodedDiscount selectedCodedDiscount;
+    private User selectedUser;
+    private Product selectedProduct;
     public ImageView profilePhoto;
     private Manager user;
 
@@ -111,7 +117,8 @@ public class ManagerMenuController extends Controller {
 
     public void showUserInfo() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        showUser(User.getUserByUserName(userName));
+        selectedUser = User.getUserByUserName(userName);
+        showUser(selectedUser);
     }
 
     public void showUser(User user) {
@@ -127,8 +134,8 @@ public class ManagerMenuController extends Controller {
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
         String productId = productNameAndId.split(" / ")[1];
-        Product product = Product.getProductById(productId);
-        showProduct(product);
+        selectedProduct = Product.getProductById(productId);
+        showProduct(selectedProduct);
     }
 
     public void showProduct(Product product) {
@@ -140,8 +147,8 @@ public class ManagerMenuController extends Controller {
 
     public void showCodedDiscountInfo() {
         String discountCode = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
-        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        showCodedDiscount(codedDiscount);
+        selectedCodedDiscount= CodedDiscount.getDiscountById(discountCode);
+        showCodedDiscount(selectedCodedDiscount);
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -152,28 +159,28 @@ public class ManagerMenuController extends Controller {
         codedDiscountInfoPane.setVisible(true);
     }
 
-    public void showRequestInfo(){
+    public void showRequestInfo() {
         String requestId = requestsListView.getSelectionModel().getSelectedItems().toString();
-        Request request = Request.getRequestById(requestId);
-        showRequest(request);
+        selectedRequest = Request.getRequestById(requestId);
+        showRequest(selectedRequest);
     }
 
-    public void showRequest(Request request){
+    public void showRequest(Request request) {
         sellerRequestPane.setVisible(false);
         offRequestPane.setVisible(false);
         productRequestPane.setVisible(false);
-        if(request instanceof ProductRequest){
-            ProductRequest productRequest = (ProductRequest)request;
+        if (request instanceof ProductRequest) {
+            ProductRequest productRequest = (ProductRequest) request;
             requestIdProduct.setText(request.getRequestId());
             productId.setText(productRequest.getProduct().getProductId());
             productRequestPane.setVisible(true);
-        } else if(request instanceof OffRequest){
-            OffRequest offRequest = (OffRequest)request;
+        } else if (request instanceof OffRequest) {
+            OffRequest offRequest = (OffRequest) request;
             requestIdOff.setText(request.getRequestId());
             offId.setText(offRequest.getOff().getOffId());
             offRequestPane.setVisible(true);
-        } else if(request instanceof SellerRequest){
-            SellerRequest sellerRequest = (SellerRequest)request;
+        } else if (request instanceof SellerRequest) {
+            SellerRequest sellerRequest = (SellerRequest) request;
             requestIdSeller.setText(request.getRequestId());
             userNameSeller.setText(sellerRequest.getSeller().getUsername());
             firstNameSeller.setText(sellerRequest.getSeller().getUserPersonalInfo().getFirstName());
@@ -232,13 +239,22 @@ public class ManagerMenuController extends Controller {
         changeFeaturePane.setVisible(false);
     }
 
-    public void closeRequestInfo(){
+    public void closeRequestInfo() {
         sellerRequestPane.setVisible(false);
         offRequestPane.setVisible(false);
         productRequestPane.setVisible(false);
     }
 
+    public void acceptRequest() throws InvalidCommandException, ParseException {
+        ((Manager) Processor.user).acceptRequest(selectedRequest);
+    }
+
+    public void declineRequest() {
+        ((Manager) Processor.user).declineRequest(selectedRequest);
+    }
+
     public void deleteUser() {
+        ((Manager) Processor.user).deleteUser(selectedUser);
 
     }
 
@@ -273,11 +289,31 @@ public class ManagerMenuController extends Controller {
     }
 
     public void removeCodedDiscount() {
+        ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
+        codedDiscountInfoPane.setVisible(false);
+        updateCodedDiscountListView();
+    }
 
+    public void updateCodedDiscountListView(){
+        codedDiscounts.clear();
+        for (CodedDiscount codedDiscount : CodedDiscount.allCodedDiscount) {
+            codedDiscounts.add(codedDiscount.getDiscountCode());
+        }
+        codedDiscountListView.setItems(codedDiscounts);
     }
 
     public void removeCategory() {
+        ((Manager) Processor.user).removeCategory(selectedCategory);
+        categoryInfoPane.setVisible(false);
+        updateCategoryListView();
+    }
 
+    public void updateCategoryListView(){
+        categories.clear();
+        for (Category category : Category.getAllCategories()) {
+            categories.add(category.getName());
+        }
+        categoryListView.setItems(categories);
     }
 
     public void changeFeature() {
