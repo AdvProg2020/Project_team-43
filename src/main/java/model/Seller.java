@@ -115,6 +115,13 @@ public class Seller extends User {
         new ProductRequest(product, this, number);
     }
 
+    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features, String path) {
+        Product product = new Product(name, company, price, category);
+        product.setFeaturesMap(features);
+        product.setImagePath(path);
+        new ProductRequest(product, this, number);
+    }
+
     public void addExistingProduct(String productId, int number) {
         new ProductRequest(Product.getProductById(productId), this, number);
     }

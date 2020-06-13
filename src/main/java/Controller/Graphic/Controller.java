@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public abstract class Controller {
     protected Stage stage = MainWindow.getInstance().getStage();
-    public void goBack(ActionEvent actionEvent) {
+    public void goBack() {
         MainWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 }
