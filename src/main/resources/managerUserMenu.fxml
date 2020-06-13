@@ -86,7 +86,7 @@
         </Tab>
         <Tab text="manage users">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" visible="false">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" visible="false">
                     <children>
                         <Pane layoutX="29.0" layoutY="24.0" prefHeight="480.0" prefWidth="252.0" style="-fx-background-radius: 5;">
                             <children>
@@ -169,7 +169,7 @@
         </Tab>
         <Tab text="manage products">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                     <children>
                         <Pane layoutX="29.0" layoutY="24.0" prefHeight="491.0" prefWidth="352.0" style="-fx-background-radius: 5;">
                             <children>
@@ -212,67 +212,225 @@
         </Tab>
         <Tab text="coded discount">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
+                    <children>
+                        <Pane layoutX="12.0" layoutY="21.0" prefHeight="510.0" prefWidth="265.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                            <children>
+                                <ListView fx:id="codedDiscountListView" layoutY="40.0" onMouseClicked="#showCodedDiscountInfo" prefHeight="468.0" prefWidth="262.0" style="-fx-background-radius: 10;" />
+                              <Text fill="#097dc9" layoutX="8.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coded discounts" wrappingWidth="248.6708984375">
+                                  <font>
+                                      <Font name="Broadway" size="20.0" />
+                                  </font>
+                              </Text>
+                            </children>
+                        </Pane>
+                        <Pane layoutX="281.0" layoutY="95.0" prefHeight="366.0" prefWidth="277.0" style="-fx-background-color: ccfce0; -fx-background-radius: 10;">
+                            <children>
+                                <Text layoutX="14.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="start time :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="16.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="end time :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="14.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount amount :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="14.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="repeat :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <TextField fx:id="createRepeat" layoutX="92.0" layoutY="200.0" prefHeight="31.0" prefWidth="181.0" promptText="repeat" />
+                                <TextField fx:id="createDiscountAmount" layoutX="157.0" layoutY="154.0" prefHeight="31.0" prefWidth="116.0" promptText="amount" />
+                                <TextField fx:id="createStartYear" layoutX="103.0" layoutY="71.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
+                                <TextField fx:id="createEndYear" layoutX="94.0" layoutY="116.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
+                                <TextField fx:id="createStartMonth" layoutX="171.0" layoutY="71.0" prefHeight="31.0" prefWidth="44.0" promptText="MM" />
+                                <TextField fx:id="createStartDay" layoutX="230.0" layoutY="71.0" prefHeight="31.0" prefWidth="43.0" promptText="dd" />
+                                <TextField fx:id="createEndMonth" layoutX="161.0" layoutY="116.0" prefHeight="31.0" prefWidth="44.0" promptText="MM" />
+                                <TextField fx:id="createEndDay" layoutX="220.0" layoutY="116.0" prefHeight="31.0" prefWidth="43.0" promptText="dd" />
+                                <Text layoutX="160.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="219.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="152.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="211.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <ImageView fitHeight="43.0" fitWidth="211.0" layoutX="32.0" layoutY="279.0" onMouseClicked="#createCodedDiscount">
+                                    <image>
+                                        <Image url="@button_create-coded-discount.png" />
+                                    </image>
+                                </ImageView>
+                                <Text fill="#097dc9" layoutX="6.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create coded discounts" wrappingWidth="248.6708984375">
+                                    <font>
+                                        <Font name="Broadway" size="20.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                        </Pane>
+                        <Pane fx:id="codedDiscountInfoPane" layoutX="568.0" layoutY="95.0" prefHeight="366.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                            <children>
+                                <TextField fx:id="endYear" layoutX="125.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
+                                <TextField fx:id="startYear" layoutX="125.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
+                                <Text layoutX="30.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount amount :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="30.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="repeat :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="30.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="end time :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="30.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="start time :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <TextField fx:id="discountAmount" layoutX="170.0" layoutY="177.0" prefHeight="31.0" prefWidth="133.0" promptText="amount" />
+                                <TextField fx:id="repeat" layoutX="118.0" layoutY="227.0" prefHeight="31.0" prefWidth="187.0" promptText="repeat" />
+                                <TextField fx:id="startMonth" layoutX="197.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
+                                <TextField fx:id="startDay" layoutX="269.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
+                                <TextField fx:id="endMonth" layoutX="197.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
+                                <TextField fx:id="endDay" layoutX="269.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
+                                <Text layoutX="184.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="256.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="185.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <Text layoutX="256.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
+                                <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="36.0" layoutY="300.0" onMouseClicked="#editCodedDiscount">
+                                    <image>
+                                        <Image url="@button_edit.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="38.0" fitWidth="138.0" layoutX="167.0" layoutY="300.0" onMouseClicked="#removeCodedDiscount">
+                                    <image>
+                                        <Image url="@button_remove-code.png" />
+                                    </image>
+                                </ImageView>
+                                <Text layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="code :" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="17.0" />
+                                    </font>
+                                </Text>
+                                <TextField fx:id="discountCode" layoutX="125.0" layoutY="25.0" prefHeight="30.0" prefWidth="198.0" promptText="discount code" />
+                        <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="306.0" layoutY="3.0" onMouseClicked="#closeCodedDiscountInfo">
+                           <image>
+                              <Image url="@transparentLight33.png" />
+                           </image>
+                        </ImageView>
+                            </children>
+                        </Pane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+      <Tab text="manage requests">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="manage categories">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Pane layoutX="14.0" layoutY="45.0" prefHeight="486.0" prefWidth="253.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                  <Pane fx:id="categoryInfoPane" layoutX="335.0" layoutY="92.0" prefHeight="372.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
                      <children>
-                        <ListView fx:id="codedDiscountListView" layoutX="4.0" layoutY="2.0" onMouseClicked="#showCodedDiscountInfo" prefHeight="480.0" prefWidth="246.0" style="-fx-background-radius: 10;" />
-                     </children>
-                  </Pane>
-                  <Pane layoutX="283.0" layoutY="15.0" prefHeight="515.0" prefWidth="244.0" style="-fx-background-color: ccfce0; -fx-background-radius: 10;" />
-                  <Pane layoutX="546.0" layoutY="95.0" prefHeight="366.0" prefWidth="330.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
-                     <children>
-                        <TextField fx:id="endYear" layoutX="125.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
-                        <TextField fx:id="startYear" layoutX="125.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
-                        <Text layoutX="30.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount amount :" textAlignment="CENTER">
+                        <Text layoutX="30.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="features :" textAlignment="CENTER">
                            <font>
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Text layoutX="30.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="repeat :" textAlignment="CENTER">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="30.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="end time :" textAlignment="CENTER">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="29.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="start time :" textAlignment="CENTER">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Text>
-                        <TextField fx:id="discountAmount" layoutX="170.0" layoutY="177.0" prefHeight="31.0" prefWidth="133.0" promptText="amount" />
-                        <TextField fx:id="repeat" layoutX="118.0" layoutY="227.0" prefHeight="31.0" prefWidth="187.0" promptText="repeat" />
-                        <TextField fx:id="startMonth" layoutX="197.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
-                        <TextField fx:id="startDay" layoutX="269.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
-                        <TextField fx:id="endMonth" layoutX="197.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
-                        <TextField fx:id="endDay" layoutX="269.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
-                        <Text layoutX="184.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
-                        <Text layoutX="256.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
-                        <Text layoutX="185.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
-                        <Text layoutX="256.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
-                        <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="36.0" layoutY="300.0" onMouseClicked="#editCodedDiscount">
+                        <ImageView fitHeight="37.0" fitWidth="73.0" layoutX="30.0" layoutY="309.0" onMouseClicked="#editCategory">
                            <image>
                               <Image url="@button_edit.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="38.0" fitWidth="138.0" layoutX="167.0" layoutY="300.0" onMouseClicked="#removeCodedDiscount">
+                        <Text layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name :" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="categoryName" layoutX="109.0" layoutY="27.0" prefHeight="30.0" prefWidth="198.0" promptText="category name" />
+                        <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="306.0" layoutY="3.0" onMouseClicked="#closeCategoryInfo">
                            <image>
-                              <Image url="@button_remove-code.png" />
+                              <Image url="@transparentLight33.png" />
+                           </image>
+                        </ImageView>
+                        <ListView fx:id="featuresListView" layoutX="108.0" layoutY="81.0" onMouseClicked="#showChangeToPane" prefHeight="158.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
+                        <ImageView fitHeight="39.0" fitWidth="140.0" layoutX="166.0" layoutY="308.0" onMouseClicked="#removeCategory">
+                           <image>
+                              <Image url="@button_remove-category.png" />
+                           </image>
+                        </ImageView>
+                        <Text layoutX="30.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add feature :" />
+                        <TextField fx:id="newFeature" layoutX="121.0" layoutY="248.0" promptText="new feature" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="changeFeaturePane" layoutX="674.0" layoutY="181.0" prefHeight="137.0" prefWidth="211.0" style="-fx-background-color: #4ee6c7; -fx-background-radius: 5;" visible="false">
+                     <children>
+                        <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change To :" />
+                        <TextField fx:id="changedFeature" layoutX="45.0" layoutY="34.0" prefHeight="31.0" prefWidth="147.0" />
+                        <ImageView fitHeight="31.0" fitWidth="34.0" layoutX="-9.0" layoutY="50.0">
+                           <image>
+                              <Image url="@transparentLight23.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="34.0" fitWidth="99.0" layoutX="68.0" layoutY="96.0" onMouseClicked="#changeFeature">
+                           <image>
+                              <Image url="@button_change.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="186.0" layoutY="3.0" onMouseClicked="#closeChangeTo">
+                           <image>
+                              <Image url="@transparentLight33.png" />
                            </image>
                         </ImageView>
                      </children>
                   </Pane>
-                  <Text fill="#097dc9" layoutX="16.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coded discounts" wrappingWidth="248.6708984375">
-                     <font>
-                        <Font name="Broadway" size="20.0" />
-                     </font>
-                  </Text>
-               </children></AnchorPane>
-            </content>
-        </Tab>
+                  <Pane layoutX="14.0" layoutY="14.0" prefHeight="508.0" prefWidth="289.0">
+                     <children>
+                        <ListView fx:id="categoryListView" layoutX="5.0" layoutY="54.0" onMouseClicked="#showCategoryInfo" prefHeight="453.0" prefWidth="283.0" style="-fx-background-radius: 5;" />
+                        <Text fill="#097dc9" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="categories" wrappingWidth="248.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="createCategoryPane" layoutX="337.0" layoutY="92.0" prefHeight="371.0" prefWidth="325.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;">
+                     <children>
+                        <Text fill="#097dc9" layoutX="7.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create category" wrappingWidth="248.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category name :" />
+                        <TextField fx:id="createCategoryName" layoutX="132.0" layoutY="45.0" />
+                        <Text layoutX="14.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="features :" />
+                        <TextField fx:id="createCategoryFeature" layoutX="89.0" layoutY="97.0" prefHeight="31.0" prefWidth="162.0" />
+                        <ListView fx:id="createCategoryFeaturesListView" layoutX="137.0" layoutY="139.0" onMouseClicked="#createRemoveFeature" prefHeight="181.0" prefWidth="178.0" style="-fx-background-radius: 5;" />
+                        <ImageView fitHeight="31.0" fitWidth="55.0" layoutX="263.0" layoutY="97.0" onMouseClicked="#createAddFeature">
+                           <image>
+                              <Image url="@button_add.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="33.0" fitWidth="80.0" layoutX="14.0" layoutY="320.0" onMouseClicked="#createCategory">
+                           <image>
+                              <Image url="@button_create.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
     </tabs>
 </TabPane>
