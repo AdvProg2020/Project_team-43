@@ -1,6 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BossProcessor;
+import Controller.console.Processor;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,8 +16,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
+import model.request.OffRequest;
+import model.request.ProductRequest;
+import model.request.Request;
+import model.request.SellerRequest;
 
 import java.io.File;
+import java.text.ParseException;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -66,18 +72,37 @@ public class ManagerMenuController extends Controller {
     public ListView categoryListView;
     public ListView featuresListView;
     public ListView createCategoryFeaturesListView;
+    public ListView requestsListView;
+    public Text requestIdOff;
+    public Text requestIdProduct;
+    public Text requestIdSeller;
+    public Text userNameSeller;
+    public Text firstNameSeller;
+    public Text lastNameSeller;
+    public Text companyNameSeller;
+    public Text offId;
+    public Text productId;
     ObservableList<String> users;
     ObservableList<String> products;
     ObservableList<String> codedDiscounts;
     ObservableList<String> categories;
     ObservableList<String> createCategoryFeatures;
+    ObservableList<String> requests;
     public Pane userInfoPane;
     public Pane productInfoPane;
     public Pane codedDiscountInfoPane;
     public Pane categoryInfoPane;
     public Pane changeFeaturePane;
     public Pane createCategoryPane;
-    public String selectedFeature;
+    public Pane sellerRequestPane;
+    public Pane offRequestPane;
+    public Pane productRequestPane;
+    private String selectedFeature;
+    private Request selectedRequest;
+    private Category selectedCategory;
+    private CodedDiscount selectedCodedDiscount;
+    private User selectedUser;
+    private Product selectedProduct;
     public ImageView profilePhoto;
     private Manager user;
 
@@ -87,11 +112,13 @@ public class ManagerMenuController extends Controller {
         codedDiscounts = FXCollections.observableArrayList();
         categories = FXCollections.observableArrayList();
         createCategoryFeatures = FXCollections.observableArrayList();
+        requests = FXCollections.observableArrayList();
     }
 
     public void showUserInfo() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        showUser(User.getUserByUserName(userName));
+        selectedUser = User.getUserByUserName(userName);
+        showUser(selectedUser);
     }
 
     public void showUser(User user) {
@@ -107,8 +134,8 @@ public class ManagerMenuController extends Controller {
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
         String productId = productNameAndId.split(" / ")[1];
-        Product product = Product.getProductById(productId);
-        showProduct(product);
+        selectedProduct = Product.getProductById(productId);
+        showProduct(selectedProduct);
     }
 
     public void showProduct(Product product) {
@@ -120,8 +147,8 @@ public class ManagerMenuController extends Controller {
 
     public void showCodedDiscountInfo() {
         String discountCode = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
-        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
-        showCodedDiscount(codedDiscount);
+        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCode);
+        showCodedDiscount(selectedCodedDiscount);
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -130,6 +157,37 @@ public class ManagerMenuController extends Controller {
         discountAmount.setPromptText("" + codedDiscount.getDiscountAmount());
         repeat.setPromptText("" + codedDiscount.getRepeat());
         codedDiscountInfoPane.setVisible(true);
+    }
+
+    public void showRequestInfo() {
+        String requestId = requestsListView.getSelectionModel().getSelectedItems().toString();
+        selectedRequest = Request.getRequestById(requestId);
+        showRequest(selectedRequest);
+    }
+
+    public void showRequest(Request request) {
+        sellerRequestPane.setVisible(false);
+        offRequestPane.setVisible(false);
+        productRequestPane.setVisible(false);
+        if (request instanceof ProductRequest) {
+            ProductRequest productRequest = (ProductRequest) request;
+            requestIdProduct.setText(request.getRequestId());
+            productId.setText(productRequest.getProduct().getProductId());
+            productRequestPane.setVisible(true);
+        } else if (request instanceof OffRequest) {
+            OffRequest offRequest = (OffRequest) request;
+            requestIdOff.setText(request.getRequestId());
+            offId.setText(offRequest.getOff().getOffId());
+            offRequestPane.setVisible(true);
+        } else if (request instanceof SellerRequest) {
+            SellerRequest sellerRequest = (SellerRequest) request;
+            requestIdSeller.setText(request.getRequestId());
+            userNameSeller.setText(sellerRequest.getSeller().getUsername());
+            firstNameSeller.setText(sellerRequest.getSeller().getUserPersonalInfo().getFirstName());
+            lastNameSeller.setText(sellerRequest.getSeller().getUserPersonalInfo().getLastName());
+            companyNameSeller.setText(sellerRequest.getSeller().getCompany().getName());
+            sellerRequestPane.setVisible(true);
+        }
     }
 
     public void showCategoryInfo() {
@@ -181,8 +239,44 @@ public class ManagerMenuController extends Controller {
         changeFeaturePane.setVisible(false);
     }
 
-    public void deleteUser() {
+    public void closeRequestInfo() {
+        sellerRequestPane.setVisible(false);
+        offRequestPane.setVisible(false);
+        productRequestPane.setVisible(false);
+    }
 
+    public void acceptRequest() throws InvalidCommandException, ParseException {
+        ((Manager) Processor.user).acceptRequest(selectedRequest);
+        closeRequestInfo();
+        updateRequestListView();
+    }
+
+    public void declineRequest() {
+        ((Manager) Processor.user).declineRequest(selectedRequest);
+        closeRequestInfo();
+        updateRequestListView();
+    }
+
+    public void updateRequestListView() {
+        requests.clear();
+        for (Request request : Request.getAllRequests()) {
+            requests.add(request.getRequestId());
+        }
+        requestsListView.setItems(requests);
+    }
+
+    public void deleteUser() {
+        ((Manager) Processor.user).deleteUser(selectedUser);
+        closeUserInfo();
+        updateUsersListView();
+    }
+
+    public void updateUsersListView() {
+        users.clear();
+        for (User user : User.allUsers) {
+            users.add(user.getUsername());
+        }
+        usersListView.setItems(users);
     }
 
     public void editCategory() {
@@ -202,7 +296,7 @@ public class ManagerMenuController extends Controller {
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
 
-    public void createCategory(){
+    public void createCategory() {
 
     }
 
@@ -216,11 +310,31 @@ public class ManagerMenuController extends Controller {
     }
 
     public void removeCodedDiscount() {
+        ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
+        closeCodedDiscountInfo();
+        updateCodedDiscountListView();
+    }
 
+    public void updateCodedDiscountListView() {
+        codedDiscounts.clear();
+        for (CodedDiscount codedDiscount : CodedDiscount.allCodedDiscount) {
+            codedDiscounts.add(codedDiscount.getDiscountCode());
+        }
+        codedDiscountListView.setItems(codedDiscounts);
     }
 
     public void removeCategory() {
+        ((Manager) Processor.user).removeCategory(selectedCategory);
+        closeCategoryInfo();
+        updateCategoryListView();
+    }
 
+    public void updateCategoryListView() {
+        categories.clear();
+        for (Category category : Category.getAllCategories()) {
+            categories.add(category.getName());
+        }
+        categoryListView.setItems(categories);
     }
 
     public void changeFeature() {
@@ -232,7 +346,7 @@ public class ManagerMenuController extends Controller {
 
     @FXML
     public void initialize() {
-        user = (Manager)bossProcessor.getUser();
+        user = (Manager) bossProcessor.getUser();
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
         lastName.setText(userPersonalInfo.getLastName());
@@ -258,6 +372,10 @@ public class ManagerMenuController extends Controller {
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
+        for (Request request : Request.getAllRequests()) {
+            requests.add(request.getRequestId());
+        }
+        requestsListView.setItems(requests);
     }
 
     public void update() {
