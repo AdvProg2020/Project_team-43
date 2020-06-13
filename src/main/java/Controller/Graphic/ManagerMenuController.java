@@ -133,8 +133,9 @@ public class ManagerMenuController extends Controller {
 
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
-        String productId = productNameAndId.split(" / ")[1];
-        selectedProduct = Product.getProductById(productId);
+        String temp =productNameAndId.split(" /")[1].trim();
+        String productId = temp.substring(0, temp.length()-1);
+        selectedProduct = Product.getAllProductById(productId);
         showProduct(selectedProduct);
     }
 
