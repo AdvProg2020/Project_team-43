@@ -17,10 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
-import model.request.OffRequest;
-import model.request.ProductRequest;
-import model.request.Request;
-import model.request.SellerRequest;
+import model.request.*;
 
 import javax.print.DocFlavor;
 import java.io.File;
@@ -29,6 +26,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -88,6 +87,14 @@ public class ManagerMenuController extends Controller {
     public Text firstNameSeller;
     public Text lastNameSeller;
     public Text companyNameSeller;
+    public Text requestIdEditOff;
+    public Text requestIdEditProduct;
+    public Text editProductField;
+    public Text editOffField;
+    public Text editProductNewValue;
+    public Text editOffNewValue;
+    public Text editProductId;
+    public Text editOffId;
     public Text offId;
     public Text productId;
     ObservableList<String> users;
@@ -105,6 +112,8 @@ public class ManagerMenuController extends Controller {
     public Pane sellerRequestPane;
     public Pane offRequestPane;
     public Pane productRequestPane;
+    public Pane editOffRequestPane;
+    public Pane editProductRequestPane;
     private String selectedFeature;
     private Request selectedRequest;
     private Category selectedCategory;
@@ -133,7 +142,7 @@ public class ManagerMenuController extends Controller {
     public void showUser(User user) {
         if (user.getImagePath() != null) {
             userProfilePhoto.setImage(new Image("file:" + user.getImagePath()));
-        } else{
+        } else {
             File file = new File("src/main/resources/user.png");
             Image image = new Image(file.toURI().toString());
             userProfilePhoto.setImage(image);
@@ -158,7 +167,7 @@ public class ManagerMenuController extends Controller {
     public void showProduct(Product product) {
         if (product.getImagePath() != null) {
             productImage.setImage(new Image("file:" + product.getImagePath()));
-        } else{
+        } else {
             File file = new File("src/main/resources/product.jpg");
             Image image = new Image(file.toURI().toString());
             productImage.setImage(image);
@@ -170,9 +179,14 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscountInfo() {
-        String discountCode = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
-        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCode);
-        showCodedDiscount(selectedCodedDiscount);
+        String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
+        Pattern pattern = Pattern.compile("\\[(.+)\\]");
+        Matcher matcher = pattern.matcher(discountCodePrime);
+        if (matcher.matches()) {
+            selectedCodedDiscount = CodedDiscount.getDiscountById(matcher.group(1));
+            showCodedDiscount(selectedCodedDiscount);
+        }
+
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -184,15 +198,22 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showRequestInfo() {
-        String requestId = requestsListView.getSelectionModel().getSelectedItems().toString();
-        selectedRequest = Request.getRequestById(requestId);
-        showRequest(selectedRequest);
+        String requestIdPrime = requestsListView.getSelectionModel().getSelectedItems().toString();
+        Pattern pattern = Pattern.compile("\\[(.+)\\]");
+        Matcher matcher = pattern.matcher(requestIdPrime);
+        if (matcher.matches()) {
+            selectedRequest = Request.getRequestById(matcher.group(1));
+            showRequest(selectedRequest);
+        }
+
     }
 
     public void showRequest(Request request) {
         sellerRequestPane.setVisible(false);
         offRequestPane.setVisible(false);
         productRequestPane.setVisible(false);
+        editOffRequestPane.setVisible(false);
+        editProductRequestPane.setVisible(false);
         if (request instanceof ProductRequest) {
             ProductRequest productRequest = (ProductRequest) request;
             requestIdProduct.setText(request.getRequestId());
@@ -211,6 +232,22 @@ public class ManagerMenuController extends Controller {
             lastNameSeller.setText(sellerRequest.getSeller().getUserPersonalInfo().getLastName());
             companyNameSeller.setText(sellerRequest.getSeller().getCompany().getName());
             sellerRequestPane.setVisible(true);
+        } else if(request instanceof EditOffRequest){
+            EditOffRequest editOffRequest = (EditOffRequest)request;
+            requestIdEditOff.setText(request.getRequestId());
+            editOffId.setText(editOffRequest.getOff().getOffId());
+            editOffField.setText(editOffRequest.getField());
+            editOffNewValue.setText(editOffRequest.getInput());
+            editOffRequestPane.setVisible(true);
+            System.out.println(editOffRequest.getInput());
+        } else if(request instanceof EditProductRequest){
+            EditProductRequest editProductRequest = (EditProductRequest)request;
+            requestIdEditProduct.setText(request.getRequestId());
+            editProductId.setText(editProductRequest.getProduct().getProductId());
+            editProductField.setText(editProductRequest.getField());
+            editProductNewValue.setText(editProductRequest.getInput());
+            editProductRequestPane.setVisible(true);
+            System.out.println(editProductRequest.getInput());
         }
     }
 
@@ -315,10 +352,17 @@ public class ManagerMenuController extends Controller {
         sellerRequestPane.setVisible(false);
         offRequestPane.setVisible(false);
         productRequestPane.setVisible(false);
+        editProductRequestPane.setVisible(false);
+        editOffRequestPane.setVisible(false);
     }
-
-    public void acceptRequest() throws InvalidCommandException, ParseException {
-        ((Manager) Processor.user).acceptRequest(selectedRequest);
+    public void acceptRequest()  {
+        try {
+            ((Manager) Processor.user).acceptRequest(selectedRequest);
+        } catch (InvalidCommandException e) {
+            showErrorAlert(e.getMessage());
+        } catch (ParseException e) {
+            showErrorAlert("invalid date");
+        }
         closeRequestInfo();
         updateRequestListView();
     }
@@ -450,36 +494,36 @@ public class ManagerMenuController extends Controller {
                 clearCodedDiscountInfo();
                 return;
             }
-        } else{
-            discountAmount = selectedCodedDiscount.getDiscountAmount()+"";
+        } else {
+            discountAmount = selectedCodedDiscount.getDiscountAmount() + "";
         }
-        if(!repeat.getText().isEmpty()){
-            if(repeat.getText().matches("\\d+")){
+        if (!repeat.getText().isEmpty()) {
+            if (repeat.getText().matches("\\d+")) {
                 discountRepeat = repeat.getText();
-            } else{
+            } else {
                 showErrorAlert("invalid repeat");
                 clearCodedDiscountInfo();
                 return;
             }
-        } else{
-            discountRepeat = selectedCodedDiscount.getRepeat()+"";
+        } else {
+            discountRepeat = selectedCodedDiscount.getRepeat() + "";
         }
         if (beforeAfterDate(startDate, endDate)) {
             selectedCodedDiscount.setStartTime(startDate);
             selectedCodedDiscount.setEndTime(endDate);
             selectedCodedDiscount.setDiscountAmount(discountAmount);
             selectedCodedDiscount.setRepeat(discountRepeat);
-        } else{
+        } else {
             showErrorAlert("startTime should be before endTime");
             return;
         }
     }
 
-    public boolean beforeAfterDate(Date startDate, Date endDate){
+    public boolean beforeAfterDate(Date startDate, Date endDate) {
         return startDate.before(endDate);
     }
 
-    public void clearCodedDiscountInfo(){
+    public void clearCodedDiscountInfo() {
         startYear.clear();
         startMonth.clear();
         startDay.clear();
@@ -524,9 +568,9 @@ public class ManagerMenuController extends Controller {
     }
 
     public void changeFeature() {
-        if(!changedFeature.getText().isEmpty()) {
+        if (!changedFeature.getText().isEmpty()) {
             try {
-                ((Manager)Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
+                ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
             } catch (InvalidCommandException e) {
                 showErrorAlert(e.getMessage());
             }

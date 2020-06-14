@@ -347,7 +347,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                <children>
-                  <Pane layoutX="14.0" layoutY="14.0" prefHeight="570.0" prefWidth="312.0">
+                  <Pane layoutX="14.0" layoutY="15.0" prefHeight="570.0" prefWidth="312.0">
                      <children>
                         <Text fill="#097dc9" layoutX="21.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="requests" wrappingWidth="248.6708984375">
                            <font>
@@ -543,6 +543,154 @@
                            </image>
                         </ImageView>
                         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="276.0" layoutY="-1.0" onMouseClicked="#closeRequestInfo">
+                           <image>
+                              <Image url="@transparentLight33.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="editProductRequestPane" layoutX="340.0" layoutY="123.0" prefHeight="383.0" prefWidth="331.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
+                     <children>
+                        <Text fill="#097dc9" layoutX="13.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request info" wrappingWidth="241.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="80.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edit product request" wrappingWidth="229.0498046875">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="product Id :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editProductId" layoutX="130.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="product Id">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="field :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editProductField" layoutX="80.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="field">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new value :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editProductNewValue" layoutX="130.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new value">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request Id :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="requestIdEditProduct" layoutX="130.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request Id">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="43.0" fitWidth="100.0" layoutX="30.0" layoutY="300.0" onMouseClicked="#acceptRequest">
+                           <image>
+                              <Image url="@button_accept.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="43.0" fitWidth="100.0" layoutX="195.0" layoutY="300.0" onMouseClicked="#declineRequest">
+                           <image>
+                              <Image url="@button_decline.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="302.0" layoutY="-1.0" onMouseClicked="#closeRequestInfo">
+                           <image>
+                              <Image url="@transparentLight33.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="editOffRequestPane" layoutX="340.0" layoutY="125.0" prefHeight="383.0" prefWidth="331.0" style="-fx-background-color: ccfce0; -fx-background-radius: 5;" visible="false">
+                     <children>
+                        <Text fill="#097dc9" layoutX="9.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request info" wrappingWidth="241.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="80.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="edit off request" wrappingWidth="229.0498046875">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off Id :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editOffId" layoutX="130.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off Id">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="field :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editOffField" layoutX="80.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="field">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new value :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="editOffNewValue" layoutX="130.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new value">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="14.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request Id :">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="requestIdEditOff" layoutX="130.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="request Id">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="43.0" fitWidth="100.0" layoutX="30.0" layoutY="300.0" onMouseClicked="#acceptRequest">
+                           <image>
+                              <Image url="@button_accept.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="43.0" fitWidth="100.0" layoutX="195.0" layoutY="300.0" onMouseClicked="#declineRequest">
+                           <image>
+                              <Image url="@button_decline.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="302.0" layoutY="-1.0" onMouseClicked="#closeRequestInfo">
                            <image>
                               <Image url="@transparentLight33.png" />
                            </image>
