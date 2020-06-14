@@ -5,16 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Pair;
-import model.Buyer;
-import model.Product;
-import model.Seller;
-import model.UserPersonalInfo;
+import model.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -23,6 +21,10 @@ public class BuyerMenuController extends Controller {
     public ListView<String> products;
     public Text userName;
     public Text totalPrice;
+    public ListView<String> discountCodes;
+    public ListView<String> orders;
+    public ListView<String> order;
+    public ImageView closeButton;
     BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -46,6 +48,8 @@ public class BuyerMenuController extends Controller {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }
         setCart();
+        setDiscountCodes();
+        setOrders();
     }
 
     public void setCart() {
@@ -53,11 +57,24 @@ public class BuyerMenuController extends Controller {
                 Product.getProductById("1").getSellers().get(0)));
         HashMap<Pair<Product, Seller>, Integer> cart = user.getNewBuyerCart();
         for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
-            products.getItems().add(productSellerPair.getKey().getName() + " " +
-                    productSellerPair.getValue().getUsername() + " " + cart.get(productSellerPair));
+            setCartCells(productSellerPair);
         }
         products.setCellFactory(param -> new XCell(user));
         setTotalPrice(Double.toString(user.getNewCartPrice()));
+    }
+
+    public void setDiscountCodes() {
+        for (CodedDiscount discount : user.getDiscounts()) {
+            discountCodes.getItems().add(discount.toString() + "remain : " + user.remainRepeats(discount));
+        }
+    }
+
+    public void setOrders() {
+        order.setVisible(false);
+        closeButton.setVisible(false);
+        for (BuyOrder order : user.getOrders()) {
+            orders.getItems().add(order.getOrderId() + " " + order.getPayment());
+        }
     }
 
     public void setTotalPrice(String text) {
@@ -79,6 +96,32 @@ public class BuyerMenuController extends Controller {
         }
     }
 
+    public void setCartCells(Pair<Product, Seller> productSellerPair) {
+        products.getItems().add(productSellerPair.getKey().getName() + "\t" +
+                productSellerPair.getValue().getUsername() + "\t" + user.getNewBuyerCart().get(productSellerPair) + "\t" + productSellerPair.getKey().getPrice() + "\t" +
+                productSellerPair.getKey().getPrice() * user.getNewBuyerCart().get(productSellerPair));
+
+    }
+
+    public void showOrder(MouseEvent mouseEvent) {
+        String orderId = orders.getSelectionModel().getSelectedItem().split(" ")[0];
+        BuyOrder buyOrder = (BuyOrder) BuyOrder.getOrderById(orderId);
+        HashMap<Product, Integer> products = buyOrder.getProducts();
+        for (Product product : products.keySet()) {
+            order.getItems().add(product.getName() + " " + products.get(product));
+        }
+        order.getItems().add(Double.toString(buyOrder.getPayment()));
+        order.setVisible(true);
+        closeButton.setVisible(true);
+
+    }
+
+    public void closeOrder(MouseEvent mouseEvent) {
+        order.setVisible(false);
+        closeButton.setVisible(false);
+
+    }
+
     private class XCell extends ListCell<String> {
         Buyer buyer;
         HBox hbox = new HBox();
@@ -92,8 +135,8 @@ public class BuyerMenuController extends Controller {
             this.buyer = buyer;
             hbox.getChildren().addAll(label, pane, addButton, removeButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            addButton.setOnAction(event -> addItem(getItem()));
-            removeButton.setOnAction(event -> removeItem(getItem()));
+            addButton.setOnAction(event -> addRemoveItem(getItem(), true));
+            removeButton.setOnAction(event -> addRemoveItem(getItem(), false));
         }
 
         @Override
@@ -107,40 +150,34 @@ public class BuyerMenuController extends Controller {
             }
         }
 
-        private void addItem(String item) {
-            String productName = item.split(" ")[0];
-            String sellerName = item.split(" ")[1];
+
+        private void addRemoveItem(String item, boolean add) {
+            String productName = item.split("\t")[0];
+            String sellerName = item.split("\t")[1];
             for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
                 if (productSellerPair.getKey().getName().equals(productName) &&
                         productSellerPair.getValue().getUsername().equals(sellerName)) {
-                    BuyerProcessor.getInstance().increaseProduct(productSellerPair.getKey().getProductId(),
-                            productSellerPair.getValue().getUsername());
-                    label.setText(productSellerPair.getKey().getName() + " " + productSellerPair.getValue().getUsername() + " " +
-                            buyer.getNewBuyerCart().get(productSellerPair));
+                    if (add) {
+                        BuyerProcessor.getInstance().increaseProduct(productSellerPair.getKey().getProductId(),
+                                productSellerPair.getValue().getUsername());
+                    } else {
+                        BuyerProcessor.getInstance().decreaseProduct(productSellerPair.getKey().getProductId(),
+                                productSellerPair.getValue().getUsername());
+                    }
+                    setLabel(productSellerPair);
                 }
+                setTotalPrice(Double.toString(user.getNewCartPrice()));
+
             }
-            setTotalPrice(Double.toString(user.getNewCartPrice()));
-
-
         }
 
-        private void removeItem(String item) {
-            String productName = item.split(" ")[0];
-            String sellerName = item.split(" ")[1];
-            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
-                if (productSellerPair.getKey().getName().equals(productName) &&
-                        productSellerPair.getValue().getUsername().equals(sellerName)) {
-                    BuyerProcessor.getInstance().decreaseProduct(productSellerPair.getKey().getProductId(),
-                            productSellerPair.getValue().getUsername());
-                    if (buyer.getNewBuyerCart().containsKey(productSellerPair)) {
-                        label.setText(productSellerPair.getKey().getName() + " " + productSellerPair.getValue().getUsername() + " " +
-                                buyer.getNewBuyerCart().get(productSellerPair));
-                    } else {
-                        getListView().getItems().remove(getItem());
-                    }
-                }
-            }
-            setTotalPrice(Double.toString(user.getNewCartPrice()));
+        private void setLabel(Pair<Product, Seller> productSellerPair) {
+            if (buyer.getNewBuyerCart().containsKey(productSellerPair))
+                label.setText(productSellerPair.getKey().getName() + "\t" + productSellerPair.getValue().getUsername() + "\t" +
+                        buyer.getNewBuyerCart().get(productSellerPair) + "\t" + productSellerPair.getKey().getPrice() + "\t" +
+                        productSellerPair.getKey().getPrice() * buyer.getNewBuyerCart().get(productSellerPair));
+            else
+                getListView().getItems().remove(getItem());
         }
     }
 }

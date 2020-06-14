@@ -153,6 +153,9 @@ public class Buyer extends User {
         return new ArrayList<>(codedDiscounts.keySet());
     }
 
+    public int remainRepeats(CodedDiscount codedDiscount) {
+        return codedDiscounts.get(codedDiscount);
+    }
 
     public void setNewBuyerCart(HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         this.newBuyerCart = newBuyerCart;

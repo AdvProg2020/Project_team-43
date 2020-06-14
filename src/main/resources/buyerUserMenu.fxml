@@ -132,15 +132,15 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ListView layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
-                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
-                     <effect>
-                        <InnerShadow />
-                     </effect>
-                     <image>
-                        <Image url="@button_back.png" />
-                     </image>
-                  </ImageView>
+                        <ListView fx:id="discountCodes" layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                            <effect>
+                                <InnerShadow />
+                            </effect>
+                            <image>
+                                <Image url="@button_back.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
             </content>
@@ -149,15 +149,21 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ListView layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
-                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
-                     <effect>
-                        <InnerShadow />
-                     </effect>
-                     <image>
-                        <Image url="@button_back.png" />
-                     </image>
-                  </ImageView>
+                        <ListView fx:id="orders" layoutX="81.0" layoutY="57.0" onMouseClicked="#showOrder" prefHeight="298.0" prefWidth="333.0" />
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                            <effect>
+                                <InnerShadow />
+                            </effect>
+                            <image>
+                                <Image url="@button_back.png" />
+                            </image>
+                        </ImageView>
+                        <ListView fx:id="order" layoutX="509.0" layoutY="74.0" prefHeight="352.0" prefWidth="260.0" />
+                        <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="28.0" layoutX="769.0" layoutY="74.0" onMouseClicked="#closeOrder" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@cancel-512.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
             </content>
