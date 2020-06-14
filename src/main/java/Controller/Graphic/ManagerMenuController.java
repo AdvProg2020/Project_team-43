@@ -51,7 +51,7 @@ public class ManagerMenuController extends Controller {
     public TextField emailCreateManager;
     public TextField passwordCreateManager;
     public TextField phoneCreateManager;
-    public TextField discountCode;
+    public Text discountCode;
     public TextField startYear;
     public TextField startMonth;
     public TextField startDay;
@@ -161,7 +161,7 @@ public class ManagerMenuController extends Controller {
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
         //TODO : set date
-        discountCode.setPromptText(codedDiscount.getDiscountCode());
+        discountCode.setText(codedDiscount.getDiscountCode());
         discountAmount.setPromptText("" + codedDiscount.getDiscountAmount());
         repeat.setPromptText("" + codedDiscount.getRepeat());
         codedDiscountInfoPane.setVisible(true);
