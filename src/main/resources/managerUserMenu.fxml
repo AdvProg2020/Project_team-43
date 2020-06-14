@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ManagerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="947.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ManagerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
@@ -321,17 +321,22 @@
                                         <Image url="@button_remove-code.png" />
                                     </image>
                                 </ImageView>
-                                <Text layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="code :" textAlignment="CENTER">
+                                <Text layoutX="30.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="code :" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="discountCode" layoutX="125.0" layoutY="25.0" prefHeight="30.0" prefWidth="198.0" promptText="discount code" />
                         <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="306.0" layoutY="3.0" onMouseClicked="#closeCodedDiscountInfo">
                            <image>
                               <Image url="@transparentLight33.png" />
                            </image>
                         </ImageView>
+                        <Text fx:id="discountCode" layoutX="100.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount code" />
+                        <Text fill="#097dc9" layoutX="14.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coded discount info" wrappingWidth="248.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
                             </children>
                         </Pane>
                     </children>

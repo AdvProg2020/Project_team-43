@@ -26,7 +26,9 @@ import javax.print.DocFlavor;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -332,8 +334,8 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCategory() {
-        if(!categoryName.getText().isEmpty()){
-            ((Manager)Processor.user).editCategoryName(selectedCategory, categoryName.getText());
+        if (!categoryName.getText().isEmpty()) {
+            ((Manager) Processor.user).editCategoryName(selectedCategory, categoryName.getText());
             categoryName.clear();
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
@@ -358,7 +360,7 @@ public class ManagerMenuController extends Controller {
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
         }
-        ((Manager)Processor.user).addCategory(createCategoryName.getText(), features);
+        ((Manager) Processor.user).addCategory(createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -367,13 +369,13 @@ public class ManagerMenuController extends Controller {
 
     public void createCodedDiscount() {
         ArrayList<String> codedDiscountInfo = new ArrayList<>();
-        codedDiscountInfo.add(createStartDay+"/"+createStartMonth+"/"+createStartYear);
-        codedDiscountInfo.add(createEndDay+"/"+createEndMonth+"/"+createEndYear);
+        codedDiscountInfo.add(createStartDay + "/" + createStartMonth + "/" + createStartYear);
+        codedDiscountInfo.add(createEndDay + "/" + createEndMonth + "/" + createEndYear);
         codedDiscountInfo.add(createDiscountAmount.getText());
         codedDiscountInfo.add(createRepeat.getText());
         try {
             bossProcessor.createCodedDiscount(codedDiscountInfo);
-        } catch (InvalidCommandException | ParseException e){
+        } catch (InvalidCommandException | ParseException e) {
             showErrorAlert(e.getMessage());
         }
         createStartYear.clear();
@@ -387,7 +389,87 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCodedDiscount() {
+        String startTime;
+        String endTime;
+        Date startDate;
+        Date endDate;
+        String discountAmount;
+        String discountRepeat;
+        if (!startYear.getText().isEmpty() && !startMonth.getText().isEmpty() && !startDay.getText().isEmpty()) {
+            startTime = startDay + "/" + startMonth + "/" + startYear;
+            try {
+                startDate = checkDate(startTime);
+            } catch (ParseException e) {
+                showErrorAlert("invalid startTime");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else {
+            startDate = selectedCodedDiscount.getStartTime();
+        }
+        if (!endYear.getText().isEmpty() && !endMonth.getText().isEmpty() && !endDay.getText().isEmpty()) {
+            endTime = endDay + "/" + endMonth + "/" + endYear;
+            try {
+                endDate = checkDate(endTime);
+            } catch (ParseException e) {
+                showErrorAlert("invalid endTime");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else {
+            endDate = selectedCodedDiscount.getEndTime();
+        }
+        if (!this.discountAmount.getText().isEmpty()) {
+            if (this.discountAmount.getText().matches("^\\d*\\.?\\d*$")) {
+                discountAmount = this.discountAmount.getText();
+            } else {
+                showErrorAlert("invalid discount amount");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else{
+            discountAmount = selectedCodedDiscount.getDiscountAmount()+"";
+        }
+        if(!repeat.getText().isEmpty()){
+            if(repeat.getText().matches("\\d+")){
+                discountRepeat = repeat.getText();
+            } else{
+                showErrorAlert("invalid repeat");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else{
+            discountRepeat = selectedCodedDiscount.getRepeat()+"";
+        }
+        if (beforeAfterDate(startDate, endDate)) {
+            selectedCodedDiscount.setStartTime(startDate);
+            selectedCodedDiscount.setEndTime(endDate);
+            selectedCodedDiscount.setDiscountAmount(discountAmount);
+            selectedCodedDiscount.setRepeat(discountRepeat);
+        } else{
+            showErrorAlert("startTime should be before endTime");
+            return;
+        }
+    }
 
+    public boolean beforeAfterDate(Date startDate, Date endDate){
+        return startDate.before(endDate);
+    }
+
+    public void clearCodedDiscountInfo(){
+        startYear.clear();
+        startMonth.clear();
+        startDay.clear();
+        endYear.clear();
+        endMonth.clear();
+        endDay.clear();
+        discountAmount.clear();
+        repeat.clear();
+    }
+
+    public Date checkDate(String stringDate) throws ParseException {
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
+        return date;
     }
 
     public void removeCodedDiscount() {
@@ -424,7 +506,7 @@ public class ManagerMenuController extends Controller {
         changeFeaturePane.setVisible(false);
     }
 
-    public void removeFeature(){
+    public void removeFeature() {
 
     }
 
