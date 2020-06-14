@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ManagerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="947.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ManagerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
@@ -95,17 +95,17 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" visible="false">
                     <children>
-                        <Pane layoutX="29.0" layoutY="24.0" prefHeight="480.0" prefWidth="252.0" style="-fx-background-radius: 5;">
+                        <Pane layoutX="29.0" layoutY="24.0" prefHeight="521.0" prefWidth="231.0" style="-fx-background-radius: 5;">
                             <children>
-                                <Text fill="#097dc9" layoutX="46.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="users" wrappingWidth="75.9140625">
+                                <Text fill="#097dc9" layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="users" wrappingWidth="75.9140625">
                                     <font>
                                         <Font name="Broadway" size="20.0" />
                                     </font>
                                 </Text>
-                                <ListView fx:id="usersListView" layoutX="46.0" layoutY="50.0" onMouseClicked="#showUserInfo" prefHeight="430.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
+                                <ListView fx:id="usersListView" layoutX="14.0" layoutY="50.0" onMouseClicked="#showUserInfo" prefHeight="459.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
                             </children>
                         </Pane>
-                        <Pane fx:id="userInfoPane" layoutX="548.0" layoutY="73.0" prefHeight="431.0" prefWidth="329.0" style="-fx-background-radius: 5; -fx-background-color: #b7f7e6;">
+                        <Pane fx:id="userInfoPane" layoutX="518.0" layoutY="73.0" prefHeight="459.0" prefWidth="329.0" style="-fx-background-radius: 5; -fx-background-color: #b7f7e6;">
                             <children>
                                 <ImageView fitHeight="199.0" fitWidth="200.0" layoutX="65.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -127,14 +127,14 @@
                                         <Image url="@transparentLight33.png" />
                                     </image>
                                 </ImageView>
-                                <ImageView fitHeight="34.0" fitWidth="101.0" layoutX="214.0" layoutY="389.0" onMouseClicked="#deleteUser">
+                                <ImageView fitHeight="46.0" fitWidth="109.0" layoutX="210.0" layoutY="399.0" onMouseClicked="#deleteUser">
                                     <image>
                                         <Image url="@button_delete-user.png" />
                                     </image>
                                 </ImageView>
                             </children>
                         </Pane>
-                        <Pane layoutX="288.0" layoutY="73.0" prefHeight="431.0" prefWidth="247.0" style="-fx-background-color: b7f7e6; -fx-background-radius: 5;">
+                        <Pane layoutX="260.0" layoutY="73.0" prefHeight="461.0" prefWidth="247.0" style="-fx-background-color: b7f7e6; -fx-background-radius: 5;">
                             <children>
                                 <Text layoutX="14.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name :" />
                                 <Text layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password :" />
@@ -146,7 +146,7 @@
                                 <TextField fx:id="passwordCreateManager" layoutX="94.0" layoutY="271.0" prefHeight="30.0" prefWidth="140.0" />
                                 <TextField fx:id="emailCreateManager" layoutX="95.0" layoutY="313.0" prefHeight="30.0" prefWidth="140.0" />
                                 <TextField fx:id="phoneCreateManager" layoutX="94.0" layoutY="355.0" prefHeight="30.0" prefWidth="140.0" />
-                                <ImageView fitHeight="29.0" fitWidth="157.0" layoutX="88.0" layoutY="396.0" onMouseClicked="#createManagerProfile">
+                                <ImageView fitHeight="40.0" fitWidth="162.0" layoutX="83.0" layoutY="407.0" onMouseClicked="#createManagerProfile">
                                     <image>
                                         <Image url="@button_create-manager-profile.png" />
                                     </image>
@@ -165,7 +165,7 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                        <Text fill="#097dc9" layoutX="288.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create manager profile" wrappingWidth="271.6708984375">
+                        <Text fill="#097dc9" layoutX="260.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create manager profile" wrappingWidth="271.6708984375">
                             <font>
                                 <Font name="Broadway" size="20.0" />
                             </font>
@@ -321,17 +321,22 @@
                                         <Image url="@button_remove-code.png" />
                                     </image>
                                 </ImageView>
-                                <Text layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="code :" textAlignment="CENTER">
+                                <Text layoutX="30.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="code :" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="discountCode" layoutX="125.0" layoutY="25.0" prefHeight="30.0" prefWidth="198.0" promptText="discount code" />
                         <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="306.0" layoutY="3.0" onMouseClicked="#closeCodedDiscountInfo">
                            <image>
                               <Image url="@transparentLight33.png" />
                            </image>
                         </ImageView>
+                        <Text fx:id="discountCode" layoutX="100.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount code" />
+                        <Text fill="#097dc9" layoutX="14.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coded discount info" wrappingWidth="248.6708984375">
+                           <font>
+                              <Font name="Broadway" size="20.0" />
+                           </font>
+                        </Text>
                             </children>
                         </Pane>
                     </children>
@@ -549,9 +554,9 @@
       </Tab>
       <Tab text="manage categories">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="867.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                <children>
-                  <Pane fx:id="categoryInfoPane" layoutX="335.0" layoutY="92.0" prefHeight="372.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
+                  <Pane fx:id="categoryInfoPane" layoutX="313.0" layoutY="92.0" prefHeight="372.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
                      <children>
                         <Text layoutX="30.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="features :" textAlignment="CENTER">
                            <font>
@@ -584,7 +589,7 @@
                         <TextField fx:id="newFeature" layoutX="121.0" layoutY="248.0" promptText="new feature" />
                      </children>
                   </Pane>
-                  <Pane fx:id="changeFeaturePane" layoutX="674.0" layoutY="181.0" prefHeight="137.0" prefWidth="211.0" style="-fx-background-color: #4ee6c7; -fx-background-radius: 5;" visible="false">
+                  <Pane fx:id="changeFeaturePane" layoutX="650.0" layoutY="184.0" prefHeight="137.0" prefWidth="211.0" style="-fx-background-color: #4ee6c7; -fx-background-radius: 5;" visible="false">
                      <children>
                         <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Change To :" />
                         <TextField fx:id="changedFeature" layoutX="45.0" layoutY="34.0" prefHeight="31.0" prefWidth="147.0" />
@@ -593,7 +598,7 @@
                               <Image url="@transparentLight23.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="34.0" fitWidth="99.0" layoutX="68.0" layoutY="96.0" onMouseClicked="#changeFeature">
+                        <ImageView fitHeight="31.0" fitWidth="75.0" layoutX="134.0" layoutY="98.0" onMouseClicked="#changeFeature">
                            <image>
                               <Image url="@button_change.png" />
                            </image>
@@ -601,6 +606,11 @@
                         <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="186.0" layoutY="3.0" onMouseClicked="#closeChangeTo">
                            <image>
                               <Image url="@transparentLight33.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="30.0" fitWidth="122.0" layoutX="6.0" layoutY="98.0" onMouseClicked="#removeFeature">
+                           <image>
+                              <Image url="@button_remove-feature.png" />
                            </image>
                         </ImageView>
                      </children>

@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,8 +22,13 @@ import model.request.ProductRequest;
 import model.request.Request;
 import model.request.SellerRequest;
 
+import javax.print.DocFlavor;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -64,6 +70,7 @@ public class ManagerMenuController extends Controller {
     public TextField createRepeat;
     public TextField categoryName;
     public TextField newFeature;
+    public TextField changedFeature;
     public TextField createCategoryName;
     public TextField createCategoryAddFeature;
     public ListView usersListView;
@@ -133,8 +140,8 @@ public class ManagerMenuController extends Controller {
 
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
-        String temp =productNameAndId.split(" /")[1].trim();
-        String productId = temp.substring(0, temp.length()-1);
+        String temp = productNameAndId.split(" /")[1].trim();
+        String productId = temp.substring(0, temp.length() - 1);
         selectedProduct = Product.getAllProductById(productId);
         showProduct(selectedProduct);
     }
@@ -211,11 +218,58 @@ public class ManagerMenuController extends Controller {
     public void showChangeToPane() {
         selectedFeature = featuresListView.getSelectionModel().getSelectedItems().toString();
         changeFeaturePane.setVisible(true);
-
     }
 
     public void createManagerProfile() {
+        if (!hasEmptyFieldInCreateManager()) {
+            ArrayList<String> managerInfo = new ArrayList<>();
+            managerInfo.add(userNameCreateManager.getText());
+            managerInfo.add(firstNameCreateManager.getText());
+            managerInfo.add(lastNameCreateManager.getText());
+            managerInfo.add(emailCreateManager.getText());
+            managerInfo.add(phoneCreateManager.getText());
+            managerInfo.add(passwordCreateManager.getText());
+            ((Manager) Processor.user).createManagerProfile(managerInfo);
+        }
+        userNameCreateManager.clear();
+        firstNameCreateManager.clear();
+        lastNameCreateManager.clear();
+        emailCreateManager.clear();
+        phoneCreateManager.clear();
+        passwordCreateManager.clear();
+    }
 
+    public boolean hasEmptyFieldInCreateManager() {
+        if (userNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the user name field");
+            return true;
+        }
+        if (firstNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the first name field");
+            return true;
+        }
+        if (lastNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the last name field");
+            return true;
+        }
+        if (passwordCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the password field");
+            return true;
+        }
+        if (emailCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the email field");
+            return true;
+        }
+        if (phoneCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the phone field");
+            return true;
+        }
+        return false;
+    }
+
+    public void showErrorAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, alertMessage);
+        alert.show();
     }
 
     public void closeProductInfo() {
@@ -281,7 +335,12 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCategory() {
-
+        if (!categoryName.getText().isEmpty()) {
+            ((Manager) Processor.user).editCategoryName(selectedCategory, categoryName.getText());
+            categoryName.clear();
+            categoryName.setPromptText(selectedCategory.getName());
+            updateCategoryListView();
+        }
     }
 
     public void createAddFeature() {
@@ -298,16 +357,120 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createCategory() {
-
+        ArrayList<String> features = new ArrayList<>();
+        for (Object item : createCategoryFeaturesListView.getItems()) {
+            features.add(item.toString());
+        }
+        ((Manager) Processor.user).addCategory(createCategoryName.getText(), features);
+        createCategoryName.clear();
+        createCategoryFeatures.clear();
+        createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
 
 
     public void createCodedDiscount() {
-
+        ArrayList<String> codedDiscountInfo = new ArrayList<>();
+        codedDiscountInfo.add(createStartDay + "/" + createStartMonth + "/" + createStartYear);
+        codedDiscountInfo.add(createEndDay + "/" + createEndMonth + "/" + createEndYear);
+        codedDiscountInfo.add(createDiscountAmount.getText());
+        codedDiscountInfo.add(createRepeat.getText());
+        try {
+            bossProcessor.createCodedDiscount(codedDiscountInfo);
+        } catch (InvalidCommandException | ParseException e) {
+            showErrorAlert(e.getMessage());
+        }
+        createStartYear.clear();
+        createStartMonth.clear();
+        createStartDay.clear();
+        createEndYear.clear();
+        createEndYear.clear();
+        createEndYear.clear();
+        createDiscountAmount.clear();
+        createRepeat.clear();
     }
 
     public void editCodedDiscount() {
+        String startTime;
+        String endTime;
+        Date startDate;
+        Date endDate;
+        String discountAmount;
+        String discountRepeat;
+        if (!startYear.getText().isEmpty() && !startMonth.getText().isEmpty() && !startDay.getText().isEmpty()) {
+            startTime = startDay + "/" + startMonth + "/" + startYear;
+            try {
+                startDate = checkDate(startTime);
+            } catch (ParseException e) {
+                showErrorAlert("invalid startTime");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else {
+            startDate = selectedCodedDiscount.getStartTime();
+        }
+        if (!endYear.getText().isEmpty() && !endMonth.getText().isEmpty() && !endDay.getText().isEmpty()) {
+            endTime = endDay + "/" + endMonth + "/" + endYear;
+            try {
+                endDate = checkDate(endTime);
+            } catch (ParseException e) {
+                showErrorAlert("invalid endTime");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else {
+            endDate = selectedCodedDiscount.getEndTime();
+        }
+        if (!this.discountAmount.getText().isEmpty()) {
+            if (this.discountAmount.getText().matches("^\\d*\\.?\\d*$")) {
+                discountAmount = this.discountAmount.getText();
+            } else {
+                showErrorAlert("invalid discount amount");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else{
+            discountAmount = selectedCodedDiscount.getDiscountAmount()+"";
+        }
+        if(!repeat.getText().isEmpty()){
+            if(repeat.getText().matches("\\d+")){
+                discountRepeat = repeat.getText();
+            } else{
+                showErrorAlert("invalid repeat");
+                clearCodedDiscountInfo();
+                return;
+            }
+        } else{
+            discountRepeat = selectedCodedDiscount.getRepeat()+"";
+        }
+        if (beforeAfterDate(startDate, endDate)) {
+            selectedCodedDiscount.setStartTime(startDate);
+            selectedCodedDiscount.setEndTime(endDate);
+            selectedCodedDiscount.setDiscountAmount(discountAmount);
+            selectedCodedDiscount.setRepeat(discountRepeat);
+        } else{
+            showErrorAlert("startTime should be before endTime");
+            return;
+        }
+    }
 
+    public boolean beforeAfterDate(Date startDate, Date endDate){
+        return startDate.before(endDate);
+    }
+
+    public void clearCodedDiscountInfo(){
+        startYear.clear();
+        startMonth.clear();
+        startDay.clear();
+        endYear.clear();
+        endMonth.clear();
+        endDay.clear();
+        discountAmount.clear();
+        repeat.clear();
+    }
+
+    public Date checkDate(String stringDate) throws ParseException {
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
+        return date;
     }
 
     public void removeCodedDiscount() {
@@ -339,11 +502,21 @@ public class ManagerMenuController extends Controller {
     }
 
     public void changeFeature() {
-        //TODO
-
-        changeFeaturePane.setVisible(false);
+        if(!changedFeature.getText().isEmpty()) {
+            try {
+                ((Manager)Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
+            } catch (InvalidCommandException e) {
+                showErrorAlert(e.getMessage());
+            }
+            changeFeaturePane.setVisible(false);
+        }
     }
 
+    public void removeFeature() {
+        ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
+        changedFeature.clear();
+        changeFeaturePane.setVisible(false);
+    }
 
     @FXML
     public void initialize() {
