@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -23,6 +24,7 @@ import model.request.SellerRequest;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();
@@ -133,8 +135,8 @@ public class ManagerMenuController extends Controller {
 
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
-        String temp =productNameAndId.split(" /")[1].trim();
-        String productId = temp.substring(0, temp.length()-1);
+        String temp = productNameAndId.split(" /")[1].trim();
+        String productId = temp.substring(0, temp.length() - 1);
         selectedProduct = Product.getAllProductById(productId);
         showProduct(selectedProduct);
     }
@@ -211,11 +213,58 @@ public class ManagerMenuController extends Controller {
     public void showChangeToPane() {
         selectedFeature = featuresListView.getSelectionModel().getSelectedItems().toString();
         changeFeaturePane.setVisible(true);
-
     }
 
     public void createManagerProfile() {
+        if (!hasEmptyFieldInCreateManager()) {
+            ArrayList<String> managerInfo = new ArrayList<>();
+            managerInfo.add(userNameCreateManager.getText());
+            managerInfo.add(firstNameCreateManager.getText());
+            managerInfo.add(lastNameCreateManager.getText());
+            managerInfo.add(emailCreateManager.getText());
+            managerInfo.add(phoneCreateManager.getText());
+            managerInfo.add(passwordCreateManager.getText());
+            ((Manager) Processor.user).createManagerProfile(managerInfo);
+        }
+        userNameCreateManager.clear();
+        firstNameCreateManager.clear();
+        lastNameCreateManager.clear();
+        emailCreateManager.clear();
+        phoneCreateManager.clear();
+        passwordCreateManager.clear();
+    }
 
+    public boolean hasEmptyFieldInCreateManager() {
+        if (userNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the user name field");
+            return true;
+        }
+        if (firstNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the first name field");
+            return true;
+        }
+        if (lastNameCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the last name field");
+            return true;
+        }
+        if (passwordCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the password field");
+            return true;
+        }
+        if (emailCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the email field");
+            return true;
+        }
+        if (phoneCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the phone field");
+            return true;
+        }
+        return false;
+    }
+
+    public void showErrorAlert(String alertMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, alertMessage);
+        alert.show();
     }
 
     public void closeProductInfo() {
