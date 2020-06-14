@@ -98,16 +98,58 @@
                     <children>
                         <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="58.0" layoutY="236.0" />
                         <ListView fx:id="products" layoutX="15.0" layoutY="13.0" prefHeight="414.0" prefWidth="751.0" />
-                  <Text layoutX="523.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="total price :">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="totalPrice" layoutX="665.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
+                        <Text layoutX="523.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="total price :">
+                            <font>
+                                <Font size="25.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="totalPrice" layoutX="665.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                            <font>
+                                <Font size="25.0" />
+                            </font>
+                        </Text>
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                            <effect>
+                                <InnerShadow />
+                            </effect>
+                            <image>
+                                <Image url="@button_back.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="60.0" fitWidth="163.0" layoutX="258.0" layoutY="461.0" preserveRatio="true" style="-fx-cursor: hand;">
+                            <image>
+                                <Image url="@button_purchase.png" />
+                            </image>
+                            <effect>
+                                <InnerShadow />
+                            </effect>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Discount Codes">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ListView layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
+                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <image>
+                        <Image url="@button_back.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="View Orders">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ListView layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
                   <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                      <effect>
                         <InnerShadow />
