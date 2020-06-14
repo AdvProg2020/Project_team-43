@@ -9,6 +9,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class PurchaseWindow extends Application {
+    private static final PurchaseWindow instance = new PurchaseWindow();
+
+    public static PurchaseWindow getInstance() {
+        return instance;
+    }
+
+    private PurchaseWindow() {
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = null;

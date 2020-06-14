@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.Graphic.PurchaseMenuController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-image: url('purchase_background.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 "
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.Graphic.PurchaseMenuController">
+    <children>
+        <TextField fx:id="phoneNumber" layoutX="626.0" layoutY="129.0" prefHeight="31.0" prefWidth="231.0"/>
+        <Text fill="WHITE" layoutX="491.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number"/>
+        <Text fill="WHITE" layoutX="513.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="address"/>
+        <TextField fx:id="discountCode" layoutX="626.0" layoutY="323.0" prefHeight="31.0" prefWidth="231.0"/>
+        <Text fill="WHITE" layoutX="493.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount code"/>
+        <TextArea fx:id="address" layoutX="626.0" layoutY="174.0" prefHeight="126.0" prefWidth="231.0"/>
+        <ImageView fx:id="paymentButton" fitHeight="53.0" fitWidth="172.0" layoutX="658.0" layoutY="441.0"
+                   pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@pay_button.png"/>
+            </image>
+        </ImageView>
+    </children>
 </AnchorPane>

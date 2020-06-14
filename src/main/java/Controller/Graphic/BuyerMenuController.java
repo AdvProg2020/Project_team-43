@@ -1,6 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.PurchaseWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -120,6 +121,14 @@ public class BuyerMenuController extends Controller {
         order.setVisible(false);
         closeButton.setVisible(false);
 
+    }
+
+    public void purchase(MouseEvent mouseEvent) {
+        try {
+            PurchaseWindow.getInstance().start(this.stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private class XCell extends ListCell<String> {
