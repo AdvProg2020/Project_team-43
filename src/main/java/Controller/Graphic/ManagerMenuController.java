@@ -37,6 +37,7 @@ public class ManagerMenuController extends Controller {
     public TextField email;
     public TextField password;
     public TextField phoneNumber;
+    public ImageView userProfilePhoto;
     public Text userName2;
     public Text firstName2;
     public Text lastName2;
@@ -111,6 +112,7 @@ public class ManagerMenuController extends Controller {
     private User selectedUser;
     private Product selectedProduct;
     public ImageView profilePhoto;
+    public ImageView productImage;
     private Manager user;
 
     public ManagerMenuController() {
@@ -129,6 +131,13 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showUser(User user) {
+        if (user.getImagePath() != null) {
+            userProfilePhoto.setImage(new Image("file:" + user.getImagePath()));
+        } else{
+            File file = new File("src/main/resources/user.png");
+            Image image = new Image(file.toURI().toString());
+            userProfilePhoto.setImage(image);
+        }
         userName2.setText(user.getUsername());
         firstName2.setText(user.getUserPersonalInfo().getFirstName());
         lastName2.setText(user.getUserPersonalInfo().getLastName());
@@ -147,9 +156,16 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showProduct(Product product) {
+        if (product.getImagePath() != null) {
+            productImage.setImage(new Image("file:" + product.getImagePath()));
+        } else{
+            File file = new File("src/main/resources/product.jpg");
+            Image image = new Image(file.toURI().toString());
+            productImage.setImage(image);
+        }
         productName.setText(product.getName());
         productPrice.setText("" + product.getPrice());
-        productScore.setText("" + product.getScore());
+        productScore.setText("" + product.getScore().getAvgScore());
         productInfoPane.setVisible(true);
     }
 
@@ -237,6 +253,7 @@ public class ManagerMenuController extends Controller {
         emailCreateManager.clear();
         phoneCreateManager.clear();
         passwordCreateManager.clear();
+        updateUsersListView();
     }
 
     public boolean hasEmptyFieldInCreateManager() {
@@ -370,8 +387,8 @@ public class ManagerMenuController extends Controller {
 
     public void createCodedDiscount() {
         ArrayList<String> codedDiscountInfo = new ArrayList<>();
-        codedDiscountInfo.add(createStartDay + "/" + createStartMonth + "/" + createStartYear);
-        codedDiscountInfo.add(createEndDay + "/" + createEndMonth + "/" + createEndYear);
+        codedDiscountInfo.add(createStartDay.getText() + "/" + createStartMonth.getText() + "/" + createStartYear.getText());
+        codedDiscountInfo.add(createEndDay.getText() + "/" + createEndMonth.getText() + "/" + createEndYear.getText());
         codedDiscountInfo.add(createDiscountAmount.getText());
         codedDiscountInfo.add(createRepeat.getText());
         try {
@@ -379,12 +396,17 @@ public class ManagerMenuController extends Controller {
         } catch (InvalidCommandException | ParseException e) {
             showErrorAlert(e.getMessage());
         }
+        updateCodedDiscountListView();
+        clearCreateCodedDiscount();
+    }
+
+    private void clearCreateCodedDiscount() {
         createStartYear.clear();
         createStartMonth.clear();
         createStartDay.clear();
         createEndYear.clear();
-        createEndYear.clear();
-        createEndYear.clear();
+        createEndMonth.clear();
+        createEndDay.clear();
         createDiscountAmount.clear();
         createRepeat.clear();
     }
@@ -397,7 +419,7 @@ public class ManagerMenuController extends Controller {
         String discountAmount;
         String discountRepeat;
         if (!startYear.getText().isEmpty() && !startMonth.getText().isEmpty() && !startDay.getText().isEmpty()) {
-            startTime = startDay + "/" + startMonth + "/" + startYear;
+            startTime = startDay.getText() + "/" + startMonth.getText() + "/" + startYear.getText();
             try {
                 startDate = checkDate(startTime);
             } catch (ParseException e) {
@@ -409,7 +431,7 @@ public class ManagerMenuController extends Controller {
             startDate = selectedCodedDiscount.getStartTime();
         }
         if (!endYear.getText().isEmpty() && !endMonth.getText().isEmpty() && !endDay.getText().isEmpty()) {
-            endTime = endDay + "/" + endMonth + "/" + endYear;
+            endTime = endDay.getText() + "/" + endMonth.getText() + "/" + endYear.getText();
             try {
                 endDate = checkDate(endTime);
             } catch (ParseException e) {

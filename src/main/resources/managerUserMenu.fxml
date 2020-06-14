@@ -93,7 +93,7 @@
         </Tab>
         <Tab text="manage users">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" visible="false">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
                     <children>
                         <Pane layoutX="29.0" layoutY="24.0" prefHeight="521.0" prefWidth="231.0" style="-fx-background-radius: 5;">
                             <children>
@@ -105,9 +105,9 @@
                                 <ListView fx:id="usersListView" layoutX="14.0" layoutY="50.0" onMouseClicked="#showUserInfo" prefHeight="459.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
                             </children>
                         </Pane>
-                        <Pane fx:id="userInfoPane" layoutX="518.0" layoutY="73.0" prefHeight="459.0" prefWidth="329.0" style="-fx-background-radius: 5; -fx-background-color: #b7f7e6;">
+                        <Pane fx:id="userInfoPane" layoutX="518.0" layoutY="73.0" prefHeight="459.0" prefWidth="329.0" style="-fx-background-radius: 5; -fx-background-color: #b7f7e6;" visible="false">
                             <children>
-                                <ImageView fitHeight="199.0" fitWidth="200.0" layoutX="65.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="userProfilePhoto" fitHeight="199.0" fitWidth="200.0" layoutX="65.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@user.png" />
                                     </image>
@@ -188,7 +188,7 @@
                                 <ListView fx:id="productsListView" layoutX="46.0" layoutY="50.0" onMouseClicked="#showProductInfo" prefHeight="430.0" prefWidth="299.0" style="-fx-background-radius: 5;" />
                             </children>
                         </Pane>
-                        <Pane fx:id="productInfoPane" layoutX="421.0" layoutY="71.0" prefHeight="433.0" prefWidth="313.0" style="-fx-background-color: b7f7e6; -fx-background-radius: 5;">
+                        <Pane fx:id="productInfoPane" layoutX="421.0" layoutY="71.0" prefHeight="433.0" prefWidth="313.0" style="-fx-background-color: b7f7e6; -fx-background-radius: 5;" visible="false">
                             <children>
                                 <Text layoutX="15.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :" />
                                 <Text fx:id="productScore" layoutX="80.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="200.0" />
@@ -277,7 +277,7 @@
                                 </Text>
                             </children>
                         </Pane>
-                        <Pane fx:id="codedDiscountInfoPane" layoutX="568.0" layoutY="95.0" prefHeight="366.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane fx:id="codedDiscountInfoPane" layoutX="568.0" layoutY="95.0" prefHeight="366.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
                             <children>
                                 <TextField fx:id="endYear" layoutX="125.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <TextField fx:id="startYear" layoutX="125.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
