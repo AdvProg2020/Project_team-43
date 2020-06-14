@@ -22,7 +22,9 @@ import model.request.ProductRequest;
 import model.request.Request;
 import model.request.SellerRequest;
 
+import javax.print.DocFlavor;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -330,7 +332,12 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCategory() {
-
+        if(!categoryName.getText().isEmpty()){
+            ((Manager)Processor.user).editCategoryName(selectedCategory, categoryName.getText());
+            categoryName.clear();
+            categoryName.setPromptText(selectedCategory.getName());
+            updateCategoryListView();
+        }
     }
 
     public void createAddFeature() {
@@ -347,12 +354,36 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createCategory() {
-
+        ArrayList<String> features = new ArrayList<>();
+        for (Object item : createCategoryFeaturesListView.getItems()) {
+            features.add(item.toString());
+        }
+        ((Manager)Processor.user).addCategory(createCategoryName.getText(), features);
+        createCategoryName.clear();
+        createCategoryFeatures.clear();
+        createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
 
 
     public void createCodedDiscount() {
-
+        ArrayList<String> codedDiscountInfo = new ArrayList<>();
+        codedDiscountInfo.add(createStartDay+"/"+createStartMonth+"/"+createStartYear);
+        codedDiscountInfo.add(createEndDay+"/"+createEndMonth+"/"+createEndYear);
+        codedDiscountInfo.add(createDiscountAmount.getText());
+        codedDiscountInfo.add(createRepeat.getText());
+        try {
+            bossProcessor.createCodedDiscount(codedDiscountInfo);
+        } catch (InvalidCommandException | ParseException e){
+            showErrorAlert(e.getMessage());
+        }
+        createStartYear.clear();
+        createStartMonth.clear();
+        createStartDay.clear();
+        createEndYear.clear();
+        createEndYear.clear();
+        createEndYear.clear();
+        createDiscountAmount.clear();
+        createRepeat.clear();
     }
 
     public void editCodedDiscount() {
@@ -393,6 +424,9 @@ public class ManagerMenuController extends Controller {
         changeFeaturePane.setVisible(false);
     }
 
+    public void removeFeature(){
+
+    }
 
     @FXML
     public void initialize() {
