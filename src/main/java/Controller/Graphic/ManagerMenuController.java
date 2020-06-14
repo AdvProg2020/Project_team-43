@@ -70,6 +70,7 @@ public class ManagerMenuController extends Controller {
     public TextField createRepeat;
     public TextField categoryName;
     public TextField newFeature;
+    public TextField changedFeature;
     public TextField createCategoryName;
     public TextField createCategoryAddFeature;
     public ListView usersListView;
@@ -501,13 +502,20 @@ public class ManagerMenuController extends Controller {
     }
 
     public void changeFeature() {
-        //TODO
-
-        changeFeaturePane.setVisible(false);
+        if(!changedFeature.getText().isEmpty()) {
+            try {
+                ((Manager)Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
+            } catch (InvalidCommandException e) {
+                showErrorAlert(e.getMessage());
+            }
+            changeFeaturePane.setVisible(false);
+        }
     }
 
     public void removeFeature() {
-
+        ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
+        changedFeature.clear();
+        changeFeaturePane.setVisible(false);
     }
 
     @FXML
