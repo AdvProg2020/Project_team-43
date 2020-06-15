@@ -50,7 +50,6 @@ public class MainWindow extends Application {
         primaryStage.setTitle("Bamazon");
         primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
 

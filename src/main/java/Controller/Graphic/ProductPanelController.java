@@ -12,67 +12,12 @@ import model.Category;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProductPanelController implements Initializable {
+public class ProductPanelController extends Controller implements Initializable {
 
     @FXML
     private ListView<String> categoryListView;
 
     ObservableList<String> categories;
-    @FXML
-    ImageView image1;
-    @FXML
-    ImageView image2;
-    @FXML
-    ImageView image3;
-    @FXML
-    ImageView image4;
-    @FXML
-    ImageView image5;
-    @FXML
-    ImageView image6;
-    @FXML
-    ImageView image7;
-    @FXML
-    ImageView image8;
-    @FXML
-    ImageView image9;
-    @FXML
-    Label name1;
-    @FXML
-    Label name2;
-    @FXML
-    Label name3;
-    @FXML
-    Label name4;
-    @FXML
-    Label name5;
-    @FXML
-    Label name6;
-    @FXML
-    Label name7;
-    @FXML
-    Label name8;
-    @FXML
-    Label name9;
-    @FXML
-    Label price1;
-    @FXML
-    Label price2;
-    @FXML
-    Label price3;
-    @FXML
-    Label price4;
-    @FXML
-    Label price5;
-    @FXML
-    Label price6;
-    @FXML
-    Label price7;
-    @FXML
-    Label price8;
-    @FXML
-    Label price9;
-
 
     public void sortByView() {
 
@@ -130,4 +75,6 @@ public class ProductPanelController implements Initializable {
         }
         categoryListView.setItems(categories);
     }
+
+
 }

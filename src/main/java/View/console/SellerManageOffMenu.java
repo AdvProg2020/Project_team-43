@@ -78,9 +78,8 @@ public class SellerManageOffMenu extends Menu {
                 Double discountAmount = Double.parseDouble(scanner.nextLine());
                 ArrayList<String> productIds = getProductIds();
                 try {
-                    sellerProcessor.addOff(startTime, endTime, discountAmount, productIds);
-                    System.out.println("Off sent to manger to confirm");
-                } catch (ParseException |InvalidCommandException e){
+                    System.out.println(sellerProcessor.addOff(startTime, endTime, discountAmount, productIds));
+                } catch (ParseException e){
                     System.out.println(e.getMessage());
                 }
             }

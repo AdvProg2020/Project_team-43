@@ -1,1 +1,1 @@
-[{"offId":"0","sellerUserName":"parsa","productsId":["1","2"],"offState":"CONFIRMED","startTime":"Nov 11, 0011 12:00:00 AM","endTime":"Nov 11, 0011 12:00:00 AM","discountAmount":30.0}]
+[{"offId":"0","sellerUserName":"parsa","productsId":["1","2"],"offState":"CONFIRMED","startTime":"Nov 11, 0011 12:00:00 AM","endTime":"Nov 11, 0011 12:00:00 AM","discountAmount":30.0},{"offId":"1","sellerUserName":"parsa","productsId":["2"],"offState":"CONFIRMED","startTime":"Apr 6, 2021 12:00:00 AM","endTime":"Jan 6, 2022 12:00:00 AM","discountAmount":40.0}]

@@ -2,6 +2,8 @@ package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +19,8 @@ import javafx.stage.Modality;
 import model.*;
 
 import java.io.File;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -33,6 +37,10 @@ public class SellerMenuController extends Controller {
     public Text offSellerText;
     public ListView offProductsListView;
     public Text offAmountText;
+    public DatePicker offStartTimeDate;
+    public DatePicker offEndTimeDate;
+    public Slider offAmount;
+    public Label offAmountLabel;
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public ListView productsList;
     public TextField firstName;
@@ -55,6 +63,8 @@ public class SellerMenuController extends Controller {
     public Text buyerText;
     public Text statusText;
     public Text offState;
+    public Text productsOffText;
+    public ListView<CheckBox> offProducts;
     private Seller user;
     private String productPhotoPath;
 
@@ -72,6 +82,7 @@ public class SellerMenuController extends Controller {
         if (user.getImagePath() != null) {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }
+        initializeAddOff();
     }
 
     @FXML
@@ -211,13 +222,14 @@ public class SellerMenuController extends Controller {
             offAmountText.setText("Discount: " + off.getDiscountAmount() + "%");
             offState.setText("State: " + off.getOffState());
             for (Product product : off.getProducts()) {
-                offProductsListView.getItems().add(product.toString());
+                offProductsListView.getItems().add("Name: " + product.getName() + "  Price: " + product.getPrice() + "  ID: " + product.getProductId() + "  Category: " + product.getCategory().getName());
             }
             setMenuOffProductListView(off);
             offProductsListView.setVisible(true);
             offSellerText.setVisible(true);
             offAmountText.setVisible(true);
             offState.setVisible(true);
+            productsOffText.setVisible(true);
         } else {
             invalidIdOff.setVisible(true);
         }
@@ -252,5 +264,35 @@ public class SellerMenuController extends Controller {
     private void editOffAmount(Off off, String text) {
         user.editOff(off, "discountAmount", text);
         offState.setText("State: " + off.getOffState());
+    }
+
+    private void initializeAddOff() {
+        offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(String.valueOf(newValue.intValue() + "%")));
+        for (Product product : user.getProductsNumber().keySet()) {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
+            offProducts.getItems().add(checkBox);
+        }
+    }
+
+
+    public void addOff() {
+        String startTime = offStartTimeDate.getEditor().getText();
+        String endTime = offEndTimeDate.getEditor().getText();
+        double amount = Integer.parseInt(offAmountLabel.getText().substring(0, offAmountLabel.getText().length() - 1));
+        ArrayList<String> productIds = new ArrayList<>();
+        for (CheckBox item : offProducts.getItems()) {
+            if (item.isSelected()) {
+                productIds.add(item.getText().split(" ")[1]);
+            }
+        }
+        try {
+            String result = sellerProcessor.addOff(startTime, endTime, amount, productIds);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(result);
+            alert.showAndWait();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

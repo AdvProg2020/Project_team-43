@@ -30,7 +30,7 @@ public class ProductPanelWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("productPanel.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("productsPanel.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
