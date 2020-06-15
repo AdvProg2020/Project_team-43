@@ -74,7 +74,7 @@ public class BuyerMenuController extends Controller {
         order.setVisible(false);
         closeButton.setVisible(false);
         for (BuyOrder order : user.getOrders()) {
-            orders.getItems().add(order.getOrderId() + " " + order.getPayment());
+            orders.getItems().add("id:\t" + order.getOrderId() + "\t" + order.getPayment());
         }
     }
 
@@ -105,6 +105,7 @@ public class BuyerMenuController extends Controller {
     }
 
     public void showOrder(MouseEvent mouseEvent) {
+        orders.getItems().clear();
         String orderId = orders.getSelectionModel().getSelectedItem().split(" ")[0];
         BuyOrder buyOrder = (BuyOrder) BuyOrder.getOrderById(orderId);
         HashMap<Product, Integer> products = buyOrder.getProducts();

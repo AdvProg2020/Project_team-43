@@ -10,20 +10,25 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import model.CodedDiscount;
 
-import javax.xml.validation.Validator;
 
 public class PurchaseMenuController extends Controller {
     public TextField phoneNumber;
     public TextArea address;
     public ImageView paymentButton;
     public JFXTextField discountCode;
-    public Validator validator;
     public Label validLabel;
+    public Text totalAmount;
+    public Text sale;
+    public Text payment;
 
 
     public void initialize() {
+        totalAmount.setText(Double.toString(BuyerProcessor.getInstance().getRealValueOfCart()));
+        payment.setText(Double.toString(BuyerProcessor.getInstance().showTotalPrice()));
+        sale.setText(Double.toString(Double.parseDouble(totalAmount.getText()) - Double.parseDouble(payment.getText())));
         BooleanBinding phoneNumberValid = Bindings.createBooleanBinding(() ->
                 (phoneNumber.getText().matches("\\d+")), phoneNumber.textProperty());
         BooleanBinding addressValid = Bindings.createBooleanBinding(() -> address.getText().length() > 0, address.textProperty());
@@ -35,21 +40,40 @@ public class PurchaseMenuController extends Controller {
                         if (BuyerProcessor.getInstance().checkDiscountCode(discountCode.getText())) {
                             validLabel.setText("valid");
                             validLabel.setTextFill(Color.GREEN);
+                            setDiscount();
+
                         } else {
                             validLabel.setText("invalid");
                             validLabel.setTextFill(Color.RED);
+                            disableDiscount();
                         }
                     } else {
+                        disableDiscount();
                         validLabel.setVisible(false);
                     }
                 }
         );
     }
 
+    public void setDiscount() {
+        payment.setText(Double.toString(Double.parseDouble(payment.getText()) *
+                (100 - CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount()) / 100));
+        sale.setText(Double.toString(Double.parseDouble(totalAmount.getText()) - Double.parseDouble(payment.getText())));
+    }
+
+    public void disableDiscount() {
+        totalAmount.setText(Double.toString(BuyerProcessor.getInstance().getRealValueOfCart()));
+        payment.setText(Double.toString(BuyerProcessor.getInstance().showTotalPrice()));
+        sale.setText(Double.toString(Double.parseDouble(totalAmount.getText()) - Double.parseDouble(payment.getText())));
+    }
+
+
     public void purchase(MouseEvent mouseEvent) {
         double discount = 0;
-        if (validLabel.getText().equals("valid"))
+        if (validLabel.getText().equals("valid")) {
             discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
+            BuyerProcessor.getInstance().useDiscountCode(CodedDiscount.getDiscountById(discountCode.getText()));
+        }
         BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
     }
 }
