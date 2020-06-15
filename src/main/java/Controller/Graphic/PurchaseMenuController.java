@@ -4,21 +4,52 @@ import Controller.console.BuyerProcessor;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import model.CodedDiscount;
+
+import javax.xml.validation.Validator;
 
 public class PurchaseMenuController extends Controller {
     public TextField phoneNumber;
     public TextArea address;
     public ImageView paymentButton;
     public JFXTextField discountCode;
+    public Validator validator;
+    public Label validLabel;
+
 
     public void initialize() {
         BooleanBinding phoneNumberValid = Bindings.createBooleanBinding(() ->
                 (phoneNumber.getText().matches("\\d+")), phoneNumber.textProperty());
         BooleanBinding addressValid = Bindings.createBooleanBinding(() -> address.getText().length() > 0, address.textProperty());
         paymentButton.disableProperty().bind(addressValid.not().or(phoneNumberValid.not()));
+        validLabel.setVisible(false);
+        discountCode.textProperty().addListener((observable) -> {
+                    if (!discountCode.getText().equals("")) {
+                        validLabel.setVisible(true);
+                        if (BuyerProcessor.getInstance().checkDiscountCode(discountCode.getText())) {
+                            validLabel.setText("valid");
+                            validLabel.setTextFill(Color.GREEN);
+                        } else {
+                            validLabel.setText("invalid");
+                            validLabel.setTextFill(Color.RED);
+                        }
+                    } else {
+                        validLabel.setVisible(false);
+                    }
+                }
+        );
     }
 
+    public void purchase(MouseEvent mouseEvent) {
+        double discount = 0;
+        if (validLabel.getText().equals("valid"))
+            discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
+        BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
+    }
 }
