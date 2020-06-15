@@ -2,11 +2,13 @@ package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
 import javafx.beans.Observable;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -16,6 +18,7 @@ import model.*;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +28,11 @@ public class SellerMenuController extends Controller {
     public TextField priceNewProduct;
     public TextField amountNewProduct;
     public TextField categoryNewProduct;
+    public Text invalidIdOff;
+    public TextField offIdTextField;
+    public Text offSellerText;
+    public ListView offProductsListView;
+    public Text offAmountText;
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public ListView productsList;
     public TextField firstName;
@@ -46,6 +54,7 @@ public class SellerMenuController extends Controller {
     public ListView<String> buyersListView;
     public Text buyerText;
     public Text statusText;
+    public Text offState;
     private Seller user;
     private String productPhotoPath;
 
@@ -190,5 +199,58 @@ public class SellerMenuController extends Controller {
         alert.setHeaderText(field + " successfully changed to " + newField + "\nManager must confirm");
         alert.show();
         statusText.setText("Status: " + product.getProductState());
+    }
+
+    public void showOff() {
+        String id = offIdTextField.getText();
+        if (user.hasOffWithId(id)) {
+            invalidIdOff.setVisible(false);
+            offProductsListView.getItems().clear();
+            Off off = user.getOffById(id);
+            offSellerText.setText("Seller: " + off.getSeller().getUsername());
+            offAmountText.setText("Discount: " + off.getDiscountAmount() + "%");
+            offState.setText("State: " + off.getOffState());
+            for (Product product : off.getProducts()) {
+                offProductsListView.getItems().add(product.toString());
+            }
+            setMenuOffProductListView(off);
+            offProductsListView.setVisible(true);
+            offSellerText.setVisible(true);
+            offAmountText.setVisible(true);
+            offState.setVisible(true);
+        } else {
+            invalidIdOff.setVisible(true);
+        }
+    }
+
+    private void setMenuOffProductListView(Off off) {
+        ContextMenu contextMenu = new ContextMenu();
+        Menu editRequest = new Menu("edit request");
+        editRequest.setOnAction(event -> {
+            TextInputDialog textInputDialog = new TextInputDialog();
+            textInputDialog.setHeaderText("Discount amount: ");
+            textInputDialog.setTitle("Edit Request");
+            textInputDialog.initModality(Modality.WINDOW_MODAL);
+            textInputDialog.initOwner(stage);
+            textInputDialog.showAndWait();
+            editOffAmount(off, textInputDialog.getEditor().getText());
+        });
+        contextMenu.getItems().add(editRequest);
+        offAmountText.setOnContextMenuRequested(event -> {
+            TextInputDialog textInputDialog = new TextInputDialog();
+            textInputDialog.setHeaderText("Discount amount: ");
+            textInputDialog.setTitle("Edit Request");
+            textInputDialog.initModality(Modality.WINDOW_MODAL);
+            textInputDialog.initOwner(stage);
+            Optional<String> result = textInputDialog.showAndWait();
+            if (result.isPresent()) {
+                editOffAmount(off, textInputDialog.getEditor().getText());
+            }
+        });
+    }
+
+    private void editOffAmount(Off off, String text) {
+        user.editOff(off, "discountAmount", text);
+        offState.setText("State: " + off.getOffState());
     }
 }
