@@ -177,7 +177,7 @@ public class SellerProcessor extends Processor {
         Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
         Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
         if (startTimeDate.after(endTimeDate)) {
-            return ("start Time must be before endTime");
+            return ("Start time must be before endTime.");
         }
         ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);
         return "Off added successfully\nWaiting for manager to confirm";

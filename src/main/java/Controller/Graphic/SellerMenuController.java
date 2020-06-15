@@ -267,7 +267,7 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeAddOff() {
-        offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(String.valueOf(newValue.intValue()+"%")));
+        offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(String.valueOf(newValue.intValue() + "%")));
         for (Product product : user.getProductsNumber().keySet()) {
             CheckBox checkBox = new CheckBox();
             checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
@@ -279,7 +279,7 @@ public class SellerMenuController extends Controller {
     public void addOff() {
         String startTime = offStartTimeDate.getEditor().getText();
         String endTime = offEndTimeDate.getEditor().getText();
-        double amount = Integer.parseInt(offAmountLabel.getText());
+        double amount = Integer.parseInt(offAmountLabel.getText().substring(0, offAmountLabel.getText().length() - 1));
         ArrayList<String> productIds = new ArrayList<>();
         for (CheckBox item : offProducts.getItems()) {
             if (item.isSelected()) {
@@ -287,7 +287,10 @@ public class SellerMenuController extends Controller {
             }
         }
         try {
-            System.out.println(sellerProcessor.addOff(startTime, endTime, amount, productIds));
+            String result = sellerProcessor.addOff(startTime, endTime, amount, productIds);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(result);
+            alert.showAndWait();
         } catch (ParseException e) {
             e.printStackTrace();
         }
