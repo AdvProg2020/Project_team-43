@@ -55,4 +55,9 @@ public class MainMenuController {
     public void productsPanelButtonClicked(ActionEvent actionEvent) {
         ProductPanelWindow.getInstance().start(stage);
     }
+
+    public void test(ActionEvent actionEvent) {
+        ProductWindow.getInstance().setProduct(Product.getProductById("1"));
+        ProductWindow.getInstance().start(stage);
+    }
 }

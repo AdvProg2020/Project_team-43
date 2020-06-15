@@ -1,5 +1,6 @@
 package View.graphic;
 
+import Controller.Graphic.ProductWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,10 +10,10 @@ import model.Product;
 
 import java.io.IOException;
 
-public class ProductPanelWindow extends Application {
-    private static ProductPanelWindow instance = new ProductPanelWindow();
+public class ProductWindow extends Application {
+    private static final ProductWindow instance = new ProductWindow();
 
-    public static ProductPanelWindow getInstance() {
+    public static ProductWindow getInstance() {
         return instance;
     }
 
@@ -22,7 +23,9 @@ public class ProductPanelWindow extends Application {
         this.product = product;
     }
 
-    private ProductPanelWindow() {
+    private Stage stage;
+
+    private ProductWindow() {
 
     }
 
@@ -30,14 +33,16 @@ public class ProductPanelWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("productPanel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("productWindow.fxml"));
+            root = (Parent) loader.load();
+            ProductWindowController controller = (ProductWindowController) loader.getController();
+            controller.setProduct(product);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Products");
+        primaryStage.setTitle("Product");
         primaryStage.setResizable(false);
         primaryStage.show();
 

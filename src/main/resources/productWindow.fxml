@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+         prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
+    <tabs>
+        <Tab text="properties">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true"
+                                   preserveRatio="true"/>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@button_add-to-cart.png"/>
+                            </image>
+                        </ImageView>
+                        <Label layoutX="373.0" layoutY="79.0" text="Label"/>
+                        <Label layoutX="373.0" layoutY="109.0" text="Label"/>
+                        <Label layoutX="373.0" layoutY="147.0" text="Label"/>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="comments">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
+        <Tab text="rate product">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
+        <Tab text="features">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

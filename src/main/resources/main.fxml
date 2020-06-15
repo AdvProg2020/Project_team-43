@@ -26,7 +26,7 @@
             </font>
         </Button>
         <Button layoutX="54.0" layoutY="384.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="159.0"
-                text="Off Panel">
+                text="Off Panel" onAction="#test">
             <font>
                 <Font size="20.0"/>
             </font>
