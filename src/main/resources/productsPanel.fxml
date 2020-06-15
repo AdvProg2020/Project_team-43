@@ -51,7 +51,7 @@
                 <TextField layoutX="170.0" layoutY="322.0" prefHeight="31.0" prefWidth="48.0" promptText="dd" />
                 <Text layoutX="87.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="10.0" />
                 <Text layoutX="156.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" wrappingWidth="10.0" />
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="365.0" onMouseClicked="#sortByDate">
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="367.0" onMouseClicked="#sortByDate">
                     <image>
                         <Image url="@button_sort.png" />
                     </image>
@@ -64,12 +64,12 @@
                 <Slider layoutX="27.0" layoutY="549.0" prefHeight="17.0" prefWidth="189.0" showTickLabels="true" />
                 <Text layoutX="25.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price :" />
                 <Text layoutX="26.0" layoutY="527.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score :" />
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="473.0" onMouseClicked="#sortByPrice">
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="475.0" onMouseClicked="#sortByPrice">
                     <image>
                         <Image url="@button_sort.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="582.0" onMouseClicked="#sortByScore">
+                <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="172.0" layoutY="585.0" onMouseClicked="#sortByScore">
                     <image>
                         <Image url="@button_sort.png" />
                     </image>
@@ -79,7 +79,7 @@
                         <Image url="@button_sort-by-view.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="31.0" fitWidth="59.0" layoutX="156.0" layoutY="227.0" onMouseClicked="#filter">
+                <ImageView fitHeight="31.0" fitWidth="59.0" layoutX="156.0" layoutY="228.0" onMouseClicked="#filter">
                     <image>
                         <Image url="@button_filter.png" />
                     </image>
@@ -105,7 +105,7 @@
                     <children>
                         <Pane prefHeight="230.0" prefWidth="230.0">
                             <children>
-                                <ImageView fx:id="image1" fitHeight="170.0" fitWidth="189.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="image1" fitHeight="170.0" fitWidth="220.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@product.jpg" />
                                     </image>
