@@ -177,6 +177,19 @@ public class BuyerProcessor extends Processor {
         return "payment done";
     }
 
+    public void useDiscountCode(CodedDiscount discount) {
+        ((Buyer) user).changeRemainDiscount(discount);
+
+    }
+
+    public double getRealValueOfCart() {
+        double result = 0;
+        for (Pair<Product, Seller> productSellerPair : ((Buyer) user).getNewBuyerCart().keySet()) {
+            result += productSellerPair.getKey().getPrice();
+        }
+        return result;
+    }
+
 
     public void setNewBuyerCart() {
         ((Buyer) user).setNewBuyerCart(newBuyerCart);

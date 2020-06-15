@@ -168,14 +168,14 @@ public class Buyer extends User {
     public boolean checkDiscountCode(CodedDiscount discount) {
         if (!this.codedDiscounts.containsKey(discount))
             return false;
-        if (!discount.checkTime())
-            return false;
+        return discount.checkTime();
+    }
+
+    public void changeRemainDiscount(CodedDiscount discount) {
         codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) + 1);
         if (codedDiscounts.get(discount) == discount.getRepeat()) {
             codedDiscounts.remove(discount);
         }
-        return true;
-
     }
 
     public boolean cartHasPair(Pair<Product, Seller> pair) {
