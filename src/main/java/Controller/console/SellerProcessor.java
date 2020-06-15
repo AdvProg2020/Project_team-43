@@ -173,13 +173,14 @@ public class SellerProcessor extends Processor {
         }
     }
 
-    public void addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException, InvalidCommandException {
+    public String addOff(String startTime, String endTime, Double discountAmount, ArrayList<String> productIds) throws ParseException {
         Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
         Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
         if (startTimeDate.after(endTimeDate)) {
-            throw new InvalidCommandException("startTime must be before endTime");
+            return ("start Time must be before endTime");
         }
         ((Seller) user).addOff(startTimeDate, endTimeDate, discountAmount, productIds);
+        return "Off added successfully\nWaiting for manager to confirm";
     }
 
     public void editField(UserPersonalInfo userPersonalInfo, String companyName) {

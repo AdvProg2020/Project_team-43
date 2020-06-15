@@ -256,13 +256,13 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="offProductsListView" layoutX="447.0" layoutY="197.0" prefHeight="224.0" prefWidth="200.0" visible="false" />
+                  <ListView fx:id="offProductsListView" layoutX="399.0" layoutY="215.0" prefHeight="224.0" prefWidth="299.0" visible="false" />
                   <Text fx:id="offAmountText" layoutX="443.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER" visible="false" wrappingWidth="207.6708984375">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Text layoutX="514.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products:" visible="false">
+                  <Text fx:id="productsOffText" layoutX="514.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products:" visible="false">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -275,5 +275,44 @@
                </children></AnchorPane>
             </content>
         </Tab>
+      <Tab text="Add Off">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff" text="Apply" />
+                  <Text fx:id="invalidCategory1" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
+                  <Text fx:id="messageText1" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
+                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <image>
+                        <Image url="@button_back.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="378.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Off" textAlignment="CENTER" wrappingWidth="105.6708984375">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <DatePicker fx:id="offStartTimeDate" layoutX="336.0" layoutY="78.0" promptText="Start Time" />
+                  <DatePicker fx:id="offEndTimeDate" layoutX="336.0" layoutY="128.0" promptText="End Time" />
+                  <Slider fx:id="offAmount" layoutX="392.0" layoutY="182.0" />
+                  <Label fx:id="offAmountLabel" layoutX="533.0" layoutY="181.0" text="0%" />
+                  <Label layoutX="324.0" layoutY="179.0" text="Amount">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="offProducts" layoutX="251.0" layoutY="249.0" prefHeight="176.0" prefWidth="388.0" />
+                  <Label layoutX="373.0" layoutY="214.0" text="Select Products:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
     </tabs>
 </TabPane>
