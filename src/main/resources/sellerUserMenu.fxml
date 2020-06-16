@@ -115,19 +115,19 @@
                                     </font>
                                 </Text>
                                 <Text fx:id="invalidIdProduct" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
-                        <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
+                        <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                            <effect>
                               <InnerShadow />
                            </effect>
                         </Button>
                             </children>
                         </Pane>
-                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="550.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false">
                             <image>
-                                <Image url="@user.png" />
+                                <Image url="@product.jpg" />
                             </image>
                         </ImageView>
-                        <ListView fx:id="productFeaturesList" layoutX="525.0" layoutY="193.0" prefHeight="224.0" prefWidth="200.0" visible="false" />
+                        <ListView fx:id="productFeaturesList" editable="true" layoutX="305.0" layoutY="236.0" onEditCommit="#editCell" prefHeight="224.0" prefWidth="200.0" visible="false" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
@@ -136,17 +136,45 @@
                                 <Image url="@button_back.png" />
                             </image>
                         </ImageView>
-                  <Text fx:id="buyerText" layoutX="370.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyers" textAlignment="CENTER" visible="false">
+                  <Text fx:id="buyerText" layoutX="676.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyers:" textAlignment="CENTER" visible="false">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="buyersListView" layoutX="295.0" layoutY="265.0" prefHeight="163.0" prefWidth="200.0" visible="false" />
-                  <Text fx:id="statusText" layoutX="62.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="168.21826171875">
+                  <ListView fx:id="buyersListView" layoutX="609.0" layoutY="346.0" prefHeight="163.0" prefWidth="200.0" visible="false" />
+                  <Text fx:id="statusText" layoutX="444.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="168.21826171875">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
+                  <Label fx:id="manageNameLabel" layoutX="554.0" layoutY="209.0" text="Name" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="manageNameTextField" layoutX="609.0" layoutY="208.0" visible="false" />
+                  <Label fx:id="managePriceLabel" layoutX="558.0" layoutY="257.0" text="Price" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="managePriceTextField" layoutX="609.0" layoutY="255.0" visible="false" />
+                  <ChoiceBox fx:id="manageProductCompanyChoiceBox" layoutX="121.0" layoutY="194.0" prefWidth="150.0" visible="false" />
+                  <Label fx:id="manageProductCategoryLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="311.0" layoutY="195.0" prefHeight="26.0" prefWidth="189.0" text="Category: " textAlignment="CENTER" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="manageCompanyLabel" layoutX="44.0" layoutY="196.0" text="Company" textAlignment="CENTER" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="applyChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="31.0" prefWidth="109.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 " visible="false">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </Button>
                     </children>
                 </AnchorPane>
             </content>

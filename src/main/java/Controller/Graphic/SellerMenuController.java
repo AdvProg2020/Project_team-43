@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -67,8 +68,18 @@ public class SellerMenuController extends Controller {
     public ListView<CheckBox> offProducts;
     public ChoiceBox<String> categoryChoiceBox;
     public ListView<HBox> categoryFeaturesListView;
+    public Label manageNameLabel;
+    public Label managePriceLabel;
+    public Label manageProductCategoryLabel;
+    public TextField manageNameTextField;
+    public TextField managePriceTextField;
+    public ChoiceBox<String> manageProductCompanyChoiceBox;
+    public Label manageCompanyLabel;
+    public Button applyChangesButton;
+
     private Seller user;
     private String productPhotoPath;
+    private Product product;
 
     @FXML
     public void initialize() {
@@ -162,17 +173,68 @@ public class SellerMenuController extends Controller {
 
     }
 
+    public void editProduct() {
+        String name = manageNameTextField.getText();
+        String price = managePriceTextField.getText();
+        String companyName = manageProductCompanyChoiceBox.getValue();
+        for (String item : productFeaturesList.getItems()) {
+            String[] temp = item.split(":");
+            String featureName = temp[0].trim();
+            String feature = temp[1].trim();
+            if (!product.getFeaturesMap().get(featureName).equalsIgnoreCase(feature)) {
+                user.editProduct(product, featureName, feature);
+            }
+        }
+        if (!name.equals(product.getName())) {
+            user.editProduct(product, "name", name);
+        }
+        if (!price.equals(String.valueOf(product.getPrice()))) {
+            user.editProduct(product, "price", price);
+        }
+        if (!companyName.equals(product.getCompany().getName())) {
+            user.editProduct(product, "company", companyName);
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Changes sent to manager");
+        alert.showAndWait();
+        statusText.setText("Status: " + product.getProductState());
+    }
+
+    private void initializeManageProduct(Product product) {
+        manageNameTextField.setText(product.getName());
+        managePriceTextField.setText(String.valueOf(product.getPrice()));
+        manageProductCategoryLabel.setText("Category: " + product.getCategory().getName());
+        for (Company company : Company.getAllCompanies()) {
+            manageProductCompanyChoiceBox.getItems().add(company.getName());
+        }
+        manageProductCompanyChoiceBox.setValue(product.getCompany().getName());
+
+        manageProductCompanyChoiceBox.setVisible(true);
+        managePriceTextField.setVisible(true);
+        manageNameTextField.setVisible(true);
+        manageProductCategoryLabel.setVisible(true);
+        manageNameLabel.setVisible(true);
+        managePriceLabel.setVisible(true);
+        manageCompanyLabel.setVisible(true);
+
+    }
+
+    public void editCell(ListView.EditEvent<String> stringEditEvent) {
+        productFeaturesList.getItems().set(productFeaturesList.getEditingIndex(), stringEditEvent.getNewValue());
+    }
+
     public void showProduct() {
         String id = productIdTextField.getText();
         if (sellerProcessor.checkProduct(id)) {
             buyersListView.getItems().clear();
-            Product product = user.getProductById(id);
+            product = user.getProductById(id);
+            initializeManageProduct(product);
             showProductFeaturesList(product);
 
             if (product.getImagePath() != null) {
                 productPhoto.setImage(new Image("file:" + product.getImagePath()));
             } else {
-                productPhoto.setImage(new Image("file:src/main/resources/user.png"));
+                productPhoto.setImage(new Image("file:src/main/resources/product.jpg"));
             }
 
             for (Buyer buyer : user.getBuyers(product.getProductId())) {
@@ -185,6 +247,7 @@ public class SellerMenuController extends Controller {
             buyersListView.setVisible(true);
             productPhoto.setVisible(true);
             statusText.setVisible(true);
+            applyChangesButton.setVisible(true);
             invalidIdProduct.setVisible(false);
 
         } else {
@@ -194,37 +257,12 @@ public class SellerMenuController extends Controller {
 
     private void showProductFeaturesList(Product product) {
         productFeaturesList.getItems().clear();
-        productFeaturesList.getItems().add("Name: " + product.getName());
-        ContextMenu contextMenu = new ContextMenu();
-        Menu editRequest = new Menu("edit request");
-        editRequest.setOnAction(event -> {
-            TextInputDialog textInputDialog = new TextInputDialog();
-            String field = productFeaturesList.getSelectionModel().getSelectedItem().split(":")[0];
-            textInputDialog.setHeaderText(field + ":");
-            textInputDialog.setTitle("Edit Request");
-            textInputDialog.initModality(Modality.WINDOW_MODAL);
-            textInputDialog.initOwner(stage);
-            textInputDialog.showAndWait();
-            editProductInfo(product, field, textInputDialog.getEditor().getText());
-        });
-        contextMenu.getItems().add(editRequest);
-        productFeaturesList.setContextMenu(contextMenu);
-        productFeaturesList.getItems().add("Price: " + product.getPrice());
-        productFeaturesList.getItems().add("Category: " + product.getCategory().getName());
-        productFeaturesList.getItems().add("Company: " + product.getCompany().getName());
+        productFeaturesList.setEditable(true);
+        productFeaturesList.setCellFactory(TextFieldListCell.forListView());
         for (String feature : product.getFeaturesMap().keySet()) {
             productFeaturesList.getItems().add(feature + ": " + product.getFeaturesMap().get(feature));
         }
         productFeaturesList.setVisible(true);
-    }
-
-    private void editProductInfo(Product product, String field, String newField) {
-        user.editProduct(product, field, newField);
-        System.out.println(field + " successfully changed to " + newField + "\nManager must confirm");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(field + " successfully changed to " + newField + "\nManager must confirm");
-        alert.show();
-        statusText.setText("Status: " + product.getProductState());
     }
 
     public void showOff() {
