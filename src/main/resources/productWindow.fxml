@@ -4,6 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+
+<?import org.controlsfx.control.Rating?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
          prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
@@ -53,6 +55,9 @@
         <Tab text="rate product">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
+                    <Rating>
+
+                    </Rating>
                     <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
                                pickOnBounds="true" preserveRatio="true">
                         <image>
