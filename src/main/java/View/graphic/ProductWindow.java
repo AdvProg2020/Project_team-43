@@ -19,11 +19,18 @@ public class ProductWindow extends Application {
 
     private Product product;
 
-    public void setProduct(Product product) {
+    public void setProduct(Product product, Application parent) {
         this.product = product;
+        this.parent = parent;
     }
 
     private Stage stage;
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    private Application parent;
 
     private ProductWindow() {
 
@@ -32,11 +39,12 @@ public class ProductWindow extends Application {
     @Override
     public void start(Stage primaryStage) {
         Parent root = null;
+        stage = primaryStage;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("productWindow.fxml"));
             root = (Parent) loader.load();
             ProductWindowController controller = (ProductWindowController) loader.getController();
-            controller.setProduct(product);
+            controller.setProductAndParent(product, parent);
         } catch (IOException e) {
             e.printStackTrace();
         }
