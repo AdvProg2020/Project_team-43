@@ -54,8 +54,6 @@ public class BuyerMenuController extends Controller {
     }
 
     public void setCart() {
-        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(Product.getProductById("1"),
-                Product.getProductById("1").getSellers().get(0)));
         HashMap<Pair<Product, Seller>, Integer> cart = user.getNewBuyerCart();
         for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
             setCartCells(productSellerPair);
