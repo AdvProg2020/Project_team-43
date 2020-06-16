@@ -12,6 +12,10 @@ public abstract class Order {
     private Date date;
     protected String orderType;
 
+    public Date getDate() {
+        return date;
+    }
+
     public Order(Date date) {
         this.orderId = "" + constructId;
         this.date = date;
@@ -42,8 +46,9 @@ public abstract class Order {
 
     public static Order getOrderById(String orderId) {
         for (Order order : allOrders) {
-            if (order.getOrderId().equals(orderId))
+            if (order.getOrderId().equals(orderId)) {
                 return order;
+            }
         }
         return null;
     }

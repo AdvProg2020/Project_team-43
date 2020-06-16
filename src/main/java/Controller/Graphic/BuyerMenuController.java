@@ -102,27 +102,32 @@ public class BuyerMenuController extends Controller {
 
     }
 
-    public void showOrder(MouseEvent mouseEvent) {
-        orders.getItems().clear();
-        String orderId = orders.getSelectionModel().getSelectedItem().split(" ")[0];
-        BuyOrder buyOrder = (BuyOrder) BuyOrder.getOrderById(orderId);
+    public void showOrder() {
+        order.getItems().clear();
+        String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[1];
+        BuyOrder buyOrder = (BuyOrder) Order.getOrderById(orderId);
         HashMap<Product, Integer> products = buyOrder.getProducts();
+        int i = 0;
         for (Product product : products.keySet()) {
-            order.getItems().add(product.getName() + " " + products.get(product));
+            order.getItems().add(product.getName() + " " + products.get(product) + " " + buyOrder.getSellers().get(i).getUsername());
+            i++;
         }
         order.getItems().add(Double.toString(buyOrder.getPayment()));
+        order.getItems().add(buyOrder.getDeliveryStatus().toString());
+        order.getItems().add(buyOrder.getDate().toString());
+        order.getItems().add(buyOrder.getAddress());
         order.setVisible(true);
         closeButton.setVisible(true);
 
     }
 
-    public void closeOrder(MouseEvent mouseEvent) {
+    public void closeOrder() {
         order.setVisible(false);
         closeButton.setVisible(false);
 
     }
 
-    public void purchase(MouseEvent mouseEvent) {
+    public void purchase() {
         try {
             PurchaseWindow.getInstance().start(this.stage);
         } catch (Exception e) {

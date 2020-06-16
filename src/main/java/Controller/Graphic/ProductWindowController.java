@@ -1,29 +1,36 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
 import javafx.application.Application;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import javafx.util.Pair;
 import model.Buyer;
 import model.Product;
 import model.Seller;
 import org.controlsfx.control.Rating;
 
+import java.util.Map;
+
 public class ProductWindowController {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
     public Label productScore;
-    public ChoiceBox sellers;
+    public ChoiceBox<String> sellers;
     public Label error;
     public Rating rating;
+    public TableView<Map.Entry<String, String>> features;
+    public TableColumn<Map.Entry<String, String>, String> feature;
+    public TableColumn<Map.Entry<String, String>, String> value;
 
     private Product product;
     Application parent;
@@ -34,7 +41,16 @@ public class ProductWindowController {
         //setProductImage();
         setProductProperties();
         setSellers();
+        setFeatures();
         error.setVisible(false);
+    }
+
+    public void setFeatures() {
+        feature.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
+        value.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue()));
+        ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(product.getFeaturesMap().entrySet());
+        features.getColumns().setAll(feature, value);
+        features.setItems(items);
 
     }
 
@@ -63,12 +79,12 @@ public class ProductWindowController {
         }
     }
 
-    public void addToCart(MouseEvent mouseEvent) {
-        Seller seller = (Seller) Seller.getUserByUserName((String) sellers.getValue());
+    public void addToCart() {
+        Seller seller = (Seller) Seller.getUserByUserName(sellers.getValue());
         BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller));
     }
 
-    public void rate(MouseEvent mouseEvent) {
+    public void rate() {
         error.setVisible(true);
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
             error.setText("first log in please");
