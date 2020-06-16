@@ -75,9 +75,10 @@ public class ProductWindowController {
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
             error.setText("you didn't buy this product");
         } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
-            product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
             error.setText("you rated before");
-        } else
+        } else {
+            product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
             error.setText("done");
+        }
     }
 }
