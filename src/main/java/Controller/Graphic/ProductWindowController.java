@@ -11,8 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
+import model.Buyer;
 import model.Product;
 import model.Seller;
+import org.controlsfx.control.Rating;
 
 public class ProductWindowController {
     public ImageView productImage;
@@ -20,6 +22,9 @@ public class ProductWindowController {
     public Label productPrice;
     public Label productScore;
     public ChoiceBox sellers;
+    public Label error;
+    public Rating rating;
+
     private Product product;
     Application parent;
 
@@ -29,6 +34,7 @@ public class ProductWindowController {
         //setProductImage();
         setProductProperties();
         setSellers();
+        error.setVisible(false);
 
     }
 
@@ -60,5 +66,18 @@ public class ProductWindowController {
     public void addToCart(MouseEvent mouseEvent) {
         Seller seller = (Seller) Seller.getUserByUserName((String) sellers.getValue());
         BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller));
+    }
+
+    public void rate(MouseEvent mouseEvent) {
+        error.setVisible(true);
+        if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
+            error.setText("first log in please");
+        } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
+            error.setText("you didn't buy this product");
+        } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
+            product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
+            error.setText("you rated before");
+        } else
+            error.setText("done");
     }
 }

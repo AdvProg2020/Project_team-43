@@ -179,6 +179,11 @@ public class Product {
         this.getScore().addBuyer(score);
     }
 
+    public void rateProduct(int score, User user) {
+        if (!this.getScore().isUserRatedBefore(user))
+            this.getScore().addBuyer(score, user.getUsername());
+    }
+
     public static ArrayList<Product> getAllProductsInList() {
         return allProductsInList;
     }

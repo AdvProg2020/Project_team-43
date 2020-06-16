@@ -85,6 +85,15 @@ public class Buyer extends User {
 
     }
 
+    public boolean hasBuyProduct(Product product) {
+        for (BuyOrder order : orders) {
+            if (order.getProducts().containsKey(product))
+                return true;
+        }
+        return false;
+
+    }
+
 
     public HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
         return newBuyerCart;

@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-
-
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import org.controlsfx.control.Rating?>
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-         prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
     <tabs>
         <Tab text="properties">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true"
-                                   preserveRatio="true"/>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" pickOnBounds="true"
-                                   preserveRatio="true" onMouseClicked="#addToCart">
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@button_add-to-cart.png"/>
+                                <Image url="@button_add-to-cart.png" />
                             </image>
                         </ImageView>
-                        <Label layoutX="373.0" layoutY="79.0" text="Name"/>
-                        <Label layoutX="373.0" layoutY="109.0" text="Price"/>
-                        <Label layoutX="373.0" layoutY="147.0" text="Score (out of 5)"/>
-                        <Label fx:id="productName" layoutX="491.0" layoutY="79.0" text="Label"/>
-                        <Label fx:id="productPrice" layoutX="491.0" layoutY="109.0" text="Label"/>
-                        <Label fx:id="productScore" layoutX="491.0" layoutY="147.0" text="Label"/>
-                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0"
-                                   onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                        <Label layoutX="373.0" layoutY="79.0" text="Name" />
+                        <Label layoutX="373.0" layoutY="109.0" text="Price" />
+                        <Label layoutX="373.0" layoutY="147.0" text="Score (out of 5)" />
+                        <Label fx:id="productName" layoutX="491.0" layoutY="79.0" text="Label" />
+                        <Label fx:id="productPrice" layoutX="491.0" layoutY="109.0" text="Label" />
+                        <Label fx:id="productScore" layoutX="491.0" layoutY="147.0" text="Label" />
+                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@button_back2.png"/>
+                                <Image url="@button_back2.png" />
                             </image>
                         </ImageView>
-                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0"/>
-                        <Label layoutX="307.0" layoutY="210.0" text="sellers"/>
+                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0" />
+                        <Label layoutX="307.0" layoutY="210.0" text="sellers" />
                     </children>
                 </AnchorPane>
             </content>
@@ -43,10 +42,9 @@
         <Tab text="comments">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
                 </AnchorPane>
@@ -55,25 +53,31 @@
         <Tab text="rate product">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <Rating>
-
+                    <Rating fx:id="rating" layoutX="132.0" layoutY="98.0" prefHeight="33.0" prefWidth="380.0" rating="0.0">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
                     </Rating>
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
+                    <ImageView fitHeight="42.0" fitWidth="109.0" layoutX="165.0" layoutY="173.0" onMouseClicked="#rate" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@button_rate.png" />
+                        </image>
+                    </ImageView>
+                    <Label fx:id="error" layoutX="511.0" layoutY="104.0" text="Label" />
                 </AnchorPane>
             </content>
         </Tab>
         <Tab text="features">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
                 </AnchorPane>
