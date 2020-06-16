@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.media.*?>
 <?import java.lang.*?>
 <?import javafx.scene.effect.*?>
@@ -16,8 +17,7 @@
                     <children>
                         <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
-                                <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
+                                <TextField fx:id="lastName" layoutX="178.0" layoutY="75.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
                                 <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
@@ -60,6 +60,7 @@
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
+                                <TextField fx:id="firstName" layoutX="178.0" layoutY="23.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
                             </children>
                         </Pane>
                         <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0" style="-fx-background-color: #448760; -fx-background-radius: 10;">
@@ -154,6 +155,28 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
+                  <VBox fx:id="applyVBox" alignment="CENTER" layoutX="475.0" layoutY="292.0" prefHeight="269.0" prefWidth="327.0">
+                     <children>
+                        <ListView fx:id="categoryFeaturesListView" prefHeight="163.0" prefWidth="327.0" visible="false">
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="5.0" />
+                           </VBox.margin>
+                        </ListView>
+                              <Button mnemonicParsing="false" onAction="#browsePhotoProduct" text="browse photo">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                              <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                         <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
                         <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
                             <font>
@@ -206,11 +229,8 @@
                         <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
                         <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
                         <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
-                        <TextField fx:id="categoryNewProduct" layoutX="559.0" layoutY="260.0" />
-                        <Button layoutX="559.0" layoutY="351.0" mnemonicParsing="false" onAction="#addNewProduct" text="Apply" />
-                        <Text fx:id="invalidCategory" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
+                        <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
                         <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
-                        <Button layoutX="503.0" layoutY="303.0" mnemonicParsing="false" onAction="#browsePhotoProduct" style="-fx-background-radius: 25;" text="browse photo" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
@@ -219,6 +239,8 @@
                                 <InnerShadow />
                             </effect>
                         </ImageView>
+                  <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0" />
+                  <Separator layoutX="401.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </content>

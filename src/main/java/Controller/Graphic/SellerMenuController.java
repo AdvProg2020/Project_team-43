@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -42,7 +43,6 @@ public class SellerMenuController extends Controller {
     public Slider offAmount;
     public Label offAmountLabel;
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
-    public ListView productsList;
     public TextField firstName;
     public TextField lastName;
     public TextField email;
@@ -65,6 +65,8 @@ public class SellerMenuController extends Controller {
     public Text offState;
     public Text productsOffText;
     public ListView<CheckBox> offProducts;
+    public ChoiceBox<String> categoryChoiceBox;
+    public ListView<HBox> categoryFeaturesListView;
     private Seller user;
     private String productPhotoPath;
 
@@ -83,6 +85,24 @@ public class SellerMenuController extends Controller {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }
         initializeAddOff();
+        initializeAddProduct();
+    }
+
+    private void initializeAddProduct() {
+        for (Category category : Category.getAllCategories()) {
+            categoryChoiceBox.getItems().add(category.getName());
+        }
+        categoryChoiceBox.setOnAction(event -> {
+            categoryFeaturesListView.getItems().clear();
+            categoryFeaturesListView.setVisible(true);
+            Category category = Category.getCategoryByName(categoryChoiceBox.getValue());
+            for (String feature : category.getFeatures()) {
+                HBox hBox = new HBox();
+                hBox.getChildren().add(new Label(feature + ": "));
+                hBox.getChildren().add(new TextField());
+                categoryFeaturesListView.getItems().add(hBox);
+            }
+        });
     }
 
     @FXML
@@ -101,27 +121,22 @@ public class SellerMenuController extends Controller {
 
     @FXML
     public void addNewProduct() {
-        Category category = Category.getCategoryByName(categoryNewProduct.getText());
-        if (category == null) {
+        if (categoryChoiceBox.getValue() == null) {
             invalidCategory.setVisible(true);
         } else {
             invalidCategory.setVisible(false);
+            Category category = Category.getCategoryByName(categoryChoiceBox.getValue());
             HashMap<String, String> features = new HashMap<>();
-            for (String feature : category.getFeatures()) {
-                String value;
-                TextInputDialog textInputDialog = new TextInputDialog("");
-                textInputDialog.setContentText(feature);
-                textInputDialog.setTitle("features");
-                textInputDialog.setHeaderText("product features");
-                textInputDialog.initModality(Modality.WINDOW_MODAL);
-                textInputDialog.initOwner(stage);
-                textInputDialog.showAndWait();
-                value = textInputDialog.getEditor().getText();
-                features.put(feature, value);
+            for (HBox item : categoryFeaturesListView.getItems()) {
+                features.put(((Label) item.getChildren().get(0)).getText().split(":")[0], ((TextField) item.getChildren().get(1)).getText());
             }
             try {
                 sellerProcessor.addNewProduct(nameNewProduct.getText(), companyNewCompany.getText(), category.getName(), priceNewProduct.getText(),
                         amountNewProduct.getText(), features, productPhotoPath);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Product added successfully");
+                alert.setContentText("Waiting for manager to confirm");
+                alert.showAndWait();
             } catch (InvalidCommandException e) {
                 System.out.println(e.getMessage());
             }
@@ -267,7 +282,7 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeAddOff() {
-        offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(String.valueOf(newValue.intValue() + "%")));
+        offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(newValue.intValue() + "%"));
         for (Product product : user.getProductsNumber().keySet()) {
             CheckBox checkBox = new CheckBox();
             checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
