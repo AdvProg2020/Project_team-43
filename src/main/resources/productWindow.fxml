@@ -1,49 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-         prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+         prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
     <tabs>
         <Tab text="properties">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
                     <children>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true"
                                    preserveRatio="true"/>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" pickOnBounds="true"
-                                   preserveRatio="true">
+                                   preserveRatio="true" onMouseClicked="#addToCart">
                             <image>
                                 <Image url="@button_add-to-cart.png"/>
                             </image>
                         </ImageView>
-                        <Label layoutX="373.0" layoutY="79.0" text="Label"/>
-                        <Label layoutX="373.0" layoutY="109.0" text="Label"/>
-                        <Label layoutX="373.0" layoutY="147.0" text="Label"/>
+                        <Label layoutX="373.0" layoutY="79.0" text="Name"/>
+                        <Label layoutX="373.0" layoutY="109.0" text="Price"/>
+                        <Label layoutX="373.0" layoutY="147.0" text="Score (out of 5)"/>
+                        <Label fx:id="productName" layoutX="491.0" layoutY="79.0" text="Label"/>
+                        <Label fx:id="productPrice" layoutX="491.0" layoutY="109.0" text="Label"/>
+                        <Label fx:id="productScore" layoutX="491.0" layoutY="147.0" text="Label"/>
+                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0"
+                                   onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@button_back2.png"/>
+                            </image>
+                        </ImageView>
+                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0"/>
+                        <Label layoutX="307.0" layoutY="210.0" text="sellers"/>
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
         <Tab text="comments">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
+                               pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@button_back2.png"/>
+                        </image>
+                    </ImageView>
+                </AnchorPane>
             </content>
         </Tab>
         <Tab text="rate product">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
+                               pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@button_back2.png"/>
+                        </image>
+                    </ImageView>
+                </AnchorPane>
             </content>
         </Tab>
         <Tab text="features">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
+                               pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@button_back2.png"/>
+                        </image>
+                    </ImageView>
+                </AnchorPane>
             </content>
         </Tab>
     </tabs>
