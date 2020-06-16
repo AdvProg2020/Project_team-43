@@ -9,7 +9,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="350.0" prefWidth="300.0"
-      style="-fx-background-image: url('login.jfif'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 315 365;"
+      style="-fx-background-image: url('login.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 315 365;"
       xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="Controller.Graphic.LoginMenuController">
     <children>
