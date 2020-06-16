@@ -1,19 +1,11 @@
 package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -25,15 +17,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SellerMenuController extends Controller {
     public TextField nameNewProduct;
     public TextField companyNewCompany;
     public TextField priceNewProduct;
     public TextField amountNewProduct;
-    public TextField categoryNewProduct;
     public Text invalidIdOff;
     public TextField offIdTextField;
     public Text offSellerText;
