@@ -51,7 +51,7 @@ public class ProductWindowController {
     public void setProductAndParent(Product product, Application parent) {
         this.product = product;
         this.parent = parent;
-        //setProductImage();
+        setProductImage();
         setProductProperties();
         setSellers();
         setFeatures();
@@ -92,7 +92,9 @@ public class ProductWindowController {
     }
 
     public void setProductImage() {
-        productImage.setImage(new Image("file:" + product.getImagePath()));
+        if (product.getImagePath() != null) {
+            productImage.setImage(new Image("file:" + product.getImagePath()));
+        }
     }
 
     public void goBack() {
@@ -105,7 +107,7 @@ public class ProductWindowController {
 
     public void addToCart() {
         Seller seller = (Seller) Seller.getUserByUserName(sellers.getValue());
-        BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller));
+        new Alert(Alert.AlertType.INFORMATION,BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller))).showAndWait();
     }
 
     public void rate() {

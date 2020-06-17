@@ -141,6 +141,7 @@ public class BuyerMenuController extends Controller {
 
     public void purchase() {
         try {
+            isBack = true;
             PurchaseWindow.getInstance().start(this.stage);
         } catch (Exception e) {
             e.printStackTrace();

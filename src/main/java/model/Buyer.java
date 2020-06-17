@@ -117,7 +117,7 @@ public class Buyer extends User {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(new Date(),
-                this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
+                this.getNewCartPrice() * (100 - discount) / 100, discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
@@ -163,7 +163,7 @@ public class Buyer extends User {
     }
 
     public int remainRepeats(CodedDiscount codedDiscount) {
-        return codedDiscounts.get(codedDiscount);
+        return codedDiscount.getRepeat() - codedDiscounts.get(codedDiscount);
     }
 
     public void setNewBuyerCart(HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
@@ -182,7 +182,7 @@ public class Buyer extends User {
 
     public void changeRemainDiscount(CodedDiscount discount) {
         codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) + 1);
-        if (codedDiscounts.get(discount) == discount.getRepeat()) {
+        if (codedDiscounts.get(discount) >= discount.getRepeat()) {
             codedDiscounts.remove(discount);
         }
     }
