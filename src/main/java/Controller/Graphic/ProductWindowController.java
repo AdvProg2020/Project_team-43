@@ -110,6 +110,9 @@ public class ProductWindowController {
 
     public void rate() {
         error.setVisible(true);
+        if (!(BuyerProcessor.getInstance().getUser() instanceof Buyer)) {
+            error.setText("you are not buyer");
+        }
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
             error.setText("first log in please");
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
