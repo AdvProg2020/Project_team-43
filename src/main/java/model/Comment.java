@@ -24,6 +24,14 @@ public class Comment {
     private State.OpinionState opinionState;
     private boolean isBuy;
 
+    public String getBuyerUserName() {
+        return buyerUserName;
+    }
+
+    public boolean isBuy() {
+        return isBuy;
+    }
+
     public static ArrayList<Comment> getInQueueExpectation() {
         return inQueueExpectation;
     }

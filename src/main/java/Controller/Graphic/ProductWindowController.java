@@ -1,19 +1,26 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.AddCommentWindow;
+import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import model.Buyer;
+import model.Comment;
 import model.Product;
 import model.Seller;
 import org.controlsfx.control.Rating;
@@ -31,6 +38,12 @@ public class ProductWindowController {
     public TableView<Map.Entry<String, String>> features;
     public TableColumn<Map.Entry<String, String>, String> feature;
     public TableColumn<Map.Entry<String, String>, String> value;
+    public ListView<String> comments;
+    public TextArea comment;
+    private static boolean isBackToComment = false;
+    public TabPane tabPane;
+    public Tab tab;
+
 
     private Product product;
     Application parent;
@@ -42,7 +55,18 @@ public class ProductWindowController {
         setProductProperties();
         setSellers();
         setFeatures();
+        setComments();
+        comment.setEditable(false);
         error.setVisible(false);
+        if (isBackToComment) {
+            isBackToComment = false;
+            tabPane.getSelectionModel().select(tab);
+        }
+
+    }
+
+    public void setComments() {
+        product.getComments().forEach((comment -> comments.getItems().add(comment.getBuyerUserName() + "\t" + comment.isBuy())));
     }
 
     public void setFeatures() {
@@ -97,4 +121,23 @@ public class ProductWindowController {
             error.setText("done");
         }
     }
+
+    public void showComment() {
+        if (comments.getItems().size() != 0) {
+            int index = comments.getSelectionModel().getSelectedIndex();
+            comment.setText(product.getComments().get(index).getCommentText());
+        }
+    }
+
+    public void addComment() {
+        if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
+            new Alert(Alert.AlertType.ERROR, "first log in").showAndWait();
+        } else {
+            AddCommentWindow.getInstance().setProduct(product);
+            AddCommentWindow.getInstance().start(MainWindow.getInstance().getStage());
+            isBackToComment = true;
+        }
+    }
+
+
 }
