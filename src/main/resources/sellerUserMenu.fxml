@@ -294,34 +294,53 @@
                            </font>
                         </Text>
                         <Text fx:id="invalidIdOff" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
-                        <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showOff" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
+                        <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showOff" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                            <effect>
                               <InnerShadow />
                            </effect>
                         </Button>
                      </children>
                   </Pane>
-                  <Text fx:id="offSellerText" layoutX="443.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller" textAlignment="CENTER" visible="false" wrappingWidth="203.9560546875">
+                  <Text fx:id="offSellerText" layoutX="543.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller" textAlignment="CENTER" visible="false" wrappingWidth="203.9560546875">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <ListView fx:id="offProductsListView" layoutX="399.0" layoutY="215.0" prefHeight="224.0" prefWidth="299.0" visible="false" />
-                  <Text fx:id="offAmountText" layoutX="443.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER" visible="false" wrappingWidth="207.6708984375">
+                  <ListView fx:id="offProductsListView" layoutX="499.0" layoutY="129.0" prefHeight="272.0" prefWidth="299.0" visible="false" />
+                  <Text fx:id="manageOffAmountText" layoutX="538.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" textAlignment="CENTER" visible="false" wrappingWidth="94.6708984375">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Text fx:id="productsOffText" layoutX="514.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products:" visible="false">
+                  <Text fx:id="productsOffText" layoutX="614.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products:" visible="false">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <Text fx:id="offState" layoutX="485.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="state" textAlignment="CENTER" visible="false" wrappingWidth="122.3603515625">
+                  <Text fx:id="offState" layoutX="585.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="state" textAlignment="CENTER" visible="false" wrappingWidth="122.3603515625">
                      <font>
                         <Font size="17.0" />
                      </font>
                   </Text>
+                  <Button fx:id="applyOffChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false" onAction="#editOff" prefHeight="31.0" prefWidth="109.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 " visible="false">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </Button>
+                  <DatePicker fx:id="manageOffStartTime" layoutX="221.0" layoutY="190.0" visible="false" />
+                  <DatePicker fx:id="manageOffEndTime" layoutX="221.0" layoutY="269.0" visible="false" />
+                  <Label fx:id="manageOffStartTimeLabel" layoutX="139.0" layoutY="193.0" text="Start time" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="manageOffEndTimeLabel" layoutX="139.0" layoutY="272.0" text="End time" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="manageOffAmountLabel" layoutX="767.0" layoutY="79.0" text="0%" visible="false" />
+                  <Slider fx:id="manageOffAmount" layoutX="620.0" layoutY="79.0" visible="false" />
                </children></AnchorPane>
             </content>
         </Tab>

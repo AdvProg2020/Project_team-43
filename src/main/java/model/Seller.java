@@ -301,7 +301,7 @@ public class Seller extends User {
     public void loadOffs() {
         ArrayList<Off> offsFromDataBase = new ArrayList<>();
         for (String offId : offsId) {
-            offsFromDataBase.add(Off.getOffById(offId));
+            offsFromDataBase.add(Off.getAllOffById(offId));
         }
         offs = offsFromDataBase;
 

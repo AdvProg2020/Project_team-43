@@ -1,6 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -14,6 +15,7 @@ import model.*;
 
 import java.io.File;
 import java.text.ParseException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -26,7 +28,7 @@ public class SellerMenuController extends Controller {
     public Text invalidIdOff;
     public TextField offIdTextField;
     public Text offSellerText;
-    public ListView offProductsListView;
+    public ListView<CheckBox> offProductsListView;
     public Text offAmountText;
     public DatePicker offStartTimeDate;
     public DatePicker offEndTimeDate;
@@ -66,9 +68,20 @@ public class SellerMenuController extends Controller {
     public Label manageCompanyLabel;
     public Button applyChangesButton;
 
+    public Button applyOffChangesButton;
+    public Label manageOffStartTimeLabel;
+    public Label manageOffEndTimeLabel;
+    public DatePicker manageOffStartTime;
+    public DatePicker manageOffEndTime;
+    public Text manageOffAmountText;
+    public Slider manageOffAmount;
+    public Label manageOffAmountLabel;
+
+
     private Seller user;
     private String productPhotoPath;
     private Product product;
+    private Off off;
 
     @FXML
     public void initialize() {
@@ -254,58 +267,86 @@ public class SellerMenuController extends Controller {
         productFeaturesList.setVisible(true);
     }
 
+    private void initializeManageOff(Off off) {
+        offProductsListView.getItems().clear();
+
+        offSellerText.setText("Seller: " + off.getSeller().getUsername());
+        offState.setText("State: " + off.getOffState());
+        manageOffAmount.setValue(off.getDiscountAmount());
+        manageOffAmountLabel.setText((int) off.getDiscountAmount() + "%");
+        manageOffAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> manageOffAmountLabel.textProperty().setValue(newValue.intValue() + "%"));
+        for (Product product : user.getProductsNumber().keySet()) {
+            CheckBox checkBox = new CheckBox();
+            checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
+            if (off.hasProduct(product)) {
+                checkBox.setSelected(true);
+            }
+            offProductsListView.getItems().add(checkBox);
+
+        }
+        manageOffStartTime.setValue(off.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        manageOffEndTime.setValue(off.getEndTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+    }
+
     public void showOff() {
         String id = offIdTextField.getText();
         if (user.hasOffWithId(id)) {
             invalidIdOff.setVisible(false);
-            offProductsListView.getItems().clear();
-            Off off = user.getOffById(id);
-            offSellerText.setText("Seller: " + off.getSeller().getUsername());
-            offAmountText.setText("Discount: " + off.getDiscountAmount() + "%");
-            offState.setText("State: " + off.getOffState());
-            for (Product product : off.getProducts()) {
-                offProductsListView.getItems().add("Name: " + product.getName() + "  Price: " + product.getPrice() + "  ID: " + product.getProductId() + "  Category: " + product.getCategory().getName());
-            }
-            setMenuOffProductListView(off);
+            off = user.getOffById(id);
+            initializeManageOff(off);
+
             offProductsListView.setVisible(true);
             offSellerText.setVisible(true);
-            offAmountText.setVisible(true);
             offState.setVisible(true);
+            manageOffAmountLabel.setVisible(true);
+            manageOffAmountText.setVisible(true);
             productsOffText.setVisible(true);
+            manageOffEndTimeLabel.setVisible(true);
+            manageOffStartTimeLabel.setVisible(true);
+            manageOffStartTime.setVisible(true);
+            manageOffEndTime.setVisible(true);
+            manageOffAmount.setVisible(true);
+            applyOffChangesButton.setVisible(true);
         } else {
             invalidIdOff.setVisible(true);
         }
     }
 
-    private void setMenuOffProductListView(Off off) {
-        ContextMenu contextMenu = new ContextMenu();
-        Menu editRequest = new Menu("edit request");
-        editRequest.setOnAction(event -> {
-            TextInputDialog textInputDialog = new TextInputDialog();
-            textInputDialog.setHeaderText("Discount amount: ");
-            textInputDialog.setTitle("Edit Request");
-            textInputDialog.initModality(Modality.WINDOW_MODAL);
-            textInputDialog.initOwner(stage);
-            textInputDialog.showAndWait();
-            editOffAmount(off, textInputDialog.getEditor().getText());
-        });
-        contextMenu.getItems().add(editRequest);
-        offAmountText.setOnContextMenuRequested(event -> {
-            TextInputDialog textInputDialog = new TextInputDialog();
-            textInputDialog.setHeaderText("Discount amount: ");
-            textInputDialog.setTitle("Edit Request");
-            textInputDialog.initModality(Modality.WINDOW_MODAL);
-            textInputDialog.initOwner(stage);
-            Optional<String> result = textInputDialog.showAndWait();
-            if (result.isPresent()) {
-                editOffAmount(off, textInputDialog.getEditor().getText());
+    public void editOff(ActionEvent event) {
+        String amountString = manageOffAmountLabel.getText();
+        double amount = Double.parseDouble(amountString.substring(0, amountString.length() - 1));
+        String startTime = manageOffStartTime.getEditor().getText();
+        String endTime = manageOffEndTime.getEditor().getText();
+        for (CheckBox item : offProductsListView.getItems()) {
+            String id = item.getText().split(" ")[1];
+            if (item.isSelected()) {
+                if (!off.hasProduct(user.getProductById(id))) {
+                    user.editOff(off, "addProduct", id);
+                }
+            } else {
+                if (off.hasProduct(user.getProductById(id))) {
+                    user.editOff(off, "removeProduct", id);
+                }
             }
-        });
+        }
+        if (amount != off.getDiscountAmount()) {
+            user.editOff(off, "discountAmount", String.valueOf(amount));
+        }
+        if (!startTime.equals(off.getStartTime().toString())) {
+            user.editOff(off, "startTime", startTime);
+        }
+        if (!endTime.equals(off.getEndTime().toString())) {
+            user.editOff(off, "endTime", endTime);
+        }
+        offState.setText("State: " + off.getOffState());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Changes sent to manager");
+        alert.showAndWait();
     }
 
+
     private void editOffAmount(Off off, String text) {
-        user.editOff(off, "discountAmount", text);
-        offState.setText("State: " + off.getOffState());
+
     }
 
     private void initializeAddOff() {
