@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SellerMenuController extends Controller {
+    public Text companyText;
+    public Text companyInfoText;
     public TextField nameNewProduct;
     public TextField companyNewCompany;
     public TextField priceNewProduct;
@@ -40,7 +42,6 @@ public class SellerMenuController extends Controller {
     public TextField phoneNumber;
     public TextField existingProductId;
     public TextField amountTextField;
-    public TextField company;
     public Text invalidCategory;
     public Text messageText;
     public Text usernameText;
@@ -91,7 +92,8 @@ public class SellerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
-        company.setText(user.getCompany().getName());
+        companyText.setText("company: " + user.getCompany().getName());
+        companyInfoText.setText("company info: " + user.getCompany().getInfo());
         balance.setText(Double.toString(user.getBalance()));
         if (user.getImagePath() != null) {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
