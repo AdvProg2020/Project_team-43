@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="620.0" style="-fx-background-image: url('login.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;-fx-background-size: 630 460;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.RegisterMenuController">
+<AnchorPane prefHeight="450.0" prefWidth="620.0" style="-fx-background-image: url('simpleBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;-fx-background-size: 630 460;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.RegisterMenuController">
     <children>
         <VBox alignment="CENTER" layoutX="136.0" layoutY="21.0" prefHeight="261.0" prefWidth="328.0">
             <children>

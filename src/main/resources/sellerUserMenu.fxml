@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.media.*?>
-<?import java.lang.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0">
                     <children>
-                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="451.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
                                 <TextField fx:id="lastName" layoutX="178.0" layoutY="75.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
                                 <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
@@ -46,7 +57,7 @@
                                 </Text>
                                 <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0" prefWidth="187.0" promptText="email" />
                                 <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password" />
-                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="328.0" onMouseClicked="#update" style="-fx-cursor: hand;">
+                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="373.0" onMouseClicked="#update" style="-fx-cursor: hand;">
                                     <image>
                                         <Image url="@button_update.png" />
                                     </image>
@@ -61,6 +72,16 @@
                                     </font>
                                 </Text>
                                 <TextField fx:id="firstName" layoutX="178.0" layoutY="23.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
+                        <Text layoutX="42.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="balance" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="balance" layoutX="190.0" layoutY="323.0" text="Label" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
                             </children>
                         </Pane>
                         <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0" style="-fx-background-color: #448760; -fx-background-radius: 10;">

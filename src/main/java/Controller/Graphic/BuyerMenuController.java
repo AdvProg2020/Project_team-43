@@ -32,6 +32,7 @@ public class BuyerMenuController extends Controller {
     public ImageView closeButton;
     public Tab cartTab;
     public TabPane tabPane;
+    public Label balance;
     BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -51,6 +52,7 @@ public class BuyerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        balance.setText(Double.toString(user.getBalance()));
         if (user.getImagePath() != null) {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }
@@ -139,6 +141,7 @@ public class BuyerMenuController extends Controller {
 
     public void purchase() {
         try {
+            isBack = true;
             PurchaseWindow.getInstance().start(this.stage);
         } catch (Exception e) {
             e.printStackTrace();

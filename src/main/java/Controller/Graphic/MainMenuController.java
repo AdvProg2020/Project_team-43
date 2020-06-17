@@ -57,7 +57,7 @@ public class MainMenuController {
     }
 
     public void test(ActionEvent actionEvent) {
-        ProductWindow.getInstance().setProduct(Product.getProductById("1"), MainWindow.getInstance());
+        ProductWindow.getInstance().setProduct(Product.getProductById("4"), MainWindow.getInstance());
         ProductWindow.getInstance().start(stage);
     }
 }

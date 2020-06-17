@@ -14,17 +14,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import org.controlsfx.control.Rating?>
 
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('productBackground.jpg')" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('productBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
     <tabs>
         <Tab text="properties">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
                     <children>
-                        <ImageView fitHeight="207.0" fitWidth="212.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="productImage" fitHeight="207.0" fitWidth="212.0" layoutX="31.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_add-to-cart.png" />
                             </image>
+                     <cursor>
+                        <Cursor fx:constant="NONE" />
+                     </cursor>
                         </ImageView>
                         <Label layoutX="373.0" layoutY="79.0" text="Name" />
                         <Label layoutX="373.0" layoutY="109.0" text="Price" />
@@ -51,13 +54,13 @@
                             <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
-               <ListView fx:id="comments" layoutX="40.0" layoutY="36.0" onMouseClicked="#showComment" prefHeight="454.0" prefWidth="200.0" />
-               <TextArea fx:id="comment" layoutX="427.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" />
-               <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0" onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@button_add-comment.png" />
-                  </image>
-               </ImageView>
+                    <ListView fx:id="comments" layoutX="40.0" layoutY="36.0" onMouseClicked="#showComment" prefHeight="454.0" prefWidth="200.0" />
+                    <TextArea fx:id="comment" layoutX="427.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" />
+                    <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0" onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@button_add-comment.png" />
+                        </image>
+                    </ImageView>
                 </AnchorPane>
             </content>
         </Tab>

@@ -31,6 +31,7 @@ public class SellerMenuController extends Controller {
     public DatePicker offEndTimeDate;
     public Slider offAmount;
     public Label offAmountLabel;
+    public Label balance;
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -91,6 +92,7 @@ public class SellerMenuController extends Controller {
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
         company.setText(user.getCompany().getName());
+        balance.setText(Double.toString(user.getBalance()));
         if (user.getImagePath() != null) {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }

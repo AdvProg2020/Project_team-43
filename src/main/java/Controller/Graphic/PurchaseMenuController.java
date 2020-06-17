@@ -1,9 +1,12 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.BuyerUserWindow;
+import View.graphic.MainWindow;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -11,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.CodedDiscount;
 
 
@@ -67,12 +71,18 @@ public class PurchaseMenuController extends Controller {
     }
 
 
-    public void purchase(MouseEvent mouseEvent) {
+    public void purchase() {
         double discount = 0;
         if (validLabel.getText().equals("valid")) {
             discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
             BuyerProcessor.getInstance().useDiscountCode(CodedDiscount.getDiscountById(discountCode.getText()));
         }
-        BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
+        String result = BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
+        new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
+        cancelPurchase();
+    }
+
+    public void cancelPurchase() {
+        BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 }
