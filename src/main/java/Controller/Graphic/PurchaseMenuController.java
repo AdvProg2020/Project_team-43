@@ -41,7 +41,6 @@ public class PurchaseMenuController extends Controller {
                             validLabel.setText("valid");
                             validLabel.setTextFill(Color.GREEN);
                             setDiscount();
-
                         } else {
                             validLabel.setText("invalid");
                             validLabel.setTextFill(Color.RED);

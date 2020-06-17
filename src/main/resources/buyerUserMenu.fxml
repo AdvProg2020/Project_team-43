@@ -8,7 +8,8 @@
 <?import javafx.scene.media.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="600.0"
          prefWidth="900.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.BuyerMenuController"
          style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
@@ -113,12 +114,13 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab text="Cart">
+        <Tab fx:id="cartTab" text="Cart">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
                         <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="58.0" layoutY="236.0"/>
-                        <ListView fx:id="products" layoutX="15.0" layoutY="13.0" prefHeight="414.0" prefWidth="751.0"/>
+                        <ListView fx:id="products" layoutX="15.0" layoutY="13.0" prefHeight="414.0" prefWidth="751.0"
+                                  onMouseClicked="#showProduct"/>
                         <Text layoutX="523.0" layoutY="503.0" strokeType="OUTSIDE" strokeWidth="0.0"
                               text="total price :">
                             <font>

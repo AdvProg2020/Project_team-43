@@ -1,6 +1,9 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.BuyerUserWindow;
+import View.graphic.MainWindow;
+import View.graphic.ProductWindow;
 import View.graphic.PurchaseWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class BuyerMenuController extends Controller {
+    private static boolean isBack = false;
     public ListView<String> products;
     public Text userName;
     public Text totalPrice;
@@ -26,6 +30,8 @@ public class BuyerMenuController extends Controller {
     public ListView<String> orders;
     public ListView<String> order;
     public ImageView closeButton;
+    public Tab cartTab;
+    public TabPane tabPane;
     BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -51,6 +57,10 @@ public class BuyerMenuController extends Controller {
         setCart();
         setDiscountCodes();
         setOrders();
+        if (isBack) {
+            isBack = false;
+            tabPane.getSelectionModel().select(cartTab);
+        }
     }
 
     public void setCart() {
@@ -133,6 +143,21 @@ public class BuyerMenuController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void showProduct(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() >= 2) {
+            isBack = true;
+            String productName = products.getSelectionModel().getSelectedItem().split("\t")[0];
+            String sellerName = products.getSelectionModel().getSelectedItem().split("\t")[1];
+            for (Pair<Product, Seller> productSellerPair : ((Buyer) buyerProcessor.getUser()).getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) && productSellerPair.getValue().getUsername().equals(sellerName)) {
+                    ProductWindow.getInstance().setProduct(productSellerPair.getKey(), BuyerUserWindow.getInstance());
+                    ProductWindow.getInstance().start(MainWindow.getInstance().getStage());
+                }
+            }
+        }
+
     }
 
     private class XCell extends ListCell<String> {
