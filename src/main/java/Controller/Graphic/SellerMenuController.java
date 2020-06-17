@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import model.*;
 
 import java.io.File;
@@ -18,7 +17,6 @@ import java.text.ParseException;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class SellerMenuController extends Controller {
     public TextField nameNewProduct;
@@ -29,7 +27,6 @@ public class SellerMenuController extends Controller {
     public TextField offIdTextField;
     public Text offSellerText;
     public ListView<CheckBox> offProductsListView;
-    public Text offAmountText;
     public DatePicker offStartTimeDate;
     public DatePicker offEndTimeDate;
     public Slider offAmount;
@@ -342,11 +339,6 @@ public class SellerMenuController extends Controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Changes sent to manager");
         alert.showAndWait();
-    }
-
-
-    private void editOffAmount(Off off, String text) {
-
     }
 
     private void initializeAddOff() {
