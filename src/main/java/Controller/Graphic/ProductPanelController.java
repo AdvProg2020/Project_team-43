@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import model.Category;
 
 import java.net.URL;
@@ -40,7 +41,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void nextPage() {
-        
+
     }
 
     public void previousPage() {
@@ -62,7 +63,6 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
 
-
     public ProductPanelController() {
         categories = FXCollections.observableArrayList();
     }
@@ -77,4 +77,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
 
+    public void hideCategories() {
+        categoryListView.setVisible(false);
+    }
 }
