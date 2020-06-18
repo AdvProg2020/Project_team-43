@@ -122,6 +122,10 @@ public class Processor {
         }
     }
 
+    public ArrayList<Product> getProductAfterFilter(ArrayList<Product> products) {
+        return productFilter.getProductsAfterFilter(products);
+    }
+
     public void addFeaturesFilter() {
         if (productFilter.getCategory() == null) {
             errorMessage("please select a category");
