@@ -116,14 +116,15 @@ public class Processor {
             productFilter.addAvailabilityFilter();
         } else if (nameMatcher.matches()) {
             productFilter.addNameFilter(nameMatcher.group(1));
-        } else if (categoryMatcher.matches()) {
-            //addFeaturesFilter();
-
         } else if (offMatcher.matches()) {
             productFilter.addOffFilter();
         } else {
             errorMessage("invalid filter");
         }
+    }
+
+    public void addFeaturesCategory(String feature, String value) {
+        productFilter.addFeatureToCategoryFeaturesFilter(feature, value);
     }
 
     public ArrayList<Product> getProductAfterFilter(ArrayList<Product> products) {

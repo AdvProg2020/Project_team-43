@@ -65,6 +65,10 @@ public class FilterManager {
         }
     }
 
+    public void addFeatureToCategoryFeaturesFilter(String feature, String value) {
+        criteriaCategoryFeatures.addFeature(feature, value);
+    }
+
     public void addOffFilter() {
         this.currentFilters.add(new CriteriaOff());
     }
