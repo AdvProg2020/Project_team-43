@@ -72,7 +72,7 @@ public class ManagerMenuController extends Controller {
     public TextField newFeature;
     public TextField changedFeature;
     public TextField createCategoryName;
-    public TextField createCategoryAddFeature;
+    public TextField createCategoryFeature;
     public ListView usersListView;
     public ListView productsListView;
     public ListView codedDiscountListView;
@@ -157,7 +157,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showProductInfo() {
-        String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
+        String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String temp = productNameAndId.split(" /")[1].trim();
         String productId = temp.substring(0, temp.length() - 1);
         selectedProduct = Product.getAllProductById(productId);
@@ -179,14 +179,13 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscountInfo() {
-        String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
+        String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
         Pattern pattern = Pattern.compile("\\[(.+)\\]");
         Matcher matcher = pattern.matcher(discountCodePrime);
         if (matcher.matches()) {
             selectedCodedDiscount = CodedDiscount.getDiscountById(matcher.group(1));
             showCodedDiscount(selectedCodedDiscount);
         }
-
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -198,7 +197,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showRequestInfo() {
-        String requestIdPrime = requestsListView.getSelectionModel().getSelectedItems().toString();
+        String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
         Pattern pattern = Pattern.compile("\\[(.+)\\]");
         Matcher matcher = pattern.matcher(requestIdPrime);
         if (matcher.matches()) {
@@ -271,7 +270,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showChangeToPane() {
-        selectedFeature = featuresListView.getSelectionModel().getSelectedItems().toString();
+        selectedFeature = featuresListView.getSelectionModel().getSelectedItem().toString();
         changeFeaturePane.setVisible(true);
     }
 
@@ -405,22 +404,55 @@ public class ManagerMenuController extends Controller {
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
         }
+        if (!newFeature.getText().isEmpty()) {
+            try {
+                for (String s : selectedCategory.getFeatures()) {
+                    System.out.println(s);
+                }
+                ((Manager) Processor.user).addCategoryFeature(selectedCategory, newFeature.getText());
+            } catch (InvalidCommandException e) {
+                showErrorAlert(e.getMessage());
+            }
+            updateCategoryInfoPaneListView();
+            newFeature.clear();
+        }
     }
 
     public void createAddFeature() {
-        String feature = createCategoryAddFeature.getText();
-        createCategoryFeatures.add(feature);
-        createCategoryFeaturesListView.setItems(createCategoryFeatures);
-        createCategoryAddFeature.clear();
+        if (!createCategoryFeature.getText().isEmpty()) {
+            String feature = createCategoryFeature.getText();
+            if(!hasFeature(feature)) {
+                createCategoryFeatures.add(feature);
+                createCategoryFeaturesListView.setItems(createCategoryFeatures);
+            } else{
+                showErrorAlert("already add this feature");
+            }
+            createCategoryFeature.clear();
+        }
+    }
+
+    public boolean hasFeature(String feature){
+        if(createCategoryFeatures.isEmpty()){
+            return false;
+        }
+        for (String categoryFeature : createCategoryFeatures) {
+            if (categoryFeature.equals(feature)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void createRemoveFeature() {
-        String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItems().toString();
+        String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItem().toString();
         createCategoryFeatures.remove(selectedFeature);
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
 
     public void createCategory() {
+        if(createCategoryName.getText().isEmpty()){
+            return;
+        }
         ArrayList<String> features = new ArrayList<>();
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
@@ -429,6 +461,7 @@ public class ManagerMenuController extends Controller {
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
+        updateCategoryListView();
     }
 
 
@@ -578,6 +611,7 @@ public class ManagerMenuController extends Controller {
                 showErrorAlert(e.getMessage());
             }
             changeFeaturePane.setVisible(false);
+            updateCategoryInfoPaneListView();
         }
     }
 
@@ -585,6 +619,15 @@ public class ManagerMenuController extends Controller {
         ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
+        updateCategoryInfoPaneListView();
+    }
+
+    public void updateCategoryInfoPaneListView() {
+        ObservableList<String> features = FXCollections.observableArrayList();
+        for (String feature : selectedCategory.getFeatures()) {
+            features.add(feature);
+        }
+        featuresListView.setItems(features);
     }
 
     @FXML
