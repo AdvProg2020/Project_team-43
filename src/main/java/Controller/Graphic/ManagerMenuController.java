@@ -252,9 +252,11 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCategoryInfo() {
+        categoryName.clear();
+        newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        Category category = Category.getCategoryByName(categoryName);
-        showCategory(category);
+        selectedCategory = Category.getCategoryByName(categoryName);
+        showCategory(selectedCategory);
     }
 
     public void showCategory(Category category) {
