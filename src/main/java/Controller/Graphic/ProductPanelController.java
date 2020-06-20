@@ -32,6 +32,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public JFXRadioButton leastExpensiveRadioButton;
     public JFXRadioButton dateAddedRadioButton;
     public JFXRadioButton scoreRadioButton;
+    public CheckBox offFilterCheckBox1;
 
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -147,6 +148,14 @@ public class ProductPanelController extends Controller implements Initializable 
             buyerProcessor.filter("by availability");
         } else {
             buyerProcessor.disableFilter("availability");
+        }
+    }
+
+    public void filterOff() {
+        if (offFilterCheckBox1.isSelected()) {
+            buyerProcessor.filter("off");
+        } else {
+            buyerProcessor.disableFilter("off");
         }
     }
 }

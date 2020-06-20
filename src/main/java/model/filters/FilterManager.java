@@ -81,8 +81,8 @@ public class FilterManager {
         currentFilters.removeIf(t -> t instanceof CriteriaAvailable);
     }
 
-    public void disableFeature(String feature) {
-        criteriaCategoryFeatures.deleteFeature(feature);
+    public void disableFeature(String feature, String value) {
+        criteriaCategoryFeatures.deleteFeature(feature, value);
     }
 
     public void disableNameFilter() {
