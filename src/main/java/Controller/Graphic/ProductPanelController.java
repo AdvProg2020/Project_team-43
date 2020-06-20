@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 import model.Sorting;
@@ -33,6 +34,8 @@ public class ProductPanelController extends Controller implements Initializable 
     public JFXRadioButton dateAddedRadioButton;
     public JFXRadioButton scoreRadioButton;
     public CheckBox offFilterCheckBox1;
+    public TextArea categoryName;
+    public Text userName;
 
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -44,6 +47,8 @@ public class ProductPanelController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (buyerProcessor.isUserLoggedIn())
+            userName.setText(buyerProcessor.getUser().getUsername());
         viewRadioButton.setSelected(true);
         buyerProcessor.sort("by view");
         toggleGroup1.selectedToggleProperty().addListener((observable -> {
@@ -120,7 +125,8 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showCategories() {
-        categoryListView.setVisible(true);
+        boolean visible = categoryListView.isVisible();
+        categoryListView.setVisible(!visible);
     }
 
     public void selectedCategory() {
@@ -130,7 +136,8 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void filterByCategory(String categoryName) {
-
+        buyerProcessor.filteringProcess("select category " + categoryName);
+        this.categoryName.setText(categoryName);
     }
 
 
