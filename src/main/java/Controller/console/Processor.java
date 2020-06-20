@@ -107,6 +107,8 @@ public class Processor {
         Matcher availabilityMatcher = availabilityPattern.matcher(selectedFilter);
         Pattern categoryPattern = Pattern.compile("by category features");
         Matcher categoryMatcher = categoryPattern.matcher(selectedFilter);
+        Pattern offPattern = Pattern.compile("off");
+        Matcher offMatcher = offPattern.matcher(selectedFilter);
         if (priceMatcher.matches()) {
             productFilter.addPriceFilter(Double.parseDouble(priceMatcher.group(1)),
                     Double.parseDouble(priceMatcher.group(2)));
@@ -115,27 +117,33 @@ public class Processor {
         } else if (nameMatcher.matches()) {
             productFilter.addNameFilter(nameMatcher.group(1));
         } else if (categoryMatcher.matches()) {
-            addFeaturesFilter();
+            //addFeaturesFilter();
 
+        } else if (offMatcher.matches()) {
+            productFilter.addOffFilter();
         } else {
             errorMessage("invalid filter");
         }
     }
 
-    public void addFeaturesFilter() {
+    public ArrayList<Product> getProductAfterFilter(ArrayList<Product> products) {
+        return productFilter.getProductsAfterFilter(products);
+    }
+
+   /* public void addFeaturesFilter() {
         if (productFilter.getCategory() == null) {
             errorMessage("please select a category");
         } else {
             productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
         }
-    }
+    }*/
 
     public void currentFilter() {
         viewManager.showCurrentFilters(productFilter);
     }
 
     public void disableFilter(String selectedFilter) {
-        Pattern featurePattern = Pattern.compile("feature (\\S+)");
+        Pattern featurePattern = Pattern.compile("feature (\\S+) (\\S+)");
         Matcher featureMatcher = featurePattern.matcher(selectedFilter);
         if (selectedFilter.equalsIgnoreCase("price")) {
             productFilter.disablePriceFilter();
@@ -143,9 +151,12 @@ public class Processor {
             productFilter.disableAvailabilityFilter();
         } else if (selectedFilter.equalsIgnoreCase("name")) {
             productFilter.disableNameFilter();
+
+        } else if (selectedFilter.equals("off")) {
+            productFilter.disableOffFilter();
         } else if (featureMatcher.matches()) {
             if (productFilter.getCategory() != null)
-                productFilter.disableFeature(featureMatcher.group(1));
+                productFilter.disableFeature(featureMatcher.group(1), featureMatcher.group(2));
             else
                 errorMessage("you did not select a category");
         } else

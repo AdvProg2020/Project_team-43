@@ -1,101 +1,118 @@
 package Controller.Graphic;
 
+import Controller.console.BuyerProcessor;
+import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import model.Category;
+import model.Product;
+import model.Sorting;
+import org.controlsfx.control.RangeSlider;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
-public class ProductPanelController implements Initializable {
+public class ProductPanelController extends Controller implements Initializable {
+    private final BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
+    public TextField nameFilterText;
+    public RangeSlider priceFilterSlider;
+    public Label minValue;
+    public Label maxValue;
+    public ToggleGroup toggleGroup1;
+    public JFXRadioButton viewRadioButton;
+    public JFXRadioButton mostExpensiveRadioButton;
+    public JFXRadioButton leastExpensiveRadioButton;
+    public JFXRadioButton dateAddedRadioButton;
+    public JFXRadioButton scoreRadioButton;
+    public CheckBox offFilterCheckBox1;
 
+
+    private ArrayList<Product> allProducts = Product.getAllProductsInList();
+    public CheckBox availableFilterCheckBox;
     @FXML
     private ListView<String> categoryListView;
 
     ObservableList<String> categories;
-    @FXML
-    ImageView image1;
-    @FXML
-    ImageView image2;
-    @FXML
-    ImageView image3;
-    @FXML
-    ImageView image4;
-    @FXML
-    ImageView image5;
-    @FXML
-    ImageView image6;
-    @FXML
-    ImageView image7;
-    @FXML
-    ImageView image8;
-    @FXML
-    ImageView image9;
-    @FXML
-    Label name1;
-    @FXML
-    Label name2;
-    @FXML
-    Label name3;
-    @FXML
-    Label name4;
-    @FXML
-    Label name5;
-    @FXML
-    Label name6;
-    @FXML
-    Label name7;
-    @FXML
-    Label name8;
-    @FXML
-    Label name9;
-    @FXML
-    Label price1;
-    @FXML
-    Label price2;
-    @FXML
-    Label price3;
-    @FXML
-    Label price4;
-    @FXML
-    Label price5;
-    @FXML
-    Label price6;
-    @FXML
-    Label price7;
-    @FXML
-    Label price8;
-    @FXML
-    Label price9;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        viewRadioButton.setSelected(true);
+        buyerProcessor.sort("by view");
+        toggleGroup1.selectedToggleProperty().addListener((observable -> {
+            sort(toggleGroup1.getSelectedToggle());
+        }));
+        setMaxAndMinPrice();
+        priceFilterSlider.highValueProperty().addListener((observable) -> {
+            maxValue.setText(Double.toString((int) priceFilterSlider.getHighValue()));
 
-    public void sortByView() {
+        });
+        priceFilterSlider.lowValueProperty().addListener((observable -> {
+            minValue.setText(Double.toString((int) priceFilterSlider.getLowValue()));
+        }));
+        BuyerProcessor.getInstance().newProductFilter();
+        categoryListView.setVisible(false);
+        for (Category category : Category.getAllCategories()) {
+            categories.add(category.getName());
+        }
+        categoryListView.setItems(categories);
+    }
+
+    public void sort(Toggle selectedToggle) {
+        String sort = ((RadioButton) selectedToggle).getText();
+        if (sort.equals("most expensive")) {
+            buyerProcessor.sort("by price");
+        } else if (sort.equals("least expensive")) {
+            buyerProcessor.sort("by price -d");
+        } else if (sort.equals("date added")) {
+            buyerProcessor.sort("by date");
+        } else if (sort.equals("view")) {
+            buyerProcessor.sort("by view");
+        } else if (sort.equals("score")) {
+            buyerProcessor.sort("by score");
+        }
+        getProductsAfterSort();
+    }
+
+    public void getProductsAfterSort() {
+        allProducts.sort(Sorting.getComparator());
+    }
+
+    public void setMaxAndMinPrice() {
+        double maxPrice = 0;
+        for (Product product : allProducts) {
+            if (product.getPrice() > maxPrice)
+                maxPrice = product.getPrice();
+        }
+        priceFilterSlider.setMax(maxPrice);
+        priceFilterSlider.setHighValue(maxPrice);
+        minValue.setText("0");
+        maxValue.setText(Double.toString(maxPrice));
 
     }
 
-    public void sortByDate() {
-
-    }
-
-    public void sortByScore() {
-
-    }
-
-    public void sortByPrice() {
-
-    }
 
     public void filter() {
+        if (!nameFilterText.getText().equals("")) {
+            buyerProcessor.filter("by name " + nameFilterText.getText());
+
+        } else {
+            buyerProcessor.disableFilter("name");
+        }
+        buyerProcessor.filter("by price from " + minValue.getText() + " to " + maxValue.getText());
+        allProducts = buyerProcessor.getProductAfterFilter(allProducts);
 
     }
 
     public void nextPage() {
-        
+
     }
 
     public void previousPage() {
@@ -117,17 +134,28 @@ public class ProductPanelController implements Initializable {
     }
 
 
-
     public ProductPanelController() {
         categories = FXCollections.observableArrayList();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+
+    public void hideCategories() {
         categoryListView.setVisible(false);
-        for (Category category : Category.getAllCategories()) {
-            categories.add(category.getName());
+    }
+
+    public void filterAvailable() {
+        if (availableFilterCheckBox.isSelected()) {
+            buyerProcessor.filter("by availability");
+        } else {
+            buyerProcessor.disableFilter("availability");
         }
-        categoryListView.setItems(categories);
+    }
+
+    public void filterOff() {
+        if (offFilterCheckBox1.isSelected()) {
+            buyerProcessor.filter("off");
+        } else {
+            buyerProcessor.disableFilter("off");
+        }
     }
 }

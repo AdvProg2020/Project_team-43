@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Product;
 
 import java.io.IOException;
 
@@ -15,7 +16,11 @@ public class ProductPanelWindow extends Application {
         return instance;
     }
 
-    private Stage stage;
+    private Product product;
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     private ProductPanelWindow() {
 
@@ -25,10 +30,11 @@ public class ProductPanelWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("productPanel.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("productsPanel.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Products");

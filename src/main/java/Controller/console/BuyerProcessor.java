@@ -48,18 +48,45 @@ public class BuyerProcessor extends Processor {
         user.setUserPersonalInfo(userPersonalInfo);
     }
 
-    public void addToBuyerCart(Pair<Product, Seller> productSellerPair) {
+    public void oldAddToBuyerCart(Pair<Product, Seller> productSellerPair) {
+        String result;
         if (newBuyerCart.containsKey(productSellerPair)) {
-            increaseProduct(productSellerPair.getKey().getProductId(), productSellerPair.getValue().getUsername());
+            result = "you have added this product before";
+            //increaseProduct(productSellerPair.getKey().getProductId(), productSellerPair.getValue().getUsername());
             //newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
         } else {
-            if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey()))
+            if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
                 newBuyerCart.put(productSellerPair, 1);
+                result = "done";
+            } else {
+                result = "is not available";
+            }
         }
         //productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
         //productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
         if (user != null)
             setNewBuyerCart();
+    }
+
+    public String addToBuyerCart(Pair<Product, Seller> productSellerPair) {
+        String result;
+        if (newBuyerCart.containsKey(productSellerPair)) {
+            result = "you have added this product before";
+            //increaseProduct(productSellerPair.getKey().getProductId(), productSellerPair.getValue().getUsername());
+            //newBuyerCart.replace(productSellerPair, newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
+        } else {
+            if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
+                newBuyerCart.put(productSellerPair, 1);
+                result = "done";
+            } else {
+                result = "is not available";
+            }
+        }
+        //productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
+        //productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
+        if (user != null)
+            setNewBuyerCart();
+        return result;
     }
 
 
@@ -175,6 +202,18 @@ public class BuyerProcessor extends Processor {
         ((Buyer) user).purchase(discount, address, phoneNumber);
         newBuyerCart.clear();
         return "payment done";
+    }
+
+    public void useDiscountCode(CodedDiscount discount) {
+        ((Buyer) user).changeRemainDiscount(discount);
+    }
+
+    public double getRealValueOfCart() {
+        double result = 0;
+        for (Pair<Product, Seller> productSellerPair : ((Buyer) user).getNewBuyerCart().keySet()) {
+            result += productSellerPair.getKey().getPrice() * ((Buyer) user).getNewBuyerCart().get(productSellerPair);
+        }
+        return result;
     }
 
 

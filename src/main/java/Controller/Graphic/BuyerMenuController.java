@@ -1,6 +1,9 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.BuyerUserWindow;
+import View.graphic.MainWindow;
+import View.graphic.ProductWindow;
 import View.graphic.PurchaseWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class BuyerMenuController extends Controller {
+    private static boolean isBack = false;
     public ListView<String> products;
     public Text userName;
     public Text totalPrice;
@@ -26,6 +30,9 @@ public class BuyerMenuController extends Controller {
     public ListView<String> orders;
     public ListView<String> order;
     public ImageView closeButton;
+    public Tab cartTab;
+    public TabPane tabPane;
+    public Label balance;
     BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -45,17 +52,20 @@ public class BuyerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
+        balance.setText(Double.toString(user.getBalance()));
         if (user.getImagePath() != null) {
             profilePhoto.setImage(new Image("file:" + user.getImagePath()));
         }
         setCart();
         setDiscountCodes();
         setOrders();
+        if (isBack) {
+            isBack = false;
+            tabPane.getSelectionModel().select(cartTab);
+        }
     }
 
     public void setCart() {
-        buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(Product.getProductById("1"),
-                Product.getProductById("1").getSellers().get(0)));
         HashMap<Pair<Product, Seller>, Integer> cart = user.getNewBuyerCart();
         for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
             setCartCells(productSellerPair);
@@ -74,7 +84,7 @@ public class BuyerMenuController extends Controller {
         order.setVisible(false);
         closeButton.setVisible(false);
         for (BuyOrder order : user.getOrders()) {
-            orders.getItems().add(order.getOrderId() + " " + order.getPayment());
+            orders.getItems().add("id:\t" + order.getOrderId() + "\t" + order.getPayment());
         }
     }
 
@@ -104,31 +114,53 @@ public class BuyerMenuController extends Controller {
 
     }
 
-    public void showOrder(MouseEvent mouseEvent) {
-        String orderId = orders.getSelectionModel().getSelectedItem().split(" ")[0];
-        BuyOrder buyOrder = (BuyOrder) BuyOrder.getOrderById(orderId);
+    public void showOrder() {
+        order.getItems().clear();
+        String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[1];
+        BuyOrder buyOrder = (BuyOrder) Order.getOrderById(orderId);
         HashMap<Product, Integer> products = buyOrder.getProducts();
+        int i = 0;
         for (Product product : products.keySet()) {
-            order.getItems().add(product.getName() + " " + products.get(product));
+            order.getItems().add(product.getName() + " " + products.get(product) + " " + buyOrder.getSellers().get(i).getUsername());
+            i++;
         }
         order.getItems().add(Double.toString(buyOrder.getPayment()));
+        order.getItems().add(buyOrder.getDeliveryStatus().toString());
+        order.getItems().add(buyOrder.getDate().toString());
+        order.getItems().add(buyOrder.getAddress());
         order.setVisible(true);
         closeButton.setVisible(true);
 
     }
 
-    public void closeOrder(MouseEvent mouseEvent) {
+    public void closeOrder() {
         order.setVisible(false);
         closeButton.setVisible(false);
 
     }
 
-    public void purchase(MouseEvent mouseEvent) {
+    public void purchase() {
         try {
+            isBack = true;
             PurchaseWindow.getInstance().start(this.stage);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void showProduct(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() >= 2) {
+            isBack = true;
+            String productName = products.getSelectionModel().getSelectedItem().split("\t")[0];
+            String sellerName = products.getSelectionModel().getSelectedItem().split("\t")[1];
+            for (Pair<Product, Seller> productSellerPair : ((Buyer) buyerProcessor.getUser()).getNewBuyerCart().keySet()) {
+                if (productSellerPair.getKey().getName().equals(productName) && productSellerPair.getValue().getUsername().equals(sellerName)) {
+                    ProductWindow.getInstance().setProduct(productSellerPair.getKey(), BuyerUserWindow.getInstance());
+                    ProductWindow.getInstance().start(MainWindow.getInstance().getStage());
+                }
+            }
+        }
+
     }
 
     private class XCell extends ListCell<String> {
