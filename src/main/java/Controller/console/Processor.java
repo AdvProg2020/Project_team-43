@@ -117,7 +117,7 @@ public class Processor {
         } else if (nameMatcher.matches()) {
             productFilter.addNameFilter(nameMatcher.group(1));
         } else if (categoryMatcher.matches()) {
-            addFeaturesFilter();
+            //addFeaturesFilter();
 
         } else if (offMatcher.matches()) {
             productFilter.addOffFilter();
@@ -130,13 +130,13 @@ public class Processor {
         return productFilter.getProductsAfterFilter(products);
     }
 
-    public void addFeaturesFilter() {
+   /* public void addFeaturesFilter() {
         if (productFilter.getCategory() == null) {
             errorMessage("please select a category");
         } else {
             productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
         }
-    }
+    }*/
 
     public void currentFilter() {
         viewManager.showCurrentFilters(productFilter);
