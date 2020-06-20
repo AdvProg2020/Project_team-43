@@ -72,7 +72,7 @@ public class ManagerMenuController extends Controller {
     public TextField newFeature;
     public TextField changedFeature;
     public TextField createCategoryName;
-    public TextField createCategoryAddFeature;
+    public TextField createCategoryFeature;
     public ListView usersListView;
     public ListView productsListView;
     public ListView codedDiscountListView;
@@ -186,7 +186,6 @@ public class ManagerMenuController extends Controller {
             selectedCodedDiscount = CodedDiscount.getDiscountById(matcher.group(1));
             showCodedDiscount(selectedCodedDiscount);
         }
-
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -405,13 +404,43 @@ public class ManagerMenuController extends Controller {
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
         }
+        if (!newFeature.getText().isEmpty()) {
+            try {
+                for (String s : selectedCategory.getFeatures()) {
+                    System.out.println(s);
+                }
+                ((Manager) Processor.user).addCategoryFeature(selectedCategory, newFeature.getText());
+            } catch (InvalidCommandException e) {
+                showErrorAlert(e.getMessage());
+            }
+            updateCategoryInfoPaneListView();
+            newFeature.clear();
+        }
     }
 
     public void createAddFeature() {
-        String feature = createCategoryAddFeature.getText();
-        createCategoryFeatures.add(feature);
-        createCategoryFeaturesListView.setItems(createCategoryFeatures);
-        createCategoryAddFeature.clear();
+        if (!createCategoryFeature.getText().isEmpty()) {
+            String feature = createCategoryFeature.getText();
+            if(!hasFeature(feature)) {
+                createCategoryFeatures.add(feature);
+                createCategoryFeaturesListView.setItems(createCategoryFeatures);
+            } else{
+                showErrorAlert("already add this feature");
+            }
+            createCategoryFeature.clear();
+        }
+    }
+
+    public boolean hasFeature(String feature){
+        if(createCategoryFeatures.isEmpty()){
+            return false;
+        }
+        for (String categoryFeature : createCategoryFeatures) {
+            if (categoryFeature.equals(feature)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void createRemoveFeature() {
@@ -421,6 +450,9 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createCategory() {
+        if(createCategoryName.getText().isEmpty()){
+            return;
+        }
         ArrayList<String> features = new ArrayList<>();
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
@@ -429,6 +461,7 @@ public class ManagerMenuController extends Controller {
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
+        updateCategoryListView();
     }
 
 
@@ -589,7 +622,7 @@ public class ManagerMenuController extends Controller {
         updateCategoryInfoPaneListView();
     }
 
-    public void updateCategoryInfoPaneListView(){
+    public void updateCategoryInfoPaneListView() {
         ObservableList<String> features = FXCollections.observableArrayList();
         for (String feature : selectedCategory.getFeatures()) {
             features.add(feature);
