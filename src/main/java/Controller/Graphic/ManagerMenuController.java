@@ -232,16 +232,16 @@ public class ManagerMenuController extends Controller {
             lastNameSeller.setText(sellerRequest.getSeller().getUserPersonalInfo().getLastName());
             companyNameSeller.setText(sellerRequest.getSeller().getCompany().getName());
             sellerRequestPane.setVisible(true);
-        } else if(request instanceof EditOffRequest){
-            EditOffRequest editOffRequest = (EditOffRequest)request;
+        } else if (request instanceof EditOffRequest) {
+            EditOffRequest editOffRequest = (EditOffRequest) request;
             requestIdEditOff.setText(request.getRequestId());
             editOffId.setText(editOffRequest.getOff().getOffId());
             editOffField.setText(editOffRequest.getField());
             editOffNewValue.setText(editOffRequest.getInput());
             editOffRequestPane.setVisible(true);
             System.out.println(editOffRequest.getInput());
-        } else if(request instanceof EditProductRequest){
-            EditProductRequest editProductRequest = (EditProductRequest)request;
+        } else if (request instanceof EditProductRequest) {
+            EditProductRequest editProductRequest = (EditProductRequest) request;
             requestIdEditProduct.setText(request.getRequestId());
             editProductId.setText(editProductRequest.getProduct().getProductId());
             editProductField.setText(editProductRequest.getField());
@@ -252,7 +252,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCategoryInfo() {
-        String categoryName = categoryListView.getSelectionModel().getSelectedItems().toString();
+        String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
         Category category = Category.getCategoryByName(categoryName);
         showCategory(category);
     }
@@ -355,7 +355,8 @@ public class ManagerMenuController extends Controller {
         editProductRequestPane.setVisible(false);
         editOffRequestPane.setVisible(false);
     }
-    public void acceptRequest()  {
+
+    public void acceptRequest() {
         try {
             ((Manager) Processor.user).acceptRequest(selectedRequest);
         } catch (InvalidCommandException e) {
