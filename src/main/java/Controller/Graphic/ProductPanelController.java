@@ -102,8 +102,8 @@ public class ProductPanelController extends Controller implements Initializable 
 
     }
 
-
     public void filter() {
+        allProducts=Product.getAllProductsInList();
         if (!nameFilterText.getText().equals("")) {
             buyerProcessor.filter("by name " + nameFilterText.getText());
         } else {
@@ -111,6 +111,7 @@ public class ProductPanelController extends Controller implements Initializable 
         }
         buyerProcessor.filter("by price from " + (int) Double.parseDouble(minValue.getText()) + " to " +
                 (int) Double.parseDouble(maxValue.getText()));
+        filterByCategory(categoryName.getText());
         for (HBox item : featuresOfCategoryForFilter.getItems()) {
             String feature = ((Text) item.getChildren().get(0)).getText();
             CheckComboBox<String> checkComboBox = ((CheckComboBox<String>) item.getChildren().get(1));
@@ -119,6 +120,7 @@ public class ProductPanelController extends Controller implements Initializable 
             }
         }
         allProducts = buyerProcessor.getProductAfterFilter(allProducts);
+
 
     }
 
