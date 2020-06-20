@@ -157,7 +157,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showProductInfo() {
-        String productNameAndId = productsListView.getSelectionModel().getSelectedItems().toString();
+        String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String temp = productNameAndId.split(" /")[1].trim();
         String productId = temp.substring(0, temp.length() - 1);
         selectedProduct = Product.getAllProductById(productId);
@@ -179,7 +179,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscountInfo() {
-        String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItems().toString();
+        String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
         Pattern pattern = Pattern.compile("\\[(.+)\\]");
         Matcher matcher = pattern.matcher(discountCodePrime);
         if (matcher.matches()) {
@@ -198,7 +198,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showRequestInfo() {
-        String requestIdPrime = requestsListView.getSelectionModel().getSelectedItems().toString();
+        String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
         Pattern pattern = Pattern.compile("\\[(.+)\\]");
         Matcher matcher = pattern.matcher(requestIdPrime);
         if (matcher.matches()) {
@@ -271,7 +271,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showChangeToPane() {
-        selectedFeature = featuresListView.getSelectionModel().getSelectedItems().toString();
+        selectedFeature = featuresListView.getSelectionModel().getSelectedItem().toString();
         changeFeaturePane.setVisible(true);
     }
 
@@ -415,7 +415,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createRemoveFeature() {
-        String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItems().toString();
+        String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItem().toString();
         createCategoryFeatures.remove(selectedFeature);
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
@@ -578,6 +578,7 @@ public class ManagerMenuController extends Controller {
                 showErrorAlert(e.getMessage());
             }
             changeFeaturePane.setVisible(false);
+            updateCategoryInfoPaneListView();
         }
     }
 
@@ -585,6 +586,15 @@ public class ManagerMenuController extends Controller {
         ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
+        updateCategoryInfoPaneListView();
+    }
+
+    public void updateCategoryInfoPaneListView(){
+        ObservableList<String> features = FXCollections.observableArrayList();
+        for (String feature : selectedCategory.getFeatures()) {
+            features.add(feature);
+        }
+        featuresListView.setItems(features);
     }
 
     @FXML
