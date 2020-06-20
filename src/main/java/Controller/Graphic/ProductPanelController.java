@@ -36,6 +36,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public CheckBox offFilterCheckBox1;
     public TextArea categoryName;
     public Text userName;
+    public ListView featuresOfCategoryForFilter;
 
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();

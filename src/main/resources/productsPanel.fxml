@@ -52,7 +52,7 @@
                         <Font size="25.0"/>
                     </font>
                 </Text>
-                <ImageView fitHeight="31.0" fitWidth="59.0" layoutX="156.0" layoutY="302.0" onMouseClicked="#filter"
+                <ImageView fitHeight="31.0" fitWidth="59.0" layoutX="186.0" layoutY="140.0" onMouseClicked="#filter"
                            style="-fx-cursor: hand;">
                     <image>
                         <Image url="@button_filter.png"/>
@@ -63,26 +63,26 @@
                              minorTickCount="100" prefHeight="17.0" prefWidth="158.0"/>
                 <Label layoutX="14.0" layoutY="227.0" text="Price"/>
                 <TextField fx:id="nameFilterText" layoutX="28.0" layoutY="182.0" promptText="filter by name"/>
-                <Label fx:id="minValue" layoutX="14.0" layoutY="264.0" text="Label"/>
-                <Label fx:id="maxValue" layoutX="144.0" layoutY="264.0" text="Label"/>
-                <JFXRadioButton fx:id="viewRadioButton" layoutX="64.0" layoutY="423.0" text="view">
+                <Label fx:id="minValue" layoutX="23.0" layoutY="255.0" text="Label"/>
+                <Label fx:id="maxValue" layoutX="153.0" layoutY="255.0" text="Label"/>
+                <JFXRadioButton fx:id="viewRadioButton" layoutX="64.0" layoutY="507.0" text="view">
                     <toggleGroup>
                         <ToggleGroup fx:id="toggleGroup1"/>
                     </toggleGroup>
                 </JFXRadioButton>
-                <JFXRadioButton fx:id="mostExpensiveRadioButton" layoutX="64.0" layoutY="461.0" text="most expensive"
+                <JFXRadioButton fx:id="mostExpensiveRadioButton" layoutX="64.0" layoutY="545.0" text="most expensive"
                                 toggleGroup="$toggleGroup1"/>
-                <JFXRadioButton fx:id="leastExpensiveRadioButton" layoutX="64.0" layoutY="495.0" text="least expensive"
+                <JFXRadioButton fx:id="leastExpensiveRadioButton" layoutX="64.0" layoutY="579.0" text="least expensive"
                                 toggleGroup="$toggleGroup1"/>
-                <JFXRadioButton fx:id="dateAddedRadioButton" layoutX="64.0" layoutY="534.0" text="date added"
+                <JFXRadioButton fx:id="dateAddedRadioButton" layoutX="64.0" layoutY="618.0" text="date added"
                                 toggleGroup="$toggleGroup1"/>
-                <Text layoutX="20.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort By : "
+                <Text layoutX="20.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort By : "
                       wrappingWidth="189.0">
                     <font>
                         <Font size="25.0"/>
                     </font>
                 </Text>
-                <JFXRadioButton fx:id="scoreRadioButton" layoutX="64.0" layoutY="573.0" text="score"
+                <JFXRadioButton fx:id="scoreRadioButton" layoutX="64.0" layoutY="657.0" text="score"
                                 toggleGroup="$toggleGroup1"/>
                 <CheckBox fx:id="offFilterCheckBox1" layoutX="48.0" layoutY="135.0" mnemonicParsing="false"
                           onAction="#filterOff" prefHeight="37.0" prefWidth="167.0" text="Off">
@@ -90,6 +90,8 @@
                         <Font name="Algerian" size="15.0"/>
                     </font>
                 </CheckBox>
+                <ListView fx:id="featuresOfCategoryForFilter" layoutX="8.0" layoutY="290.0" prefHeight="161.0"
+                          prefWidth="242.0"/>
             </children>
         </Pane>
         <AmbientLight color="CHARTREUSE" lightOn="true"/>
@@ -103,7 +105,7 @@
                 <Image url="@user.png"/>
             </image>
         </ImageView>
-        <Text  fx:id="userName" layoutX="80.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name"
+        <Text fx:id="userName" layoutX="80.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name"
               wrappingWidth="117.6708984375"/>
 
         <Pane prefHeight="779.0" prefWidth="765.0">
