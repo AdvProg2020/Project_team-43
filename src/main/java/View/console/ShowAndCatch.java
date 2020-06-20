@@ -163,13 +163,13 @@ public class ShowAndCatch {
         System.out.println("sort by price [-d for descending]");
     }
 
-    /*public HashMap<String, String> addFilterByCategoryFeatures(FilterManager filterManager) {
+    public HashMap<String, String> addFilterByCategoryFeatures(FilterManager filterManager) {
         Category category = filterManager.getCategory();
         for (String feature : category.getFeatures()) {
             System.out.println(feature);
         }
         System.out.println("print features and their value that you want to filter by them. print exit to end this process");
-        HashMap<String, ArrayList<String>> features = filterManager.getCriteriaCategoryFeatures().getFeatures();
+        HashMap<String, String> features = new HashMap<>();
         String feature, value;
         while (!(feature = Menu.getScanner().nextLine()).equalsIgnoreCase("exit")) {
             value = Menu.getScanner().nextLine();
@@ -177,7 +177,7 @@ public class ShowAndCatch {
             features.put(feature, value);
         }
         return features;
-    }*/
+    }
 
     public void showCurrentFilters(FilterManager filterManager) {
         for (Criteria filter : filterManager.getCurrentFilters()) {

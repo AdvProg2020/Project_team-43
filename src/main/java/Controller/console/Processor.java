@@ -131,13 +131,13 @@ public class Processor {
         return productFilter.getProductsAfterFilter(products);
     }
 
-   /* public void addFeaturesFilter() {
+    public void addFeaturesFilter() {
         if (productFilter.getCategory() == null) {
             errorMessage("please select a category");
         } else {
             productFilter.addFeaturesToCategoryFeaturesFilter(viewManager.addFilterByCategoryFeatures(productFilter));
         }
-    }*/
+    }
 
     public void currentFilter() {
         viewManager.showCurrentFilters(productFilter);

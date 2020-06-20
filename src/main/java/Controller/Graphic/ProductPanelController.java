@@ -120,6 +120,7 @@ public class ProductPanelController extends Controller implements Initializable 
             }
         }
         allProducts = buyerProcessor.getProductAfterFilter(allProducts);
+        getProductsAfterSort();
 
 
     }
