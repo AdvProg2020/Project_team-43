@@ -199,12 +199,12 @@ public class ManagerMenuController extends Controller {
 
     public void showRequestInfo() {
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
-        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-        Matcher matcher = pattern.matcher(requestIdPrime);
-        if (matcher.matches()) {
-            selectedRequest = Request.getRequestById(matcher.group(1));
+//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
+//        Matcher matcher = pattern.matcher(requestIdPrime);
+//        if (matcher.matches()) {
+            selectedRequest = Request.getRequestById(requestIdPrime);
             showRequest(selectedRequest);
-        }
+//        }
 
     }
 
