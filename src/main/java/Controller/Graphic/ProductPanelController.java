@@ -7,14 +7,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 import model.Sorting;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
-
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -36,6 +42,27 @@ public class ProductPanelController extends Controller implements Initializable 
     public TextArea categoryName;
     public Text userName;
     public ListView<HBox> featuresOfCategoryForFilter;
+    public ImageView image1;
+    public ImageView image2;
+    public ImageView image3;
+    public ImageView image4;
+    public ImageView image5;
+    public ImageView image6;
+    public ImageView image7;
+    public ImageView image8;
+    public ImageView image9;
+    public Pane productCartPane1;
+    public Pane productCartPane2;
+    public Pane productCartPane3;
+    public Pane productCartPane4;
+    public Pane productCartPane5;
+    public Pane productCartPane6;
+    public Pane productCartPane7;
+    public Pane productCartPane8;
+    public Pane productCartPane9;
+
+    public ArrayList<ImageView> images;
+    public static int startProductIndex = 0;
 
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -46,6 +73,16 @@ public class ProductPanelController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        images = new ArrayList<>();
+        images.add(image1);
+        images.add(image2);
+        images.add(image3);
+        images.add(image4);
+        images.add(image5);
+        images.add(image6);
+        images.add(image7);
+        images.add(image8);
+        images.add(image9);
         if (buyerProcessor.isUserLoggedIn())
             userName.setText(buyerProcessor.getUser().getUsername());
         viewRadioButton.setSelected(true);
@@ -67,6 +104,24 @@ public class ProductPanelController extends Controller implements Initializable 
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
+        showProducts();
+
+    }
+
+    public void showProducts() {
+        for (int i = startProductIndex; i < startProductIndex + 9; i++) {
+            if (allProducts.size() > i) {
+                if (allProducts.get(i).getImagePath() != null) {
+                    images.get(i-startProductIndex).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
+                } else {
+                    File file = new File("src/main/resources/product.jpg");
+                    Image image = new Image(file.toURI().toString());
+                    images.get(i-startProductIndex).setImage(image);
+                }
+            } else{
+//                images.get(i-startProductIndex)
+            }
+        }
     }
 
     public void sort(Toggle selectedToggle) {
@@ -103,7 +158,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void filter() {
-        allProducts=Product.getAllProductsInList();
+        allProducts = Product.getAllProductsInList();
         if (!nameFilterText.getText().equals("")) {
             buyerProcessor.filter("by name " + nameFilterText.getText());
         } else {

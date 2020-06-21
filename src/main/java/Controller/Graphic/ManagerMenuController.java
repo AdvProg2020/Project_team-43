@@ -2,10 +2,8 @@ package Controller.Graphic;
 
 import Controller.console.BossProcessor;
 import Controller.console.Processor;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
@@ -18,8 +16,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 import model.request.*;
-
-import javax.print.DocFlavor;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.text.ParseException;
