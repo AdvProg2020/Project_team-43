@@ -20,6 +20,7 @@ import model.Product;
 import model.Sorting;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,9 +61,11 @@ public class ProductPanelController extends Controller implements Initializable 
     public Pane productCartPane7;
     public Pane productCartPane8;
     public Pane productCartPane9;
+    public ArrayList<Pane> panes;
 
     public ArrayList<ImageView> images;
     public static int startProductIndex = 0;
+    public static boolean hasNextPage = true;
 
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -83,6 +86,16 @@ public class ProductPanelController extends Controller implements Initializable 
         images.add(image7);
         images.add(image8);
         images.add(image9);
+        panes = new ArrayList<>();
+        panes.add(productCartPane1);
+        panes.add(productCartPane2);
+        panes.add(productCartPane3);
+        panes.add(productCartPane4);
+        panes.add(productCartPane5);
+        panes.add(productCartPane6);
+        panes.add(productCartPane7);
+        panes.add(productCartPane8);
+        panes.add(productCartPane9);
         if (buyerProcessor.isUserLoggedIn())
             userName.setText(buyerProcessor.getUser().getUsername());
         viewRadioButton.setSelected(true);
@@ -105,21 +118,20 @@ public class ProductPanelController extends Controller implements Initializable 
         }
         categoryListView.setItems(categories);
         showProducts();
-
     }
 
     public void showProducts() {
         for (int i = startProductIndex; i < startProductIndex + 9; i++) {
             if (allProducts.size() > i) {
                 if (allProducts.get(i).getImagePath() != null) {
-                    images.get(i-startProductIndex).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
+                    images.get(i - startProductIndex).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
                 } else {
                     File file = new File("src/main/resources/product.jpg");
                     Image image = new Image(file.toURI().toString());
-                    images.get(i-startProductIndex).setImage(image);
+                    images.get(i - startProductIndex).setImage(image);
                 }
-            } else{
-//                images.get(i-startProductIndex)
+            } else {
+                panes.get(i - startProductIndex).setVisible(false);
             }
         }
     }
@@ -138,6 +150,8 @@ public class ProductPanelController extends Controller implements Initializable 
             buyerProcessor.sort("by score");
         }
         getProductsAfterSort();
+        startProductIndex = 0;
+        showProducts();
     }
 
     public void getProductsAfterSort() {
@@ -176,7 +190,8 @@ public class ProductPanelController extends Controller implements Initializable 
         }
         allProducts = buyerProcessor.getProductAfterFilter(allProducts);
         getProductsAfterSort();
-
+        startProductIndex = 0;
+        showProducts();
 
     }
 
