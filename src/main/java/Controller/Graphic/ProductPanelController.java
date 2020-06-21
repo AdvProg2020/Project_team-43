@@ -207,8 +207,18 @@ public class ProductPanelController extends Controller implements Initializable 
         }
     }
 
-    public void previousPage() {
+    public boolean hasPreviousPage() {
+        if (startProductIndex == 0) {
+            return false;
+        }
+        return true;
+    }
 
+    public void previousPage() {
+        if (hasPreviousPage()) {
+            startProductIndex -= 9;
+            showProducts();
+        }
     }
 
     public void showCategories() {
