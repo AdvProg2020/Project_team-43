@@ -180,12 +180,13 @@ public class ManagerMenuController extends Controller {
 
     public void showCodedDiscountInfo() {
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-        Matcher matcher = pattern.matcher(discountCodePrime);
-        if (matcher.matches()) {
-            selectedCodedDiscount = CodedDiscount.getDiscountById(matcher.group(1));
+        System.out.println(discountCodePrime);
+//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
+//        Matcher matcher = pattern.matcher(discountCodePrime);
+//        if (matcher.matches()) {
+            selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
             showCodedDiscount(selectedCodedDiscount);
-        }
+//        }
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
