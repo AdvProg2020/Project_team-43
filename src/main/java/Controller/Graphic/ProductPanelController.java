@@ -65,8 +65,6 @@ public class ProductPanelController extends Controller implements Initializable 
 
     public ArrayList<ImageView> images;
     public static int startProductIndex = 0;
-    public static boolean hasNextPage = true;
-
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
     public CheckBox availableFilterCheckBox;
@@ -195,8 +193,18 @@ public class ProductPanelController extends Controller implements Initializable 
 
     }
 
-    public void nextPage() {
+    public boolean hasNextPage() {
+        if (startProductIndex + 9 >= allProducts.size()) {
+            return false;
+        }
+        return true;
+    }
 
+    public void nextPage() {
+        if (hasNextPage()) {
+            startProductIndex += 9;
+            showProducts();
+        }
     }
 
     public void previousPage() {
