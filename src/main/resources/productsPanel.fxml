@@ -75,6 +75,11 @@
                     </font>
                 </CheckBox>
                 <ListView fx:id="featuresOfCategoryForFilter" layoutX="8.0" layoutY="290.0" prefHeight="160.0" prefWidth="242.0" />
+            <ImageView fx:id="cancelCategoryButton" fitHeight="21.0" fitWidth="23.0" layoutX="216.0" layoutY="28.0" onMouseClicked="#cancelFilterByCategory" visible="false">
+               <image>
+                  <Image url="@cancel-512.png" />
+               </image>
+            </ImageView>
             </children>
         </Pane>
         <AmbientLight color="CHARTREUSE" lightOn="true" />

@@ -1,6 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import Controller.console.Processor;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,6 +62,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public Pane productCartPane7;
     public Pane productCartPane8;
     public Pane productCartPane9;
+    public ImageView cancelCategoryButton;
     public ArrayList<Pane> panes;
 
     public ArrayList<ImageView> images;
@@ -74,6 +76,9 @@ public class ProductPanelController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (Processor.isLogin) {
+            userName.setText(Processor.user.getUsername());
+        }
         images = new ArrayList<>();
         images.add(image1);
         images.add(image2);
@@ -226,12 +231,23 @@ public class ProductPanelController extends Controller implements Initializable 
         categoryListView.setVisible(!visible);
     }
 
+    public void cancelFilterByCategory(){
+        categoryName.setText("categories");
+        //TODO : cancel filter by category
+        //todo
+        //todo
+        //todo
+        //todo
+        // in hame gozashtam ke yademon nare byd filter by category ro cancel konim inja
+        cancelCategoryButton.setVisible(false);
+    }
+
     public void selectedCategory() {
         int index = categoryListView.getSelectionModel().getSelectedIndex();
         filterByCategory(categories.get(index));
         categoryListView.setVisible(false);
         showCategoryFeatures();
-
+        cancelCategoryButton.setVisible(true);
     }
 
     public void showCategoryFeatures() {
