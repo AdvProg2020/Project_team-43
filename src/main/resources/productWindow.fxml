@@ -35,12 +35,12 @@
                         <Label fx:id="productName" layoutX="505.0" layoutY="79.0" text="Label" />
                         <Label fx:id="productPrice" layoutX="505.0" layoutY="109.0" text="Label" />
                         <Label fx:id="productScore" layoutX="505.0" layoutY="147.0" text="Label" />
-                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back2.png" />
                             </image>
                         </ImageView>
-                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0" />
+                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0" style="-fx-cursor: hand;" />
                         <Label layoutX="307.0" layoutY="210.0" text="sellers" />
                     </children>
                 </AnchorPane>
@@ -49,14 +49,14 @@
         <Tab fx:id="tab" text="comments">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                             <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
                     <ListView fx:id="comments" layoutX="40.0" layoutY="36.0" onMouseClicked="#showComment" prefHeight="454.0" prefWidth="200.0" />
                     <TextArea fx:id="comment" layoutX="427.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" />
-                    <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0" onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0" onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                             <Image url="@button_add-comment.png" />
                         </image>
@@ -72,12 +72,12 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Rating>
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                             <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
-                    <ImageView fitHeight="42.0" fitWidth="109.0" layoutX="165.0" layoutY="173.0" onMouseClicked="#rate" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="42.0" fitWidth="109.0" layoutX="165.0" layoutY="173.0" onMouseClicked="#rate" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                             <Image url="@button_rate.png" />
                         </image>
@@ -89,7 +89,7 @@
         <Tab text="features">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                             <Image url="@button_back2.png" />
                         </image>

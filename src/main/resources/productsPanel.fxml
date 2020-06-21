@@ -30,12 +30,12 @@
                         <Font name="Arial Black" size="15.0" />
                     </font>
                 </TextArea>
-                <ImageView fitHeight="43.0" fitWidth="34.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#showCategories">
+                <ImageView fitHeight="43.0" fitWidth="34.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#showCategories" style="-fx-cursor: hand;">
                     <image>
                         <Image url="@transparentLight22.png" />
                     </image>
                 </ImageView>
-                <CheckBox fx:id="availableFilterCheckBox" layoutX="48.0" layoutY="103.0" mnemonicParsing="false" onAction="#filterAvailable" prefHeight="37.0" prefWidth="167.0" text="Available Items">
+                <CheckBox fx:id="availableFilterCheckBox" layoutX="48.0" layoutY="103.0" mnemonicParsing="false" onAction="#filterAvailable" prefHeight="37.0" prefWidth="167.0" style="-fx-cursor: hand;" text="Available Items">
                     <font>
                         <Font name="Algerian" size="15.0" />
                     </font>
@@ -55,21 +55,21 @@
                 <TextField fx:id="nameFilterText" layoutX="28.0" layoutY="182.0" promptText="filter by name" />
                 <Label fx:id="minValue" layoutX="23.0" layoutY="255.0" text="Label" />
                 <Label fx:id="maxValue" layoutX="153.0" layoutY="255.0" text="Label" />
-                <JFXRadioButton fx:id="viewRadioButton" layoutX="64.0" layoutY="507.0" text="view">
+                <JFXRadioButton fx:id="viewRadioButton" layoutX="64.0" layoutY="507.0" style="-fx-cursor: hand;" text="view">
                     <toggleGroup>
                         <ToggleGroup fx:id="toggleGroup1" />
                     </toggleGroup>
                 </JFXRadioButton>
-                <JFXRadioButton fx:id="mostExpensiveRadioButton" layoutX="64.0" layoutY="545.0" text="most expensive" toggleGroup="$toggleGroup1" />
-                <JFXRadioButton fx:id="leastExpensiveRadioButton" layoutX="64.0" layoutY="579.0" text="least expensive" toggleGroup="$toggleGroup1" />
-                <JFXRadioButton fx:id="dateAddedRadioButton" layoutX="64.0" layoutY="618.0" text="date added" toggleGroup="$toggleGroup1" />
+                <JFXRadioButton fx:id="mostExpensiveRadioButton" layoutX="64.0" layoutY="545.0" style="-fx-cursor: hand;" text="most expensive" toggleGroup="$toggleGroup1" />
+                <JFXRadioButton fx:id="leastExpensiveRadioButton" layoutX="64.0" layoutY="579.0" style="-fx-cursor: hand;" text="least expensive" toggleGroup="$toggleGroup1" />
+                <JFXRadioButton fx:id="dateAddedRadioButton" layoutX="64.0" layoutY="618.0" style="-fx-cursor: hand;" text="date added" toggleGroup="$toggleGroup1" />
                 <Text layoutX="20.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort By : " wrappingWidth="189.0">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </Text>
-                <JFXRadioButton fx:id="scoreRadioButton" layoutX="64.0" layoutY="657.0" text="score" toggleGroup="$toggleGroup1" />
-                <CheckBox fx:id="offFilterCheckBox1" layoutX="48.0" layoutY="135.0" mnemonicParsing="false" onAction="#filterOff" prefHeight="37.0" prefWidth="118.0" text="Off">
+                <JFXRadioButton fx:id="scoreRadioButton" layoutX="64.0" layoutY="657.0" style="-fx-cursor: hand;" text="score" toggleGroup="$toggleGroup1" />
+                <CheckBox fx:id="offFilterCheckBox1" layoutX="48.0" layoutY="135.0" mnemonicParsing="false" onAction="#filterOff" prefHeight="37.0" prefWidth="118.0" style="-fx-cursor: hand;" text="Off">
                     <font>
                         <Font name="Algerian" size="15.0" />
                     </font>
@@ -211,12 +211,12 @@
                 </VBox>
             </children>
         </Pane>
-        <ImageView fitHeight="31.0" fitWidth="75.0" layoutX="722.0" layoutY="780.0" onMouseClicked="#nextPage">
+        <ImageView fitHeight="37.0" fitWidth="86.0" layoutX="711.0" layoutY="774.0" onMouseClicked="#nextPage" style="-fx-cursor: hand;">
             <image>
                 <Image url="@button_next.png" />
             </image>
         </ImageView>
-        <ImageView fitHeight="31.0" fitWidth="75.0" layoutX="640.0" layoutY="779.0" onMouseClicked="#previousPage">
+        <ImageView fitHeight="37.0" fitWidth="86.0" layoutX="28.0" layoutY="780.0" onMouseClicked="#previousPage" style="-fx-cursor: hand;">
             <image>
                 <Image url="@button_previous.png" />
             </image>
