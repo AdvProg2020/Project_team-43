@@ -158,10 +158,10 @@ public class ManagerMenuController extends Controller {
 
     public void showProductInfo() {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
-        String temp = productNameAndId.split(" /")[1].trim();
-        String productId = temp.substring(0, temp.length() - 1);
+        String productId = productNameAndId.split(" / ")[1].trim();
         selectedProduct = Product.getAllProductById(productId);
         showProduct(selectedProduct);
+
     }
 
     public void showProduct(Product product) {
@@ -421,18 +421,18 @@ public class ManagerMenuController extends Controller {
     public void createAddFeature() {
         if (!createCategoryFeature.getText().isEmpty()) {
             String feature = createCategoryFeature.getText();
-            if(!hasFeature(feature)) {
+            if (!hasFeature(feature)) {
                 createCategoryFeatures.add(feature);
                 createCategoryFeaturesListView.setItems(createCategoryFeatures);
-            } else{
+            } else {
                 showErrorAlert("already add this feature");
             }
             createCategoryFeature.clear();
         }
     }
 
-    public boolean hasFeature(String feature){
-        if(createCategoryFeatures.isEmpty()){
+    public boolean hasFeature(String feature) {
+        if (createCategoryFeatures.isEmpty()) {
             return false;
         }
         for (String categoryFeature : createCategoryFeatures) {
@@ -450,7 +450,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createCategory() {
-        if(createCategoryName.getText().isEmpty()){
+        if (createCategoryName.getText().isEmpty()) {
             return;
         }
         ArrayList<String> features = new ArrayList<>();
