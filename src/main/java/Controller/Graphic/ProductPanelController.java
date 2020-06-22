@@ -133,6 +133,7 @@ public class ProductPanelController extends Controller implements Initializable 
                     Image image = new Image(file.toURI().toString());
                     images.get(i - startProductIndex).setImage(image);
                 }
+                panes.get(i - startProductIndex).setVisible(true);
             } else {
                 panes.get(i - startProductIndex).setVisible(false);
             }
@@ -183,17 +184,24 @@ public class ProductPanelController extends Controller implements Initializable 
         }
         buyerProcessor.filter("by price from " + (int) Double.parseDouble(minValue.getText()) + " to " +
                 (int) Double.parseDouble(maxValue.getText()));
-        filterByCategory(categoryName.getText());
-        for (HBox item : featuresOfCategoryForFilter.getItems()) {
-            String feature = ((Text) item.getChildren().get(0)).getText();
-            CheckComboBox<String> checkComboBox = ((CheckComboBox<String>) item.getChildren().get(1));
-            for (String checkedItem : checkComboBox.getCheckModel().getCheckedItems()) {
-                buyerProcessor.addFeaturesCategory(feature, checkedItem);
+        if (!categoryName.getText().equalsIgnoreCase("categories")) {
+            filterByCategory(categoryName.getText());
+            for (HBox item : featuresOfCategoryForFilter.getItems()) {
+                String feature = ((Text) item.getChildren().get(0)).getText();
+                CheckComboBox<String> checkComboBox = ((CheckComboBox<String>) item.getChildren().get(1));
+                for (String checkedItem : checkComboBox.getCheckModel().getCheckedItems()) {
+                    buyerProcessor.addFeaturesCategory(feature, checkedItem);
+                }
             }
+        } else {
+            buyerProcessor.disableCategoryFilter();
         }
         allProducts = buyerProcessor.getProductAfterFilter(allProducts);
         getProductsAfterSort();
         startProductIndex = 0;
+        for (Product product : allProducts) {
+            System.out.println(product.getName());
+        }
         showProducts();
 
     }
@@ -231,14 +239,8 @@ public class ProductPanelController extends Controller implements Initializable 
         categoryListView.setVisible(!visible);
     }
 
-    public void cancelFilterByCategory(){
+    public void cancelFilterByCategory() {
         categoryName.setText("categories");
-        //TODO : cancel filter by category
-        //todo
-        //todo
-        //todo
-        //todo
-        // in hame gozashtam ke yademon nare byd filter by category ro cancel konim inja
         cancelCategoryButton.setVisible(false);
     }
 

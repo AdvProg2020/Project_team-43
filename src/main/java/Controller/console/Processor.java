@@ -163,6 +163,9 @@ public class Processor {
         } else
             errorMessage("there is no filter with this name");
     }
+    public void disableCategoryFilter(){
+        productFilter.disableCategory();
+    }
 
     public void sortingProcess(String command) throws InvalidCommandException {
         if (command.equals("back")) {
