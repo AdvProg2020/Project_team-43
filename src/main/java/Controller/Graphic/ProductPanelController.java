@@ -4,6 +4,7 @@ import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -199,9 +200,6 @@ public class ProductPanelController extends Controller implements Initializable 
         allProducts = buyerProcessor.getProductAfterFilter(allProducts);
         getProductsAfterSort();
         startProductIndex = 0;
-        for (Product product : allProducts) {
-            System.out.println(product.getName());
-        }
         showProducts();
 
     }
@@ -242,6 +240,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public void cancelFilterByCategory() {
         categoryName.setText("categories");
         cancelCategoryButton.setVisible(false);
+        filter();
     }
 
     public void selectedCategory() {
@@ -250,6 +249,7 @@ public class ProductPanelController extends Controller implements Initializable 
         categoryListView.setVisible(false);
         showCategoryFeatures();
         cancelCategoryButton.setVisible(true);
+        filter();
     }
 
     public void showCategoryFeatures() {
@@ -257,6 +257,7 @@ public class ProductPanelController extends Controller implements Initializable 
         for (String feature : Category.getCategoryByName(categoryName.getText()).getFeatures()) {
             HBox hBox = new HBox();
             CheckComboBox<String> checkComboBox = new CheckComboBox<String>();
+            checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> filter());
             hBox.getChildren().add(new Text(feature));
             hBox.getChildren().add(checkComboBox);
             featuresOfCategoryForFilter.getItems().add(hBox);
@@ -290,6 +291,7 @@ public class ProductPanelController extends Controller implements Initializable 
         } else {
             buyerProcessor.disableFilter("availability");
         }
+        filter();
     }
 
     public void filterOff() {
@@ -298,5 +300,6 @@ public class ProductPanelController extends Controller implements Initializable 
         } else {
             buyerProcessor.disableFilter("off");
         }
+        filter();
     }
 }
