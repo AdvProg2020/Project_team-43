@@ -20,8 +20,6 @@
                     <children>
                         <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0" prefWidth="188.0" promptText="last name" />
-                                <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" promptText="first name" />
                                 <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
@@ -32,24 +30,26 @@
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0" prefWidth="186.0" promptText="phone number" />
                                 <Text layoutX="35.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="35.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
+                                <Text layoutX="35.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
+                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
+                                <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
+                                <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
                                 <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0" prefWidth="187.0" promptText="email" />
                                 <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password" />
+                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0" prefWidth="186.0" promptText="phone number" />
                                 <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="291.0" onMouseClicked="#update" style="-fx-cursor: hand;">
                                     <image>
                                         <Image url="@button_update.png" />
@@ -146,6 +146,7 @@
                                 <Text layoutX="14.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email :" />
                                 <Text layoutX="14.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name :" />
                                 <Text layoutX="14.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone :" />
+                                <TextField fx:id="userNameCreateManager" layoutX="95.0" layoutY="145.0" prefHeight="30.0" prefWidth="140.0" />
                                 <TextField fx:id="firstNameCreateManager" layoutX="94.0" layoutY="189.0" prefHeight="30.0" prefWidth="140.0" />
                                 <TextField fx:id="lastNameCreateManager" layoutX="94.0" layoutY="231.0" prefHeight="30.0" prefWidth="140.0" />
                                 <TextField fx:id="passwordCreateManager" layoutX="94.0" layoutY="271.0" prefHeight="30.0" prefWidth="140.0" />
@@ -157,7 +158,6 @@
                                     </image>
                                 </ImageView>
                                 <Text layoutX="14.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name :" />
-                                <TextField fx:id="userNameCreateManager" layoutX="95.0" layoutY="145.0" prefHeight="30.0" prefWidth="140.0" />
                                 <ImageView fitHeight="131.0" fitWidth="122.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@user.png" />
@@ -258,14 +258,14 @@
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="createRepeat" layoutX="92.0" layoutY="200.0" prefHeight="31.0" prefWidth="181.0" promptText="repeat" />
-                                <TextField fx:id="createDiscountAmount" layoutX="157.0" layoutY="154.0" prefHeight="31.0" prefWidth="116.0" promptText="amount" />
                                 <TextField fx:id="createStartYear" layoutX="103.0" layoutY="71.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
-                                <TextField fx:id="createEndYear" layoutX="94.0" layoutY="116.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <TextField fx:id="createStartMonth" layoutX="171.0" layoutY="71.0" prefHeight="31.0" prefWidth="44.0" promptText="MM" />
                                 <TextField fx:id="createStartDay" layoutX="230.0" layoutY="71.0" prefHeight="31.0" prefWidth="43.0" promptText="dd" />
+                                <TextField fx:id="createEndYear" layoutX="94.0" layoutY="116.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <TextField fx:id="createEndMonth" layoutX="161.0" layoutY="116.0" prefHeight="31.0" prefWidth="44.0" promptText="MM" />
                                 <TextField fx:id="createEndDay" layoutX="220.0" layoutY="116.0" prefHeight="31.0" prefWidth="43.0" promptText="dd" />
+                                <TextField fx:id="createDiscountAmount" layoutX="157.0" layoutY="154.0" prefHeight="31.0" prefWidth="116.0" promptText="amount" />
+                                <TextField fx:id="createRepeat" layoutX="92.0" layoutY="200.0" prefHeight="31.0" prefWidth="181.0" promptText="repeat" />
                                 <Text layoutX="160.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
                                 <Text layoutX="219.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
                                 <Text layoutX="152.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
@@ -284,8 +284,6 @@
                         </Pane>
                         <Pane fx:id="codedDiscountInfoPane" layoutX="568.0" layoutY="95.0" prefHeight="366.0" prefWidth="331.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;" visible="false">
                             <children>
-                                <TextField fx:id="endYear" layoutX="125.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
-                                <TextField fx:id="startYear" layoutX="125.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <Text layoutX="30.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount amount :" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
@@ -306,12 +304,14 @@
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="discountAmount" layoutX="170.0" layoutY="177.0" prefHeight="31.0" prefWidth="133.0" promptText="amount" />
-                                <TextField fx:id="repeat" layoutX="118.0" layoutY="227.0" prefHeight="31.0" prefWidth="187.0" promptText="repeat" />
+                                <TextField fx:id="startYear" layoutX="125.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <TextField fx:id="startMonth" layoutX="197.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
                                 <TextField fx:id="startDay" layoutX="269.0" layoutY="75.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
+                                <TextField fx:id="endYear" layoutX="125.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="yyyy" />
                                 <TextField fx:id="endMonth" layoutX="197.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="MM" />
                                 <TextField fx:id="endDay" layoutX="269.0" layoutY="125.0" prefHeight="31.0" prefWidth="54.0" promptText="dd" />
+                                <TextField fx:id="discountAmount" layoutX="170.0" layoutY="177.0" prefHeight="31.0" prefWidth="133.0" promptText="amount" />
+                                <TextField fx:id="repeat" layoutX="118.0" layoutY="227.0" prefHeight="31.0" prefWidth="187.0" promptText="repeat" />
                                 <Text layoutX="184.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
                                 <Text layoutX="256.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
                                 <Text layoutX="185.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/" />
@@ -726,20 +726,20 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="categoryName" layoutX="109.0" layoutY="27.0" prefHeight="30.0" prefWidth="198.0" promptText="category name" />
                         <ImageView fitHeight="22.0" fitWidth="23.0" layoutX="306.0" layoutY="3.0" onMouseClicked="#closeCategoryInfo" style="-fx-cursor: hand;">
-                           <image>
-                              <Image url="@transparentLight33.png" />
-                           </image>
+                            <image>
+                                <Image url="@transparentLight33.png" />
+                            </image>
                         </ImageView>
-                        <ListView fx:id="featuresListView" layoutX="108.0" layoutY="81.0" onMouseClicked="#showChangeToPane" prefHeight="158.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
-                        <ImageView fitHeight="39.0" fitWidth="140.0" layoutX="166.0" layoutY="308.0" onMouseClicked="#removeCategory" style="-fx-cursor: hand;">
-                           <image>
-                              <Image url="@button_remove-category.png" />
-                           </image>
-                        </ImageView>
-                        <Text layoutX="30.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add feature :" />
-                        <TextField fx:id="newFeature" layoutX="121.0" layoutY="248.0" promptText="new feature" />
+                         <ListView fx:id="featuresListView" layoutX="108.0" layoutY="81.0" onMouseClicked="#showChangeToPane" prefHeight="158.0" prefWidth="200.0" style="-fx-background-radius: 5;" />
+                         <ImageView fitHeight="39.0" fitWidth="140.0" layoutX="166.0" layoutY="308.0" onMouseClicked="#removeCategory" style="-fx-cursor: hand;">
+                             <image>
+                                 <Image url="@button_remove-category.png" />
+                             </image>
+                         </ImageView>
+                         <Text layoutX="30.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add feature :" />
+                         <TextField fx:id="categoryName" layoutX="109.0" layoutY="27.0" prefHeight="30.0" prefWidth="198.0" promptText="category name" />
+                         <TextField fx:id="newFeature" layoutX="121.0" layoutY="248.0" promptText="new feature" />
                      </children>
                   </Pane>
                   <Pane fx:id="changeFeaturePane" layoutX="650.0" layoutY="184.0" prefHeight="137.0" prefWidth="211.0" style="-fx-background-color: #4ee6c7; -fx-background-radius: 5;" visible="false">
@@ -786,9 +786,9 @@
                            </font>
                         </Text>
                         <Text layoutX="14.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category name :" />
-                        <TextField fx:id="createCategoryName" layoutX="132.0" layoutY="45.0" />
                         <Text layoutX="14.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="features :" />
-                        <TextField fx:id="createCategoryFeature" layoutX="89.0" layoutY="97.0" prefHeight="31.0" prefWidth="162.0" />
+                         <TextField fx:id="createCategoryName" layoutX="132.0" layoutY="45.0" />
+                         <TextField fx:id="createCategoryFeature" layoutX="89.0" layoutY="97.0" prefHeight="31.0" prefWidth="162.0" />
                         <ListView fx:id="createCategoryFeaturesListView" layoutX="137.0" layoutY="139.0" onMouseClicked="#createRemoveFeature" prefHeight="181.0" prefWidth="178.0" style="-fx-background-radius: 5;" />
                         <ImageView fitHeight="31.0" fitWidth="55.0" layoutX="263.0" layoutY="97.0" onMouseClicked="#createAddFeature" style="-fx-cursor: hand;">
                            <image>
