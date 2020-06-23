@@ -2,14 +2,12 @@
 import Controller.console.BossProcessor;
 import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
-import jdk.nashorn.internal.objects.NativeUint8Array;
 import model.Buyer;
 import model.InvalidCommandException;
 import model.UserPersonalInfo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.text.ParseException;
 
