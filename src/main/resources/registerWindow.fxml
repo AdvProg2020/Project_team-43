@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="450.0" prefWidth="620.0" style="-fx-background-image: url('simpleBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center;-fx-background-size: 630 460;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.RegisterMenuController">
+    <children>
+        <VBox alignment="CENTER" layoutX="136.0" layoutY="21.0" prefHeight="261.0" prefWidth="328.0">
+            <children>
+            <RadioButton fx:id="buyerChoice" mnemonicParsing="false" onAction="#buyerChoiceAction" selected="true" style="-fx-cursor: hand;" text="Buyer" textAlignment="CENTER" />
+            <RadioButton fx:id="sellerChoice" mnemonicParsing="false" onAction="#sellerChoiceAction" style="-fx-cursor: hand;" text="Seller">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </RadioButton>
+                <TextField fx:id="userName" prefHeight="31.0" prefWidth="266.0" promptText="username">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <TextField fx:id="firstName" promptText="first name">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <TextField fx:id="lastName" promptText="last name">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <TextField fx:id="phoneNumber" promptText="phone number">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <TextField fx:id="email" promptText="email">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <PasswordField fx:id="passWord" promptText="password">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></PasswordField>
+            <Text fx:id="alertMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="326.6708984375">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Text>
+                <TextField fx:id="companyName" promptText="company name" visible="false">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerButtonClicked" style="-fx-cursor: hand;" text="Register">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
