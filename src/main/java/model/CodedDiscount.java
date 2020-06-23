@@ -123,4 +123,8 @@ public class CodedDiscount {
     public static void save() throws IOException {
         Saver.save(allCodedDiscount, fileAddress);
     }
+
+    public static ArrayList<CodedDiscount> getAllCodedDiscount() {
+        return allCodedDiscount;
+    }
 }

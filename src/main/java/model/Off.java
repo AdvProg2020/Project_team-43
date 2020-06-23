@@ -253,4 +253,20 @@ public class Off {
         allOffs.addAll(allOffsInQueueEdit);
         Saver.save(allOffs, fileAddress);
     }
+
+    public static ArrayList<Off> getAcceptedOffs() {
+        return acceptedOffs;
+    }
+
+    public static ArrayList<Off> getInQueueExpectionOffs() {
+        return inQueueExpectionOffs;
+    }
+
+    public static ArrayList<Off> getAllOffsInQueueEdit() {
+        return allOffsInQueueEdit;
+    }
+
+    public static ArrayList<Off> getAllOffs() {
+        return allOffs;
+    }
 }
