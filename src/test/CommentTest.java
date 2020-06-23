@@ -1,9 +1,11 @@
+import Controller.BossProcessor;
 import Controller.Processor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.nio.charset.CoderMalfunctionError;
 import java.util.ArrayList;
 
 public class CommentTest {
@@ -19,9 +21,11 @@ public class CommentTest {
     Comment comment2;
     Comment comment3;
     Processor processor;
+    BossProcessor bossProcessor;
 
     @BeforeAll
     public void setAll() {
+        bossProcessor = BossProcessor.getInstance();
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("asus", "none");
         category = new Category("laptop", new ArrayList<>());
@@ -48,6 +52,23 @@ public class CommentTest {
     public void getCommentText() {
         setAll();
         Assert.assertEquals(comment.getCommentText(), "opinionText");
+    }
+
+    @Test
+    public void acceptCommentTest(){
+        setAll();
+        Comment newComment = new Comment(product1, "opinionText", true, buyer);
+        bossProcessor.manageComments("accept comment "+ (Comment.inQueueExpectation.size()-1));
+        Assert.assertFalse(Comment.inQueueExpectation.contains(newComment));
+        Assert.assertTrue(Comment.acceptedComments.contains(newComment));
+    }
+    @Test
+    public void declineCommentTest(){
+        setAll();
+        Comment newComment = new Comment(product1, "opinionText", true, buyer);
+        bossProcessor.manageComments("decline comment "+ (Comment.inQueueExpectation.size()-1));
+        Assert.assertFalse(Comment.inQueueExpectation.contains(newComment));
+        Assert.assertTrue(Comment.declineComments.contains(newComment));
     }
 
     @Test

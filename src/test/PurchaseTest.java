@@ -145,7 +145,7 @@ public class PurchaseTest {
     public void logoutUserTest(){
         setAll();
         Processor.user = buyer;
-        buyerProcessor.logout();
+        processor.logout();
         Assert.assertNull(Processor.user);
     }
 
