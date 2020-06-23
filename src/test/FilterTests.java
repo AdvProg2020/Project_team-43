@@ -1,4 +1,3 @@
-package test;
 
 import Controller.console.Processor;
 import model.Category;
@@ -126,7 +125,7 @@ public class FilterTests {
         Assert.assertEquals(criteriaCategory.getName(), "category : " + filterManager.getCategory().getName());
 
     }
-    /*@Test
+    @Test
     public void categoryFeatureFilterTest() {
         setAll();
         category1.addFeatures("color");
@@ -136,8 +135,8 @@ public class FilterTests {
         product10.getFeaturesMap().replace("color", "yellow");
         filterManager.setCategory(category1);
         CriteriaCategoryFeatures criteriaCategoryFeatures = filterManager.getCriteriaCategoryFeatures();
-        criteriaCategoryFeatures.getFeatures().put("new junk feature", "junk value");
-        filterManager.disableFeature("new junk feature");
+        criteriaCategoryFeatures.getFeatures().put("new junk feature", new ArrayList<>());
+        filterManager.disableFeature("new junk feature", "junk value");
         criteriaCategoryFeatures.addFeature("color", "red");
         expectationFilter.add(product1);
         expectationFilter.add(product7);
@@ -145,7 +144,7 @@ public class FilterTests {
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
-    }*/
+    }
 
     @Test
     public void addFeatureFromFilterManagerTest(){

@@ -40,6 +40,11 @@ public class FilterManager {
         currentFilters.add(new CriteriaAvailable());
     }
 
+    public void disableCategory() {
+        category = null;
+        criteriaCategoryFeatures = null;
+    }
+
     public void addNameFilter(String name) {
         disableNameFilter();
         currentFilters.add(new CriteriaName(name));

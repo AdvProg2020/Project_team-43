@@ -1,4 +1,3 @@
-package test;
 
 import Controller.console.Processor;
 import model.*;
