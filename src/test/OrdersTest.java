@@ -1,6 +1,4 @@
-import Controller.BossProcessor;
-import Controller.Processor;
-import Controller.SellerProcessor;
+
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -101,6 +99,11 @@ public class OrdersTest {
         Assert.assertEquals(buyOrder.getPhoneNumber(), "phone number");
     }
 
+    @Test
+    public void getProductSellOrderTest(){
+        setAll();
+        Assert.assertEquals(product1, sellOrder.getProducts());
+    }
     @Test
     public void loadAndSaveFieldsSellOrderTest() {
         setAll();

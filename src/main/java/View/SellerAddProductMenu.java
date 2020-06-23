@@ -1,6 +1,5 @@
 package View;
 
-import model.Category;
 import model.InvalidCommandException;
 
 import java.util.HashMap;

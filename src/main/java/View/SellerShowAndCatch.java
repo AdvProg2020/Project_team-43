@@ -5,7 +5,6 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class SellerShowAndCatch {
     private static SellerShowAndCatch ourInstance = new SellerShowAndCatch();

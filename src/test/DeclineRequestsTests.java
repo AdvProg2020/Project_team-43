@@ -1,4 +1,3 @@
-package test;
 
 import Controller.BossProcessor;
 import Controller.Processor;
