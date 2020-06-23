@@ -43,7 +43,6 @@ public class SellerMenuController extends Controller {
     public TextField existingProductId;
     public TextField amountTextField;
     public Text invalidCategory;
-    public Text messageText;
     public Text usernameText;
     public ImageView profilePhoto;
     public TextField productIdTextField;
@@ -129,8 +128,11 @@ public class SellerMenuController extends Controller {
     @FXML
     public void addExistingProduct() {
         String message = sellerProcessor.addExistingProduct(existingProductId.getText(), amountTextField.getText());
-        messageText.setText(message);
-        messageText.setVisible(true);
+        System.out.println(message);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Product added successfully");
+        alert.setContentText("Waiting for manager to confirm");
+        alert.showAndWait();
     }
 
     @FXML

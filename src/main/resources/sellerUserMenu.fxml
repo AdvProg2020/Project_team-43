@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -20,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
@@ -218,19 +225,19 @@
                               <Insets bottom="10.0" top="5.0" />
                            </VBox.margin>
                         </ListView>
-                              <Button mnemonicParsing="false" onAction="#browsePhotoProduct" style="-fx-cursor: hand;" text="browse photo">
+                              <Button mnemonicParsing="false" onAction="#browsePhotoProduct" text="browse photo">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                              <Button mnemonicParsing="false" onAction="#addNewProduct" style="-fx-cursor: hand;" text="Apply">
+                              <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                   </VBox>
-                        <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct" style="-fx-cursor: hand;" text="Apply" />
+                        <Button layoutX="135.0" layoutY="177.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
                         <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
                             <font>
                                 <Font size="17.0" />
@@ -283,7 +290,6 @@
                         <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
                         <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
                         <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
-                        <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
@@ -292,7 +298,7 @@
                                 <InnerShadow />
                             </effect>
                         </ImageView>
-                  <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0" style="-fx-cursor: hand;" />
+                  <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0" />
                   <Separator layoutX="401.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
@@ -373,7 +379,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff" style="-fx-cursor: hand;" text="Apply" />
+                  <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff" text="Apply" />
                   <Text fx:id="invalidCategory1" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
                   <Text fx:id="messageText1" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
                   <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
