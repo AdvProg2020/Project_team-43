@@ -1,7 +1,6 @@
-package test;
 
-import Controller.BossProcessor;
-import Controller.Processor;
+import Controller.console.BossProcessor;
+import Controller.console.Processor;
 import model.*;
 import model.request.*;
 import org.junit.Assert;

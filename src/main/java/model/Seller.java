@@ -72,6 +72,10 @@ public class Seller extends User {
         return false;
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public Product getProductById(String productId) {
         for (Product product : productsNumber.keySet()) {
             if (product.getProductId().equals(productId)) {
@@ -108,6 +112,13 @@ public class Seller extends User {
     public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features) {
         Product product = new Product(name, company, price, category);
         product.setFeaturesMap(features);
+        new ProductRequest(product, this, number);
+    }
+
+    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features, String path) {
+        Product product = new Product(name, company, price, category);
+        product.setFeaturesMap(features);
+        product.setImagePath(path);
         new ProductRequest(product, this, number);
     }
 
@@ -188,6 +199,11 @@ public class Seller extends User {
 
     public boolean isProductAvailable(Product product) {
         return productsNumber.get(product) > 0;
+    }
+
+    public int productNumber(Product product) {
+        return productsNumber.get(product);
+
     }
 
     public void decreaseProduct(Product product) {
@@ -285,7 +301,7 @@ public class Seller extends User {
     public void loadOffs() {
         ArrayList<Off> offsFromDataBase = new ArrayList<>();
         for (String offId : offsId) {
-            offsFromDataBase.add(Off.getOffById(offId));
+            offsFromDataBase.add(Off.getAllOffById(offId));
         }
         offs = offsFromDataBase;
 

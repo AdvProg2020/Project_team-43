@@ -1,6 +1,7 @@
-import Controller.BossProcessor;
-import Controller.BuyerProcessor;
-import Controller.Processor;
+
+import Controller.console.BossProcessor;
+import Controller.console.BuyerProcessor;
+import Controller.console.Processor;
 import jdk.nashorn.internal.objects.NativeUint8Array;
 import model.Buyer;
 import model.InvalidCommandException;

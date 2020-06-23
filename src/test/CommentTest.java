@@ -1,11 +1,10 @@
-import Controller.BossProcessor;
-import Controller.Processor;
+
+import Controller.console.BossProcessor;
+import Controller.console.Processor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-
-import java.nio.charset.CoderMalfunctionError;
 import java.util.ArrayList;
 
 public class CommentTest {

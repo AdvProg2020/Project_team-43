@@ -1,8 +1,10 @@
 package model;
 
+import javafx.scene.image.Image;
 import model.database.Loader;
 import model.database.Saver;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public abstract class User {
     protected UserPersonalInfo userPersonalInfo;
     protected double balance;//hamoon etebare
     protected UserType userType;
+    protected String imagePath;
 
     public UserPersonalInfo getUserPersonalInfo() {
         return userPersonalInfo;
@@ -115,5 +118,17 @@ public abstract class User {
     @Override
     public String toString() {
         return username + ":" + userPersonalInfo.toString();
+    }
+
+    public void setUserPersonalInfo(UserPersonalInfo userPersonalInfo) {
+        this.userPersonalInfo = userPersonalInfo;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 }

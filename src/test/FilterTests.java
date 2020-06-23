@@ -1,6 +1,5 @@
-package test;
 
-import Controller.Processor;
+import Controller.console.Processor;
 import model.Category;
 import model.Company;
 import model.Product;
@@ -136,8 +135,8 @@ public class FilterTests {
         product10.getFeaturesMap().replace("color", "yellow");
         filterManager.setCategory(category1);
         CriteriaCategoryFeatures criteriaCategoryFeatures = filterManager.getCriteriaCategoryFeatures();
-        criteriaCategoryFeatures.getFeatures().put("new junk feature", "junk value");
-        filterManager.disableFeature("new junk feature");
+        criteriaCategoryFeatures.getFeatures().put("new junk feature", new ArrayList<>());
+        filterManager.disableFeature("new junk feature", "junk value");
         criteriaCategoryFeatures.addFeature("color", "red");
         expectationFilter.add(product1);
         expectationFilter.add(product7);
