@@ -3,7 +3,9 @@ import Controller.BuyerProcessor;
 import Controller.Processor;
 import javafx.util.Pair;
 import model.*;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -11,21 +13,21 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PurchaseTest {
-    Buyer buyer;
-    BuyerProcessor buyerProcessor;
-    Processor processor;
-    Category category1;
-    Category category2;
-    Category category3;
-    Seller seller;
-    Product product1;
-    Product product2;
-    Product product3;
-    Product product4;
-    Company company;
-    CodedDiscount codedDiscount;
+    static Buyer buyer;
+    static BuyerProcessor buyerProcessor;
+    static Processor processor;
+    static Category category1;
+    static Category category2;
+    static Category category3;
+    static Seller seller;
+    static Product product1;
+    static Product product2;
+    static Product product3;
+    static Product product4;
+    static Company company;
+    static CodedDiscount codedDiscount;
 
-    @BeforeAll
+    @Before
     public void setAll() {
         processor = new Processor();
         buyerProcessor = BuyerProcessor.getInstance();
@@ -52,49 +54,59 @@ public class PurchaseTest {
 
     }
 
+    @After
+    public void clear() {
+        User.getAllUsers().clear();
+        CodedDiscount.getAllCodedDiscount().clear();
+        Order.getAllOrders().clear();
+        Off.getAcceptedOffs().clear();
+        Off.getAllOffsInQueueEdit().clear();
+        Off.getAllOffs().clear();
+        Off.getInQueueExpectionOffs().clear();
+        Product.getAllProducts().clear();
+        Product.getAllProductsInList().clear();
+        Company.getAllCompanies().clear();
+    }
+
     @Test
     public void purchaseTest() {
-        setAll();
         Processor.user = buyer;
         if (buyerProcessor.checkDiscountCode(codedDiscount.getDiscountCode())) {
             buyerProcessor.payment("address", "0912", codedDiscount.getDiscountAmount());
             Assert.assertEquals(buyer.getBalance(), (100000 - 80), 0.0);
         } else {
             buyerProcessor.payment("address", "0912", 0);
-            Assert.assertEquals(100000-100, buyer.getBalance(), 0.0);
+            Assert.assertEquals(100000 - 100, buyer.getBalance(), 0.0);
         }
     }
 
     @Test
     public void addToBuyerCartSellerPartTest() {
-        setAll();
         Processor.user = buyer;
         buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product4, seller));
         Assert.assertEquals(seller.getProductsNumber().get(product4), 4, 1);
     }
+
     @Test
-    public void addToBuyerCartBuyerPartTest(){
-        setAll();
+    public void addToBuyerCartBuyerPartTest() {
         Processor.user = buyer;
         buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product4, seller));
         Assert.assertTrue(buyer.getNewBuyerCart().containsKey(new Pair<Product, Seller>(product4, seller)));
     }
 
     @Test
-    public void addToBuyerCartBuyerPart2Test(){
-        setAll();
+    public void addToBuyerCartBuyerPart2Test() {
         Processor.user = buyer;
         buyerProcessor.addToBuyerCart(new Pair<Product, Seller>(product3, seller));
         Assert.assertEquals(buyer.getNewBuyerCart().get(new Pair<>(product3, seller)), 2, 1);
     }
 
     @Test
-    public void rateProductTest(){
-        setAll();
+    public void rateProductTest() {
         Product.getAllProductsInList().add(product4);
         Processor.user = buyer;
         try {
-            buyerProcessor.manageOrders("rate "+product4.getProductId()+" 5");
+            buyerProcessor.manageOrders("rate " + product4.getProductId() + " 5");
         } catch (InvalidCommandException e) {
             Assert.assertTrue(true);
         }
@@ -102,63 +114,56 @@ public class PurchaseTest {
     }
 
     @Test
-    public void checkValiditySellerTest(){
-        setAll();
+    public void checkValiditySellerTest() {
         Assert.assertTrue(buyerProcessor.checkProductAndSellerValidation(product4.getProductId(), "no seller"));
     }
 
     @Test
-    public void checkValidityProductTest(){
-        setAll();
+    public void checkValidityProductTest() {
         Assert.assertTrue(buyerProcessor.checkProductAndSellerValidation(product1.getProductId(), "seller"));
     }
 
     @Test
-    public void increaseCartProductTest(){
-        setAll();
+    public void increaseCartProductTest() {
         Processor.user = buyer;
         Product.allProductsInList.add(product1);
         int availableCount = product1.getAvailableCount();
         buyerProcessor.increaseProduct(product1.getProductId(), "seller");
-        Assert.assertEquals(product1.getAvailableCount(), availableCount-1);
+        Assert.assertEquals(product1.getAvailableCount(), availableCount - 1);
 
     }
 
     @Test
-    public void increaseCartSellerTest(){
-        setAll();
+    public void increaseCartSellerTest() {
         Processor.user = buyer;
         int availableCount = seller.getProductsNumber().get(product1);
         Product.allProductsInList.add(product1);
         buyerProcessor.increaseProduct(product1.getProductId(), "seller");
-        Assert.assertEquals(seller.getProductsNumber().get(product1),availableCount-1, 1);
+        Assert.assertEquals(seller.getProductsNumber().get(product1), availableCount - 1, 1);
     }
 
     @Test
-    public void isCartEmptyTest(){
-        setAll();
+    public void isCartEmptyTest() {
         BuyerProcessor.getNewBuyerCart().clear();
         Assert.assertTrue(buyerProcessor.isCartEmpty());
     }
+
     @Test
-    public void logoutUserTest(){
-        setAll();
+    public void logoutUserTest() {
         Processor.user = buyer;
         processor.logout();
         Assert.assertNull(Processor.user);
     }
 
     @Test
-    public void logoutBuyerCartTest(){
-        setAll();
+    public void logoutBuyerCartTest() {
         Processor.user = buyer;
         buyerProcessor.logout();
         Assert.assertEquals(BuyerProcessor.getNewBuyerCart().size(), 0);
     }
 
     @Test
-    public void addToCartFromProcessorTest(){
-        setAll();
+    public void addToCartFromProcessorTest() {
         Product.allProductsInList.add(product1);
         processor.addToCart(product1.getProductId(), seller);
         Assert.assertFalse(BuyerProcessor.getNewBuyerCart().isEmpty());
@@ -166,8 +171,7 @@ public class PurchaseTest {
     }
 
     @Test
-    public void increaseAndDecreaseCartTest(){
-        setAll();
+    public void increaseAndDecreaseCartTest() {
         Pair<Product, Seller> pair = new Pair<>(product1, seller);
         buyer.increaseCart(product1, seller);
         buyer.decreaseCart(product1, seller);
@@ -175,8 +179,7 @@ public class PurchaseTest {
     }
 
     @Test
-    public void justDecreaseCartTest(){
-        setAll();
+    public void justDecreaseCartTest() {
         Pair<Product, Seller> pair = new Pair<>(product1, seller);
         buyer.decreaseCart(product1, seller);
         Assert.assertFalse(buyer.getNewBuyerCart().containsKey(pair));
