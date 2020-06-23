@@ -3,7 +3,9 @@ import Controller.BossProcessor;
 import Controller.Processor;
 import model.*;
 import model.request.*;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -11,21 +13,21 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AcceptRequestsTests {
-    Manager manager;
-    Request sellerRequest;
-    Request productRequest;
-    Request offRequest;
-    Request editOffRequest;
-    Request editProductRequest;
-    UserPersonalInfo userPersonalInfo;
-    Product product;
-    Company company;
-    Seller seller;
-    Category category;
-    Off off;
-    BossProcessor bossProcessor;
+    static Manager manager;
+    static Request sellerRequest;
+    static Request productRequest;
+    static Request offRequest;
+    static Request editOffRequest;
+    static Request editProductRequest;
+    static UserPersonalInfo userPersonalInfo;
+    static Product product;
+    static Company company;
+    static Seller seller;
+    static Category category;
+    static Off off;
+    static BossProcessor bossProcessor;
 
-    @BeforeAll
+    @Before
     public void setAll() {
         manager = new Manager("managerUserName", userPersonalInfo);
         seller = new Seller("sellerUserName", userPersonalInfo, "companyName");
@@ -43,9 +45,13 @@ public class AcceptRequestsTests {
         Processor.user = manager;
     }
 
+    @After
+    public void clear() {
+        Request.getAllRequests().clear();
+    }
+
     @Test
     public void acceptSellerRequestTest() {
-        setAll();
         try {
             bossProcessor.manageRequests("accept request " + sellerRequest.getRequestId());
         } catch (InvalidCommandException e) {
@@ -57,7 +63,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void acceptProductRequestTest() {
-        setAll();
         Product newProduct = ((ProductRequest) productRequest).getProduct();
         try {
             bossProcessor.manageRequests("accept request " + productRequest.getRequestId());
@@ -70,7 +75,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void acceptOffRequestTest() {
-        setAll();
         Off newOff = ((OffRequest) offRequest).getOff();
         try {
             bossProcessor.manageRequests("accept request " + offRequest.getRequestId());
@@ -83,7 +87,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void acceptEditOffRequestTest() {
-        setAll();
         Off newOff = ((EditOffRequest) editOffRequest).getOff();
         try {
             bossProcessor.manageRequests("accept request " + editOffRequest.getRequestId());
@@ -95,7 +98,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void acceptEditProductRequestTest() {
-        setAll();
         Product newProduct = ((EditProductRequest) editProductRequest).getProduct();
         try {
             bossProcessor.manageRequests("accept request " + editProductRequest.getRequestId());
@@ -107,7 +109,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void addSellerRequestTest() {
-        setAll();
         Request.getAllRequests().clear();
         SellerRequest.addSellerRequest(userPersonalInfo, "parsa", "asus");
         Assert.assertFalse(Request.getAllRequests().isEmpty());
@@ -115,7 +116,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void addAllTest() {
-        setAll();
         ArrayList<Request> requests = new ArrayList<>();
         requests.add(sellerRequest);
         requests.add(offRequest);
@@ -128,7 +128,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void loadAndSaveFieldOffTest() {
-        setAll();
         Request.saveFields();
         Request.loadFields();
         Assert.assertEquals(((OffRequest) offRequest).getOff(), off);
@@ -136,7 +135,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void loadAndSaveFieldProductTest() {
-        setAll();
         Request.saveFields();
         Request.loadFields();
         Assert.assertEquals(((ProductRequest) productRequest).getProduct(), product);
@@ -144,7 +142,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void loadAndSaveFieldEditOffTest() {
-        setAll();
         Request.saveFields();
         Request.loadFields();
         Assert.assertEquals(((EditOffRequest) editOffRequest).getOff(), off);
@@ -152,7 +149,6 @@ public class AcceptRequestsTests {
 
     @Test
     public void loadAndSaveFieldEditProductTest() {
-        setAll();
         Request.saveFields();
         Request.loadFields();
         Assert.assertEquals(((EditProductRequest) editProductRequest).getProduct(), product);
