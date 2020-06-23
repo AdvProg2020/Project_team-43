@@ -288,6 +288,10 @@ public class Processor {
     public void addComment(Product product) {
         ArrayList<String> commentInfo = new ArrayList<>();
         viewManager.getCommentInfo(commentInfo);
+        addComment(product,commentInfo);
+
+    }
+    public void addComment(Product product,ArrayList<String> commentInfo){
         boolean isBuy = false;
         for (BuyOrder order : ((Buyer) user).getOrders()) {
             if (order.getProducts().containsKey(product)) {
@@ -340,7 +344,6 @@ public class Processor {
             viewManager.getPersonalInfo(personalInfo);
             String companyName = viewManager.getCompanyNameMenuFromUser();
             SellerRequest.addSellerRequest(personalInfo, matcher.group(2), companyName);
-
             return "done";
         } else if (matcher.group(1).equalsIgnoreCase("buyer")) {
             UserPersonalInfo personalInfo = new UserPersonalInfo();
