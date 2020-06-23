@@ -102,6 +102,11 @@ public class OrdersTest {
     }
 
     @Test
+    public void getProductSellOrderTest(){
+        setAll();
+        Assert.assertEquals(product1, sellOrder.getProducts());
+    }
+    @Test
     public void loadAndSaveFieldsSellOrderTest() {
         setAll();
         SellOrder.allOrders.add(sellOrder);
