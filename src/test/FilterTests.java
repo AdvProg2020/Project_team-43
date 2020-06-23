@@ -135,8 +135,8 @@ public class FilterTests {
         product10.getFeaturesMap().replace("color", "yellow");
         filterManager.setCategory(category1);
         CriteriaCategoryFeatures criteriaCategoryFeatures = filterManager.getCriteriaCategoryFeatures();
-        criteriaCategoryFeatures.getFeatures().put("new junk feature", new ArrayList<>());
-        filterManager.disableFeature("new junk feature", "junk value");
+        criteriaCategoryFeatures.getFeatures().put("new junk feature", "junk value");
+        filterManager.disableFeature("new junk feature");
         criteriaCategoryFeatures.addFeature("color", "red");
         expectationFilter.add(product1);
         expectationFilter.add(product7);
