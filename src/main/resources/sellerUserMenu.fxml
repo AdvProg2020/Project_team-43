@@ -237,7 +237,7 @@
                         </Button>
                      </children>
                   </VBox>
-                        <Button layoutX="133.0" layoutY="200.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
+                        <Button layoutX="135.0" layoutY="177.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
                         <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
                             <font>
                                 <Font size="17.0" />
@@ -290,7 +290,6 @@
                         <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
                         <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
                         <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
-                        <Text fx:id="messageText" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
