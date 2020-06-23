@@ -133,6 +133,7 @@ public class Buyer extends User {
         for (int i = 0; i < decreaseNumber; i++) {
             productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
         }
+        productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - decreaseNumber);
 
     }
 

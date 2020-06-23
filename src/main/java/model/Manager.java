@@ -133,6 +133,7 @@ public class Manager extends User {
         } else {
             seller.getProductsNumber().put(product, request.getNumber());
         }
+        product.setAvailableCount(product.getAvailableCount() + request.getNumber());
         product.setProductState(State.ProductState.CONFIRMED);
     }
 
@@ -187,7 +188,7 @@ public class Manager extends User {
         Off.inQueueExpectionOffs.remove(off);
     }
 
-    public void addCategory(String categoryName, ArrayList<String> features){
+    public void addCategory(String categoryName, ArrayList<String> features) {
         new Category(categoryName, features);
     }
 
