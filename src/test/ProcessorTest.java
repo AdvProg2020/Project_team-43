@@ -193,7 +193,7 @@ public class ProcessorTest {
     @Test
     public void showPersonalInfoTest() {
         setAll();
-        buyerProcessor.login(buyer.getUsername(),buyer.getUserPersonalInfo().getPassword());
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
         buyerProcessor.viewPersonalInfo();
         Assert.assertEquals(true, outContent.toString().startsWith("User"));
     }
@@ -201,13 +201,72 @@ public class ProcessorTest {
     @Test
     public void addCommentTest() {
         setAll();
-        buyerProcessor.login(buyer.getUsername(),buyer.getUserPersonalInfo().getPassword());
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
         product = new Product("hello", null, 100, new Category("phone", new ArrayList<>()));
-        ArrayList<String > commentInfo =new ArrayList<String>();
+        ArrayList<String> commentInfo = new ArrayList<String>();
         commentInfo.add("hello");
         commentInfo.add("BYE");
-        buyerProcessor.addComment(product,commentInfo);
-        Assert.assertEquals(1,product.getComments().size());
+        buyerProcessor.addComment(product, commentInfo);
+        Assert.assertEquals(1, product.getComments().size());
+    }
+
+    @Test
+    public void manageDigestTest() {
+        setAll();
+        buyerProcessor.manageDigest("add to cartt", "0");
+        Assert.assertEquals(true, outContent.toString().startsWith("invalid"));
+    }
+
+    @Test
+    public void editBuyerFieldTest() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        Assert.assertNull(buyerProcessor.editBuyerField("back"));
+    }
+
+    @Test
+    public void editBuyerFieldTest2() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        Assert.assertEquals("invalid", buyerProcessor.editBuyerField("ewegwge"));
+    }
+
+    @Test
+    public void editBuyerFieldTest3() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        Assert.assertEquals("firstName" + " successfully changed to " + "ali", buyerProcessor.editBuyerField("firstName", "ali"));
+    }
+
+    @Test
+    public void viewDiscountCodesTest() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        buyerProcessor.viewBuyerDiscountCodes();
+        Assert.assertEquals(false, outContent.toString().startsWith("discount"));
+    }
+
+    @Test
+    public void viewBalanceTest() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        buyerProcessor.viewBalance();
+        Assert.assertEquals(true, outContent.toString().startsWith("user balance"));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void viewCartTest() {
+        setAll();
+        buyerProcessor.showProductsInCart();
+        Assert.assertNotEquals("", outContent.toString());
+    }
+
+    @Test
+    public void totalPriceTest() {
+        setAll();
+        buyerProcessor.login(buyer.getUsername(), buyer.getUserPersonalInfo().getPassword());
+        buyerProcessor.setNewBuyerCart();
+        Assert.assertEquals(10, buyerProcessor.showTotalPrice(), 0);
     }
 
 }

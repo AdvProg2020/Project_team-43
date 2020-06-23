@@ -32,10 +32,16 @@ public class BuyerProcessor extends Processor {
         Matcher matcher = pattern.matcher(command);
         if (command.equalsIgnoreCase("back"))
             return null;
-        if (!matcher.find())
+        if (!matcher.find()) {
             errorMessage("invalid command");
+            return "invalid";
+        }
         String field = matcher.group(1);
         String newField = buyerViewManager.getNewField(field);
+        return editBuyerField(field, newField);
+    }
+
+    public String editBuyerField(String field, String newField) {
         try {
             ((Buyer) user).editFields(field, newField);
             return (field + " successfully changed to " + newField);
@@ -55,7 +61,6 @@ public class BuyerProcessor extends Processor {
         if (user != null)
             setNewBuyerCart();
     }
-
 
     public void viewOrders() {
         ArrayList<BuyOrder> orders = ((Buyer) user).getOrders();
@@ -141,7 +146,6 @@ public class BuyerProcessor extends Processor {
             errorMessage("not available any more");
     }
 
-
     public void decreaseProduct(String productId, String sellerName) {
         if (checkProductAndSellerValidation(productId, sellerName))
             return;
@@ -169,7 +173,6 @@ public class BuyerProcessor extends Processor {
         newBuyerCart.clear();
         return "payment done";
     }
-
 
     public void setNewBuyerCart() {
         ((Buyer) user).setNewBuyerCart(newBuyerCart);
