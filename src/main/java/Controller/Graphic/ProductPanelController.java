@@ -45,28 +45,10 @@ public class ProductPanelController extends Controller implements Initializable 
     public TextArea categoryName;
     public Text userName;
     public ListView<HBox> featuresOfCategoryForFilter;
-    public ImageView image1;
-    public ImageView image2;
-    public ImageView image3;
-    public ImageView image4;
-    public ImageView image5;
-    public ImageView image6;
-    public ImageView image7;
-    public ImageView image8;
-    public ImageView image9;
-    public Pane productCartPane1;
-    public Pane productCartPane2;
-    public Pane productCartPane3;
-    public Pane productCartPane4;
-    public Pane productCartPane5;
-    public Pane productCartPane6;
-    public Pane productCartPane7;
-    public Pane productCartPane8;
-    public Pane productCartPane9;
     public ImageView cancelCategoryButton;
     public ArrayList<Pane> panes;
-
     public ArrayList<ImageView> images;
+
     public static int startProductIndex = 0;
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -80,26 +62,6 @@ public class ProductPanelController extends Controller implements Initializable 
         if (Processor.isLogin) {
             userName.setText(Processor.user.getUsername());
         }
-        images = new ArrayList<>();
-        images.add(image1);
-        images.add(image2);
-        images.add(image3);
-        images.add(image4);
-        images.add(image5);
-        images.add(image6);
-        images.add(image7);
-        images.add(image8);
-        images.add(image9);
-        panes = new ArrayList<>();
-        panes.add(productCartPane1);
-        panes.add(productCartPane2);
-        panes.add(productCartPane3);
-        panes.add(productCartPane4);
-        panes.add(productCartPane5);
-        panes.add(productCartPane6);
-        panes.add(productCartPane7);
-        panes.add(productCartPane8);
-        panes.add(productCartPane9);
         if (buyerProcessor.isUserLoggedIn())
             userName.setText(buyerProcessor.getUser().getUsername());
         viewRadioButton.setSelected(true);
