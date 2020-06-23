@@ -1,33 +1,35 @@
 
 import model.*;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class OrdersTest {
-    Manager manager;
-    UserPersonalInfo userPersonalInfo;
-    Buyer buyer;
-    Company company;
-    Category category;
-    Seller seller;
-    Product product1;
-    Product product2;
-    Product product3;
-    BuyOrder buyOrder;
-    SellOrder sellOrder;
-    ArrayList<Seller> sellers;
-    HashMap<Product, Integer> hashMap;
-    ArrayList<SellOrder> sellOrders;
-    ArrayList<Buyer> buyers;
-    ArrayList<BuyOrder> buyOrders;
+    static Manager manager;
+    static UserPersonalInfo userPersonalInfo;
+    static Buyer buyer;
+    static Company company;
+    static Category category;
+    static Seller seller;
+    static Product product1;
+    static Product product2;
+    static Product product3;
+    static BuyOrder buyOrder;
+    static SellOrder sellOrder;
+    static ArrayList<Seller> sellers;
+    static HashMap<Product, Integer> hashMap;
+    static ArrayList<SellOrder> sellOrders;
+    static ArrayList<Buyer> buyers;
+    static ArrayList<BuyOrder> buyOrders;
 
-    @BeforeAll
-    public void setAll() {
+    @Before
+    public void init() {
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("asus", "none");
         category = new Category("laptop", new ArrayList<>());
@@ -55,9 +57,17 @@ public class OrdersTest {
         buyer.getOrders().add(buyOrder);
     }
 
+    @After
+    public void clear() {
+        User.getAllUsers().clear();
+        User.getAllUsers().clear();
+        Order.constructId = 0;
+        Order.getAllOrders().clear();
+
+    }
+
     @Test
     public void getOrderSellerTest() {
-        setAll();
         ArrayList<SellOrder> sellOrders = new ArrayList<>();
         sellOrders.add(sellOrder);
         Assert.assertArrayEquals(seller.getOrders().toArray(), sellOrders.toArray());
@@ -65,25 +75,21 @@ public class OrdersTest {
 
     @Test
     public void getBuyerSellerTest() {
-        setAll();
         Assert.assertArrayEquals(seller.getBuyers(product1.getProductId()).toArray(), buyers.toArray());
     }
 
     @Test
     public void toStringSellOrderTest() {
-        setAll();
         Assert.assertEquals(sellOrder.toString(), sellOrder.toString());
     }
 
     @Test
     public void toStringBuyOrderTest() {
-        setAll();
         Assert.assertEquals(buyOrder.toString(), buyOrder.toString());
     }
 
     @Test
     public void loadAndSaveFieldsBuyOrderTest() {
-        setAll();
         Order.allOrders.add(buyOrder);
         Product.allProductsInList.add(product1);
         BuyOrder.saveAllFields();
@@ -95,18 +101,16 @@ public class OrdersTest {
 
     @Test
     public void getPhoneNumberBuyOrderTest() {
-        setAll();
         Assert.assertEquals(buyOrder.getPhoneNumber(), "phone number");
     }
 
     @Test
-    public void getProductSellOrderTest(){
-        setAll();
+    public void getProductSellOrderTest() {
         Assert.assertEquals(product1, sellOrder.getProducts());
     }
+
     @Test
     public void loadAndSaveFieldsSellOrderTest() {
-        setAll();
         SellOrder.allOrders.add(sellOrder);
         Product.allProductsInList.add(product1);
         SellOrder.saveAllFields();
@@ -116,35 +120,30 @@ public class OrdersTest {
 
     @Test
     public void getOrderByIdTest() {
-        setAll();
         Order.allOrders.add(buyOrder);
         Assert.assertNotNull(Order.getOrderById(buyOrder.getOrderId()));
     }
 
     @Test
     public void getOrderByIdNullTest() {
-        setAll();
         Assert.assertNull(Order.getOrderById("null Id"));
     }
 
     @Test
-    public void getBuyerOrderTest(){
-        setAll();
+    public void getBuyerOrderTest() {
         Assert.assertArrayEquals(buyer.getOrders().toArray(), buyOrders.toArray());
 
     }
 
     @Test
     public void loadAndSaveOrderTest() {
-        setAll();
         Order.saveAllFields();
         Order.loadAllFields();
         Assert.assertTrue(Order.allOrders.contains(buyOrder));
     }
 
     @Test
-    public void addAllTest(){
-        setAll();
+    public void addAllTest() {
         ArrayList<Order> orders = new ArrayList<>();
         orders.addAll(buyOrders);
         orders.addAll(sellOrders);
