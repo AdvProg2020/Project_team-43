@@ -5,17 +5,27 @@ import View.graphic.AddCommentWindow;
 import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ZoomEvent;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
 import javafx.util.Pair;
@@ -43,6 +53,7 @@ public class ProductWindowController {
     private static boolean isBackToComment = false;
     public TabPane tabPane;
     public Tab tab;
+    public ImageView ivTarget;
 
 
     private Product product;
@@ -52,6 +63,7 @@ public class ProductWindowController {
         this.product = product;
         this.parent = parent;
         setProductImage();
+        ivTarget.setVisible(false);
         setProductProperties();
         setSellers();
         setFeatures();
@@ -107,7 +119,7 @@ public class ProductWindowController {
 
     public void addToCart() {
         Seller seller = (Seller) Seller.getUserByUserName(sellers.getValue());
-        new Alert(Alert.AlertType.INFORMATION,BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller))).showAndWait();
+        new Alert(Alert.AlertType.INFORMATION, BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller))).showAndWait();
     }
 
     public void rate() {
@@ -145,4 +157,13 @@ public class ProductWindowController {
     }
 
 
+    public void zoom(MouseEvent event) {
+        System.out.println("hello");
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        ivTarget.setImage(productImage.getImage());
+        Rectangle2D viewPortRect=new Rectangle2D(x,y,500,500);
+        ivTarget.setViewport(viewPortRect);
+        ivTarget.setVisible(true);
+    }
 }
