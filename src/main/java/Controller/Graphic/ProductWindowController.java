@@ -158,12 +158,15 @@ public class ProductWindowController {
 
 
     public void zoom(MouseEvent event) {
-        System.out.println("hello");
         int x = (int) event.getX();
         int y = (int) event.getY();
         ivTarget.setImage(productImage.getImage());
-        Rectangle2D viewPortRect=new Rectangle2D(x,y,500,500);
+        Rectangle2D viewPortRect = new Rectangle2D(x, y, 300, 300);
         ivTarget.setViewport(viewPortRect);
         ivTarget.setVisible(true);
+    }
+
+    public void endZoom() {
+        ivTarget.setVisible(false);
     }
 }
