@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +60,7 @@ public class PurchaseTest {
         Order.getAllOrders().clear();
         Off.getAcceptedOffs().clear();
         Off.getAllOffsInQueueEdit().clear();
+        Category.getAllCategories().clear();
         Off.getAllOffs().clear();
         Off.getInQueueExpectionOffs().clear();
         Product.getAllProducts().clear();
