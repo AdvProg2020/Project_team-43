@@ -1,6 +1,6 @@
 package test;
 
-import Controller.console.Processor;
+import Controller.Processor;
 import model.Category;
 import model.Company;
 import model.Product;
@@ -126,7 +126,7 @@ public class FilterTests {
         Assert.assertEquals(criteriaCategory.getName(), "category : " + filterManager.getCategory().getName());
 
     }
-    /*@Test
+    @Test
     public void categoryFeatureFilterTest() {
         setAll();
         category1.addFeatures("color");
@@ -145,7 +145,7 @@ public class FilterTests {
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
-    }*/
+    }
 
     @Test
     public void addFeatureFromFilterManagerTest(){

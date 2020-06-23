@@ -4,26 +4,23 @@ import model.Category;
 import model.Product;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class CriteriaCategoryFeatures extends CriteriaCategory {
-    private HashMap<String, ArrayList<String>> features;
+    private HashMap<String, String> features;
 
     public CriteriaCategoryFeatures(Category category) {
         super(category);
-        this.features = new HashMap<String, ArrayList<String>>();
+        this.features = new HashMap<String, String>();
     }
 
-    public HashMap<String, ArrayList<String>> getFeatures() {
+
+    public HashMap<String, String> getFeatures() {
         return features;
     }
 
     public void addFeature(String feature, String value) {
-        if (!this.features.containsKey(feature)) {
-            this.features.put(feature, new ArrayList<String>());
-        }
-        this.features.get(feature).add(value);
+        this.features.put(feature, value);
     }
 
     @Override
@@ -39,14 +36,14 @@ public class CriteriaCategoryFeatures extends CriteriaCategory {
 
     public boolean hasFeature(Product product) {
         for (String feature : features.keySet()) {
-            if (!features.get(feature).contains(product.getFeaturesMap().get(feature))) {
+            if (!product.getFeaturesMap().get(feature).equals(features.get(feature))) {
                 return false;
             }
         }
         return true;
     }
 
-    public void deleteFeature(String feature, String value) {
-        this.features.get(feature).remove(value);
+    public void deleteFeature(String feature) {
+        this.features.remove(feature);
     }
 }

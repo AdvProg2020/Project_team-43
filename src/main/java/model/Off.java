@@ -119,7 +119,7 @@ public class Off {
     }
 
     public void editField(String field, String newField) throws InvalidCommandException, ParseException {
-        if (field.equalsIgnoreCase("startTime")) {
+        if (field.equalsIgnoreCase("startTime") && newField.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(newField);
             if (date.before(endTime)) {
                 startTime = date;
@@ -139,10 +139,6 @@ public class Off {
             } catch (Exception e) {
                 throw new InvalidCommandException("discountAmount must be double");
             }
-        } else if (field.equalsIgnoreCase("addProduct")) {
-            products.add(seller.getProductById(newField));
-        } else if (field.equalsIgnoreCase("removeProduct")) {
-            products.remove(seller.getProductById(newField));
         } else {
             throw new InvalidCommandException("invalid field");
         }

@@ -1,13 +1,15 @@
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
+import Controller.BuyerProcessor;
+import Controller.Processor;
 import javafx.util.Pair;
 import model.*;
+import org.codehaus.plexus.component.annotations.Component;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class PurchaseTest {
     Buyer buyer;

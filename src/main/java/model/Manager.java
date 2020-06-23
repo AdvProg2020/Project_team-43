@@ -7,7 +7,6 @@ import model.request.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -185,10 +184,6 @@ public class Manager extends User {
     public void declineOffRequest(Request offRequest) {
         Off off = ((OffRequest) offRequest).getOff();
         Off.inQueueExpectionOffs.remove(off);
-    }
-
-    public void addCategory(String categoryName, ArrayList<String> features){
-        new Category(categoryName, features);
     }
 
     public void editCategoryName(Category category, String newName) {

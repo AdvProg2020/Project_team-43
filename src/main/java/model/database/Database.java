@@ -1,7 +1,7 @@
 package model.database;
 
 import model.*;
-import model.request.*;
+import model.request.Request;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

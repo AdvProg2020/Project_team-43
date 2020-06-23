@@ -1,6 +1,6 @@
 package test;
 
-import Controller.console.Processor;
+import Controller.Processor;
 import model.*;
 import org.junit.Assert;
 import org.junit.Test;

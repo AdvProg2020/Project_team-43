@@ -69,7 +69,4 @@ public class Company {
         Saver.save(allCompanies, fileAddress);
     }
 
-    public static ArrayList<Company> getAllCompanies() {
-        return allCompanies;
-    }
 }

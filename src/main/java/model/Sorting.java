@@ -25,6 +25,7 @@ public class Sorting {
         comparator = SortingByPrice.getInstance().reversed();
     }
 
+
     public static Comparator<Product> getComparator() {
         return comparator;
     }

@@ -1,6 +1,7 @@
 package model.filters;
 
 import model.Category;
+import model.InvalidCommandException;
 import model.Product;
 
 import java.util.ArrayList;
@@ -40,11 +41,6 @@ public class FilterManager {
         currentFilters.add(new CriteriaAvailable());
     }
 
-    public void disableCategory() {
-        category = null;
-        criteriaCategoryFeatures = null;
-    }
-
     public void addNameFilter(String name) {
         disableNameFilter();
         currentFilters.add(new CriteriaName(name));
@@ -70,18 +66,6 @@ public class FilterManager {
         }
     }
 
-    public void addFeatureToCategoryFeaturesFilter(String feature, String value) {
-        criteriaCategoryFeatures.addFeature(feature, value);
-    }
-
-    public void addOffFilter() {
-        this.currentFilters.add(new CriteriaOff());
-    }
-
-    public void disableOffFilter() {
-        currentFilters.removeIf(t -> t instanceof CriteriaOff);
-    }
-
     public void disablePriceFilter() {
         currentFilters.removeIf(t -> t instanceof CriteriaPrice);
     }
@@ -90,8 +74,8 @@ public class FilterManager {
         currentFilters.removeIf(t -> t instanceof CriteriaAvailable);
     }
 
-    public void disableFeature(String feature, String value) {
-        criteriaCategoryFeatures.deleteFeature(feature, value);
+    public void disableFeature(String feature) {
+        criteriaCategoryFeatures.deleteFeature(feature);
     }
 
     public void disableNameFilter() {

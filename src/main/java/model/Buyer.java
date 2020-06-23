@@ -42,7 +42,6 @@ public class Buyer extends User {
     public void viewPersonalInfo() {
     }
 
-
     public void editFields(String field, String newField) throws InvalidCommandException {
         if (field.equalsIgnoreCase("password")) {
             this.getUserPersonalInfo().setPassword(newField);
@@ -85,15 +84,6 @@ public class Buyer extends User {
 
     }
 
-    public boolean hasBuyProduct(Product product) {
-        for (BuyOrder order : orders) {
-            if (order.getProducts().containsKey(product))
-                return true;
-        }
-        return false;
-
-    }
-
 
     public HashMap<Pair<Product, Seller>, Integer> getNewBuyerCart() {
         return newBuyerCart;
@@ -117,23 +107,13 @@ public class Buyer extends User {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(new Date(),
-                this.getNewCartPrice() * (100 - discount) / 100, discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
+                this.getNewCartPrice(), discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
         this.checkSumPaymentForOff();
-        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
-        }
         makingSellOrders();
         this.newBuyerCart.clear();
-    }
-
-    public void decreaseInSeller(Pair<Product, Seller> productSellerPair, int decreaseNumber) {
-        for (int i = 0; i < decreaseNumber; i++) {
-            productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
-        }
-
     }
 
     public void checkSumPaymentForOff() {
@@ -162,9 +142,6 @@ public class Buyer extends User {
         return new ArrayList<>(codedDiscounts.keySet());
     }
 
-    public int remainRepeats(CodedDiscount codedDiscount) {
-        return codedDiscount.getRepeat() - codedDiscounts.get(codedDiscount);
-    }
 
     public void setNewBuyerCart(HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         this.newBuyerCart = newBuyerCart;
@@ -177,14 +154,14 @@ public class Buyer extends User {
     public boolean checkDiscountCode(CodedDiscount discount) {
         if (!this.codedDiscounts.containsKey(discount))
             return false;
-        return discount.checkTime();
-    }
-
-    public void changeRemainDiscount(CodedDiscount discount) {
+        if (!discount.checkTime())
+            return false;
         codedDiscounts.replace(discount, codedDiscounts.get(discount), codedDiscounts.get(discount) + 1);
-        if (codedDiscounts.get(discount) >= discount.getRepeat()) {
+        if (codedDiscounts.get(discount) == discount.getRepeat()) {
             codedDiscounts.remove(discount);
         }
+        return true;
+
     }
 
     public boolean cartHasPair(Pair<Product, Seller> pair) {

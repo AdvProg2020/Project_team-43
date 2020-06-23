@@ -18,11 +18,6 @@ public class BuyOrder extends Order {
     private HashMap<String, Integer> productsId = new HashMap<>();
     private transient ArrayList<Seller> sellers;
     private ArrayList<String> sellersId = new ArrayList<>();
-
-    public String getAddress() {
-        return address;
-    }
-
     private DeliveryStatus deliveryStatus;
     private String address;
     private String phoneNumber;

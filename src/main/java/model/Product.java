@@ -1,6 +1,5 @@
 package model;
 
-import javafx.scene.image.Image;
 import model.database.Loader;
 import model.database.Saver;
 
@@ -31,7 +30,6 @@ public class Product {
     private String description;
     private ProductScore score;
     private ArrayList<Comment> comments;
-    private String imagePath;
 
 
     private transient Category category;
@@ -177,11 +175,6 @@ public class Product {
 
     public void rateProduct(int score) {
         this.getScore().addBuyer(score);
-    }
-
-    public void rateProduct(int score, User user) {
-        if (!this.getScore().isUserRatedBefore(user))
-            this.getScore().addBuyer(score, user.getUsername());
     }
 
     public static ArrayList<Product> getAllProductsInList() {
@@ -373,13 +366,5 @@ public class Product {
         for (Seller seller : sellers) {
             sellersName.add(seller.getUsername());
         }
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 }

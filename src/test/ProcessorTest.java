@@ -1,5 +1,7 @@
-import Controller.console.Processor;
+import Controller.BossProcessor;
+import Controller.Processor;
 import model.Buyer;
+import model.InvalidCommandException;
 import model.UserPersonalInfo;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,11 +11,13 @@ public class ProcessorTest {
     Processor processor;
     Buyer buyer;
     UserPersonalInfo userPersonalInfo;
+    BossProcessor bossProcessor;
 
 
     @BeforeAll
     public void setAll() {
         processor = new Processor();
+        bossProcessor = new BossProcessor();
         userPersonalInfo = new UserPersonalInfo("first name", "last name", "email", "phone number", "password");
         buyer = new Buyer("alireza", userPersonalInfo);
 
@@ -44,4 +48,8 @@ public class ProcessorTest {
         Assert.assertEquals(processor.login("alireza", "password1"), "incorrect password");
     }
 
+    @Test(expected = NullPointerException.class)
+    public void viewUserTest() {
+        bossProcessor.processViewUser("null user");
+    }
 }
