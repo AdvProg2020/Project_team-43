@@ -4,33 +4,19 @@ import Controller.console.BuyerProcessor;
 import View.graphic.AddCommentWindow;
 import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ZoomEvent;
-import javafx.scene.text.TextFlow;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import model.*;
@@ -38,6 +24,7 @@ import org.controlsfx.control.Rating;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -45,7 +32,6 @@ public class ProductWindowController {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
-    public Label productScore;
     public ChoiceBox<String> sellers;
     public Label error;
     public Rating rating;
@@ -60,6 +46,12 @@ public class ProductWindowController {
     public ImageView ivTarget;
     public Label isOff;
     public Label timesRemain;
+    public Rating productScore;
+    public TextField secondProductId;
+    public TableView<Pair<String, Pair<String, String>>> compareTable;
+    public TableColumn<Pair<String, Pair<String, String>>, String> featureForCompare;
+    public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct1;
+    public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct2;
 
 
     private Product product;
@@ -120,7 +112,6 @@ public class ProductWindowController {
         ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(product.getFeaturesMap().entrySet());
         features.getColumns().setAll(feature, value);
         features.setItems(items);
-
     }
 
     public void setSellers() {
@@ -133,7 +124,8 @@ public class ProductWindowController {
     public void setProductProperties() {
         productName.setText(product.getName());
         productPrice.setText(Double.toString(product.getPrice()));
-        productScore.setText(Double.toString(product.getScore().getAvgScore()));
+        productScore.setRating(product.getScore().getAvgScore());
+        productScore.disableProperty().setValue(true);
     }
 
     public void setProductImage() {
@@ -164,17 +156,17 @@ public class ProductWindowController {
             error.setText("you are not buyer");
         }
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
-           // Music.getInstance().error();
+            // Music.getInstance().error();
             error.setText("first log in please");
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
-           // Music.getInstance().error();
+            // Music.getInstance().error();
             error.setText("you didn't buy this product");
         } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
-           // Music.getInstance().error();
+            // Music.getInstance().error();
             error.setText("you rated before");
         } else {
             product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
-           // Music.getInstance().confirmation();
+            // Music.getInstance().confirmation();
             error.setText("done");
         }
     }
@@ -191,7 +183,7 @@ public class ProductWindowController {
             //Music.getInstance().error();
             new Alert(Alert.AlertType.ERROR, "first log in").showAndWait();
         } else {
-           // Music.getInstance().confirmation();
+            // Music.getInstance().confirmation();
             AddCommentWindow.getInstance().setProduct(product);
             AddCommentWindow.getInstance().start(MainWindow.getInstance().getStage());
             isBackToComment = true;
@@ -210,5 +202,31 @@ public class ProductWindowController {
 
     public void endZoom() {
         ivTarget.setVisible(false);
+    }
+
+    public void compare() {
+        Product product2;
+        if (!Product.hasProductWithId(secondProductId.getText())) {
+            new Alert(Alert.AlertType.ERROR, "no product with this id").showAndWait();
+            return;
+        }
+        product2 = Product.getProductById(secondProductId.getText());
+        if (!product2.getCategory().equals(product.getCategory())) {
+            new Alert(Alert.AlertType.ERROR, "not same category").showAndWait();
+            return;
+        }
+        featureForCompare.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
+        featureOfProduct1.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getValue().getKey()));
+        featureOfProduct2.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getValue()));
+        ArrayList<Pair<String, Pair<String, String>>> list = new ArrayList<>();
+        for (String s : product2.getCategory().getFeatures()) {
+            Pair<String, Pair<String, String>> pairPair = new Pair<String, Pair<String, String>>(s, new Pair<>(product.getFeaturesMap().get(s),
+                    product2.getFeaturesMap().get(s)));
+            list.add(pairPair);
+        }
+        ObservableList<Pair<String, Pair<String, String>>> details = FXCollections.observableArrayList(list);
+        compareTable.setItems(details);
+
+
     }
 }
