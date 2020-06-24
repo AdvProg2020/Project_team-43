@@ -51,7 +51,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public ListView<HBox> featuresOfCategoryForFilter;
     public ImageView cancelCategoryButton;
     public ArrayList<Pane> panes;
-
+    public TextField pageNumber;
     private int startProductIndex = 0;
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
@@ -62,6 +62,7 @@ public class ProductPanelController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        pageNumber.setText("1");
         if (Processor.isLogin) {
             userName.setText(Processor.user.getUsername());
         }
@@ -189,6 +190,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public void nextPage() {
         Music.getInstance().open();
         if (hasNextPage()) {
+            pageNumber.setText((Integer.parseInt(pageNumber.getText()) + 1) + "");
             startProductIndex += 9;
             showProducts();
         }
@@ -204,6 +206,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public void previousPage() {
         Music.getInstance().open();
         if (hasPreviousPage()) {
+            pageNumber.setText((Integer.parseInt(pageNumber.getText()) - 1) + "");
             startProductIndex -= 9;
             showProducts();
         }
