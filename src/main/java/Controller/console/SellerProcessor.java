@@ -114,12 +114,12 @@ public class SellerProcessor extends Processor {
             int numberInt = Integer.parseInt(number);
             if (Product.hasProductWithId(id)) {
                 ((Seller) user).addExistingProduct(id, numberInt);
-                return "Product add successfully\nWaiting for manger to confirm";
+                return "Product added successfully\nWaiting for manager to confirm";
             } else {
-                return "product with this Id doesn't exist";
+                return "Product with this Id doesn't exist";
             }
         } else {
-            return "number must be an integer";
+            return "Amount must be an integer";
         }
     }
 
@@ -200,15 +200,15 @@ public class SellerProcessor extends Processor {
                     }
                     Double price = Double.parseDouble(priceString);
                     ((Seller) user).addNewProduct(name, company, price, category, numberInt, features, path);
-                    return "Product add successfully\nWaiting for manager to confirm";
+                    return "Product added successfully\nWaiting for manager to confirm";
                 } else {
-                    throw new InvalidCommandException("company with this name doesn't exist");
+                    throw new InvalidCommandException("Company with this name doesn't exist");
                 }
             } else {
-                throw new InvalidCommandException("category with this name doesn't exist");
+                throw new InvalidCommandException("Category with this name doesn't exist");
             }
         } else {
-            throw new InvalidCommandException("number must be an integer");
+            throw new InvalidCommandException("Amount must be an integer");
         }
     }
 }

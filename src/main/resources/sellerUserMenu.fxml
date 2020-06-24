@@ -138,13 +138,12 @@
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="invalidIdProduct" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
                                 <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                                     <effect>
                                         <InnerShadow />
                                     </effect>
                                 </Button>
-                                <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="30.0" prefWidth="150.0" />
+                                <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="25.0" prefWidth="150.0" />
                             </children>
                         </Pane>
                         <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -200,6 +199,7 @@
                                 <InnerShadow />
                             </effect>
                         </Button>
+                  <Button fx:id="manageProductBrowsePhotoButton" layoutX="653.0" layoutY="171.0" mnemonicParsing="false" onAction="#browsePhotoManageProduct" text="browse photo" visible="false" />
                     </children>
                 </AnchorPane>
             </content>
@@ -236,7 +236,6 @@
                                 <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0" />
                         <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add existing product" wrappingWidth="166.94287109375">
                             <font>
                                 <Font size="17.0" />
@@ -279,7 +278,6 @@
                             </font>
                         </Text>
                         <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0" />
-                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
                         <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
                         <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
                         <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
@@ -293,6 +291,8 @@
                         </ImageView>
                         <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0" />
                         <Separator layoutX="401.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="0.0" />
+                  <ChoiceBox fx:id="existingProductsIds" layoutX="142.0" layoutY="85.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="addProductCompanyChoiceBox" layoutX="573.0" layoutY="131.0" prefWidth="150.0" />
                     </children>
                 </AnchorPane>
             </content>
@@ -311,18 +311,17 @@
                         </ImageView>
                         <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="offIdTextField" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" />
-                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off id" textAlignment="CENTER">
+                                <Text layoutX="42.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off id" textAlignment="CENTER">
                                     <font>
                                         <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="invalidIdOff" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
                                 <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showOff" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                                     <effect>
                                         <InnerShadow />
                                     </effect>
                                 </Button>
+                        <ChoiceBox fx:id="offIdChoiceBox" layoutX="171.0" layoutY="25.0" prefWidth="150.0" />
                             </children>
                         </Pane>
                         <Text fx:id="offSellerText" layoutX="543.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller" textAlignment="CENTER" visible="false" wrappingWidth="203.9560546875">
@@ -341,7 +340,7 @@
                                 <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text fx:id="offState" layoutX="585.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="state" textAlignment="CENTER" visible="false" wrappingWidth="122.3603515625">
+                        <Text fx:id="offState" layoutX="563.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="state" textAlignment="CENTER" visible="false" wrappingWidth="170.3603515625">
                             <font>
                                 <Font size="17.0" />
                             </font>
