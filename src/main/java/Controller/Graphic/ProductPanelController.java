@@ -2,7 +2,6 @@ package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
-import View.console.ProductPanel;
 import View.graphic.MainWindow;
 import View.graphic.ProductPanelWindow;
 import View.graphic.ProductWindow;
@@ -262,11 +261,6 @@ public class ProductPanelController extends Controller implements Initializable 
 
     public ProductPanelController() {
         categories = FXCollections.observableArrayList();
-    }
-
-
-    public void hideCategories() {
-        categoryListView.setVisible(false);
     }
 
     public void filterAvailable() {

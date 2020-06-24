@@ -18,6 +18,7 @@ public class SellOrder extends Order {
     private transient Buyer buyer;
     private String buyerUsername;
     private DeliveryStatus deliveryStatus;
+    private int number;
 
     public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer) {
         super(date);
@@ -26,6 +27,17 @@ public class SellOrder extends Order {
         this.buyer = buyer;
         this.offAmount = offAmount;
         this.deliveryStatus = DeliveryStatus.DELIVERING;
+        number = 1;
+    }
+
+    public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer, int number) {
+        super(date);
+        this.payment = payment;
+        this.product = product;
+        this.buyer = buyer;
+        this.offAmount = offAmount;
+        this.deliveryStatus = DeliveryStatus.DELIVERING;
+        this.number = number;
     }
 
     @Override
@@ -33,7 +45,7 @@ public class SellOrder extends Order {
         this.orderType = "SellOrder";
     }
 
-    public Product getProducts() {
+    public Product getProduct() {
         return product;
     }
 
@@ -68,11 +80,11 @@ public class SellOrder extends Order {
         buyer = (Buyer) User.getUserByUserName(buyerUsername);
     }
 
-    private void loadProduct(){
+    private void loadProduct() {
         product = Product.getProductById(productId);
     }
 
-    private void saveProduct(){
+    private void saveProduct() {
         productId = product.getProductId();
     }
 
@@ -80,44 +92,44 @@ public class SellOrder extends Order {
         buyerUsername = buyer.getUsername();
     }
 
-    private static void loadAllBuyers(){
+    private static void loadAllBuyers() {
         for (Order order : allOrders) {
-            if (order.getOrderType().equals("SellOrder")){
-                ((SellOrder)order).loadBuyer();
+            if (order.getOrderType().equals("SellOrder")) {
+                ((SellOrder) order).loadBuyer();
             }
         }
     }
 
-    private static void saveAllBuyers(){
+    private static void saveAllBuyers() {
         for (Order order : allOrders) {
-            if (order.getOrderType().equals("SellOrder")){
-                ((SellOrder)order).saveBuyer();
+            if (order.getOrderType().equals("SellOrder")) {
+                ((SellOrder) order).saveBuyer();
             }
         }
     }
 
-    private static void loadAllProducts(){
+    private static void loadAllProducts() {
         for (Order order : allOrders) {
-            if (order.getOrderType().equals("SellOrder")){
-                ((SellOrder)order).loadProduct();
+            if (order.getOrderType().equals("SellOrder")) {
+                ((SellOrder) order).loadProduct();
             }
         }
     }
 
-    private static void saveAllProducts(){
+    private static void saveAllProducts() {
         for (Order order : allOrders) {
-            if (order.getOrderType().equals("SellOrder")){
-                ((SellOrder)order).saveProduct();
+            if (order.getOrderType().equals("SellOrder")) {
+                ((SellOrder) order).saveProduct();
             }
         }
     }
 
-    public static void loadAllFields(){
+    public static void loadAllFields() {
         loadAllProducts();
         loadAllBuyers();
     }
 
-    public static void saveAllFields(){
+    public static void saveAllFields() {
         saveAllProducts();
         saveAllBuyers();
     }
@@ -133,10 +145,27 @@ public class SellOrder extends Order {
     public static void save() throws IOException {
         ArrayList<SellOrder> allSellOrders = new ArrayList<>();
         for (Order order : allOrders) {
-            if (order.getOrderType().equals("SellOrder")){
-                allSellOrders.add((SellOrder)order);
+            if (order.getOrderType().equals("SellOrder")) {
+                allSellOrders.add((SellOrder) order);
             }
         }
         Saver.save(allSellOrders, fileAddress);
+    }
+
+    public double getPayment() {
+        return payment;
+    }
+
+    public double getOffAmount() {
+        return offAmount;
+    }
+
+
+    public DeliveryStatus getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }
