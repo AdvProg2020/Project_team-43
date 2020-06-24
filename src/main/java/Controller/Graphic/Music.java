@@ -26,29 +26,66 @@ public class Music {
     }
 
     public void close() {
-        closeSound.play();
+        System.out.println("close");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                closeSound.stop();
+                closeSound.play();
+            }
+        }).start();
+
     }
 
     public void open() {
-        openSound.play();
+        System.out.println("open");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                openSound.stop();
+                openSound.play();
+            }
+        }).start();
     }
 
     public void confirmation() {
-        confirmationSound.play();
+        System.out.println("confirmation");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                confirmationSound.stop();
+                confirmationSound.play();
+            }
+        }).start();
     }
 
     public void backPage() {
-        backPageSound.play();
+        System.out.println("backPage");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                backPageSound.stop();
+                backPageSound.play();
+            }
+        }).start();
     }
 
-    public void error(){
-        errorSound.play();
+    public void error() {
+        System.out.println("error");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                errorSound.stop();
+                errorSound.play();
+            }
+        }).start();
     }
 
     private MediaPlayer getCloseSound() {
         File file = new File("src/main/resources/music/close.mp3");
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
+
         return mediaPlayer;
     }
 
@@ -72,6 +109,7 @@ public class Music {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         return mediaPlayer;
     }
+
     private MediaPlayer getErrorSound() {
         File file = new File("src/main/resources/music/error.mp3");
         Media media = new Media(file.toURI().toString());

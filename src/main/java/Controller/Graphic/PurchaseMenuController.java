@@ -72,6 +72,7 @@ public class PurchaseMenuController extends Controller {
 
 
     public void purchase() {
+        Music.getInstance().confirmation();
         double discount = 0;
         if (validLabel.getText().equals("valid")) {
             discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
@@ -83,6 +84,7 @@ public class PurchaseMenuController extends Controller {
     }
 
     public void cancelPurchase() {
+        Music.getInstance().backPage();
         BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 }

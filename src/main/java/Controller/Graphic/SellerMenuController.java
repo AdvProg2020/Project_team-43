@@ -129,6 +129,7 @@ public class SellerMenuController extends Controller {
 
     @FXML
     public void addExistingProduct() {
+        Music.getInstance().confirmation();
         String message = sellerProcessor.addExistingProduct(existingProductId.getText(), amountTextField.getText());
         System.out.println(message);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -141,6 +142,7 @@ public class SellerMenuController extends Controller {
     public void addNewProduct() {
         if (categoryChoiceBox.getValue() == null) {
             invalidCategory.setVisible(true);
+            Music.getInstance().error();
         } else {
             invalidCategory.setVisible(false);
             Category category = Category.getCategoryByName(categoryChoiceBox.getValue());
@@ -155,6 +157,7 @@ public class SellerMenuController extends Controller {
                 alert.setHeaderText("Product added successfully");
                 alert.setContentText("Waiting for manager to confirm");
                 alert.showAndWait();
+                Music.getInstance().confirmation();
             } catch (InvalidCommandException e) {
                 System.out.println(e.getMessage());
             }
@@ -162,6 +165,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void browsePhotoUser() {
+        Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -172,6 +176,7 @@ public class SellerMenuController extends Controller {
 
 
     public void browsePhotoProduct() {
+        Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -181,6 +186,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void editProduct() {
+        Music.getInstance().confirmation();
         String name = manageNameTextField.getText();
         String price = managePriceTextField.getText();
         String companyName = manageProductCompanyChoiceBox.getValue();
@@ -238,8 +244,10 @@ public class SellerMenuController extends Controller {
     }
 
     public void showProduct() {
+
         String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
         if (sellerProcessor.checkProduct(id)) {
+            Music.getInstance().open();
             buyersListView.getItems().clear();
             product = user.getProductById(id);
             initializeManageProduct(product);
@@ -265,6 +273,7 @@ public class SellerMenuController extends Controller {
             invalidIdProduct.setVisible(false);
 
         } else {
+            Music.getInstance().error();
             invalidIdProduct.setVisible(true);
         }
     }
@@ -303,6 +312,7 @@ public class SellerMenuController extends Controller {
     public void showOff() {
         String id = offIdTextField.getText();
         if (user.hasOffWithId(id)) {
+            Music.getInstance().open();
             invalidIdOff.setVisible(false);
             off = user.getOffById(id);
             initializeManageOff(off);
@@ -320,11 +330,13 @@ public class SellerMenuController extends Controller {
             manageOffAmount.setVisible(true);
             applyOffChangesButton.setVisible(true);
         } else {
+            Music.getInstance().error();
             invalidIdOff.setVisible(true);
         }
     }
 
     public void editOff(ActionEvent event) {
+        Music.getInstance().confirmation();
         String amountString = manageOffAmountLabel.getText();
         double amount = Double.parseDouble(amountString.substring(0, amountString.length() - 1));
         String startTime = manageOffStartTime.getEditor().getText();
@@ -367,6 +379,7 @@ public class SellerMenuController extends Controller {
 
 
     public void addOff() {
+        Music.getInstance().confirmation();
         String startTime = offStartTimeDate.getEditor().getText();
         String endTime = offEndTimeDate.getEditor().getText();
         double amount = Integer.parseInt(offAmountLabel.getText().substring(0, offAmountLabel.getText().length() - 1));
