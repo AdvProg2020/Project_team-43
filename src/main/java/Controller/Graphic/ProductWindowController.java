@@ -4,6 +4,9 @@ import Controller.console.BuyerProcessor;
 import View.graphic.AddCommentWindow;
 import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -28,13 +31,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ZoomEvent;
 import javafx.scene.text.TextFlow;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import javafx.util.Pair;
-import model.Buyer;
-import model.Comment;
-import model.Product;
-import model.Seller;
+import model.*;
 import org.controlsfx.control.Rating;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class ProductWindowController {
@@ -54,6 +58,8 @@ public class ProductWindowController {
     public TabPane tabPane;
     public Tab tab;
     public ImageView ivTarget;
+    public Label isOff;
+    public Label timesRemain;
 
 
     private Product product;
@@ -61,6 +67,7 @@ public class ProductWindowController {
 
     public void setProductAndParent(Product product, Application parent) {
         this.product = product;
+        product.setVisit(product.getVisit() + 1);
         this.parent = parent;
         setProductImage();
         ivTarget.setVisible(false);
@@ -68,6 +75,7 @@ public class ProductWindowController {
         setSellers();
         setFeatures();
         setComments();
+        checkOff();
         comment.setEditable(false);
         error.setVisible(false);
         if (isBackToComment) {
@@ -75,6 +83,31 @@ public class ProductWindowController {
             tabPane.getSelectionModel().select(tab);
         }
 
+    }
+
+    public void checkOff() {
+        timesRemain.setVisible(false);
+        isOff.setVisible(false);
+        if (Off.isProductInOff(product) != 0) {
+            isOff.setText("off amount : " + Double.toString(Off.isProductInOff(product)));
+            isOff.setVisible(true);
+            Off off = Off.getOffProductInOff(product);
+
+            DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()));
+
+            timesRemain.setVisible(true);
+            Timeline oneSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()));
+                }
+            }));
+            oneSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+            oneSecondsWonder.play();
+
+        }
     }
 
     public void setComments() {

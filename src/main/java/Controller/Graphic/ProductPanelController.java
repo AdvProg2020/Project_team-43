@@ -83,6 +83,7 @@ public class ProductPanelController extends Controller implements Initializable 
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
+        getProductsAfterSort();
         showProducts();
     }
 

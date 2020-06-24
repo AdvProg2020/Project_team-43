@@ -113,6 +113,13 @@ public class Off {
         }
         return 0;
     }
+    public static Off getOffProductInOff(Product product) {
+        for (Off off : acceptedOffs) {
+            if (off.getProducts().contains(product))
+                return off;
+        }
+        return null;
+    }
 
     public boolean hasProduct(Product product) {
         return products.contains(product);

@@ -163,7 +163,8 @@ public class Processor {
         } else
             errorMessage("there is no filter with this name");
     }
-    public void disableCategoryFilter(){
+
+    public void disableCategoryFilter() {
         productFilter.disableCategory();
     }
 
