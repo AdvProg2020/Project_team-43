@@ -49,7 +49,7 @@ public class ProductPanelController extends Controller implements Initializable 
     public ArrayList<Pane> panes;
     public ArrayList<ImageView> images;
 
-    public static int startProductIndex = 0;
+    public int startProductIndex = 0;
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
     public CheckBox availableFilterCheckBox;
@@ -88,20 +88,30 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showProducts() {
+        showProductIds();
         for (int i = startProductIndex; i < startProductIndex + 9; i++) {
+            Pane pane = panes.get(i - startProductIndex);
             if (allProducts.size() > i) {
                 if (allProducts.get(i).getImagePath() != null) {
-                    images.get(i - startProductIndex).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
+                    ((ImageView) pane.getChildren().get(0)).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
                 } else {
                     File file = new File("src/main/resources/product.jpg");
                     Image image = new Image(file.toURI().toString());
-                    images.get(i - startProductIndex).setImage(image);
+                    ((ImageView) pane.getChildren().get(0)).setImage(image);
                 }
                 panes.get(i - startProductIndex).setVisible(true);
+                ((Label) pane.getChildren().get(1)).setText(allProducts.get(i).getName());
+                ((Label) pane.getChildren().get(2)).setText("id: " + allProducts.get(i).getPrice());
+                ((Label) pane.getChildren().get(3)).setText(allProducts.get(i).getProductId());
             } else {
-                panes.get(i - startProductIndex).setVisible(false);
+                pane.setVisible(false);
             }
         }
+
+    }
+
+    private void showProductIds() {
+
     }
 
     public void sort(Toggle selectedToggle) {
