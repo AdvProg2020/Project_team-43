@@ -20,133 +20,107 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-         prefWidth="900.0" side="LEFT"
-         style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;"
-         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="Controller.Graphic.SellerMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.SellerMenuController">
     <tabs>
         <Tab text="personal Info">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0">
                     <children>
-                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="451.0" prefWidth="414.0"
-                              style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="336.0" layoutY="57.0" prefHeight="451.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="lastName" layoutX="178.0" layoutY="75.0" prefHeight="31.0"
-                                           prefWidth="187.0" promptText="last name"/>
-                                <Text layoutX="40.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="phone number" textAlignment="CENTER">
+                                <TextField fx:id="lastName" layoutX="178.0" layoutY="75.0" prefHeight="31.0" prefWidth="187.0" promptText="last name" />
+                                <Text layoutX="40.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="40.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email"
-                                      textAlignment="CENTER">
+                                <Text layoutX="40.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0"
-                                           prefWidth="186.0" promptText="phone number"/>
-                                <Text layoutX="40.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="password" textAlignment="CENTER">
+                                <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0" prefWidth="186.0" promptText="phone number" />
+                                <Text layoutX="40.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="40.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="last name" textAlignment="CENTER">
+                                <Text layoutX="40.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="40.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="first name" textAlignment="CENTER">
+                                <Text layoutX="40.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0"
-                                           prefWidth="187.0" promptText="email"/>
-                                <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password"/>
-                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="385.0"
-                                           onMouseClicked="#update" style="-fx-cursor: hand;">
+                                <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0" prefWidth="187.0" promptText="email" />
+                                <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password" />
+                                <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="385.0" onMouseClicked="#update" style="-fx-cursor: hand;">
                                     <image>
-                                        <Image url="@button_update.png"/>
+                                        <Image url="@button_update.png" />
                                     </image>
                                     <effect>
-                                        <InnerShadow/>
+                                        <InnerShadow />
                                     </effect>
                                 </ImageView>
-                                <Text fx:id="companyText" layoutX="40.0" layoutY="296.0" strokeType="OUTSIDE"
-                                      strokeWidth="0.0" text="company" textAlignment="CENTER">
+                                <Text fx:id="companyText" layoutX="40.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <TextField fx:id="firstName" layoutX="178.0" layoutY="23.0" prefHeight="31.0"
-                                           prefWidth="188.0" promptText="first name"/>
-                                <Text layoutX="40.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="balance:" textAlignment="CENTER">
+                                <TextField fx:id="firstName" layoutX="178.0" layoutY="23.0" prefHeight="31.0" prefWidth="188.0" promptText="first name" />
+                                <Text layoutX="40.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="balance:" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Label fx:id="balance" layoutX="176.0" layoutY="342.0" text="Label"
-                                       textAlignment="CENTER">
+                                <Label fx:id="balance" layoutX="176.0" layoutY="342.0" text="Label" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Label>
-                                <Text fx:id="companyInfoText" layoutX="40.0" layoutY="326.0" strokeType="OUTSIDE"
-                                      strokeWidth="0.0" text="company info" wrappingWidth="324.62255859375">
+                                <Text fx:id="companyInfoText" layoutX="40.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company info" wrappingWidth="324.62255859375">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
                             </children>
                         </Pane>
-                        <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0"
-                              style="-fx-background-color: #448760; -fx-background-radius: 10;">
+                        <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0" style="-fx-background-color: #448760; -fx-background-radius: 10;">
                             <children>
-                                <Text fx:id="usernameText" fontSmoothingType="LCD" layoutX="12.0" layoutY="217.0"
-                                      strokeType="OUTSIDE" strokeWidth="0.0" text="username"
-                                      wrappingWidth="163.6708984375">
+                                <Text fx:id="usernameText" fontSmoothingType="LCD" layoutX="12.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="163.6708984375">
                                     <font>
-                                        <Font name="Century" size="20.0"/>
+                                        <Font name="Century" size="20.0" />
                                     </font>
                                 </Text>
-                                <Text layoutX="11.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="Seller" wrappingWidth="166.6708984375">
+                                <Text layoutX="11.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller" wrappingWidth="166.6708984375">
                                     <font>
-                                        <Font name="Century" size="17.0"/>
+                                        <Font name="Century" size="17.0" />
                                     </font>
                                 </Text>
-                                <ImageView fitHeight="33.0" fitWidth="119.0" layoutX="64.0" layoutY="257.0"
-                                           onMouseClicked="#browsePhotoUser" style="-fx-cursor: hand;">
+                                <ImageView fitHeight="33.0" fitWidth="119.0" layoutX="64.0" layoutY="257.0" onMouseClicked="#browsePhotoUser" style="-fx-cursor: hand;">
                                     <image>
-                                        <Image url="@button_browse-photo.png"/>
+                                        <Image url="@button_browse-photo.png" />
                                     </image>
                                     <effect>
-                                        <InnerShadow/>
+                                        <InnerShadow />
                                     </effect>
                                 </ImageView>
-                                <ImageView fx:id="profilePhoto" fitHeight="179.0" fitWidth="179.0" layoutX="4.0"
-                                           layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="profilePhoto" fitHeight="179.0" fitWidth="179.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@user.png"/>
+                                        <Image url="@user.png" />
                                     </image>
                                 </ImageView>
                             </children>
                         </Pane>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0"
-                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                         </ImageView>
                     </children>
@@ -157,92 +131,73 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0"
-                              style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                      text="product id" textAlignment="CENTER">
+                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="product id" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="invalidIdProduct" fill="RED" layoutX="220.0" layoutY="75.0"
-                                      strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER"
-                                      visible="false" wrappingWidth="100.6708984375"/>
-                                <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct"
-                                        prefHeight="34.0" prefWidth="87.0"
-                                        style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
+                                <Text fx:id="invalidIdProduct" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
+                                <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showProduct" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                                     <effect>
-                                        <InnerShadow/>
+                                        <InnerShadow />
                                     </effect>
                                 </Button>
-                                <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="30.0" prefWidth="150.0"/>
+                                <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="30.0" prefWidth="150.0" />
                             </children>
                         </Pane>
-                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0"
-                                   layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false">
                             <image>
-                                <Image url="@product.jpg"/>
+                                <Image url="@product.jpg" />
                             </image>
                         </ImageView>
-                        <ListView fx:id="productFeaturesList" editable="true" layoutX="305.0" layoutY="236.0"
-                                  onEditCommit="#editCell" prefHeight="224.0" prefWidth="200.0" visible="false"/>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0"
-                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                        <ListView fx:id="productFeaturesList" editable="true" layoutX="305.0" layoutY="236.0" onEditCommit="#editCell" prefHeight="224.0" prefWidth="200.0" visible="false" />
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
                         </ImageView>
-                        <Text fx:id="buyerText" layoutX="676.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Buyers:" textAlignment="CENTER" visible="false">
+                        <Text fx:id="buyerText" layoutX="676.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Buyers:" textAlignment="CENTER" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <ListView fx:id="buyersListView" layoutX="609.0" layoutY="346.0" prefHeight="163.0"
-                                  prefWidth="200.0" visible="false"/>
-                        <Text fx:id="statusText" layoutX="444.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              visible="false" wrappingWidth="168.21826171875">
+                        <ListView fx:id="buyersListView" layoutX="609.0" layoutY="346.0" prefHeight="163.0" prefWidth="200.0" visible="false" />
+                        <Text fx:id="statusText" layoutX="444.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" wrappingWidth="168.21826171875">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
                         <Label fx:id="manageNameLabel" layoutX="554.0" layoutY="209.0" text="Name" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="manageNameTextField" layoutX="609.0" layoutY="208.0" visible="false"/>
+                        <TextField fx:id="manageNameTextField" layoutX="609.0" layoutY="208.0" visible="false" />
                         <Label fx:id="managePriceLabel" layoutX="558.0" layoutY="257.0" text="Price" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="managePriceTextField" layoutX="609.0" layoutY="255.0" visible="false"/>
-                        <ChoiceBox fx:id="manageProductCompanyChoiceBox" layoutX="121.0" layoutY="194.0"
-                                   prefWidth="150.0" visible="false"/>
-                        <Label fx:id="manageProductCategoryLabel" alignment="CENTER" contentDisplay="CENTER"
-                               layoutX="311.0" layoutY="195.0" prefHeight="26.0" prefWidth="189.0" text="Category: "
-                               textAlignment="CENTER" visible="false">
+                        <TextField fx:id="managePriceTextField" layoutX="609.0" layoutY="255.0" visible="false" />
+                        <ChoiceBox fx:id="manageProductCompanyChoiceBox" layoutX="121.0" layoutY="194.0" prefWidth="150.0" visible="false" />
+                        <Label fx:id="manageProductCategoryLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="311.0" layoutY="195.0" prefHeight="26.0" prefWidth="189.0" text="Category: " textAlignment="CENTER" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <Label fx:id="manageCompanyLabel" layoutX="44.0" layoutY="196.0" text="Company"
-                               textAlignment="CENTER" visible="false">
+                        <Label fx:id="manageCompanyLabel" layoutX="44.0" layoutY="196.0" text="Company" textAlignment="CENTER" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <Button fx:id="applyChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false"
-                                onAction="#editProduct" prefHeight="31.0" prefWidth="109.0"
-                                style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 "
-                                visible="false">
+                        <Button fx:id="applyChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="31.0" prefWidth="109.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 " visible="false">
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                         </Button>
                     </children>
@@ -253,108 +208,91 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <VBox fx:id="applyVBox" alignment="CENTER" layoutX="475.0" layoutY="292.0" prefHeight="269.0"
-                              prefWidth="327.0">
+                        <VBox fx:id="applyVBox" alignment="CENTER" layoutX="475.0" layoutY="292.0" prefHeight="269.0" prefWidth="327.0">
                             <children>
-                                <ListView fx:id="categoryFeaturesListView" prefHeight="163.0" prefWidth="327.0"
-                                          visible="false">
+                                <ListView fx:id="categoryFeaturesListView" prefHeight="163.0" prefWidth="327.0" visible="false">
                                     <padding>
-                                        <Insets bottom="10.0"/>
+                                        <Insets bottom="10.0" />
                                     </padding>
                                     <VBox.margin>
-                                        <Insets bottom="10.0" top="5.0"/>
+                                        <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </ListView>
                                 <Button mnemonicParsing="false" onAction="#browsePhotoProduct" text="browse photo">
                                     <VBox.margin>
-                                        <Insets bottom="10.0" top="10.0"/>
+                                        <Insets bottom="10.0" top="10.0" />
                                     </VBox.margin>
                                 </Button>
                                 <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply">
                                     <VBox.margin>
-                                        <Insets top="10.0"/>
+                                        <Insets top="10.0" />
                                     </VBox.margin>
                                 </Button>
                             </children>
                         </VBox>
-                        <Button layoutX="135.0" layoutY="177.0" mnemonicParsing="false" onAction="#addExistingProduct"
-                                text="Apply"/>
-                        <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"
-                              textAlignment="CENTER">
+                        <Button layoutX="135.0" layoutY="177.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />
+                        <Text layoutX="34.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0"/>
-                        <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Add existing product" wrappingWidth="166.94287109375">
+                        <TextField fx:id="existingProductId" layoutX="135.0" layoutY="85.0" />
+                        <Text layoutX="50.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add existing product" wrappingWidth="166.94287109375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
-                              textAlignment="CENTER">
+                        <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0"/>
-                        <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="Add new product" wrappingWidth="166.94287109375">
+                        <TextField fx:id="amountTextField" layoutX="135.0" layoutY="130.0" />
+                        <Text layoutX="546.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new product" wrappingWidth="166.94287109375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="category" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="name" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="company" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount"
-                              textAlignment="CENTER">
+                        <Text layoutX="480.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="amount" textAlignment="CENTER">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0"/>
-                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0"/>
-                        <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0"/>
-                        <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0"/>
-                        <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false"
-                              wrappingWidth="111.6708984375"/>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0"
-                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                        <TextField fx:id="nameNewProduct" layoutX="559.0" layoutY="85.0" />
+                        <TextField fx:id="companyNewCompany" layoutX="559.0" layoutY="130.0" />
+                        <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
+                        <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
+                        <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                         </ImageView>
-                        <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0"/>
-                        <Separator layoutX="401.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="6.0"
-                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="401.0"
-                                   AnchorPane.topAnchor="0.0"/>
+                        <ChoiceBox fx:id="categoryChoiceBox" layoutX="575.0" layoutY="260.0" prefWidth="150.0" />
+                        <Separator layoutX="401.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </content>
@@ -363,90 +301,70 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0"
-                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
                         </ImageView>
-                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0"
-                              style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                        <Pane layoutX="14.0" layoutY="14.0" prefHeight="148.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
                             <children>
-                                <TextField fx:id="offIdTextField" layoutX="177.0" layoutY="24.0" prefHeight="31.0"
-                                           prefWidth="187.0"/>
-                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off id"
-                                      textAlignment="CENTER">
+                                <TextField fx:id="offIdTextField" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" />
+                                <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="off id" textAlignment="CENTER">
                                     <font>
-                                        <Font size="17.0"/>
+                                        <Font size="17.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="invalidIdOff" fill="RED" layoutX="220.0" layoutY="75.0"
-                                      strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER"
-                                      visible="false" wrappingWidth="100.6708984375"/>
-                                <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showOff"
-                                        prefHeight="34.0" prefWidth="87.0"
-                                        style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
+                                <Text fx:id="invalidIdOff" fill="RED" layoutX="220.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid id" textAlignment="CENTER" visible="false" wrappingWidth="100.6708984375" />
+                                <Button layoutX="102.0" layoutY="86.0" mnemonicParsing="false" onAction="#showOff" prefHeight="34.0" prefWidth="87.0" style="-fx-cursor: hand; -fx-background-image: url('button_show.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 87 34 ">
                                     <effect>
-                                        <InnerShadow/>
+                                        <InnerShadow />
                                     </effect>
                                 </Button>
                             </children>
                         </Pane>
-                        <Text fx:id="offSellerText" layoutX="543.0" layoutY="62.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="Seller" textAlignment="CENTER" visible="false"
-                              wrappingWidth="203.9560546875">
+                        <Text fx:id="offSellerText" layoutX="543.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seller" textAlignment="CENTER" visible="false" wrappingWidth="203.9560546875">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <ListView fx:id="offProductsListView" layoutX="499.0" layoutY="129.0" prefHeight="272.0"
-                                  prefWidth="299.0" visible="false"/>
-                        <Text fx:id="manageOffAmountText" layoutX="538.0" layoutY="94.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="Amount" textAlignment="CENTER" visible="false"
-                              wrappingWidth="94.6708984375">
+                        <ListView fx:id="offProductsListView" layoutX="499.0" layoutY="129.0" prefHeight="272.0" prefWidth="299.0" visible="false" />
+                        <Text fx:id="manageOffAmountText" layoutX="538.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" textAlignment="CENTER" visible="false" wrappingWidth="94.6708984375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text fx:id="productsOffText" layoutX="614.0" layoutY="121.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="Products:" visible="false">
+                        <Text fx:id="productsOffText" layoutX="614.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Products:" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Text fx:id="offState" layoutX="585.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                              text="state" textAlignment="CENTER" visible="false" wrappingWidth="122.3603515625">
+                        <Text fx:id="offState" layoutX="585.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="state" textAlignment="CENTER" visible="false" wrappingWidth="122.3603515625">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <Button fx:id="applyOffChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false"
-                                onAction="#editOff" prefHeight="31.0" prefWidth="109.0"
-                                style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 "
-                                visible="false">
+                        <Button fx:id="applyOffChangesButton" layoutX="351.0" layoutY="487.0" mnemonicParsing="false" onAction="#editOff" prefHeight="31.0" prefWidth="109.0" style="-fx-cursor: hand; -fx-background-image: url('button_apply-changes.png'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 109 31 " visible="false">
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                         </Button>
-                        <DatePicker fx:id="manageOffStartTime" layoutX="221.0" layoutY="190.0" visible="false"/>
-                        <DatePicker fx:id="manageOffEndTime" layoutX="221.0" layoutY="269.0" visible="false"/>
-                        <Label fx:id="manageOffStartTimeLabel" layoutX="139.0" layoutY="193.0" text="Start time"
-                               visible="false">
+                        <DatePicker fx:id="manageOffStartTime" layoutX="221.0" layoutY="190.0" visible="false" />
+                        <DatePicker fx:id="manageOffEndTime" layoutX="221.0" layoutY="269.0" visible="false" />
+                        <Label fx:id="manageOffStartTimeLabel" layoutX="139.0" layoutY="193.0" text="Start time" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <Label fx:id="manageOffEndTimeLabel" layoutX="139.0" layoutY="272.0" text="End time"
-                               visible="false">
+                        <Label fx:id="manageOffEndTimeLabel" layoutX="139.0" layoutY="272.0" text="End time" visible="false">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <Label fx:id="manageOffAmountLabel" layoutX="767.0" layoutY="79.0" text="0%" visible="false"/>
-                        <Slider fx:id="manageOffAmount" layoutX="620.0" layoutY="79.0" visible="false"/>
+                        <Label fx:id="manageOffAmountLabel" layoutX="767.0" layoutY="79.0" text="0%" visible="false" />
+                        <Slider fx:id="manageOffAmount" layoutX="620.0" layoutY="79.0" visible="false" />
                     </children>
                 </AnchorPane>
             </content>
@@ -455,48 +373,68 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff"
-                                text="Apply"/>
-                        <Text fx:id="invalidCategory1" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false"
-                              wrappingWidth="181.6708984375"/>
-                        <Text fx:id="messageText1" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false"
-                              wrappingWidth="182.6708984375"/>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0"
-                                   onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                        <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff" text="Apply" />
+                        <Text fx:id="invalidCategory1" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
+                        <Text fx:id="messageText1" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
-                                <InnerShadow/>
+                                <InnerShadow />
                             </effect>
                             <image>
-                                <Image url="@button_back.png"/>
+                                <Image url="@button_back.png" />
                             </image>
                         </ImageView>
-                        <Text layoutX="378.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Off"
-                              textAlignment="CENTER" wrappingWidth="105.6708984375">
+                        <Text layoutX="378.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Off" textAlignment="CENTER" wrappingWidth="105.6708984375">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Text>
-                        <DatePicker fx:id="offStartTimeDate" layoutX="336.0" layoutY="78.0" promptText="Start Time"/>
-                        <DatePicker fx:id="offEndTimeDate" layoutX="336.0" layoutY="128.0" promptText="End Time"/>
-                        <Slider fx:id="offAmount" layoutX="392.0" layoutY="182.0"/>
-                        <Label fx:id="offAmountLabel" layoutX="533.0" layoutY="181.0" text="0%"/>
+                        <DatePicker fx:id="offStartTimeDate" layoutX="336.0" layoutY="78.0" promptText="Start Time" />
+                        <DatePicker fx:id="offEndTimeDate" layoutX="336.0" layoutY="128.0" promptText="End Time" />
+                        <Slider fx:id="offAmount" layoutX="392.0" layoutY="182.0" />
+                        <Label fx:id="offAmountLabel" layoutX="533.0" layoutY="181.0" text="0%" />
                         <Label layoutX="324.0" layoutY="179.0" text="Amount">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
-                        <ListView fx:id="offProducts" layoutX="251.0" layoutY="249.0" prefHeight="176.0"
-                                  prefWidth="388.0"/>
+                        <ListView fx:id="offProducts" layoutX="251.0" layoutY="249.0" prefHeight="176.0" prefWidth="388.0" />
                         <Label layoutX="373.0" layoutY="214.0" text="Select Products:">
                             <font>
-                                <Font size="17.0"/>
+                                <Font size="17.0" />
                             </font>
                         </Label>
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
+      <Tab text="View Orders">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@button_back.png" />
+                     </image>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </ImageView>
+                  <ListView fx:id="orders" layoutX="110.0" layoutY="71.0" onMouseClicked="#showOrder" prefHeight="298.0" prefWidth="333.0" />
+                  <ListView fx:id="order" layoutX="535.0" layoutY="113.0" prefHeight="352.0" prefWidth="260.0" visible="false" />
+                  <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="28.0" layoutX="767.0" layoutY="113.0" onMouseClicked="#closeOrder" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="false">
+                     <image>
+                        <Image url="@cancel-512.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="249.0" layoutY="37.0" text="Orders:">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
     </tabs>
 </TabPane>
