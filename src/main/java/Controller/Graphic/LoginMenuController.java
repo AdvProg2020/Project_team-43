@@ -24,6 +24,7 @@ public class LoginMenuController {
 
     @FXML
     public void loginButtonClicked() {
+        //Music.getInstance().open();
         wrongUsername.setVisible(false);
         wrongPassword.setVisible(false);
         String username = usernameTextField.getText();

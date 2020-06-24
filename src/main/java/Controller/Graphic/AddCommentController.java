@@ -25,6 +25,7 @@ public class AddCommentController {
     }
 
     public void submitComment() {
+        //Music.getInstance().confirmation();
         boolean isBuy = ((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product);
         Comment commentOfBuyer = new Comment(product, commentText.getText(), isBuy, (Buyer) BuyerProcessor.getInstance().getUser());
         product.addComment(commentOfBuyer);

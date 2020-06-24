@@ -30,6 +30,7 @@ public class RegisterMenuController {
         }
         alertMessage.setVisible(false);
         if (passWord.getText().length() < 8) {
+           // Music.getInstance().error();
             alertMessage.setText("password must contains at least 8 characters");
             alertMessage.setVisible(true);
             return;
@@ -41,11 +42,13 @@ public class RegisterMenuController {
             MainWindow.getInstance().start(MainWindow.getInstance().getStage());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Registered successfully");
+           // Music.getInstance().confirmation();
             if (sellerChoice.isSelected()) {
                 alert.setContentText("Waiting for manager to confirm");
             }
             alert.show();
         } else {
+          //  Music.getInstance().error();
             alertMessage.setText("username exists please change it");
             alertMessage.setVisible(true);
         }

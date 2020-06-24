@@ -143,6 +143,7 @@ public class ProductWindowController {
     }
 
     public void goBack() {
+        //Music.getInstance().backPage();
         try {
             parent.start(ProductWindow.getInstance().getStage());
         } catch (Exception e) {
@@ -156,18 +157,24 @@ public class ProductWindowController {
     }
 
     public void rate() {
+
         error.setVisible(true);
         if (!(BuyerProcessor.getInstance().getUser() instanceof Buyer)) {
+            //Music.getInstance().error();
             error.setText("you are not buyer");
         }
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
+           // Music.getInstance().error();
             error.setText("first log in please");
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
+           // Music.getInstance().error();
             error.setText("you didn't buy this product");
         } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
+           // Music.getInstance().error();
             error.setText("you rated before");
         } else {
             product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
+           // Music.getInstance().confirmation();
             error.setText("done");
         }
     }
@@ -181,8 +188,10 @@ public class ProductWindowController {
 
     public void addComment() {
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
+            //Music.getInstance().error();
             new Alert(Alert.AlertType.ERROR, "first log in").showAndWait();
         } else {
+           // Music.getInstance().confirmation();
             AddCommentWindow.getInstance().setProduct(product);
             AddCommentWindow.getInstance().start(MainWindow.getInstance().getStage());
             isBackToComment = true;
