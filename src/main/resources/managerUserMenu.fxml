@@ -158,12 +158,12 @@
                                     </image>
                                 </ImageView>
                                 <Text layoutX="14.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name :" />
-                                <ImageView fitHeight="131.0" fitWidth="122.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="createManagerPhoto" fitHeight="131.0" fitWidth="122.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@user.png" />
                                     </image>
                                 </ImageView>
-                                <ImageView fitHeight="28.0" fitWidth="92.0" layoutX="143.0" layoutY="99.0" style="-fx-cursor: hand;">
+                                <ImageView fitHeight="28.0" fitWidth="92.0" layoutX="143.0" layoutY="99.0" onMouseClicked="#createManagerBrowsePhoto" style="-fx-cursor: hand;">
                                     <image>
                                         <Image url="@button_browse-photo.png" />
                                     </image>
@@ -206,7 +206,7 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <ImageView fitHeight="51.0" fitWidth="149.0" layoutX="148.0" layoutY="358.0">
+                                <ImageView fitHeight="51.0" fitWidth="149.0" layoutX="148.0" layoutY="358.0" onMouseClicked="#removeProduct">
                                     <image>
                                         <Image url="@button_remove-product.png" />
                                     </image>
