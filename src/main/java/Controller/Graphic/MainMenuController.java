@@ -18,6 +18,7 @@ public class MainMenuController {
 
     @FXML
     public void userPanelButtonClicked() {
+        Music.getInstance().open();
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoggedOutStatusWindow.getInstance().start(stage);
         } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
@@ -39,6 +40,7 @@ public class MainMenuController {
 
     @FXML
     public void loginButtonClicked() {
+        Music.getInstance().open();
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoginWindow.getInstance().start(stage);
         } else {
@@ -53,6 +55,7 @@ public class MainMenuController {
     }
 
     public void productsPanelButtonClicked(ActionEvent actionEvent) {
+        Music.getInstance().open();
         ProductPanelWindow.getInstance().start(stage);
     }
 
