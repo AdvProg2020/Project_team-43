@@ -161,7 +161,7 @@ public class ProductWindowController {
         int x = (int) event.getX();
         int y = (int) event.getY();
         ivTarget.setImage(productImage.getImage());
-        Rectangle2D viewPortRect = new Rectangle2D(x, y, 300, 300);
+        Rectangle2D viewPortRect = new Rectangle2D(x * 5, y * 5, 200, 200);
         ivTarget.setViewport(viewPortRect);
         ivTarget.setVisible(true);
     }
