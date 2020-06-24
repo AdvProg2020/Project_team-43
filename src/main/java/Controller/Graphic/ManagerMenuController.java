@@ -119,6 +119,7 @@ public class ManagerMenuController extends Controller {
     private Product selectedProduct;
     public ImageView profilePhoto;
     public ImageView productImage;
+    public ImageView createManagerPhoto;
     private Manager user;
 
     public ManagerMenuController() {
@@ -131,7 +132,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showUserInfo() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
         selectedUser = User.getUserByUserName(userName);
         showUser(selectedUser);
@@ -155,7 +156,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showProductInfo() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
         selectedProduct = Product.getAllProductById(productId);
@@ -179,7 +180,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscountInfo() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
         System.out.println(discountCodePrime);
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
@@ -199,7 +200,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showRequestInfo() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(requestIdPrime);
@@ -254,7 +255,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCategoryInfo() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
@@ -274,13 +275,13 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showChangeToPane() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         selectedFeature = featuresListView.getSelectionModel().getSelectedItem().toString();
         changeFeaturePane.setVisible(true);
     }
 
     public void createManagerProfile() {
-        //Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         if (!hasEmptyFieldInCreateManager()) {
             ArrayList<String> managerInfo = new ArrayList<>();
             managerInfo.add(userNameCreateManager.getText());
@@ -291,84 +292,84 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(passwordCreateManager.getText());
             ((Manager) Processor.user).createManagerProfile(managerInfo);
         }
+        clearCreateManager();
+        updateUsersListView();
+    }
+
+    private void clearCreateManager() {
+        File file = new File("src/main/resources/user.png");
+        createManagerPhoto.setImage(new Image(file.toURI().toString()));
         userNameCreateManager.clear();
         firstNameCreateManager.clear();
         lastNameCreateManager.clear();
         emailCreateManager.clear();
         phoneCreateManager.clear();
         passwordCreateManager.clear();
-        updateUsersListView();
     }
 
     public boolean hasEmptyFieldInCreateManager() {
         if (userNameCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the user name field");
-            //usic.getInstance().error();
             return true;
         }
         if (firstNameCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the first name field");
-           // Music.getInstance().error();
             return true;
         }
         if (lastNameCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the last name field");
-            //Music.getInstance().error();
             return true;
         }
         if (passwordCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the password field");
-            //Music.getInstance().error();
             return true;
         }
         if (emailCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the email field");
-           // Music.getInstance().error();
             return true;
         }
         if (phoneCreateManager.getText().isEmpty()) {
             showErrorAlert("please fill the phone field");
-           // Music.getInstance().error();
             return true;
         }
         return false;
     }
 
     public void showErrorAlert(String alertMessage) {
-       // Music.getInstance().error();
+        Music.getInstance().error();
         Alert alert = new Alert(Alert.AlertType.ERROR, alertMessage);
         alert.show();
     }
 
     public void closeProductInfo() {
-        //Music.getInstance().close();
+        Music.getInstance().close();
         productInfoPane.setVisible(false);
     }
 
 
     public void closeUserInfo() {
-        //Music.getInstance().close();
+        Music.getInstance().close();
         userInfoPane.setVisible(false);
     }
 
     public void closeCodedDiscountInfo() {
-       // Music.getInstance().close();
+        Music.getInstance().close();
         codedDiscountInfoPane.setVisible(false);
     }
 
     public void closeCategoryInfo() {
-       // Music.getInstance().close();
+        Music.getInstance().close();
         categoryInfoPane.setVisible(false);
         createCategoryPane.setVisible(true);
     }
 
     public void closeChangeTo() {
-      //  Music.getInstance().close();
+        Music.getInstance().close();
         changeFeaturePane.setVisible(false);
     }
 
     public void closeRequestInfo() {
-        //Music.getInstance().close();
+        Music.getInstance().close();
         sellerRequestPane.setVisible(false);
         offRequestPane.setVisible(false);
         productRequestPane.setVisible(false);
@@ -379,7 +380,7 @@ public class ManagerMenuController extends Controller {
     public void acceptRequest() {
         try {
             ((Manager) Processor.user).acceptRequest(selectedRequest);
-           // Music.getInstance().confirmation();
+            Music.getInstance().confirmation();
         } catch (InvalidCommandException e) {
             showErrorAlert(e.getMessage());
         } catch (ParseException e) {
@@ -390,7 +391,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void declineRequest() {
-       // Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ((Manager) Processor.user).declineRequest(selectedRequest);
         closeRequestInfo();
         updateRequestListView();
@@ -406,7 +407,7 @@ public class ManagerMenuController extends Controller {
 
 
     public void deleteUser() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ((Manager) Processor.user).deleteUser(selectedUser);
         closeUserInfo();
         updateUsersListView();
@@ -421,7 +422,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCategory() {
-       // Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         if (!categoryName.getText().isEmpty()) {
             ((Manager) Processor.user).editCategoryName(selectedCategory, categoryName.getText());
             categoryName.clear();
@@ -443,7 +444,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createAddFeature() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         if (!createCategoryFeature.getText().isEmpty()) {
             String feature = createCategoryFeature.getText();
             if (!hasFeature(feature)) {
@@ -469,14 +470,14 @@ public class ManagerMenuController extends Controller {
     }
 
     public void createRemoveFeature() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         String selectedFeature = createCategoryFeaturesListView.getSelectionModel().getSelectedItem().toString();
         createCategoryFeatures.remove(selectedFeature);
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
     }
 
     public void createCategory() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         if (createCategoryName.getText().isEmpty()) {
             return;
         }
@@ -493,7 +494,7 @@ public class ManagerMenuController extends Controller {
 
 
     public void createCodedDiscount() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ArrayList<String> codedDiscountInfo = new ArrayList<>();
         codedDiscountInfo.add(createStartDay.getText() + "/" + createStartMonth.getText() + "/" + createStartYear.getText());
         codedDiscountInfo.add(createEndDay.getText() + "/" + createEndMonth.getText() + "/" + createEndYear.getText());
@@ -520,7 +521,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void editCodedDiscount() {
-      //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         String startTime;
         String endTime;
         Date startDate;
@@ -605,7 +606,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void removeCodedDiscount() {
-       // Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
         closeCodedDiscountInfo();
         updateCodedDiscountListView();
@@ -620,10 +621,15 @@ public class ManagerMenuController extends Controller {
     }
 
     public void removeCategory() {
-        //Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ((Manager) Processor.user).removeCategory(selectedCategory);
         closeCategoryInfo();
         updateCategoryListView();
+    }
+
+    public void removeProduct(){
+        Music.getInstance().confirmation();
+        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
     }
 
     public void updateCategoryListView() {
@@ -635,7 +641,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void changeFeature() {
-        //Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         if (!changedFeature.getText().isEmpty()) {
             try {
                 ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
@@ -648,7 +654,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void removeFeature() {
-       // Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
@@ -698,18 +704,28 @@ public class ManagerMenuController extends Controller {
     }
 
     public void update() {
+        Music.getInstance().confirmation();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
     }
 
     public void browsePhotoUser() {
-        //Music.getInstance().open();
+        Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             user.setImagePath(file.getAbsolutePath());
             profilePhoto.setImage(new Image(file.toURI().toString()));
+        }
+    }
+
+    public void createManagerBrowsePhoto(){
+        Music.getInstance().open();
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            createManagerPhoto.setImage(new Image(file.toURI().toString()));
         }
     }
 }

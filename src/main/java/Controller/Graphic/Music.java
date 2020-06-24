@@ -1,4 +1,4 @@
-/*package Controller.Graphic;
+package Controller.Graphic;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -39,46 +39,28 @@ public class Music {
 
     public void open() {
         System.out.println("open");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                openSound.stop();
-                openSound.play();
-            }
-        }).start();
+        openSound.stop();
+        openSound.play();
     }
 
     public void confirmation() {
         System.out.println("confirmation");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                confirmationSound.stop();
-                confirmationSound.play();
-            }
-        }).start();
+        confirmationSound.stop();
+        confirmationSound.play();
+
     }
 
     public void backPage() {
         System.out.println("backPage");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                backPageSound.stop();
-                backPageSound.play();
-            }
-        }).start();
+        backPageSound.stop();
+        backPageSound.play();
     }
+
 
     public void error() {
         System.out.println("error");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                errorSound.stop();
-                errorSound.play();
-            }
-        }).start();
+        errorSound.stop();
+        errorSound.play();
     }
 
     private MediaPlayer getCloseSound() {
@@ -93,6 +75,7 @@ public class Music {
         File file = new File("src/main/resources/music/open.mp3");
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
         return mediaPlayer;
     }
 
@@ -117,4 +100,4 @@ public class Music {
         return mediaPlayer;
     }
 }
-*/
+
