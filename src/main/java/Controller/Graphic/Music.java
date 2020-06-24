@@ -1,4 +1,4 @@
-package View.graphic;
+package Controller.Graphic;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -67,3 +67,4 @@ public class Music {
         return mediaPlayer;
     }
 }
+
