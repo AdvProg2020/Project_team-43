@@ -14,7 +14,8 @@ public abstract class User {
     private static final int startMoney = 100000;
 
     public static ArrayList<User> allUsers = new ArrayList<>();
-    private static String fileAddress = "database/User.dat";
+
+    private static String fileAddress = "database/DeletedUsers.dat";
 
 
     protected String username;

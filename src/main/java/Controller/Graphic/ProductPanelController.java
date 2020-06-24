@@ -95,7 +95,8 @@ public class ProductPanelController extends Controller implements Initializable 
             Pane pane = panes.get(i - startProductIndex);
             if (allProducts.size() > i) {
                 if (allProducts.get(i).getImagePath() != null) {
-                    ((ImageView) pane.getChildren().get(0)).setImage(new Image("file:" + allProducts.get(i).getImagePath()));
+                    Image image = new Image("file:" + allProducts.get(i).getImagePath(), 230, 140, false, false);
+                    ((ImageView) pane.getChildren().get(0)).setImage(image);
                 } else {
                     File file = new File("src/main/resources/product.jpg");
                     Image image = new Image(file.toURI().toString());
@@ -105,6 +106,7 @@ public class ProductPanelController extends Controller implements Initializable 
                 ((Label) pane.getChildren().get(1)).setText(allProducts.get(i).getName());
                 ((Label) pane.getChildren().get(2)).setText(String.valueOf(allProducts.get(i).getPrice()));
                 ((Label) pane.getChildren().get(3)).setText("id: " + allProducts.get(i).getProductId());
+                ((Label) pane.getChildren().get(4)).setText(allProducts.get(i).getScore().getAvgScore() + "/5");
             } else {
                 pane.setVisible(false);
             }
@@ -208,13 +210,13 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showCategories() {
-         Music.getInstance().open();
+        Music.getInstance().open();
         boolean visible = categoryListView.isVisible();
         categoryListView.setVisible(!visible);
     }
 
     public void cancelFilterByCategory() {
-          Music.getInstance().close();
+        Music.getInstance().close();
         categoryName.setText("categories");
         cancelCategoryButton.setVisible(false);
         filter();
