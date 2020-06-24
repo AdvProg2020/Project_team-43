@@ -620,6 +620,14 @@ public class ManagerMenuController extends Controller {
         codedDiscountListView.setItems(codedDiscounts);
     }
 
+    public void updateProductListView(){
+        products.clear();
+        for (Product product : Product.allProductsInList) {
+            products.add(product.getName() +" / " + product.getAvailableCount());
+        }
+    }
+
+
     public void removeCategory() {
         Music.getInstance().confirmation();
         ((Manager) Processor.user).removeCategory(selectedCategory);
@@ -630,6 +638,7 @@ public class ManagerMenuController extends Controller {
     public void removeProduct(){
         Music.getInstance().confirmation();
         bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+        updateProductListView();
     }
 
     public void updateCategoryListView() {
