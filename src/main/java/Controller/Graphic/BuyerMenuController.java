@@ -40,6 +40,8 @@ public class BuyerMenuController extends Controller {
     public TextField password;
     public TextField phoneNumber;
     public ImageView profilePhoto;
+    public ImageView closeDiscountButton;
+    public ListView<String> discountCodeFeatures;
     private Buyer user;
 
     @FXML
@@ -76,7 +78,7 @@ public class BuyerMenuController extends Controller {
 
     public void setDiscountCodes() {
         for (CodedDiscount discount : user.getDiscounts()) {
-            discountCodes.getItems().add(discount.toString() + "remain : " + user.remainRepeats(discount));
+            discountCodes.getItems().add("Code: " + discount.getDiscountCode() + "   Amount: " + discount.getDiscountAmount() + "   Remain : " + user.remainRepeats(discount));
         }
     }
 
@@ -131,7 +133,7 @@ public class BuyerMenuController extends Controller {
         order.getItems().add(buyOrder.getDate().toString());
         order.getItems().add(buyOrder.getAddress());
         order.setVisible(true);
-        closeButton.setVisible(true);
+        closeDiscountButton.setVisible(true);
 
     }
 
@@ -139,7 +141,6 @@ public class BuyerMenuController extends Controller {
         //Music.getInstance().close();
         order.setVisible(false);
         closeButton.setVisible(false);
-
     }
 
     public void purchase() {
@@ -166,6 +167,25 @@ public class BuyerMenuController extends Controller {
             }
         }
 
+    }
+
+    public void showCodedDiscount(MouseEvent mouseEvent) {
+        discountCodeFeatures.getItems().clear();
+        String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
+        System.out.println(discountId);
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountId);
+        discountCodeFeatures.getItems().add("Amount: " + codedDiscount.getDiscountAmount());
+        discountCodeFeatures.getItems().add("Repeat: " + user.remainRepeats(codedDiscount));
+        discountCodeFeatures.getItems().add("Start Time: " + codedDiscount.getStartTime());
+        discountCodeFeatures.getItems().add("End Time: " + codedDiscount.getEndTime());
+
+        discountCodeFeatures.setVisible(true);
+        closeDiscountButton.setVisible(true);
+    }
+
+    public void closeDiscountCodeFeatures(MouseEvent mouseEvent) {
+        discountCodeFeatures.setVisible(false);
+        closeDiscountButton.setVisible(false);
     }
 
     private class XCell extends ListCell<String> {
