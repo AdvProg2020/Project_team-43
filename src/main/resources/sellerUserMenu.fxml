@@ -146,7 +146,7 @@
                                 <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="25.0" prefWidth="150.0" />
                             </children>
                         </Pane>
-                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" visible="false">
                             <image>
                                 <Image url="@product.jpg" />
                             </image>

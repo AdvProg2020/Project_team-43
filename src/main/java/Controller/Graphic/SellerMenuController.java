@@ -14,7 +14,6 @@ import model.*;
 
 import java.io.File;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +23,6 @@ public class SellerMenuController extends Controller {
     public Text companyText;
     public Text companyInfoText;
     public TextField nameNewProduct;
-    public TextField companyNewCompany;
     public TextField priceNewProduct;
     public TextField amountNewProduct;
     public Text offSellerText;
@@ -35,7 +33,6 @@ public class SellerMenuController extends Controller {
     public Label offAmountLabel;
     public Label balance;
     public ChoiceBox<String> productIdChoiceBox;
-    SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
     public TextField email;
@@ -79,7 +76,7 @@ public class SellerMenuController extends Controller {
     public ChoiceBox<String> addProductCompanyChoiceBox;
     public Button manageProductBrowsePhotoButton;
 
-
+    SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
     private String productPhotoPath;
     private Product product;
