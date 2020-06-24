@@ -14,15 +14,15 @@ public class Sorting {
     }
 
     public static void setSortByDate() {
-        comparator = SortingByDate.getInstance();
+        comparator = SortingByDate.getInstance().reversed();
     }
 
     public static void setSortByPrice() {
-        comparator = SortingByPrice.getInstance();
+        comparator = SortingByPrice.getInstance().reversed();
     }
 
     public static void setSortByPriceDescending() {
-        comparator = SortingByPrice.getInstance().reversed();
+        comparator = SortingByPrice.getInstance();
     }
 
     public static Comparator<Product> getComparator() {

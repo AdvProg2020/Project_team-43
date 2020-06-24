@@ -84,8 +84,11 @@ public class BuyerProcessor extends Processor {
         }
         //productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
         //productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - 1);
-        if (user != null)
+        if (user != null && user.getUserType() == UserType.BUYER) {
             setNewBuyerCart();
+        } else {
+            return "You must login with a buyer account.";
+        }
         return result;
     }
 
