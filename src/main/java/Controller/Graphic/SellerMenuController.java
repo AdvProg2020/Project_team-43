@@ -34,6 +34,7 @@ public class SellerMenuController extends Controller {
     public Slider offAmount;
     public Label offAmountLabel;
     public Label balance;
+    public ChoiceBox<String> productIdChoiceBox;
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -45,7 +46,7 @@ public class SellerMenuController extends Controller {
     public Text invalidCategory;
     public Text usernameText;
     public ImageView profilePhoto;
-    public TextField productIdTextField;
+
     public Text invalidIdProduct;
     public ImageView productPhoto;
     public ListView<String> productFeaturesList;
@@ -99,6 +100,7 @@ public class SellerMenuController extends Controller {
         }
         initializeAddOff();
         initializeAddProduct();
+        setProducts();
     }
 
     private void initializeAddProduct() {
@@ -222,6 +224,13 @@ public class SellerMenuController extends Controller {
         managePriceLabel.setVisible(true);
         manageCompanyLabel.setVisible(true);
 
+
+    }
+
+    public void setProducts() {
+        for (Product product1 : ((Seller) sellerProcessor.getUser()).getProductsNumber().keySet()) {
+            productIdChoiceBox.getItems().add(product1.getProductId());
+        }
     }
 
     public void editCell(ListView.EditEvent<String> stringEditEvent) {
@@ -229,7 +238,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void showProduct() {
-        String id = productIdTextField.getText();
+        String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
         if (sellerProcessor.checkProduct(id)) {
             buyersListView.getItems().clear();
             product = user.getProductById(id);
