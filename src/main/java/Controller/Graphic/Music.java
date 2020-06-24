@@ -11,6 +11,7 @@ public class Music {
     private MediaPlayer openSound;
     private MediaPlayer confirmationSound;
     private MediaPlayer backPageSound;
+    private MediaPlayer errorSound;
 
     public static Music getInstance() {
         return ourInstance;
@@ -21,6 +22,7 @@ public class Music {
         openSound = getOpenSound();
         confirmationSound = getConfirmationSound();
         backPageSound = getBackPageSound();
+        errorSound = getErrorSound();
     }
 
     public void close() {
@@ -37,6 +39,10 @@ public class Music {
 
     public void backPage() {
         backPageSound.play();
+    }
+
+    public void error(){
+        errorSound.play();
     }
 
     private MediaPlayer getCloseSound() {
@@ -62,6 +68,12 @@ public class Music {
 
     private MediaPlayer getBackPageSound() {
         File file = new File("src/main/resources/music/backPage.mp3");
+        Media media = new Media(file.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        return mediaPlayer;
+    }
+    private MediaPlayer getErrorSound() {
+        File file = new File("src/main/resources/music/error.mp3");
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         return mediaPlayer;
