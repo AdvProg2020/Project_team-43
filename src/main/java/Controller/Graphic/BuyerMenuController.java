@@ -93,14 +93,14 @@ public class BuyerMenuController extends Controller {
     }
 
     public void update() {
-        Music.getInstance().confirmation();
+        //Music.getInstance().confirmation();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         buyerProcessor.editField(userPersonalInfo);
     }
 
     public void browsePhotoUser() {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -136,14 +136,14 @@ public class BuyerMenuController extends Controller {
     }
 
     public void closeOrder() {
-        Music.getInstance().close();
+        //Music.getInstance().close();
         order.setVisible(false);
         closeButton.setVisible(false);
 
     }
 
     public void purchase() {
-        Music.getInstance().confirmation();
+        //Music.getInstance().confirmation();
         try {
             isBack = true;
             PurchaseWindow.getInstance().start(this.stage);
@@ -153,7 +153,7 @@ public class BuyerMenuController extends Controller {
     }
 
     public void showProduct(MouseEvent mouseEvent) {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         if (mouseEvent.getClickCount() >= 2) {
             isBack = true;
             String productName = products.getSelectionModel().getSelectedItem().split("\t")[0];

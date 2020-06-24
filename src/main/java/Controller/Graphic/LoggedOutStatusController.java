@@ -14,13 +14,13 @@ public class LoggedOutStatusController extends Controller {
 
     @FXML
     public void registerButtonClicked() {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         RegisterWindow.getInstance().start(stage);
     }
 
     @FXML
     public void loginButtonClicked() {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         LoginWindow.getInstance().start(stage);
     }
 

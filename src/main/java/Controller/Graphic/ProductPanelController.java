@@ -115,7 +115,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void sort(Toggle selectedToggle) {
-        Music.getInstance().confirmation();
+        //Music.getInstance().confirmation();
         String sort = ((RadioButton) selectedToggle).getText();
         if (sort.equals("most expensive")) {
             buyerProcessor.sort("by price");
@@ -151,7 +151,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void filter() {
-        Music.getInstance().confirmation();
+        //Music.getInstance().confirmation();
         allProducts = Product.getAllProductsInList();
         if (!nameFilterText.getText().equals("")) {
             buyerProcessor.filter("by name " + nameFilterText.getText());
@@ -187,7 +187,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void nextPage() {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         if (hasNextPage()) {
             startProductIndex += 9;
             showProducts();
@@ -202,7 +202,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void previousPage() {
-        Music.getInstance().open();
+        //Music.getInstance().open();
         if (hasPreviousPage()) {
             startProductIndex -= 9;
             showProducts();
@@ -210,13 +210,13 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showCategories() {
-        Music.getInstance().open();
+       // Music.getInstance().open();
         boolean visible = categoryListView.isVisible();
         categoryListView.setVisible(!visible);
     }
 
     public void cancelFilterByCategory() {
-        Music.getInstance().close();
+      //  Music.getInstance().close();
         categoryName.setText("categories");
         cancelCategoryButton.setVisible(false);
         filter();
