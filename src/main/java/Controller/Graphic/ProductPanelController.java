@@ -51,9 +51,8 @@ public class ProductPanelController extends Controller implements Initializable 
     public ListView<HBox> featuresOfCategoryForFilter;
     public ImageView cancelCategoryButton;
     public ArrayList<Pane> panes;
-    public ArrayList<ImageView> images;
 
-    public int startProductIndex = 0;
+    private int startProductIndex = 0;
 
     private ArrayList<Product> allProducts = Product.getAllProductsInList();
     public CheckBox availableFilterCheckBox;
@@ -92,7 +91,6 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showProducts() {
-        showProductIds();
         for (int i = startProductIndex; i < startProductIndex + 9; i++) {
             Pane pane = panes.get(i - startProductIndex);
             if (allProducts.size() > i) {
@@ -111,10 +109,6 @@ public class ProductPanelController extends Controller implements Initializable 
                 pane.setVisible(false);
             }
         }
-
-    }
-
-    private void showProductIds() {
 
     }
 
