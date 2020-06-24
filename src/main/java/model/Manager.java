@@ -114,9 +114,11 @@ public class Manager extends User {
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
-        product.setProductState(State.ProductState.CONFIRMED);
-        Product.allProductsInList.add(product);
-        Product.allProductsInQueueEdit.remove(product);
+        if (!EditProductRequest.productIsInConfirmedProcess(product)) {
+            product.setProductState(State.ProductState.CONFIRMED);
+            Product.allProductsInList.add(product);
+            Product.allProductsInQueueEdit.remove(product);
+        }
     }
 
     public void acceptProductRequest(ProductRequest request) {

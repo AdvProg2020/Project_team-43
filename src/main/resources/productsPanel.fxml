@@ -18,8 +18,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.RangeSlider?>
-
 <?import java.util.ArrayList?>
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductPanelController">
     <children>
         <Pane focusTraversable="true" layoutX="809.0" layoutY="111.0" prefHeight="699.0" prefWidth="258.0" style="-fx-background-color: #e8ede4; -fx-background-radius: 10;">
@@ -273,19 +273,6 @@
         <ListView fx:id="categoryListView" layoutX="601.0" layoutY="111.0" onMouseClicked="#selectedCategory" prefHeight="310.0" prefWidth="200.0" visible="false" />
     </children>
 
-    <fx:define>
-        <ArrayList fx:id="images">
-            <fx:reference source="image1" />
-            <fx:reference source="image2" />
-            <fx:reference source="image3" />
-            <fx:reference source="image4" />
-            <fx:reference source="image5" />
-            <fx:reference source="image6" />
-            <fx:reference source="image7" />
-            <fx:reference source="image8" />
-            <fx:reference source="image9" />
-        </ArrayList>
-    </fx:define>
     <fx:define>
         <ArrayList fx:id="panes">
             <fx:reference source="productCartPane1" />

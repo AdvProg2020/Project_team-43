@@ -181,6 +181,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void editProduct() {
+        boolean change = false;
         String name = manageNameTextField.getText();
         String price = managePriceTextField.getText();
         String companyName = manageProductCompanyChoiceBox.getValue();
@@ -193,17 +194,22 @@ public class SellerMenuController extends Controller {
             }
         }
         if (!name.equals(product.getName())) {
+            change = true;
             user.editProduct(product, "name", name);
         }
         if (!price.equals(String.valueOf(product.getPrice()))) {
+            change = true;
             user.editProduct(product, "price", price);
         }
         if (!companyName.equals(product.getCompany().getName())) {
+            change = true;
             user.editProduct(product, "company", companyName);
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Changes sent to manager");
-        alert.showAndWait();
+        if (change) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Changes sent to manager");
+            alert.showAndWait();
+        }
         statusText.setText("Status: " + product.getProductState());
     }
 

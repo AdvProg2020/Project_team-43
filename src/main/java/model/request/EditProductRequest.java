@@ -100,4 +100,15 @@ public class EditProductRequest extends Request {
                 ", requestType='" + requestType + '\'' +
                 '}';
     }
+
+    public static boolean productIsInConfirmedProcess(Product product) {
+        for (Request request : allRequests) {
+            if (request.getRequestType().equals("edit product")) {
+                if (((EditProductRequest) request).getProduct().equals(product))
+                    return true;
+            }
+        }
+        return false;
+
+    }
 }
