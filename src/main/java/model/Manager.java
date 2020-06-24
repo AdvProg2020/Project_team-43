@@ -56,8 +56,6 @@ public class Manager extends User {
 
     public void removeProduct(Product product) {
         Product.allProductsInList.remove(product);
-        Category category = product.getCategory();
-        category.removeProduct(product);
         removeFromSellerProducts(product);
     }
 

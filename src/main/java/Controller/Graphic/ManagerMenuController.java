@@ -638,6 +638,7 @@ public class ManagerMenuController extends Controller {
     public void removeProduct(){
         Music.getInstance().confirmation();
         bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+        closeProductInfo();
         updateProductListView();
     }
 
