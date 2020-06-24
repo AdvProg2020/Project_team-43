@@ -18,8 +18,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.RangeSlider?>
-<?import java.util.ArrayList?>
 
+<?import java.util.ArrayList?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductPanelController">
     <children>
         <Pane focusTraversable="true" layoutX="809.0" layoutY="111.0" prefHeight="699.0" prefWidth="258.0" style="-fx-background-color: #e8ede4; -fx-background-radius: 10;">
@@ -96,7 +96,7 @@
 
                 <VBox layoutX="31.0" layoutY="108.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
-                        <Pane fx:id="productCartPane1" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane1" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image1" fitHeight="170.0" fitWidth="220.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -111,7 +111,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane4" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane4" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image4" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -129,7 +129,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane7" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane7" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image7" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -148,7 +148,7 @@
                 </VBox>
                 <VBox layoutX="283.0" layoutY="108.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
-                        <Pane fx:id="productCartPane2" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane2" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image2" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -163,7 +163,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane5" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane5" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image5" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -178,7 +178,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane8" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane8" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image8" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -197,7 +197,7 @@
                 </VBox>
                 <VBox layoutX="536.0" layoutY="108.0" prefHeight="660.0" prefWidth="229.0">
                     <children>
-                        <Pane fx:id="productCartPane3" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane3" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image3" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -212,7 +212,7 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane6" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane6" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image6" fitHeight="170.0" fitWidth="230.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -227,7 +227,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                         </Pane>
-                        <Pane fx:id="productCartPane9" prefHeight="230.0" prefWidth="230.0">
+                        <Pane fx:id="productCartPane9" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
                                 <ImageView fx:id="image9" fitHeight="170.0" fitWidth="230.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

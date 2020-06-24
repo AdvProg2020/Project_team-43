@@ -219,6 +219,7 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeManageProduct(Product product) {
+        manageProductCompanyChoiceBox.getItems().clear();
         manageNameTextField.setText(product.getName());
         managePriceTextField.setText(String.valueOf(product.getPrice()));
         manageProductCategoryLabel.setText("Category: " + product.getCategory().getName());
@@ -254,6 +255,7 @@ public class SellerMenuController extends Controller {
         if (sellerProcessor.checkProduct(id)) {
            // Music.getInstance().open();
             buyersListView.getItems().clear();
+
             product = user.getProductById(id);
             initializeManageProduct(product);
             showProductFeaturesList(product);

@@ -2,6 +2,10 @@ package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
+import View.console.ProductPanel;
+import View.graphic.MainWindow;
+import View.graphic.ProductPanelWindow;
+import View.graphic.ProductWindow;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -14,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -101,8 +106,8 @@ public class ProductPanelController extends Controller implements Initializable 
                 }
                 panes.get(i - startProductIndex).setVisible(true);
                 ((Label) pane.getChildren().get(1)).setText(allProducts.get(i).getName());
-                ((Label) pane.getChildren().get(2)).setText("id: " + allProducts.get(i).getPrice());
-                ((Label) pane.getChildren().get(3)).setText(allProducts.get(i).getProductId());
+                ((Label) pane.getChildren().get(2)).setText(String.valueOf(allProducts.get(i).getPrice()));
+                ((Label) pane.getChildren().get(3)).setText("id: " + allProducts.get(i).getProductId());
             } else {
                 pane.setVisible(false);
             }
@@ -210,13 +215,13 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void showCategories() {
-       // Music.getInstance().open();
+        // Music.getInstance().open();
         boolean visible = categoryListView.isVisible();
         categoryListView.setVisible(!visible);
     }
 
     public void cancelFilterByCategory() {
-      //  Music.getInstance().close();
+        //  Music.getInstance().close();
         categoryName.setText("categories");
         cancelCategoryButton.setVisible(false);
         filter();
@@ -280,5 +285,12 @@ public class ProductPanelController extends Controller implements Initializable 
             buyerProcessor.disableFilter("off");
         }
         filter();
+    }
+
+    public void openProductPanel(MouseEvent mouseEvent) {
+        Product product = Product.getProductById((((Label) ((Pane) mouseEvent.getSource()).getChildren().get(3)).getText().split(" ")[1]));
+        ProductWindow.getInstance().setProduct(product, ProductPanelWindow.getInstance());
+        ProductWindow.getInstance().start(MainWindow.getInstance().getStage());
+
     }
 }

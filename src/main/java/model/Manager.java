@@ -7,15 +7,11 @@ import model.request.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.lang.reflect.Method;
-import java.lang.reflect.Field;
-import java.lang.reflect.Constructor;
 
 public class Manager extends User {
     private static String fileAddress = "database/Manager.dat";
@@ -114,7 +110,7 @@ public class Manager extends User {
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
-        if (!EditProductRequest.productIsInConfirmedProcess(product)) {
+        if (!EditProductRequest.isProductInEditingProcess(product)) {
             product.setProductState(State.ProductState.CONFIRMED);
             Product.allProductsInList.add(product);
             Product.allProductsInQueueEdit.remove(product);
