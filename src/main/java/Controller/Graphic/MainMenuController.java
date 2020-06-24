@@ -54,13 +54,13 @@ public class MainMenuController {
         setLoginButtonText();
     }
 
-    public void productsPanelButtonClicked(ActionEvent actionEvent) {
+    public void productsPanelButtonClicked() {
         //Music.getInstance().open();
         ProductPanelWindow.getInstance().start(stage);
     }
 
     public void test(ActionEvent actionEvent) {
-        ProductWindow.getInstance().setProduct(Product.getProductById("4"), MainWindow.getInstance());
+        ProductWindow.getInstance().setProduct(Product.getProductById("2"), MainWindow.getInstance());
         ProductWindow.getInstance().start(stage);
     }
 }
