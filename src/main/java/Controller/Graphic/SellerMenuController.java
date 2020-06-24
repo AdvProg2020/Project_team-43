@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -75,6 +76,9 @@ public class SellerMenuController extends Controller {
     public Text manageOffAmountText;
     public Slider manageOffAmount;
     public Label manageOffAmountLabel;
+    public ListView<String> orders;
+    public ListView<String> order;
+    public ImageView closeButton;
 
 
     private Seller user;
@@ -100,7 +104,14 @@ public class SellerMenuController extends Controller {
         }
         initializeAddOff();
         initializeAddProduct();
+        initializeViewOrders();
         setProducts();
+    }
+
+    private void initializeViewOrders() {
+        for (SellOrder sellOrder : user.getOrders()) {
+            orders.getItems().add("id: " + sellOrder.getOrderId() + "\tprice: " + sellOrder.getPayment());
+        }
     }
 
     private void initializeAddProduct() {
@@ -141,7 +152,7 @@ public class SellerMenuController extends Controller {
     public void addNewProduct() {
         if (categoryChoiceBox.getValue() == null) {
             invalidCategory.setVisible(true);
-            Music.getInstance().error();
+            //   Music.getInstance().error();
         } else {
             invalidCategory.setVisible(false);
             Category category = Category.getCategoryByName(categoryChoiceBox.getValue());
@@ -156,7 +167,7 @@ public class SellerMenuController extends Controller {
                 alert.setHeaderText("Product added successfully");
                 alert.setContentText("Waiting for manager to confirm");
                 alert.showAndWait();
-                Music.getInstance().confirmation();
+                //    Music.getInstance().confirmation();
             } catch (InvalidCommandException e) {
                 System.out.println(e.getMessage());
             }
@@ -164,7 +175,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void browsePhotoUser() {
-        Music.getInstance().open();
+        //  Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -175,7 +186,7 @@ public class SellerMenuController extends Controller {
 
 
     public void browsePhotoProduct() {
-        Music.getInstance().open();
+        // Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
@@ -186,7 +197,7 @@ public class SellerMenuController extends Controller {
 
     public void editProduct() {
         boolean change = false;
-        Music.getInstance().confirmation();
+        //  Music.getInstance().confirmation();
         String name = manageNameTextField.getText();
         String price = managePriceTextField.getText();
         String companyName = manageProductCompanyChoiceBox.getValue();
@@ -253,7 +264,7 @@ public class SellerMenuController extends Controller {
 
         String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
         if (sellerProcessor.checkProduct(id)) {
-            Music.getInstance().open();
+            // Music.getInstance().open();
             buyersListView.getItems().clear();
 
             product = user.getProductById(id);
@@ -280,7 +291,7 @@ public class SellerMenuController extends Controller {
             invalidIdProduct.setVisible(false);
 
         } else {
-            Music.getInstance().error();
+            // Music.getInstance().error();
             invalidIdProduct.setVisible(true);
         }
     }
@@ -319,7 +330,7 @@ public class SellerMenuController extends Controller {
     public void showOff() {
         String id = offIdTextField.getText();
         if (user.hasOffWithId(id)) {
-            Music.getInstance().open();
+            //Music.getInstance().open();
             invalidIdOff.setVisible(false);
             off = user.getOffById(id);
             initializeManageOff(off);
@@ -337,13 +348,13 @@ public class SellerMenuController extends Controller {
             manageOffAmount.setVisible(true);
             applyOffChangesButton.setVisible(true);
         } else {
-            Music.getInstance().error();
+            //Music.getInstance().error();
             invalidIdOff.setVisible(true);
         }
     }
 
     public void editOff(ActionEvent event) {
-        Music.getInstance().confirmation();
+        //Music.getInstance().confirmation();
         String amountString = manageOffAmountLabel.getText();
         double amount = Double.parseDouble(amountString.substring(0, amountString.length() - 1));
         String startTime = manageOffStartTime.getEditor().getText();
@@ -386,7 +397,7 @@ public class SellerMenuController extends Controller {
 
 
     public void addOff() {
-        Music.getInstance().confirmation();
+        //  Music.getInstance().confirmation();
         String startTime = offStartTimeDate.getEditor().getText();
         String endTime = offEndTimeDate.getEditor().getText();
         double amount = Integer.parseInt(offAmountLabel.getText().substring(0, offAmountLabel.getText().length() - 1));
@@ -404,5 +415,24 @@ public class SellerMenuController extends Controller {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showOrder() {
+        order.getItems().clear();
+        String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[0].split(" ")[1];
+        SellOrder sellOrder = (SellOrder) Order.getOrderById(orderId);
+        Product product = sellOrder.getProduct();
+        order.getItems().add("Product: " + product.getName() + "\tNumber: " + sellOrder.getNumber());
+        order.getItems().add("Payment: " + sellOrder.getPayment());
+        order.getItems().add("Delivery Status: " + sellOrder.getDeliveryStatus().toString());
+        order.getItems().add("Date: " + sellOrder.getDate().toString());
+        order.getItems().add("Off Amount: " + sellOrder.getOffAmount());
+        order.setVisible(true);
+        closeButton.setVisible(true);
+    }
+
+    public void closeOrder() {
+        order.setVisible(false);
+        closeButton.setVisible(false);
     }
 }

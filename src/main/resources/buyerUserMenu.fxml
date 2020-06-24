@@ -148,7 +148,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ListView fx:id="discountCodes" layoutX="81.0" layoutY="57.0" prefHeight="297.0" prefWidth="512.0" />
+                        <ListView fx:id="discountCodes" layoutX="91.0" layoutY="74.0" onMouseClicked="#showCodedDiscount" prefHeight="333.0" prefWidth="369.0" />
                         <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="53.0" layoutY="464.0" onMouseClicked="#goBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
@@ -157,6 +157,12 @@
                                 <Image url="@button_back.png" />
                             </image>
                         </ImageView>
+                  <ListView fx:id="discountCodeFeatures" layoutX="549.0" layoutY="124.0" prefHeight="352.0" prefWidth="260.0" visible="false" />
+                  <ImageView fx:id="closeDiscountButton" fitHeight="30.0" fitWidth="28.0" layoutX="781.0" layoutY="124.0" onMouseClicked="#closeDiscountCodeFeatures" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" visible="false">
+                     <image>
+                        <Image url="@cancel-512.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </content>
@@ -175,7 +181,7 @@
                             </image>
                         </ImageView>
                         <ListView fx:id="order" layoutX="509.0" layoutY="74.0" prefHeight="352.0" prefWidth="260.0" />
-                        <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="28.0" layoutX="769.0" layoutY="74.0" onMouseClicked="#closeOrder" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                        <ImageView fx:id="closeButton" fitHeight="30.0" fitWidth="28.0" layoutX="741.0" layoutY="74.0" onMouseClicked="#closeOrder" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@cancel-512.png" />
                             </image>

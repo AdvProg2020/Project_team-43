@@ -150,7 +150,7 @@ public class Buyer extends User {
             Product product = productSellerPair.getKey();
             double discount = seller.getOffDiscountAmount(product);
             SellOrder sellOrder = new SellOrder(discount, new Date(),
-                    product.getPrice() * newBuyerCart.get(productSellerPair), product, this);
+                    product.getPrice() * newBuyerCart.get(productSellerPair), product, this, newBuyerCart.get(productSellerPair));
             seller.settleMoney(product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair));
             seller.addOrder(sellOrder);
 
