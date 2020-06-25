@@ -15,6 +15,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.Rating?>
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('productBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
@@ -160,6 +162,21 @@
                         <Image url="@repeat.png" />
                      </image>
                   </ImageView>
+                  <Text layoutX="131.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="allTimeOfVideo" fill="#281616" layoutX="139.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="53.6708984375">
+                     <font>
+                        <Font name="Bookman Old Style" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="currentTimeOfVideo" fill="#080817" layoutX="83.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT" wrappingWidth="47.6708984375">
+                     <font>
+                        <Font name="Bookman Old Style" size="20.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
         </content>

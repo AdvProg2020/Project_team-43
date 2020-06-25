@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import model.*;
@@ -66,6 +66,8 @@ public class ProductWindowController extends Controller implements Initializable
     public StackPane videoPane;
     public Label numberOfPeopleRated;
     public Label usernameTextField;
+    public Text allTimeOfVideo;
+    public Text currentTimeOfVideo;
     public Slider timeSlider;
     public File file;
     public Media media;
@@ -297,6 +299,8 @@ public class ProductWindowController extends Controller implements Initializable
         Platform.runLater(new Runnable() {
             public void run() {
                 timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
+                currentTimeOfVideo.setText((int)(mediaPlayer.getCurrentTime().toSeconds())+"");
+                allTimeOfVideo.setText((int)(mediaPlayer.getStopTime().toSeconds())+"");
             }
         });
     }
