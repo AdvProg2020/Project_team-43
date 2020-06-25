@@ -74,6 +74,20 @@ public abstract class Controller {
         imageView.setImage(new Image("file:" + "src/main/resources/product.jpg"));
     }
 
+    public void setProductImage(Product product, ImageView imageView, int height, int width) {
+        File file = new File("src/main/resources/photos/products/" + product.getProductId() + ".jpg");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName(), width, height, false, false));
+            return;
+        }
+        file = new File("src/main/resources/photos/products/" + product.getProductId() + ".png");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName(), width, height, false, false));
+            return;
+        }
+        imageView.setImage(new Image("file:" + "src/main/resources/product.jpg", width, height, false, false));
+    }
+
     protected void setUserImage(User user, ImageView imageView) {
         File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
         if (file.exists()) {
@@ -93,4 +107,5 @@ public abstract class Controller {
         BuyerProcessor.getInstance().logout();
         userPanelGoBack();
     }
+
 }

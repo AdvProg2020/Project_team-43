@@ -85,11 +85,12 @@ public class OffTest {
         Assert.assertTrue(((Request.getAllRequests().get(Request.getAllRequests().size() - 1))) instanceof OffRequest);
     }
 
-    @Test(expected = InvalidCommandException.class)
+    @Test
     public void addOffDateExceptionTest() throws ParseException, InvalidCommandException {
         setAll();
         Processor.user = seller;
-        sellerProcessor.addOff("12/11/1111", "11/11/1111", 20.0, productsId);
+        String response = sellerProcessor.addOff("12/11/1111", "11/11/1111", 20.0, productsId);
+        Assert.assertEquals(response, "Start time must be before endTime.");
     }
 
     @Test

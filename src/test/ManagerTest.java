@@ -2,20 +2,22 @@
 import Controller.console.BossProcessor;
 import Controller.console.Processor;
 import model.*;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 
 public class ManagerTest {
-    Buyer buyer;
-    Manager manager;
-    BossProcessor bossProcessor;
-    UserPersonalInfo userPersonalInfo;
+    static Buyer buyer;
+    static Manager manager;
+    static BossProcessor bossProcessor;
+    static UserPersonalInfo userPersonalInfo;
 
 
-    @BeforeAll
+    @Before
     public void setAll() {
         userPersonalInfo = new UserPersonalInfo("first name", "last name", "email", "phone number", "password");
         buyer = new Buyer("alireza", userPersonalInfo);
@@ -23,9 +25,13 @@ public class ManagerTest {
         bossProcessor = BossProcessor.getInstance();
     }
 
+    @After
+    public void clear() {
+        User.getAllUsers().clear();
+    }
+
     @Test
     public void deleteUserTest() {
-        setAll();
         Processor.user = manager;
         try {
             bossProcessor.manageUsers("delete user alireza");
@@ -37,7 +43,6 @@ public class ManagerTest {
 
     @Test
     public void createManagerProfile(){
-        setAll();
         ArrayList<String> info = new ArrayList<>();
         info.add("sadra2");
         info.add("first name");
@@ -50,8 +55,7 @@ public class ManagerTest {
     }
     @Test(expected = NullPointerException.class)
     public void getRequestByIdNullTest(){
-        setAll();
-        manager.getRequestById("null Id");
+        Assert.assertNull(manager.getRequestById("null Id"));
     }
 
 }

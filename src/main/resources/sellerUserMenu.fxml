@@ -210,6 +210,7 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
+                  <Button fx:id="browseVideoButton" layoutX="479.0" layoutY="120.0" mnemonicParsing="false" onAction="#selectVideoForProduct" text="select video" visible="false" />
                     </children>
                 </AnchorPane>
             </content>
