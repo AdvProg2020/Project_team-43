@@ -215,7 +215,6 @@ public class SellerMenuController extends Controller {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             productPhotoPath = file.getAbsolutePath();
-            Files.copy(file.toPath(), new File("src/main/resources/photos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 

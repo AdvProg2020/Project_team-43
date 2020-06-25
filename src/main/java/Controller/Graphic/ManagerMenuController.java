@@ -765,13 +765,4 @@ public class ManagerMenuController extends Controller {
         }
     }
 
-    public void createManagerBrowsePhoto() {
-        Music.getInstance().open();
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            createManagerPhoto.setImage(new Image(file.toURI().toString()));
-        }
-    }
-
 }
