@@ -86,7 +86,7 @@ public class ProductWindowController extends Controller implements Initializable
         this.product = product;
         product.setVisit(product.getVisit() + 1);
         this.parent = parent;
-        setProductImage(product, productImage);
+        setProductImage(product, productImage, 200, 300);
         ivTarget.setVisible(false);
         setProductProperties();
         setSellers();
