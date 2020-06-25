@@ -96,7 +96,7 @@ public class ProductPanelController extends Controller implements Initializable 
         for (int i = startProductIndex; i < startProductIndex + 9; i++) {
             Pane pane = panes.get(i - startProductIndex);
             if (allProducts.size() > i) {
-                setProductImage(allProducts.get(i), (ImageView) pane.getChildren().get(0));
+                setProductImage(allProducts.get(i), (ImageView) pane.getChildren().get(0), 140, 220);
                 panes.get(i - startProductIndex).setVisible(true);
 
                 ((Label) pane.getChildren().get(1)).setText(allProducts.get(i).getName());
