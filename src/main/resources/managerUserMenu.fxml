@@ -84,7 +84,7 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
                             </image>
@@ -92,6 +92,11 @@
                         <InnerShadow />
                      </effect>
                         </ImageView>
+                  <ImageView fitHeight="98.0" fitWidth="94.0" layoutX="778.0" layoutY="11.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@logout-512.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </content>

@@ -1,10 +1,8 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import View.console.LoggedOutStatus;
 import View.graphic.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.Product;
 import model.UserType;
@@ -42,7 +40,8 @@ public abstract class Controller {
             BuyerUserWindow.getInstance().start(stage);
         }
     }
-    public void UserPanelGoBack() {
+
+    public void userPanelGoBack() {
         Music.getInstance().backPage();
         try {
             if (parent instanceof ProductWindow) {
@@ -54,5 +53,10 @@ public abstract class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void logout() {
+        BuyerProcessor.getInstance().logout();
+        userPanelGoBack();
     }
 }
