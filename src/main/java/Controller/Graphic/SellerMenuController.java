@@ -484,4 +484,8 @@ public class SellerMenuController extends Controller {
             System.out.println("Done!");
         }
     }
+
+    public void open(){
+        Music.getInstance().open();
+    }
 }

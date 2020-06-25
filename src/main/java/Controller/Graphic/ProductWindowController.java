@@ -276,12 +276,17 @@ public class ProductWindowController extends Controller {
 
     }
 
+
     public void updatesValues() {
         Platform.runLater(() -> {
             timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
             currentTimeOfVideo.setText((int) (mediaPlayer.getCurrentTime().toSeconds()) + "");
             allTimeOfVideo.setText((int) (mediaPlayer.getStopTime().toSeconds()) + "");
         });
+    }
+
+    public void open(){
+        Music.getInstance().open();
     }
 
     @Override
