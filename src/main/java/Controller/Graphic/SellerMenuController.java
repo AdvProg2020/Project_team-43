@@ -78,6 +78,7 @@ public class SellerMenuController extends Controller {
     public ChoiceBox<String> addProductCompanyChoiceBox;
     public Button manageProductBrowsePhotoButton;
     public Label productAvailableCount;
+    public Button browseVideoButton;
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
@@ -199,6 +200,8 @@ public class SellerMenuController extends Controller {
 
     public void browsePhotoManageProduct() throws IOException {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             final File folder = new File("src/main/resources/photos/products");
@@ -311,6 +314,7 @@ public class SellerMenuController extends Controller {
         productPhoto.setVisible(true);
         statusText.setVisible(true);
         applyChangesButton.setVisible(true);
+        browseVideoButton.setVisible(true);
     }
 
     private void showProductFeaturesList(Product product) {
@@ -459,4 +463,25 @@ public class SellerMenuController extends Controller {
         closeButton.setVisible(false);
     }
 
+    public void selectVideoForProduct() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MP4 files (*.mp4)", "*.mp4"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MKV files (*.mkv)", "*.mkv"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("MOV files (*.mov)", "*.mov"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("WMV files (*.wmv)", "*.wmv"));
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            final File folder = new File("src/main/resources/videos/products");
+            for (final File video : folder.listFiles()) {
+                if (video.isFile()) {
+                    String fileName = FilenameUtils.getBaseName(video.getAbsolutePath());
+                    if (product.getProductId().equals(fileName)) {
+                        video.delete();
+                    }
+                }
+            }
+            Files.copy(file.toPath(), new File("src/main/resources/videos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Done!");
+        }
+    }
 }
