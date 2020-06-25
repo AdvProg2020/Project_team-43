@@ -158,7 +158,7 @@ public class ProductWindowController extends Controller implements Initializable
 
     public void setProductImage() {
         if (product.getImagePath() != null) {
-            productImage.setImage(new Image("file:" + product.getImagePath()));
+            productImage.setImage(new Image("file:" + product.getImagePath(),300,200,false,false));
         }
     }
 
