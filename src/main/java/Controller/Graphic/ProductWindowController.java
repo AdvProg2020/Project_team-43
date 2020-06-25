@@ -3,6 +3,7 @@ package Controller.Graphic;
 import Controller.console.BuyerProcessor;
 import View.graphic.AddCommentWindow;
 import View.graphic.MainWindow;
+import View.graphic.ProductPanelWindow;
 import View.graphic.ProductWindow;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,15 +14,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import model.*;
 import org.controlsfx.control.Rating;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +59,7 @@ public class ProductWindowController {
     public TableColumn<Pair<String, Pair<String, String>>, String> featureForCompare;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct1;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct2;
+    public StackPane videoPane;
 
 
     private Product product;
@@ -156,17 +164,17 @@ public class ProductWindowController {
             error.setText("you are not buyer");
         }
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("first log in please");
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("you didn't buy this product");
         } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("you rated before");
         } else {
             product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
-             Music.getInstance().confirmation();
+            Music.getInstance().confirmation();
             error.setText("done");
         }
     }
@@ -183,7 +191,7 @@ public class ProductWindowController {
             Music.getInstance().error();
             new Alert(Alert.AlertType.ERROR, "first log in").showAndWait();
         } else {
-             Music.getInstance().confirmation();
+            Music.getInstance().confirmation();
             AddCommentWindow.getInstance().setProduct(product);
             AddCommentWindow.getInstance().start(MainWindow.getInstance().getStage());
             isBackToComment = true;
@@ -226,7 +234,12 @@ public class ProductWindowController {
         }
         ObservableList<Pair<String, Pair<String, String>>> details = FXCollections.observableArrayList(list);
         compareTable.setItems(details);
+    }
 
+    public void playVideo() {
+        File file = new File("src/main/resources/video.mp4");
+        Scene scene = new Scene(videoPane, videoPane.getWidth(), videoPane.getHeight());
+        ProductPanelWindow.stage.setScene(scene);
 
     }
 }

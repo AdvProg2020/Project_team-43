@@ -12,12 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 import model.request.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -633,6 +636,11 @@ public class ManagerMenuController extends Controller {
         ((Manager) Processor.user).removeCategory(selectedCategory);
         closeCategoryInfo();
         updateCategoryListView();
+    }
+
+    public void kossher(){
+        StackPane sp = new StackPane();
+
     }
 
     public void removeProduct(){
