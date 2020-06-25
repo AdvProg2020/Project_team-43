@@ -3,9 +3,14 @@ package Controller.Graphic;
 import Controller.console.BuyerProcessor;
 import View.graphic.*;
 import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Product;
+import model.User;
 import model.UserType;
+
+import java.io.File;
 
 public abstract class Controller {
     protected Stage stage = MainWindow.getInstance().getStage();
@@ -53,6 +58,35 @@ public abstract class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected void setProductImage(Product product, ImageView imageView) {
+        File file = new File("src/main/resources/photos/products/" + product.getProductId() + ".png");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName()));
+            return;
+        }
+        file = new File("src/main/resources/photos/products/" + product.getProductId() + ".jpg");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName()));
+            return;
+        }
+        imageView.setImage(new Image("file:" + "src/main/resources/product.jpg"));
+    }
+
+    protected void setUserImage(User user, ImageView imageView) {
+        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
+        }
+        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
+        if (file.exists()) {
+            imageView.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
+        }
+        imageView.setImage(new Image("file:" + "src/main/resources/user.png"));
+
     }
 
     public void logout() {

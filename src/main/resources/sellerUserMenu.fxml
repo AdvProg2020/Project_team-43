@@ -151,7 +151,7 @@
                                 <ChoiceBox fx:id="productIdChoiceBox" layoutX="171.0" layoutY="25.0" prefWidth="150.0" />
                             </children>
                         </Pane>
-                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="603.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="productPhoto" fitHeight="150.0" fitWidth="200.0" layoutX="634.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" visible="false">
                             <image>
                                 <Image url="@product.jpg" />
                             </image>
@@ -204,7 +204,7 @@
                                 <InnerShadow />
                             </effect>
                         </Button>
-                  <Button fx:id="manageProductBrowsePhotoButton" layoutX="653.0" layoutY="171.0" mnemonicParsing="false" onAction="#browsePhotoManageProduct" text="browse photo" visible="false" />
+                  <Button fx:id="manageProductBrowsePhotoButton" layoutX="678.0" layoutY="164.0" mnemonicParsing="false" onAction="#browsePhotoManageProduct" text="browse photo" visible="false" />
                   <Label fx:id="productAvailableCount" layoutX="57.0" layoutY="307.0" prefHeight="26.0" prefWidth="200.0" text="Label" visible="false">
                      <font>
                         <Font size="17.0" />
@@ -228,11 +228,6 @@
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </ListView>
-                                <Button mnemonicParsing="false" onAction="#browsePhotoProduct" text="browse photo">
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" top="10.0" />
-                                    </VBox.margin>
-                                </Button>
                                 <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply">
                                     <VBox.margin>
                                         <Insets top="10.0" />

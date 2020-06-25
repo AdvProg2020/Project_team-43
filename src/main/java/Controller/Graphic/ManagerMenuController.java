@@ -148,7 +148,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showUser(User user) {
-        showUserPhoto(user);
+        setUserImage(user, userProfilePhoto);
         userName2.setText(user.getUsername());
         firstName2.setText(user.getUserPersonalInfo().getFirstName());
         lastName2.setText(user.getUserPersonalInfo().getLastName());
@@ -156,20 +156,6 @@ public class ManagerMenuController extends Controller {
         phoneNumber2.setText(user.getUserPersonalInfo().getPhoneNumber());
         userInfoPane.setVisible(true);
 
-    }
-
-    private void showUserPhoto(User user) {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
-        if (file.exists()) {
-            userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-            return;
-        }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
-        if (file.exists()) {
-            userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-            return;
-        }
-        userProfilePhoto.setImage(new Image("file:" + "src/main/resources/user.png"));
     }
 
     public void showProductInfo() {
@@ -183,13 +169,8 @@ public class ManagerMenuController extends Controller {
 
     public void showProduct(Product product) {
 
-        if (product.getImagePath() != null) {
-            productImage.setImage(new Image("file:" + product.getImagePath()));
-        } else {
-            File file = new File("src/main/resources/product.jpg");
-            Image image = new Image(file.toURI().toString());
-            productImage.setImage(image);
-        }
+        setProductImage(product, productImage);
+
         productName.setText(product.getName());
         productPrice.setText("" + product.getPrice());
         productScore.setText("" + product.getScore().getAvgScore());
@@ -199,7 +180,6 @@ public class ManagerMenuController extends Controller {
     public void showCodedDiscountInfo() {
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-        System.out.println(discountCodePrime);
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
@@ -314,8 +294,6 @@ public class ManagerMenuController extends Controller {
     }
 
     private void clearCreateManager() {
-        File file = new File("src/main/resources/user.png");
-        createManagerPhoto.setImage(new Image(file.toURI().toString()));
         userNameCreateManager.clear();
         firstNameCreateManager.clear();
         lastNameCreateManager.clear();
@@ -704,7 +682,7 @@ public class ManagerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
-        showProfilePhoto();
+        setUserImage(user, profilePhoto);
         for (User user : User.allUsers) {
             users.add(user.getUsername());
         }
@@ -725,17 +703,6 @@ public class ManagerMenuController extends Controller {
             requests.add(request.getRequestId());
         }
         requestsListView.setItems(requests);
-    }
-
-    private void showProfilePhoto() {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
     }
 
     public void update() {
@@ -761,7 +728,7 @@ public class ManagerMenuController extends Controller {
                 }
             }
             Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            showProfilePhoto();
+            setUserImage(user, profilePhoto);
         }
     }
 
