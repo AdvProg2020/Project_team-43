@@ -17,7 +17,7 @@ public class BuyerProcessor extends Processor {
         return instance;
     }
 
-    private final static HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<Pair<Product, Seller>, Integer>();
+    private final static HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
     private final static BuyerShowAndCatch buyerViewManager = BuyerShowAndCatch.getInstance();
 
     private BuyerProcessor() {
@@ -161,7 +161,7 @@ public class BuyerProcessor extends Processor {
             errorMessage("product with this Id doesn't exist");
             return true;
         }
-        return !((Buyer) user).cartHasPair(new Pair<Product, Seller>(Product.getProductById(productId), (Seller) User.getUserByUserName(sellerName)));
+        return !((Buyer) user).cartHasPair(new Pair<>(Product.getProductById(productId), (Seller) User.getUserByUserName(sellerName)));
     }
 
     public void increaseProduct(String productId, String sellerName) throws NullPointerException {
@@ -183,10 +183,7 @@ public class BuyerProcessor extends Processor {
         if (checkProductAndSellerValidation(productId, sellerName))
             return;
         Product product = Product.getProductById(productId);
-        Seller seller = (Seller) User.getUserByUserName(sellerName);
         ((Buyer) user).decreaseCart(product, (Seller) User.getUserByUserName(sellerName));
-        //Objects.requireNonNull(seller).increaseProduct(product);
-        //Objects.requireNonNull(product).setAvailableCount(product.getAvailableCount() + 1);
     }
 
     public double showTotalPrice() {

@@ -4,7 +4,6 @@ import Controller.console.BuyerProcessor;
 import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -178,7 +177,7 @@ public class BuyerMenuController extends Controller {
 
     }
 
-    public void showCodedDiscount(MouseEvent mouseEvent) {
+    public void showCodedDiscount() {
         discountCodeFeatures.getItems().clear();
         String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
         System.out.println(discountId);
@@ -192,7 +191,7 @@ public class BuyerMenuController extends Controller {
         closeDiscountButton.setVisible(true);
     }
 
-    public void closeDiscountCodeFeatures(MouseEvent mouseEvent) {
+    public void closeDiscountCodeFeatures() {
         discountCodeFeatures.setVisible(false);
         closeDiscountButton.setVisible(false);
     }

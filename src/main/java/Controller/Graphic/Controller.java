@@ -107,4 +107,5 @@ public abstract class Controller {
         BuyerProcessor.getInstance().logout();
         userPanelGoBack();
     }
+
 }

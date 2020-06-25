@@ -1,1 +1,1 @@
-[{"name":"phone","features":["size","color"],"productsId":["1","2","11","14"]},{"name":"laptop","features":["RAM","CPU","size","color","weight"],"productsId":["3","4"]},{"name":"tablet","features":["battery","sizes"],"productsId":["7","8","9","12","13"]}]
+[{"name":"phone","features":["size","color"],"productsId":["1","2","11","14"]},{"name":"laptop","features":["RAM","CPU","size","color","weight"],"productsId":["3","4"]},{"name":"tablet","features":["battery","sizes"],"productsId":["7","8","9","12","13","15"]}]

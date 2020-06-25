@@ -32,7 +32,7 @@
                         <ImageView fx:id="productImage" fitHeight="207.0" fitWidth="212.0" layoutX="31.0" layoutY="34.0"
                                    onMouseExited="#endZoom" onMouseMoved="#zoom" pickOnBounds="true"
                                    preserveRatio="true"/>
-                        <ImageView fx:id="ivTarget" fitHeight="150.0" fitWidth="150.0" layoutX="100.0" layoutY="180.0"
+                        <ImageView fx:id="ivTarget" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="180.0"
                                    pickOnBounds="true" preserveRatio="true"/>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0"
                                    onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true"
