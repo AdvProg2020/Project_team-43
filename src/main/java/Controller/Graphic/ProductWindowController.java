@@ -43,7 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-public class ProductWindowController extends Controller implements Initializable {
+public class ProductWindowController extends Controller {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
@@ -102,6 +102,7 @@ public class ProductWindowController extends Controller implements Initializable
         if (BuyerProcessor.getInstance().isUserLoggedIn()) {
             usernameTextField.setText(BuyerProcessor.getInstance().getUser().getUsername());
         }
+        init();
 
     }
 
@@ -301,9 +302,8 @@ public class ProductWindowController extends Controller implements Initializable
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        file = new File("src/main/resources/videos/products" + product.getProductId() + ".mp4");
+    private void init() {
+        file = new File("src/main/resources/videos/products/" + product.getProductId() + ".mp4");
         if (!file.canRead()) {
             file = new File("src/main/resources/video.mp4");
         }
