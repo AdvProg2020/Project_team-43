@@ -740,16 +740,5 @@ public class ManagerMenuController extends Controller {
             createManagerPhoto.setImage(new Image(file.toURI().toString()));
         }
     }
-    public void goBack() {
-        try {
-            if (parent instanceof ProductWindow) {
-                ProductWindow.getInstance().setProduct(super.product, ProductPanelWindow.getInstance());
-                ProductWindow.getInstance().start(stage);
-            } else {
-                parent.start(stage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

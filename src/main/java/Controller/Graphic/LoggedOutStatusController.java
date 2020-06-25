@@ -12,10 +12,6 @@ public class LoggedOutStatusController extends Controller {
     private Application parent;
     private Product product;
 
-    public void setParent(Application parent, Product product) {
-        this.parent = parent;
-        this.product = product;
-    }
 
     @FXML
     private Button registerButton;
@@ -32,17 +28,5 @@ public class LoggedOutStatusController extends Controller {
         LoginWindow.getInstance().start(stage);
     }
 
-    @Override
-    public void goBack() {
-        try {
-            if (parent instanceof ProductWindow) {
-                ProductWindow.getInstance().setProduct(product, ProductPanelWindow.getInstance());
-                ProductWindow.getInstance().start(stage);
-            } else {
-                parent.start(stage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

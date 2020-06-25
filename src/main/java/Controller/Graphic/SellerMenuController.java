@@ -458,16 +458,4 @@ public class SellerMenuController extends Controller {
         closeButton.setVisible(false);
     }
 
-    public void goBack() {
-        try {
-            if (parent instanceof ProductWindow) {
-                ProductWindow.getInstance().setProduct(super.product, ProductPanelWindow.getInstance());
-                ProductWindow.getInstance().start(stage);
-            } else {
-                parent.start(stage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -42,4 +42,17 @@ public abstract class Controller {
             BuyerUserWindow.getInstance().start(stage);
         }
     }
+    public void UserPanelGoBack() {
+        Music.getInstance().backPage();
+        try {
+            if (parent instanceof ProductWindow) {
+                ProductWindow.getInstance().setProduct(product, ProductPanelWindow.getInstance());
+                ProductWindow.getInstance().start(stage);
+            } else {
+                parent.start(stage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
