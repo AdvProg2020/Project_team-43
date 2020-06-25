@@ -115,7 +115,7 @@
                                 </ImageView>
                             </children>
                         </Pane>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
                             </image>
@@ -123,6 +123,11 @@
                                 <InnerShadow />
                             </effect>
                         </ImageView>
+                  <ImageView fitHeight="123.0" fitWidth="103.0" layoutX="750.0" layoutY="13.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@logout-512.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </content>
@@ -152,7 +157,7 @@
                             </image>
                         </ImageView>
                         <ListView fx:id="productFeaturesList" editable="true" layoutX="305.0" layoutY="236.0" onEditCommit="#editCell" prefHeight="224.0" prefWidth="200.0" visible="false" />
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
                             </effect>
@@ -286,7 +291,7 @@
                         <TextField fx:id="priceNewProduct" layoutX="559.0" layoutY="177.0" />
                         <TextField fx:id="amountNewProduct" layoutX="559.0" layoutY="218.0" />
                         <Text fx:id="invalidCategory" fill="RED" layoutX="735.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select a category" textAlignment="CENTER" visible="false" wrappingWidth="111.6708984375" />
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <image>
                                 <Image url="@button_back.png" />
                             </image>
@@ -306,7 +311,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
                             </effect>
@@ -380,7 +385,7 @@
                         <Button layoutX="416.0" layoutY="446.0" mnemonicParsing="false" onAction="#addOff" text="Apply" />
                         <Text fx:id="invalidCategory1" fill="RED" layoutX="559.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid category" textAlignment="CENTER" visible="false" wrappingWidth="181.6708984375" />
                         <Text fx:id="messageText1" fill="RED" layoutX="137.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" visible="false" wrappingWidth="182.6708984375" />
-                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                             <effect>
                                 <InnerShadow />
                             </effect>
@@ -416,7 +421,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#UserPanelGoBack" style="-fx-cursor: hand;">
+                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="63.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
                      <image>
                         <Image url="@button_back.png" />
                      </image>

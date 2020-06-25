@@ -10,6 +10,8 @@ import model.Product;
 import java.io.IOException;
 
 public class ProductPanelWindow extends Application {
+    public static Stage stage;
+
     private static ProductPanelWindow instance = new ProductPanelWindow();
 
     public static ProductPanelWindow getInstance() {
@@ -28,6 +30,7 @@ public class ProductPanelWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        stage = primaryStage;
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("productsPanel.fxml"));

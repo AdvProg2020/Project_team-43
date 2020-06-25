@@ -1,6 +1,10 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
+import View.graphic.AddCommentWindow;
+import View.graphic.MainWindow;
+import View.graphic.ProductPanelWindow;
+import View.graphic.ProductWindow;
 import View.graphic.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,15 +15,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import model.*;
 import org.controlsfx.control.Rating;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +61,7 @@ public class ProductWindowController extends Controller {
     public TableColumn<Pair<String, Pair<String, String>>, String> featureForCompare;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct1;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct2;
+    public StackPane videoPane;
     public Label numberOfPeopleRated;
     public Label usernameTextField;
 
@@ -232,6 +243,23 @@ public class ProductWindowController extends Controller {
         }
         ObservableList<Pair<String, Pair<String, String>>> details = FXCollections.observableArrayList(list);
         compareTable.setItems(details);
+    }
+
+    public void playVideo() {
+        File file = new File("src/main/resources/video.mp4");
+        Media media = new Media(file.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setFitHeight(videoPane.getHeight());
+        mediaView.setFitWidth(videoPane.getWidth());
+        videoPane.getChildren().add(mediaView);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.stop();
+                mediaPlayer.play();
+            }
+        }).start();
     }
 
     @Override
