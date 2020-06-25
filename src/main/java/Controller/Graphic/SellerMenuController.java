@@ -99,23 +99,12 @@ public class SellerMenuController extends Controller {
         companyText.setText("company: " + user.getCompany().getName());
         companyInfoText.setText("company info: " + user.getCompany().getInfo());
         balance.setText(Double.toString(user.getBalance()));
-        showProfilePhoto();
+        setUserImage(user, profilePhoto);
         initializeAddOff();
         initializeAddProduct();
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
-    }
-
-    private void showProfilePhoto() {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
     }
 
     private void initializeViewOrders() {
@@ -192,6 +181,8 @@ public class SellerMenuController extends Controller {
 
     public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             final File folder = new File("src/main/resources/photos/users");
@@ -204,7 +195,7 @@ public class SellerMenuController extends Controller {
                 }
             }
             Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            showProfilePhoto();
+            setUserImage(user, profilePhoto);
         }
     }
 
