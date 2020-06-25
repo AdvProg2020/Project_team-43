@@ -20,10 +20,14 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 import model.request.*;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -632,17 +636,11 @@ public class ManagerMenuController extends Controller {
         }
     }
 
-
     public void removeCategory() {
         Music.getInstance().confirmation();
         ((Manager) Processor.user).removeCategory(selectedCategory);
         closeCategoryInfo();
         updateCategoryListView();
-    }
-
-    public void kossher(){
-        StackPane sp = new StackPane();
-
     }
 
     public void removeProduct(){
@@ -698,9 +696,7 @@ public class ManagerMenuController extends Controller {
         email.setText(userPersonalInfo.getEmail());
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
-        if (user.getImagePath() != null) {
-            profilePhoto.setImage(new Image("file:" + user.getImagePath()));
-        }
+        showProfilePhoto();
         for (User user : User.allUsers) {
             users.add(user.getUsername());
         }
@@ -723,6 +719,18 @@ public class ManagerMenuController extends Controller {
         requestsListView.setItems(requests);
     }
 
+    private void showProfilePhoto() {
+        final File folder = new File("src/main/resources/photos/users");
+        for (final File file : folder.listFiles()) {
+            if (file.isFile()) {
+                String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
+                if (user.getUsername().equals(fileName)) {
+                    profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+                }
+            }
+        }
+    }
+
     public void update() {
         Music.getInstance().confirmation();
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
@@ -730,13 +738,21 @@ public class ManagerMenuController extends Controller {
         bossProcessor.editField(userPersonalInfo);
     }
 
-    public void browsePhotoUser() {
-        Music.getInstance().open();
+    public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            user.setImagePath(file.getAbsolutePath());
-            profilePhoto.setImage(new Image(file.toURI().toString()));
+            final File folder = new File("src/main/resources/photos/users");
+            for (final File photo : folder.listFiles()) {
+                if (photo.isFile()) {
+                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
+                    if (user.getUsername().equals(fileName)) {
+                        photo.delete();
+                    }
+                }
+            }
+            Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            showProfilePhoto();
         }
     }
 
