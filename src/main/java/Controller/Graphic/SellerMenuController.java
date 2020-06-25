@@ -83,7 +83,6 @@ public class SellerMenuController extends Controller {
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
-    private String productPhotoPath;
     private Product product;
     private Off off;
 
@@ -100,23 +99,12 @@ public class SellerMenuController extends Controller {
         companyText.setText("company: " + user.getCompany().getName());
         companyInfoText.setText("company info: " + user.getCompany().getInfo());
         balance.setText(Double.toString(user.getBalance()));
-        showProfilePhoto();
+        setUserImage(user, profilePhoto);
         initializeAddOff();
         initializeAddProduct();
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
-    }
-
-    private void showProfilePhoto() {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
     }
 
     private void initializeViewOrders() {
@@ -167,7 +155,7 @@ public class SellerMenuController extends Controller {
     public void addNewProduct() {
         if (categoryChoiceBox.getValue() == null) {
             invalidCategory.setVisible(true);
-            //   Music.getInstance().error();
+            Music.getInstance().error();
         } else {
             invalidCategory.setVisible(false);
             Category category = Category.getCategoryByName(categoryChoiceBox.getValue());
@@ -177,12 +165,12 @@ public class SellerMenuController extends Controller {
             }
             try {
                 sellerProcessor.addNewProduct(nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
-                        amountNewProduct.getText(), features, productPhotoPath);
+                        amountNewProduct.getText(), features);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Product added successfully");
                 alert.setContentText("Waiting for manager to confirm");
                 alert.showAndWait();
-                //    Music.getInstance().confirmation();
+                Music.getInstance().confirmation();
             } catch (InvalidCommandException e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(e.getMessage());
@@ -193,6 +181,8 @@ public class SellerMenuController extends Controller {
 
     public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             final File folder = new File("src/main/resources/photos/users");
@@ -205,29 +195,26 @@ public class SellerMenuController extends Controller {
                 }
             }
             Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            showProfilePhoto();
-        }
-    }
-
-    public void browsePhotoProduct() throws IOException {
-        // Music.getInstance().open();
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            productPhotoPath = file.getAbsolutePath();
-            Files.copy(file.toPath(), new File("src/main/resources/photos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            setUserImage(user, profilePhoto);
         }
     }
 
     public void browsePhotoManageProduct() throws IOException {
-        // Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            product.setImagePath(file.getAbsolutePath());
+            final File folder = new File("src/main/resources/photos/products");
+            for (final File photo : folder.listFiles()) {
+                if (photo.isFile()) {
+                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
+                    if (product.getProductId().equals(fileName)) {
+                        photo.delete();
+                    }
+                }
+            }
             Files.copy(file.toPath(), new File("src/main/resources/photos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            setProductImage(product, productPhoto);
         }
-        showProductImage();
     }
 
     public void editProduct() {
@@ -304,14 +291,6 @@ public class SellerMenuController extends Controller {
         productFeaturesList.getItems().set(productFeaturesList.getEditingIndex(), stringEditEvent.getNewValue());
     }
 
-    private void showProductImage() {
-        if (product.getImagePath() != null) {
-            productPhoto.setImage(new Image("file:" + product.getImagePath()));
-        } else {
-            productPhoto.setImage(new Image("file:src/main/resources/product.jpg"));
-        }
-    }
-
     public void showProduct() {
 
         String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
@@ -321,7 +300,7 @@ public class SellerMenuController extends Controller {
         product = user.getProductById(id);
         initializeManageProduct(product);
         showProductFeaturesList(product);
-        showProductImage();
+        setProductImage(product, productPhoto);
 
         for (Buyer buyer : user.getBuyers(product.getProductId())) {
             buyersListView.getItems().add(buyer.toString());

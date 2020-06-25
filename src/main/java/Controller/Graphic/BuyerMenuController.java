@@ -56,24 +56,13 @@ public class BuyerMenuController extends Controller {
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
         balance.setText(Double.toString(user.getBalance()));
-        showProfilePhoto();
+        setUserImage(user, profilePhoto);
         setCart();
         setDiscountCodes();
         setOrders();
         if (isBack) {
             isBack = false;
             tabPane.getSelectionModel().select(cartTab);
-        }
-    }
-
-    private void showProfilePhoto() {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-        }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
-        if (file.exists()) {
-            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
         }
     }
 
@@ -113,6 +102,8 @@ public class BuyerMenuController extends Controller {
 
     public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             final File folder = new File("src/main/resources/photos/users");
@@ -125,7 +116,7 @@ public class BuyerMenuController extends Controller {
                 }
             }
             Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            showProfilePhoto();
+            setUserImage(user, profilePhoto);
         }
     }
 

@@ -168,11 +168,6 @@
                                         <Image url="@user.png" />
                                     </image>
                                 </ImageView>
-                                <ImageView fitHeight="28.0" fitWidth="92.0" layoutX="143.0" layoutY="99.0" onMouseClicked="#createManagerBrowsePhoto" style="-fx-cursor: hand;">
-                                    <image>
-                                        <Image url="@button_browse-photo.png" />
-                                    </image>
-                                </ImageView>
                             </children>
                         </Pane>
                         <Text fill="#097dc9" layoutX="260.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create manager profile" wrappingWidth="271.6708984375">

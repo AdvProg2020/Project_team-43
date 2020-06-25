@@ -187,28 +187,4 @@ public class SellerProcessor extends Processor {
         super.editField(userPersonalInfo);
         ((Seller) user).setCompany(Company.getCompanyByName(companyName));
     }
-
-    public String addNewProduct(String name, String companyName, String categoryName, String priceString, String number, HashMap<String, String> features, String path) throws InvalidCommandException {
-        if (number.matches("(\\d)+")) {
-            int numberInt = Integer.parseInt(number);
-            if (Category.hasCategoryWithName(categoryName)) {
-                if (Company.hasCompanyWithName(companyName)) {
-                    Company company = Company.getCompanyByName(companyName);
-                    Category category = Category.getCategoryByName(categoryName);
-                    if (!priceString.matches("(\\d)+")) {
-                        throw new InvalidCommandException("price must be an integer");
-                    }
-                    Double price = Double.parseDouble(priceString);
-                    ((Seller) user).addNewProduct(name, company, price, category, numberInt, features, path);
-                    return "Product added successfully\nWaiting for manager to confirm";
-                } else {
-                    throw new InvalidCommandException("Company with this name doesn't exist");
-                }
-            } else {
-                throw new InvalidCommandException("Category with this name doesn't exist");
-            }
-        } else {
-            throw new InvalidCommandException("Amount must be an integer");
-        }
-    }
 }
