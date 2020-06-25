@@ -77,6 +77,7 @@ public class SellerMenuController extends Controller {
     public ChoiceBox<String> existingProductsIds;
     public ChoiceBox<String> addProductCompanyChoiceBox;
     public Button manageProductBrowsePhotoButton;
+    public Label productAvailableCount;
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
@@ -243,6 +244,7 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeManageProduct(Product product) {
+        productAvailableCount.setText("Available count: " + user.getProductsNumber().get(product));
         manageProductCompanyChoiceBox.getItems().clear();
         manageNameTextField.setText(product.getName());
         managePriceTextField.setText(String.valueOf(product.getPrice()));
@@ -260,6 +262,7 @@ public class SellerMenuController extends Controller {
         managePriceLabel.setVisible(true);
         manageCompanyLabel.setVisible(true);
         manageProductBrowsePhotoButton.setVisible(true);
+        productAvailableCount.setVisible(true);
 
 
     }

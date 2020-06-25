@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
@@ -104,8 +105,15 @@ public class ProductPanelController extends Controller implements Initializable 
                     ((ImageView) pane.getChildren().get(0)).setImage(image);
                 }
                 panes.get(i - startProductIndex).setVisible(true);
+
                 ((Label) pane.getChildren().get(1)).setText(allProducts.get(i).getName());
-                ((Label) pane.getChildren().get(2)).setText(String.valueOf(allProducts.get(i).getPrice()));
+                if (allProducts.get(i).getAvailableCount() > 0) {
+                    ((Label) pane.getChildren().get(2)).setTextFill(Color.BLACK);
+                    ((Label) pane.getChildren().get(2)).setText("price: " + allProducts.get(i).getPrice());
+                } else {
+                    ((Label) pane.getChildren().get(2)).setTextFill(Color.RED);
+                    ((Label) pane.getChildren().get(2)).setText("Not Available");
+                }
                 ((Label) pane.getChildren().get(3)).setText("id: " + allProducts.get(i).getProductId());
                 ((Label) pane.getChildren().get(4)).setText(allProducts.get(i).getScore().getAvgScore() + "/5");
             } else {
@@ -181,10 +189,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public boolean hasNextPage() {
-        if (startProductIndex + 9 >= allProducts.size()) {
-            return false;
-        }
-        return true;
+        return startProductIndex + 9 < allProducts.size();
     }
 
     public void nextPage() {
@@ -197,10 +202,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public boolean hasPreviousPage() {
-        if (startProductIndex == 0) {
-            return false;
-        }
-        return true;
+        return startProductIndex != 0;
     }
 
     public void previousPage() {

@@ -205,6 +205,11 @@
                             </effect>
                         </Button>
                   <Button fx:id="manageProductBrowsePhotoButton" layoutX="653.0" layoutY="171.0" mnemonicParsing="false" onAction="#browsePhotoManageProduct" text="browse photo" visible="false" />
+                  <Label fx:id="productAvailableCount" layoutX="57.0" layoutY="307.0" prefHeight="26.0" prefWidth="200.0" text="Label" visible="false">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </content>
