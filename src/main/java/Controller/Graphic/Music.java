@@ -27,12 +27,9 @@ public class Music {
 
     public void close() {
         System.out.println("close");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                closeSound.stop();
-                closeSound.play();
-            }
+        new Thread(() -> {
+            closeSound.stop();
+            closeSound.play();
         }).start();
 
     }
