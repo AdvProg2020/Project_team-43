@@ -228,7 +228,7 @@ public class BuyerMenuController extends Controller {
                         product = pair.getKey();
                     }
                 }
-                imageView.setImage(new Image("file:" + product.getImagePath(), 100, 50, false, false));
+                setProductImage(product, imageView);
                 label.setText(item);
                 setGraphic(hbox);
             }

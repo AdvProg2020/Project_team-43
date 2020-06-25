@@ -61,12 +61,12 @@ public abstract class Controller {
     }
 
     protected void setProductImage(Product product, ImageView imageView) {
-        File file = new File("src/main/resources/photos/products/" + product.getProductId() + ".png");
+        File file = new File("src/main/resources/photos/products/" + product.getProductId() + ".jpg");
         if (file.exists()) {
             imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName()));
             return;
         }
-        file = new File("src/main/resources/photos/products/" + product.getProductId() + ".jpg");
+        file = new File("src/main/resources/photos/products/" + product.getProductId() + ".png");
         if (file.exists()) {
             imageView.setImage(new Image("file:" + "src/main/resources/photos/products/" + file.getName()));
             return;

@@ -86,7 +86,7 @@ public class ProductWindowController extends Controller implements Initializable
         this.product = product;
         product.setVisit(product.getVisit() + 1);
         this.parent = parent;
-        setProductImage();
+        setProductImage(product, productImage);
         ivTarget.setVisible(false);
         setProductProperties();
         setSellers();
@@ -156,12 +156,6 @@ public class ProductWindowController extends Controller implements Initializable
         numberOfPeopleRated.setText(Integer.toString(product.getScore().getBuyers()) + " user");
         productScore.setRating(product.getScore().getAvgScore());
         productScore.disableProperty().setValue(true);
-    }
-
-    public void setProductImage() {
-        if (product.getImagePath() != null) {
-            productImage.setImage(new Image("file:" + product.getImagePath(), 300, 200, false, false));
-        }
     }
 
     public void goBack() {

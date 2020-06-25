@@ -31,8 +31,6 @@ public class Product {
     private String description;
     private ProductScore score;
     private ArrayList<Comment> comments;
-    private String imagePath;
-
 
     private transient Category category;
     private String categoryName;
@@ -373,13 +371,5 @@ public class Product {
         for (Seller seller : sellers) {
             sellersName.add(seller.getUsername());
         }
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 }
