@@ -159,14 +159,17 @@ public class ManagerMenuController extends Controller {
     }
 
     private void showUserPhoto(User user) {
-        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
+        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
         if (file.exists()) {
             userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
         }
-        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
+        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
         if (file.exists()) {
             userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
         }
+        userProfilePhoto.setImage(new Image("file:" + "src/main/resources/user.png"));
     }
 
     public void showProductInfo() {
