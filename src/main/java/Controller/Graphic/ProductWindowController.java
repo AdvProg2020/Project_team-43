@@ -73,6 +73,7 @@ public class ProductWindowController extends Controller {
     public Text allTimeOfVideo;
     public Text currentTimeOfVideo;
     public Slider timeSlider;
+    public Slider volumeSlider;
     public File file;
     public Media media;
     public MediaPlayer mediaPlayer;
@@ -318,6 +319,14 @@ public class ProductWindowController extends Controller {
         timeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (timeSlider.isPressed()) {
                 mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
+            }
+        });
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if(volumeSlider.isPressed()){
+                    mediaPlayer.setVolume(volumeSlider.getValue()/100);
+                }
             }
         });
     }

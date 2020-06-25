@@ -19,59 +19,44 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.Rating?>
 
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-         prefHeight="600.0" prefWidth="900.0"
-         style="-fx-background-image: url('productBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600;"
-         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="Controller.Graphic.ProductWindowController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('productBackground.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductWindowController">
     <tabs>
         <Tab text="properties">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
                     <children>
-                        <ImageView fx:id="productImage" fitHeight="207.0" fitWidth="212.0" layoutX="31.0" layoutY="34.0"
-                                   onMouseExited="#endZoom" onMouseMoved="#zoom" pickOnBounds="true"
-                                   preserveRatio="true"/>
-                        <ImageView fx:id="ivTarget" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="180.0"
-                                   pickOnBounds="true" preserveRatio="true"/>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0"
-                                   onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true"
-                                   style="-fx-cursor: hand;">
+                        <ImageView fx:id="productImage" fitHeight="207.0" fitWidth="212.0" layoutX="31.0" layoutY="34.0" onMouseExited="#endZoom" onMouseMoved="#zoom" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="ivTarget" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="73.0" layoutY="331.0" onMouseClicked="#addToCart" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@button_add-to-cart.png"/>
+                                <Image url="@button_add-to-cart.png" />
                             </image>
                             <cursor>
-                                <Cursor fx:constant="NONE"/>
+                                <Cursor fx:constant="NONE" />
                             </cursor>
                         </ImageView>
-                        <Label layoutX="373.0" layoutY="79.0" text="Name"/>
-                        <Label layoutX="373.0" layoutY="109.0" text="Price"/>
-                        <Label layoutX="373.0" layoutY="147.0" text="Score (out of 5)"/>
-                        <Label fx:id="productName" layoutX="505.0" layoutY="79.0" text="Label"/>
-                        <Label fx:id="productPrice" layoutX="505.0" layoutY="109.0" text="Label"/>
-                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0"
-                                   onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true"
-                                   style="-fx-cursor: hand;">
+                        <Label layoutX="373.0" layoutY="79.0" text="Name" />
+                        <Label layoutX="373.0" layoutY="109.0" text="Price" />
+                        <Label layoutX="373.0" layoutY="147.0" text="Score (out of 5)" />
+                        <Label fx:id="productName" layoutX="505.0" layoutY="79.0" text="Label" />
+                        <Label fx:id="productPrice" layoutX="505.0" layoutY="109.0" text="Label" />
+                        <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@button_back2.png"/>
+                                <Image url="@button_back2.png" />
                             </image>
                         </ImageView>
-                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0"
-                                   style="-fx-cursor: hand;"/>
-                        <Label layoutX="307.0" layoutY="210.0" text="sellers"/>
-                        <Label fx:id="isOff" layoutX="677.0" layoutY="79.0" text="Label"/>
-                        <Label fx:id="timesRemain" layoutX="677.0" layoutY="109.0" text="Label"/>
-                        <Rating fx:id="productScore" layoutX="502.0" layoutY="142.0" prefHeight="10.0"
-                                prefWidth="68.0"/>
-                        <Label fx:id="numberOfPeopleRated" layoutX="695.0" layoutY="152.0" text="Label"/>
-                        <ImageView fitHeight="68.0" fitWidth="73.0" layoutX="808.0" layoutY="14.0"
-                                   onMouseClicked="#userPanelButtonClicked" pickOnBounds="true" preserveRatio="true"
-                                   style="-fx-cursor: hand;">
+                        <ChoiceBox fx:id="sellers" layoutX="375.0" layoutY="206.0" prefWidth="150.0" style="-fx-cursor: hand;" />
+                        <Label layoutX="307.0" layoutY="210.0" text="sellers" />
+                        <Label fx:id="isOff" layoutX="677.0" layoutY="79.0" text="Label" />
+                        <Label fx:id="timesRemain" layoutX="677.0" layoutY="109.0" text="Label" />
+                        <Rating fx:id="productScore" layoutX="502.0" layoutY="142.0" prefHeight="10.0" prefWidth="68.0" />
+                        <Label fx:id="numberOfPeopleRated" layoutX="695.0" layoutY="152.0" text="Label" />
+                        <ImageView fitHeight="68.0" fitWidth="73.0" layoutX="808.0" layoutY="14.0" onMouseClicked="#userPanelButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@user.png"/>
+                                <Image url="@user.png" />
                             </image>
                         </ImageView>
-                        <Label fx:id="usernameTextField" layoutX="726.0" layoutY="27.0" text="username"/>
+                        <Label fx:id="usernameTextField" layoutX="726.0" layoutY="27.0" text="username" />
 
                     </children>
                 </AnchorPane>
@@ -80,20 +65,16 @@
         <Tab fx:id="tab" text="comments">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
-                    <ListView fx:id="comments" layoutX="40.0" layoutY="36.0" onMouseClicked="#showComment"
-                              prefHeight="454.0" prefWidth="200.0"/>
-                    <TextArea fx:id="comment" layoutX="427.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0"/>
-                    <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0"
-                               onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true"
-                               style="-fx-cursor: hand;">
+                    <ListView fx:id="comments" layoutX="40.0" layoutY="36.0" onMouseClicked="#showComment" prefHeight="454.0" prefWidth="200.0" />
+                    <TextArea fx:id="comment" layoutX="427.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" />
+                    <ImageView fitHeight="37.0" fitWidth="157.0" layoutX="333.0" layoutY="332.0" onMouseClicked="#addComment" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
-                            <Image url="@button_add-comment.png"/>
+                            <Image url="@button_add-comment.png" />
                         </image>
                     </ImageView>
                 </AnchorPane>
@@ -102,41 +83,37 @@
         <Tab text="rate product">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <Rating fx:id="rating" layoutX="132.0" layoutY="98.0" prefHeight="33.0" prefWidth="380.0"
-                            rating="0.0">
+                    <Rating fx:id="rating" layoutX="132.0" layoutY="98.0" prefHeight="33.0" prefWidth="380.0" rating="0.0">
                         <cursor>
-                            <Cursor fx:constant="HAND"/>
+                            <Cursor fx:constant="HAND" />
                         </cursor>
                     </Rating>
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
-                    <ImageView fitHeight="42.0" fitWidth="109.0" layoutX="165.0" layoutY="173.0" onMouseClicked="#rate"
-                               pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                    <ImageView fitHeight="42.0" fitWidth="109.0" layoutX="165.0" layoutY="173.0" onMouseClicked="#rate" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
-                            <Image url="@button_rate.png"/>
+                            <Image url="@button_rate.png" />
                         </image>
                     </ImageView>
-                    <Label fx:id="error" layoutX="511.0" layoutY="104.0" text="Label"/>
+                    <Label fx:id="error" layoutX="511.0" layoutY="104.0" text="Label" />
                 </AnchorPane>
             </content>
         </Tab>
         <Tab text="features">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600" prefWidth="900">
-                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack"
-                               pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                    <ImageView fitHeight="39.0" fitWidth="91.0" layoutX="546.0" layoutY="331.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
-                            <Image url="@button_back2.png"/>
+                            <Image url="@button_back2.png" />
                         </image>
                     </ImageView>
                     <TableView fx:id="features" layoutX="38.0" layoutY="22.0" prefHeight="478.0" prefWidth="458.0">
                         <columns>
-                            <TableColumn fx:id="feature" prefWidth="191.0" text="Feature"/>
-                            <TableColumn fx:id="value" minWidth="0.0" prefWidth="266.0"/>
+                            <TableColumn fx:id="feature" prefWidth="191.0" text="Feature" />
+                            <TableColumn fx:id="value" minWidth="0.0" prefWidth="266.0" />
                         </columns>
                     </TableView>
                 </AnchorPane>
@@ -146,21 +123,18 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <TextField fx:id="secondProductId" layoutX="756.0" layoutY="66.0" prefHeight="31.0"
-                                   prefWidth="130.0"/>
-                        <Label layoutX="665.0" layoutY="71.0" text="productId"/>
-                        <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="766.0" layoutY="125.0"
-                                   onMouseClicked="#compare" pickOnBounds="true" preserveRatio="true">
+                        <TextField fx:id="secondProductId" layoutX="756.0" layoutY="66.0" prefHeight="31.0" prefWidth="130.0" />
+                        <Label layoutX="665.0" layoutY="71.0" text="productId" />
+                        <ImageView fitHeight="42.0" fitWidth="110.0" layoutX="766.0" layoutY="125.0" onMouseClicked="#compare" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@button_compare.png"/>
+                                <Image url="@button_compare.png" />
                             </image>
                         </ImageView>
-                        <TableView fx:id="compareTable" layoutX="171.0" layoutY="92.0" prefHeight="334.0"
-                                   prefWidth="272.0">
+                        <TableView fx:id="compareTable" layoutX="171.0" layoutY="92.0" prefHeight="334.0" prefWidth="272.0">
                             <columns>
-                                <TableColumn fx:id="featureForCompare" prefWidth="75.0" text="feature"/>
-                                <TableColumn fx:id="featureOfProduct1" prefWidth="100.0" text="product1"/>
-                                <TableColumn fx:id="featureOfProduct2" prefWidth="96.0" text="product2"/>
+                                <TableColumn fx:id="featureForCompare" prefWidth="75.0" text="feature" />
+                                <TableColumn fx:id="featureOfProduct1" prefWidth="100.0" text="product1" />
+                                <TableColumn fx:id="featureOfProduct2" prefWidth="96.0" text="product2" />
                             </columns>
                         </TableView>
                     </children>
@@ -171,45 +145,44 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <StackPane fx:id="videoPane" layoutX="36.0" layoutY="43.0" prefHeight="414.0" prefWidth="828.0"
-                                   style="-fx-border-radius: 5;"/>
-                        <Slider fx:id="timeSlider" layoutX="193.0" layoutY="457.0" prefHeight="18.0" prefWidth="394.0"/>
-                        <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="630.0" layoutY="452.0"
-                                   onMouseClicked="#play" style="-fx-cursor: hand;">
+                        <StackPane fx:id="videoPane" layoutX="36.0" layoutY="43.0" prefHeight="414.0" prefWidth="828.0" style="-fx-border-radius: 5;" />
+                        <Slider fx:id="timeSlider" layoutX="193.0" layoutY="457.0" prefHeight="18.0" prefWidth="394.0" />
+                        <ImageView fitHeight="29.0" fitWidth="31.0" layoutX="630.0" layoutY="452.0" onMouseClicked="#play" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@transparentLight14.png"/>
+                                <Image url="@transparentLight14.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="30.0" fitWidth="27.0" layoutX="595.0" layoutY="451.0"
-                                   onMouseClicked="#pause" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="30.0" fitWidth="27.0" layoutX="595.0" layoutY="451.0" onMouseClicked="#pause" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@transparentLight12.png"/>
+                                <Image url="@transparentLight12.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="667.0" layoutY="454.0"
-                                   onMouseClicked="#repeat" style="-fx-cursor: hand;">
+                        <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="667.0" layoutY="454.0" onMouseClicked="#repeat" style="-fx-cursor: hand;">
                             <image>
-                                <Image url="@repeat.png"/>
+                                <Image url="@repeat.png" />
                             </image>
                         </ImageView>
                         <Text layoutX="131.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/">
                             <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                             </font>
                         </Text>
-                        <Text fx:id="allTimeOfVideo" fill="#281616" layoutX="139.0" layoutY="473.0" strokeType="OUTSIDE"
-                              strokeWidth="0.0" text="00" wrappingWidth="53.6708984375">
+                        <Text fx:id="allTimeOfVideo" fill="#281616" layoutX="139.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="53.6708984375">
                             <font>
-                                <Font name="Bookman Old Style" size="20.0"/>
+                                <Font name="Bookman Old Style" size="20.0" />
                             </font>
                         </Text>
-                        <Text fx:id="currentTimeOfVideo" fill="#080817" layoutX="83.0" layoutY="473.0"
-                              strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT"
-                              wrappingWidth="47.6708984375">
+                        <Text fx:id="currentTimeOfVideo" fill="#080817" layoutX="83.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT" wrappingWidth="47.6708984375">
                             <font>
-                                <Font name="Bookman Old Style" size="20.0"/>
+                                <Font name="Bookman Old Style" size="20.0" />
                             </font>
                         </Text>
+                  <Slider fx:id="volumeSlider" layoutX="710.0" layoutY="456.0" prefHeight="18.0" prefWidth="99.0" value="100.0" />
+                  <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="815.0" layoutY="451.0">
+                     <image>
+                        <Image url="@transparentLight11.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </content>
