@@ -67,14 +67,13 @@ public class BuyerMenuController extends Controller {
     }
 
     private void showProfilePhoto() {
-        final File folder = new File("src/main/resources/photos/users");
-        for (final File file : folder.listFiles()) {
-            if (file.isFile()) {
-                String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
-                if (user.getUsername().equals(fileName)) {
-                    profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-                }
-            }
+        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
+        if (file.exists()) {
+            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+        }
+        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
+        if (file.exists()) {
+            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
         }
     }
 

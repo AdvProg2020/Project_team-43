@@ -22,7 +22,6 @@ public abstract class User {
     protected UserPersonalInfo userPersonalInfo;
     protected double balance;//hamoon etebare
     protected UserType userType;
-    protected String imagePath;
 
     public UserPersonalInfo getUserPersonalInfo() {
         return userPersonalInfo;
@@ -123,13 +122,5 @@ public abstract class User {
 
     public void setUserPersonalInfo(UserPersonalInfo userPersonalInfo) {
         this.userPersonalInfo = userPersonalInfo;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getImagePath() {
-        return imagePath;
     }
 }

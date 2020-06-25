@@ -148,13 +148,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showUser(User user) {
-        if (user.getImagePath() != null) {
-            userProfilePhoto.setImage(new Image("file:" + user.getImagePath()));
-        } else {
-            File file = new File("src/main/resources/user.png");
-            Image image = new Image(file.toURI().toString());
-            userProfilePhoto.setImage(image);
-        }
+        showUserPhoto(user);
         userName2.setText(user.getUsername());
         firstName2.setText(user.getUserPersonalInfo().getFirstName());
         lastName2.setText(user.getUserPersonalInfo().getLastName());
@@ -162,6 +156,20 @@ public class ManagerMenuController extends Controller {
         phoneNumber2.setText(user.getUserPersonalInfo().getPhoneNumber());
         userInfoPane.setVisible(true);
 
+    }
+
+    private void showUserPhoto(User user) {
+        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
+        if (file.exists()) {
+            userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
+        }
+        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
+        if (file.exists()) {
+            userProfilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+            return;
+        }
+        userProfilePhoto.setImage(new Image("file:" + "src/main/resources/user.png"));
     }
 
     public void showProductInfo() {
@@ -299,7 +307,7 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(emailCreateManager.getText());
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
-            ((Manager) Processor.user).createManagerProfile(managerInfo);
+            user.createManagerProfile(managerInfo);
         }
         clearCreateManager();
         updateUsersListView();
@@ -629,10 +637,10 @@ public class ManagerMenuController extends Controller {
         codedDiscountListView.setItems(codedDiscounts);
     }
 
-    public void updateProductListView(){
+    public void updateProductListView() {
         products.clear();
         for (Product product : Product.allProductsInList) {
-            products.add(product.getName() +" / " + product.getAvailableCount());
+            products.add(product.getName() + " / " + product.getAvailableCount());
         }
     }
 
@@ -643,7 +651,7 @@ public class ManagerMenuController extends Controller {
         updateCategoryListView();
     }
 
-    public void removeProduct(){
+    public void removeProduct() {
         Music.getInstance().confirmation();
         bossProcessor.processRemoveProduct(selectedProduct.getProductId());
         closeProductInfo();
@@ -720,14 +728,13 @@ public class ManagerMenuController extends Controller {
     }
 
     private void showProfilePhoto() {
-        final File folder = new File("src/main/resources/photos/users");
-        for (final File file : folder.listFiles()) {
-            if (file.isFile()) {
-                String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
-                if (user.getUsername().equals(fileName)) {
-                    profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
-                }
-            }
+        File file = new File("src/main/resources/photos/users/" + user.getUsername() + ".png");
+        if (file.exists()) {
+            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+        }
+        file = new File("src/main/resources/photos/users/" + user.getUsername() + ".jpg");
+        if (file.exists()) {
+            profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
         }
     }
 
@@ -740,6 +747,8 @@ public class ManagerMenuController extends Controller {
 
     public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             final File folder = new File("src/main/resources/photos/users");
@@ -756,7 +765,7 @@ public class ManagerMenuController extends Controller {
         }
     }
 
-    public void createManagerBrowsePhoto(){
+    public void createManagerBrowsePhoto() {
         Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
