@@ -4,7 +4,6 @@ import Controller.console.BuyerProcessor;
 import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -123,7 +122,7 @@ public class BuyerMenuController extends Controller {
     public void setCartCells(Pair<Product, Seller> productSellerPair) {
         products.getItems().add(productSellerPair.getKey().getName() + "\t" +
                 productSellerPair.getValue().getUsername() + "\t" + user.getNewBuyerCart().get(productSellerPair) + "\t" + productSellerPair.getKey().getPrice() + "\t" +
-                productSellerPair.getKey().getPrice() * user.getNewBuyerCart().get(productSellerPair));
+                productSellerPair.getKey().getPrice() * user.getNewBuyerCart().get(productSellerPair) + "\t");
 
     }
 
@@ -178,7 +177,7 @@ public class BuyerMenuController extends Controller {
 
     }
 
-    public void showCodedDiscount(MouseEvent mouseEvent) {
+    public void showCodedDiscount() {
         discountCodeFeatures.getItems().clear();
         String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
         System.out.println(discountId);
@@ -192,10 +191,11 @@ public class BuyerMenuController extends Controller {
         closeDiscountButton.setVisible(true);
     }
 
-    public void closeDiscountCodeFeatures(MouseEvent mouseEvent) {
+    public void closeDiscountCodeFeatures() {
         discountCodeFeatures.setVisible(false);
         closeDiscountButton.setVisible(false);
     }
+
 
     private class XCell extends ListCell<String> {
         Buyer buyer;
@@ -228,7 +228,7 @@ public class BuyerMenuController extends Controller {
                         product = pair.getKey();
                     }
                 }
-                setProductImage(product, imageView);
+                setProductImage(product, imageView, 70, 100);
                 label.setText(item);
                 setGraphic(hbox);
             }
@@ -259,7 +259,7 @@ public class BuyerMenuController extends Controller {
             if (buyer.getNewBuyerCart().containsKey(productSellerPair))
                 label.setText(productSellerPair.getKey().getName() + "\t" + productSellerPair.getValue().getUsername() + "\t" +
                         buyer.getNewBuyerCart().get(productSellerPair) + "\t" + productSellerPair.getKey().getPrice() + "\t" +
-                        productSellerPair.getKey().getPrice() * buyer.getNewBuyerCart().get(productSellerPair));
+                        productSellerPair.getKey().getPrice() * buyer.getNewBuyerCart().get(productSellerPair) + "\t");
             else
                 getListView().getItems().remove(getItem());
         }

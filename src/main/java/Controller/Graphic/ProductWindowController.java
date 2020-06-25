@@ -86,7 +86,7 @@ public class ProductWindowController extends Controller implements Initializable
         this.product = product;
         product.setVisit(product.getVisit() + 1);
         this.parent = parent;
-        setProductImage(product, productImage);
+        setProductImage(product, productImage, 200, 300);
         ivTarget.setVisible(false);
         setProductProperties();
         setSellers();
@@ -109,21 +109,16 @@ public class ProductWindowController extends Controller implements Initializable
         timesRemain.setVisible(false);
         isOff.setVisible(false);
         if (Off.isProductInOff(product) != 0) {
-            isOff.setText("off amount : " + Double.toString(Off.isProductInOff(product)));
+            isOff.setText("off amount : " + Off.isProductInOff(product));
             isOff.setVisible(true);
             Off off = Off.getOffProductInOff(product);
 
             DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            assert off != null;
             timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()));
 
             timesRemain.setVisible(true);
-            Timeline oneSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()));
-                }
-            }));
+            Timeline oneSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), event -> timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()))));
             oneSecondsWonder.setCycleCount(Timeline.INDEFINITE);
             oneSecondsWonder.play();
 
@@ -153,7 +148,7 @@ public class ProductWindowController extends Controller implements Initializable
         productName.setText(product.getName());
         productPrice.setText(Double.toString(product.getPrice()));
         productScore.setPartialRating(true);
-        numberOfPeopleRated.setText(Integer.toString(product.getScore().getBuyers()) + " user");
+        numberOfPeopleRated.setText(product.getScore().getBuyers() + " user");
         productScore.setRating(product.getScore().getAvgScore());
         productScore.disableProperty().setValue(true);
     }
@@ -217,6 +212,7 @@ public class ProductWindowController extends Controller implements Initializable
 
     public void zoom(MouseEvent event) {
         productImage.setPreserveRatio(true);
+        ivTarget.setPreserveRatio(false);
         int x = (int) event.getX();
         int y = (int) event.getY();
         PixelReader reader = productImage.getImage().getPixelReader();
@@ -246,7 +242,7 @@ public class ProductWindowController extends Controller implements Initializable
         featureOfProduct2.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getValue()));
         ArrayList<Pair<String, Pair<String, String>>> list = new ArrayList<>();
         for (String s : product2.getCategory().getFeatures()) {
-            Pair<String, Pair<String, String>> pairPair = new Pair<String, Pair<String, String>>(s, new Pair<>(product.getFeaturesMap().get(s),
+            Pair<String, Pair<String, String>> pairPair = new Pair<>(s, new Pair<>(product.getFeaturesMap().get(s),
                     product2.getFeaturesMap().get(s)));
             list.add(pairPair);
         }
@@ -255,15 +251,12 @@ public class ProductWindowController extends Controller implements Initializable
     }
 
     public void play() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mediaPlayer.getCurrentTime() == mediaPlayer.getStartTime()) {
-                    mediaPlayer.stop();
-                    System.out.println(1);
-                }
-                mediaPlayer.play();
+        new Thread(() -> {
+            if (mediaPlayer.getCurrentTime() == mediaPlayer.getStartTime()) {
+                mediaPlayer.stop();
+                System.out.println(1);
             }
+            mediaPlayer.play();
         }).start();
     }
 
@@ -282,12 +275,10 @@ public class ProductWindowController extends Controller implements Initializable
     }
 
     public void updatesValues() {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
-                currentTimeOfVideo.setText((int) (mediaPlayer.getCurrentTime().toSeconds()) + "");
-                allTimeOfVideo.setText((int) (mediaPlayer.getStopTime().toSeconds()) + "");
-            }
+        Platform.runLater(() -> {
+            timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
+            currentTimeOfVideo.setText((int) (mediaPlayer.getCurrentTime().toSeconds()) + "");
+            allTimeOfVideo.setText((int) (mediaPlayer.getStopTime().toSeconds()) + "");
         });
     }
 
@@ -319,19 +310,11 @@ public class ProductWindowController extends Controller implements Initializable
         mediaView.setFitHeight(400);
         mediaView.setFitWidth(820);
         videoPane.getChildren().add(mediaView);
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                updatesValues();
-            }
-        });
+        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> updatesValues());
 
-        timeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (timeSlider.isPressed()) {
-                    mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
-                }
+        timeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (timeSlider.isPressed()) {
+                mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
             }
         });
     }

@@ -366,7 +366,7 @@ public class SellerMenuController extends Controller {
         applyOffChangesButton.setVisible(true);
     }
 
-    public void editOff(ActionEvent event) {
+    public void editOff() {
         //Music.getInstance().confirmation();
         boolean change = false;
         String amountString = manageOffAmountLabel.getText();
