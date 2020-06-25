@@ -303,7 +303,7 @@ public class ProductWindowController extends Controller implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        file = new File("src/main/resources/" + product.getProductId() + ".mp4");
+        file = new File("src/main/resources/videos/products" + product.getProductId() + ".mp4");
         if (!file.canRead()) {
             file = new File("src/main/resources/video.mp4");
         }
