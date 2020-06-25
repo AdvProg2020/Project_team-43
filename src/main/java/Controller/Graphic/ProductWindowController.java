@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -30,14 +31,16 @@ import model.*;
 import org.controlsfx.control.Rating;
 
 import java.io.File;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 
-public class ProductWindowController extends Controller {
+public class ProductWindowController extends Controller implements Initializable {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
@@ -64,6 +67,10 @@ public class ProductWindowController extends Controller {
     public StackPane videoPane;
     public Label numberOfPeopleRated;
     public Label usernameTextField;
+    public File file;
+    public Media media;
+    public MediaPlayer mediaPlayer;
+    public MediaView mediaView;
 
 
     private Product product;
@@ -245,21 +252,25 @@ public class ProductWindowController extends Controller {
         compareTable.setItems(details);
     }
 
-    public void playVideo() {
-        File file = new File("src/main/resources/video.mp4");
-        Media media = new Media(file.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
-        mediaView.setFitHeight(videoPane.getHeight());
-        mediaView.setFitWidth(videoPane.getWidth());
-        videoPane.getChildren().add(mediaView);
+    public void play() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mediaPlayer.stop();
+                if(mediaPlayer.getCurrentTime() == mediaPlayer.getStartTime()) {
+                    mediaPlayer.stop();
+                    System.out.println(1);
+                }
                 mediaPlayer.play();
             }
         }).start();
+    }
+    public void pause(){
+        mediaPlayer.pause();
+    }
+
+    public void repeat(){
+        mediaPlayer.stop();
+        mediaPlayer.play();
     }
 
     @Override
@@ -279,5 +290,16 @@ public class ProductWindowController extends Controller {
             BuyerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
             BuyerUserWindow.getInstance().start(stage);
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        file = new File("src/main/resources/video.mp4");
+        media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaView = new MediaView(mediaPlayer);
+        mediaView.setFitHeight(400);
+        mediaView.setFitWidth(820);
+        videoPane.getChildren().add(mediaView);
     }
 }
