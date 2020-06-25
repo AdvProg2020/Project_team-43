@@ -1,9 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import View.graphic.AddCommentWindow;
-import View.graphic.MainWindow;
-import View.graphic.ProductWindow;
+import View.graphic.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -28,7 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-public class ProductWindowController {
+
+public class ProductWindowController extends Controller {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
@@ -52,6 +51,8 @@ public class ProductWindowController {
     public TableColumn<Pair<String, Pair<String, String>>, String> featureForCompare;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct1;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct2;
+    public Label numberOfPeopleRated;
+    public Label usernameTextField;
 
 
     private Product product;
@@ -73,6 +74,9 @@ public class ProductWindowController {
         if (isBackToComment) {
             isBackToComment = false;
             tabPane.getSelectionModel().select(tab);
+        }
+        if (BuyerProcessor.getInstance().isUserLoggedIn()) {
+            usernameTextField.setText(BuyerProcessor.getInstance().getUser().getUsername());
         }
 
     }
@@ -124,6 +128,8 @@ public class ProductWindowController {
     public void setProductProperties() {
         productName.setText(product.getName());
         productPrice.setText(Double.toString(product.getPrice()));
+        productScore.setPartialRating(true);
+        numberOfPeopleRated.setText(Integer.toString(product.getScore().getBuyers()) + " user");
         productScore.setRating(product.getScore().getAvgScore());
         productScore.disableProperty().setValue(true);
     }
@@ -156,17 +162,17 @@ public class ProductWindowController {
             error.setText("you are not buyer");
         }
         if (!BuyerProcessor.getInstance().isUserLoggedIn()) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("first log in please");
         } else if (!((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product)) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("you didn't buy this product");
         } else if (product.getScore().isUserRatedBefore(BuyerProcessor.getInstance().getUser())) {
-             Music.getInstance().error();
+            Music.getInstance().error();
             error.setText("you rated before");
         } else {
             product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
-             Music.getInstance().confirmation();
+            Music.getInstance().confirmation();
             error.setText("done");
         }
     }
@@ -183,7 +189,7 @@ public class ProductWindowController {
             Music.getInstance().error();
             new Alert(Alert.AlertType.ERROR, "first log in").showAndWait();
         } else {
-             Music.getInstance().confirmation();
+            Music.getInstance().confirmation();
             AddCommentWindow.getInstance().setProduct(product);
             AddCommentWindow.getInstance().start(MainWindow.getInstance().getStage());
             isBackToComment = true;
@@ -226,7 +232,24 @@ public class ProductWindowController {
         }
         ObservableList<Pair<String, Pair<String, String>>> details = FXCollections.observableArrayList(list);
         compareTable.setItems(details);
+    }
 
-
+    @Override
+    public void userPanelButtonClicked() {
+        BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
+        Music.getInstance().open();
+        if (!(buyerProcessor.isUserLoggedIn())) {
+            LoggedOutStatusWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            LoggedOutStatusWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
+            ManagerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            ManagerUserWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
+            SellerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            SellerUserWindow.getInstance().start(stage);
+        } else {
+            BuyerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            BuyerUserWindow.getInstance().start(stage);
+        }
     }
 }

@@ -1,10 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import View.graphic.BuyerUserWindow;
-import View.graphic.MainWindow;
-import View.graphic.ProductWindow;
-import View.graphic.PurchaseWindow;
+import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -244,6 +241,19 @@ public class BuyerMenuController extends Controller {
                         productSellerPair.getKey().getPrice() * buyer.getNewBuyerCart().get(productSellerPair));
             else
                 getListView().getItems().remove(getItem());
+        }
+    }
+
+    public void goBack() {
+        try {
+            if (parent instanceof ProductWindow) {
+                ProductWindow.getInstance().setProduct(super.product, ProductPanelWindow.getInstance());
+                ProductWindow.getInstance().start(stage);
+            } else {
+                parent.start(stage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

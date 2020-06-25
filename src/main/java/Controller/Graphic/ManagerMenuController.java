@@ -2,6 +2,8 @@ package Controller.Graphic;
 
 import Controller.console.BossProcessor;
 import Controller.console.Processor;
+import View.graphic.ProductPanelWindow;
+import View.graphic.ProductWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -736,6 +738,18 @@ public class ManagerMenuController extends Controller {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             createManagerPhoto.setImage(new Image(file.toURI().toString()));
+        }
+    }
+    public void goBack() {
+        try {
+            if (parent instanceof ProductWindow) {
+                ProductWindow.getInstance().setProduct(super.product, ProductPanelWindow.getInstance());
+                ProductWindow.getInstance().start(stage);
+            } else {
+                parent.start(stage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -16,7 +16,6 @@ public class RegisterWindow extends Application {
     public static RegisterWindow getInstance() {
         return instance;
     }
-
     private RegisterWindow() {
 
     }

@@ -2,9 +2,7 @@ package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
-import View.graphic.MainWindow;
-import View.graphic.ProductPanelWindow;
-import View.graphic.ProductWindow;
+import View.graphic.*;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -24,6 +22,7 @@ import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 import model.Sorting;
+import model.UserType;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
 
@@ -62,6 +61,7 @@ public class ProductPanelController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.parent = ProductPanelWindow.getInstance();
         pageNumber.setText("1");
         if (Processor.isLogin) {
             userName.setText(Processor.user.getUsername());
@@ -286,4 +286,5 @@ public class ProductPanelController extends Controller implements Initializable 
         ProductWindow.getInstance().start(MainWindow.getInstance().getStage());
 
     }
+
 }

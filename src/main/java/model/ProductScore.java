@@ -7,6 +7,10 @@ public class ProductScore {
     private double avgScore;
     private final ArrayList<String> userNamesOfUsersRated;
 
+    public int getBuyers() {
+        return buyers;
+    }
+
     public ProductScore() {
         buyers = 0;
         avgScore = 0;
