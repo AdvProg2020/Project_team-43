@@ -204,11 +204,13 @@ public class BuyerMenuController extends Controller {
         Pane pane = new Pane();
         Button addButton = new Button("+");
         Button removeButton = new Button("-");
+        ImageView imageView = new ImageView();
 
         public XCell(Buyer buyer) {
             super();
             this.buyer = buyer;
-            hbox.getChildren().addAll(label, pane, addButton, removeButton);
+
+            hbox.getChildren().addAll(label, imageView, pane, addButton, removeButton);
             HBox.setHgrow(pane, Priority.ALWAYS);
             addButton.setOnAction(event -> addRemoveItem(getItem(), true));
             removeButton.setOnAction(event -> addRemoveItem(getItem(), false));
@@ -220,6 +222,13 @@ public class BuyerMenuController extends Controller {
             setText(null);
             setGraphic(null);
             if (item != null && !empty) {
+                Product product = null;
+                for (Pair<Product, Seller> pair : buyer.getNewBuyerCart().keySet()) {
+                    if (pair.getKey().getName().equalsIgnoreCase(item.split("\t")[0])) {
+                        product = pair.getKey();
+                    }
+                }
+                imageView.setImage(new Image("file:" + product.getImagePath(), 100, 50, false, false));
                 label.setText(item);
                 setGraphic(hbox);
             }
