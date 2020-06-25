@@ -1,8 +1,6 @@
 package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
-import View.graphic.ProductPanelWindow;
-import View.graphic.ProductWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,8 +11,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -98,14 +100,24 @@ public class SellerMenuController extends Controller {
         companyText.setText("company: " + user.getCompany().getName());
         companyInfoText.setText("company info: " + user.getCompany().getInfo());
         balance.setText(Double.toString(user.getBalance()));
-        if (user.getImagePath() != null) {
-            profilePhoto.setImage(new Image("file:" + user.getImagePath()));
-        }
+        showProfilePhoto();
         initializeAddOff();
         initializeAddProduct();
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
+    }
+
+    private void showProfilePhoto() {
+        final File folder = new File("src/main/resources/photos/users");
+        for (final File file : folder.listFiles()) {
+            if (file.isFile()) {
+                String fileName = FilenameUtils.getBaseName(file.getAbsolutePath());
+                if (user.getUsername().equals(fileName)) {
+                    profilePhoto.setImage(new Image("file:" + "src/main/resources/photos/users/" + file.getName()));
+                }
+            }
+        }
     }
 
     private void initializeViewOrders() {
@@ -180,31 +192,41 @@ public class SellerMenuController extends Controller {
         }
     }
 
-    public void browsePhotoUser() {
-        //  Music.getInstance().open();
+    public void browsePhotoUser() throws IOException {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            user.setImagePath(file.getAbsolutePath());
-            profilePhoto.setImage(new Image(file.toURI().toString()));
+            final File folder = new File("src/main/resources/photos/users");
+            for (final File photo : folder.listFiles()) {
+                if (photo.isFile()) {
+                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
+                    if (user.getUsername().equals(fileName)) {
+                        photo.delete();
+                    }
+                }
+            }
+            Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            showProfilePhoto();
         }
     }
 
-    public void browsePhotoProduct() {
+    public void browsePhotoProduct() throws IOException {
         // Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             productPhotoPath = file.getAbsolutePath();
+            Files.copy(file.toPath(), new File("src/main/resources/photos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 
-    public void browsePhotoManageProduct() {
+    public void browsePhotoManageProduct() throws IOException {
         // Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             product.setImagePath(file.getAbsolutePath());
+            Files.copy(file.toPath(), new File("src/main/resources/photos/products/" + product.getProductId() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
         showProductImage();
     }
