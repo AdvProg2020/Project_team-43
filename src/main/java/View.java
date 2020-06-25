@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import model.Manager;
 import model.UserPersonalInfo;
 
-import java.io.File;
-
 public class View extends Application {
     @Override
     public void start(Stage primaryStage) {
