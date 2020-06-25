@@ -276,6 +276,7 @@ public class ProductPanelController extends Controller implements Initializable 
     }
 
     public void openProductPanel(MouseEvent mouseEvent) {
+        Music.getInstance().open();
         Product product = Product.getProductById((((Label) ((Pane) mouseEvent.getSource()).getChildren().get(3)).getText().split(" ")[1]));
         ProductWindow.getInstance().setProduct(product, ProductPanelWindow.getInstance());
         ProductWindow.getInstance().start(MainWindow.getInstance().getStage());

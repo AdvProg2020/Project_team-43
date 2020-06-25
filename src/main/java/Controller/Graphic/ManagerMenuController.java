@@ -141,9 +141,11 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showUserInfo() {
+        if(usersListView.getSelectionModel().getSelectedItem()==null)return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
         selectedUser = User.getUserByUserName(userName);
+        if(selectedUser==null)return;
         showUser(selectedUser);
     }
 
@@ -159,10 +161,12 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showProductInfo() {
+        if(productsListView.getSelectionModel().getSelectedItem()==null)return;
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
         selectedProduct = Product.getAllProductById(productId);
+        if(selectedProduct==null)return;
         showProduct(selectedProduct);
 
     }
@@ -178,12 +182,14 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscountInfo() {
+        if(codedDiscountListView.getSelectionModel().getSelectedItem()==null)return;
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
         selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
+        if(selectedCodedDiscount==null)return;
         showCodedDiscount(selectedCodedDiscount);
 //        }
     }
@@ -197,12 +203,14 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showRequestInfo() {
+        if(requestsListView.getSelectionModel().getSelectedItem()==null)return;
         Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(requestIdPrime);
 //        if (matcher.matches()) {
         selectedRequest = Request.getRequestById(requestIdPrime);
+        if(selectedRequest==null)return;
         showRequest(selectedRequest);
 //        }
 
@@ -252,11 +260,13 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCategoryInfo() {
+        if(categoryListView.getSelectionModel().getSelectedItem()==null)return;
         Music.getInstance().open();
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
         selectedCategory = Category.getCategoryByName(categoryName);
+        if(selectedCategory==null)return;
         showCategory(selectedCategory);
     }
 
@@ -274,6 +284,7 @@ public class ManagerMenuController extends Controller {
     public void showChangeToPane() {
         Music.getInstance().open();
         selectedFeature = featuresListView.getSelectionModel().getSelectedItem().toString();
+        if(selectedFeature==null)return;
         changeFeaturePane.setVisible(true);
     }
 
@@ -730,6 +741,9 @@ public class ManagerMenuController extends Controller {
             Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
             setUserImage(user, profilePhoto);
         }
+    }
+    public void open(){
+        Music.getInstance().open();
     }
 
 }
