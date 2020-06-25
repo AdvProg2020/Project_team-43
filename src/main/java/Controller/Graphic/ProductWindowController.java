@@ -9,6 +9,8 @@ import View.graphic.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,10 +36,7 @@ import java.io.File;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class ProductWindowController extends Controller implements Initializable {
@@ -67,6 +66,7 @@ public class ProductWindowController extends Controller implements Initializable
     public StackPane videoPane;
     public Label numberOfPeopleRated;
     public Label usernameTextField;
+    public Slider timeSlider;
     public File file;
     public Media media;
     public MediaPlayer mediaPlayer;
@@ -256,7 +256,7 @@ public class ProductWindowController extends Controller implements Initializable
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(mediaPlayer.getCurrentTime() == mediaPlayer.getStartTime()) {
+                if (mediaPlayer.getCurrentTime() == mediaPlayer.getStartTime()) {
                     mediaPlayer.stop();
                     System.out.println(1);
                 }
@@ -264,13 +264,41 @@ public class ProductWindowController extends Controller implements Initializable
             }
         }).start();
     }
-    public void pause(){
+
+    public void pause() {
         mediaPlayer.pause();
     }
 
-    public void repeat(){
+    public void repeat() {
         mediaPlayer.stop();
         mediaPlayer.play();
+    }
+
+    public void mediaBar() {
+
+        mediaPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(javafx.beans.Observable observable) {
+                updatesValues();
+            }
+        });
+
+        timeSlider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(javafx.beans.Observable observable) {
+                if (timeSlider.isPressed()) {
+                    mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
+                }
+            }
+        });
+    }
+
+    public void updatesValues() {
+        Platform.runLater(new Runnable() {
+            public void run() {
+                timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
+            }
+        });
     }
 
     @Override
@@ -301,5 +329,6 @@ public class ProductWindowController extends Controller implements Initializable
         mediaView.setFitHeight(400);
         mediaView.setFitWidth(820);
         videoPane.getChildren().add(mediaView);
+        mediaBar();
     }
 }
