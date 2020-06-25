@@ -120,6 +120,7 @@ public class SortTests {
             Assert.assertTrue(true);
         }
         Collections.sort(products, Sorting.getComparator());
+        Collections.reverse(products);
         Object[] productsArray = products.toArray();
         Object[] expectationArray = expectationSort.toArray();
         Assert.assertArrayEquals(expectationArray, productsArray);
@@ -139,6 +140,7 @@ public class SortTests {
             Assert.assertTrue(true);
         }
         Collections.sort(products, Sorting.getComparator());
+        Collections.reverse(products);
         Object[] productsArray = products.toArray();
         Object[] expectationArray = expectationSort.toArray();
         Assert.assertArrayEquals(expectationArray, productsArray);

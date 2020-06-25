@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class FilterTests {
@@ -137,16 +135,15 @@ public class FilterTests {
         product10.getFeaturesMap().replace("color", "yellow");
         filterManager.setCategory(category1);
         CriteriaCategoryFeatures criteriaCategoryFeatures = filterManager.getCriteriaCategoryFeatures();
-        criteriaCategoryFeatures.getFeatures().put("new junk feature", new ArrayList<>(Arrays.asList("color")));
+        criteriaCategoryFeatures.getFeatures().put("new junk feature", new ArrayList<>());
         filterManager.disableFeature("new junk feature", "junk value");
         criteriaCategoryFeatures.addFeature("color", "red");
+        criteriaCategoryFeatures.getFeatures().remove("new junk feature");
         expectationFilter.add(product1);
         expectationFilter.add(product7);
         ArrayList<Product> afterFilter = criteriaCategoryFeatures.meetCriteria(products);
         Object[] afterFilterArray = afterFilter.toArray();
         Object[] expectationArray = expectationFilter.toArray();
-        System.out.println(new ArrayList<>(Arrays.asList(afterFilterArray)));
-        System.out.println(new ArrayList<>(Arrays.asList(expectationArray)));
         Assert.assertArrayEquals(expectationArray, afterFilterArray);
     }
 

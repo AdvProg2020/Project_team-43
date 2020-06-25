@@ -72,4 +72,8 @@ public abstract class Order {
         SellOrder.saveAllFields();
         BuyOrder.saveAllFields();
     }
+
+    public static ArrayList<Order> getAllOrders() {
+        return allOrders;
+    }
 }

@@ -24,6 +24,10 @@ public class CodedDiscount {
     private double discountAmount;
     private int repeat;
 
+    public static ArrayList<CodedDiscount> getAllCodedDiscount() {
+        return allCodedDiscount;
+    }
+
     public int getRepeat() {
         return repeat;
     }

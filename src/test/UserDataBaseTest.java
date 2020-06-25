@@ -1,8 +1,9 @@
 import model.*;
 import model.database.Database;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,23 +11,23 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class UserDataBaseTest {
-    Seller seller;
-    Buyer buyer;
-    UserPersonalInfo userPersonalInfo;
-    Company company;
-    Category category;
-    Off off;
-    ArrayList<Product> products;
-    Product product1;
-    Product product2;
-    Product product3;
-    SellOrder sellOrder;
-    HashMap<Product, Integer> hashMap;
-    ArrayList<Seller> sellers;
-    BuyOrder buyOrder;
-    CodedDiscount codedDiscount;
+    static Seller seller;
+    static Buyer buyer;
+    static UserPersonalInfo userPersonalInfo;
+    static Company company;
+    static Category category;
+    static Off off;
+    static ArrayList<Product> products;
+    static Product product1;
+    static Product product2;
+    static Product product3;
+    static SellOrder sellOrder;
+    static HashMap<Product, Integer> hashMap;
+    static ArrayList<Seller> sellers;
+    static BuyOrder buyOrder;
+    static CodedDiscount codedDiscount;
 
-    @BeforeAll
+    @Before
     public void setAll() {
         userPersonalInfo = new UserPersonalInfo("firstName", "lastName", "email", "phoneNumber", "password");
         company = new Company("asus", "none");
@@ -61,10 +62,23 @@ public class UserDataBaseTest {
         buyer.getOrders().add(buyOrder);
     }
 
+    @After
+    public void clear() {
+        User.getAllUsers().clear();
+        CodedDiscount.getAllCodedDiscount().clear();
+        Order.getAllOrders().clear();
+        Off.getAcceptedOffs().clear();
+        Off.getAllOffsInQueueEdit().clear();
+        Off.getAllOffs().clear();
+        Off.getInQueueExpectionOffs().clear();
+        Product.getAllProducts().clear();
+        Product.getAllProductsInList().clear();
+        Company.getAllCompanies().clear();
+    }
+
 
     @Test
     public void getSellerTest() {
-        setAll();
         ArrayList<Seller> sellers = new ArrayList<>();
         sellers.add(seller);
         Assert.assertArrayEquals(Seller.getSeller().toArray(), sellers.toArray());
@@ -72,7 +86,6 @@ public class UserDataBaseTest {
 
     @Test
     public void loadAndSaveSellerTest() {
-        setAll();
         seller.saveOffs();
         seller.saveProducts();
         seller.saveSellOrders();
@@ -84,7 +97,6 @@ public class UserDataBaseTest {
 
     @Test
     public void loadAndSaveBuyerTest(){
-        setAll();
         buyer.buyOrdersSave();
         buyer.codedDiscountsSave();
         buyer.getDiscounts().clear();
