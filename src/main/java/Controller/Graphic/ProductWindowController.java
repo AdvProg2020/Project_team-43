@@ -21,6 +21,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
@@ -156,7 +158,7 @@ public class ProductWindowController extends Controller implements Initializable
 
     public void setProductImage() {
         if (product.getImagePath() != null) {
-            productImage.setImage(new Image("file:" + product.getImagePath()));
+            productImage.setImage(new Image("file:" + product.getImagePath(),300,200,false,false));
         }
     }
 
@@ -218,11 +220,13 @@ public class ProductWindowController extends Controller implements Initializable
 
 
     public void zoom(MouseEvent event) {
+        productImage.setPreserveRatio(true);
         int x = (int) event.getX();
         int y = (int) event.getY();
-        ivTarget.setImage(productImage.getImage());
-        Rectangle2D viewPortRect = new Rectangle2D(x * 5, y * 5, 200, 200);
-        ivTarget.setViewport(viewPortRect);
+        PixelReader reader = productImage.getImage().getPixelReader();
+        Image currentImage;
+        currentImage = new WritableImage(reader, x, y, 50, 50);
+        ivTarget.setImage(currentImage);
         ivTarget.setVisible(true);
     }
 
@@ -299,8 +303,8 @@ public class ProductWindowController extends Controller implements Initializable
         Platform.runLater(new Runnable() {
             public void run() {
                 timeSlider.setValue(((mediaPlayer.getCurrentTime().toMillis()) / (mediaPlayer.getTotalDuration().toMillis())) * 100);
-                currentTimeOfVideo.setText((int)(mediaPlayer.getCurrentTime().toSeconds())+"");
-                allTimeOfVideo.setText((int)(mediaPlayer.getStopTime().toSeconds())+"");
+                currentTimeOfVideo.setText((int) (mediaPlayer.getCurrentTime().toSeconds()) + "");
+                allTimeOfVideo.setText((int) (mediaPlayer.getStopTime().toSeconds()) + "");
             }
         });
     }
