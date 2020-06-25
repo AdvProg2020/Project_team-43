@@ -20,12 +20,16 @@ public class MainMenuController {
     public void userPanelButtonClicked() {
         Music.getInstance().open();
         if (!(buyerProcessor.isUserLoggedIn())) {
+            LoggedOutStatusWindow.getInstance().setParent(MainWindow.getInstance(), null);
             LoggedOutStatusWindow.getInstance().start(stage);
         } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
+            ManagerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             ManagerUserWindow.getInstance().start(stage);
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
+            SellerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SellerUserWindow.getInstance().start(stage);
         } else {
+            BuyerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             BuyerUserWindow.getInstance().start(stage);
         }
     }

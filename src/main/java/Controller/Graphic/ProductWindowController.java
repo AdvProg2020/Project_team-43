@@ -5,6 +5,7 @@ import View.graphic.AddCommentWindow;
 import View.graphic.MainWindow;
 import View.graphic.ProductPanelWindow;
 import View.graphic.ProductWindow;
+import View.graphic.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -35,7 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-public class ProductWindowController {
+
+public class ProductWindowController extends Controller {
     public ImageView productImage;
     public Label productName;
     public Label productPrice;
@@ -60,6 +62,8 @@ public class ProductWindowController {
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct1;
     public TableColumn<Pair<String, Pair<String, String>>, String> featureOfProduct2;
     public StackPane videoPane;
+    public Label numberOfPeopleRated;
+    public Label usernameTextField;
 
 
     private Product product;
@@ -81,6 +85,9 @@ public class ProductWindowController {
         if (isBackToComment) {
             isBackToComment = false;
             tabPane.getSelectionModel().select(tab);
+        }
+        if (BuyerProcessor.getInstance().isUserLoggedIn()) {
+            usernameTextField.setText(BuyerProcessor.getInstance().getUser().getUsername());
         }
 
     }
@@ -132,6 +139,8 @@ public class ProductWindowController {
     public void setProductProperties() {
         productName.setText(product.getName());
         productPrice.setText(Double.toString(product.getPrice()));
+        productScore.setPartialRating(true);
+        numberOfPeopleRated.setText(Integer.toString(product.getScore().getBuyers()) + " user");
         productScore.setRating(product.getScore().getAvgScore());
         productScore.disableProperty().setValue(true);
     }
@@ -238,8 +247,37 @@ public class ProductWindowController {
 
     public void playVideo() {
         File file = new File("src/main/resources/video.mp4");
-        Scene scene = new Scene(videoPane, videoPane.getWidth(), videoPane.getHeight());
-        ProductPanelWindow.stage.setScene(scene);
+        Media media = new Media(file.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setFitHeight(videoPane.getHeight());
+        mediaView.setFitWidth(videoPane.getWidth());
+        videoPane.getChildren().add(mediaView);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.stop();
+                mediaPlayer.play();
+            }
+        }).start();
+    }
 
+    @Override
+    public void userPanelButtonClicked() {
+        BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
+        Music.getInstance().open();
+        if (!(buyerProcessor.isUserLoggedIn())) {
+            LoggedOutStatusWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            LoggedOutStatusWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.MANAGER) {
+            ManagerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            ManagerUserWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
+            SellerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            SellerUserWindow.getInstance().start(stage);
+        } else {
+            BuyerUserWindow.getInstance().setParent(ProductWindow.getInstance(), product);
+            BuyerUserWindow.getInstance().start(stage);
+        }
     }
 }

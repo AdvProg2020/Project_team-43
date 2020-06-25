@@ -19,7 +19,6 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.RangeSlider?>
 <?import org.controlsfx.control.textfield.CustomTextField?>
-
 <?import java.util.ArrayList?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductPanelController">
     <children>
@@ -106,12 +105,12 @@
                                 </ImageView>
                                 <Label fx:id="name1" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
                                 <Label fx:id="price1" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="171.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="192.0" layoutY="139.0" text="score" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane4" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -120,17 +119,18 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name4" layoutX="5.0" layoutY="149.0" prefHeight="31.0" prefWidth="220.0" text="name">
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding></Label>
-                                <Label fx:id="price4" layoutX="5.0" layoutY="191.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="175.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="194.0" layoutY="140.0" text="score" />
+                                <Label fx:id="name4" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name">
+                                    <padding>
+                                        <Insets top="10.0" />
+                                    </padding>
+                                </Label>
+                                <Label fx:id="price4" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane7" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -139,14 +139,14 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name7" layoutX="4.0" layoutY="144.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price7" layoutX="4.0" layoutY="193.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="6.0" layoutY="175.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="195.0" layoutY="136.0" text="score" />
+                                <Label fx:id="name7" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price7" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
                         </Pane>
                     </children>
                 </VBox>
@@ -161,12 +161,12 @@
                                 </ImageView>
                                 <Label fx:id="name2" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
                                 <Label fx:id="price2" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="173.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="192.0" layoutY="140.0" text="score" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane5" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -175,14 +175,14 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name5" layoutX="4.0" layoutY="144.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price5" layoutX="4.0" layoutY="192.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="175.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="193.0" layoutY="138.0" text="score" />
+                                <Label fx:id="name5" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price5" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane8" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -191,14 +191,14 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name8" layoutX="4.0" layoutY="143.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price8" layoutX="4.0" layoutY="192.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="174.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="193.0" layoutY="136.0" text="score" />
+                                <Label fx:id="name8" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price8" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
                         </Pane>
                     </children>
                 </VBox>
@@ -212,13 +212,13 @@
                                     </image>
                                 </ImageView>
                                 <Label fx:id="name3" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price3" layoutX="4.0" layoutY="185.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="6.0" layoutY="170.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="192.0" layoutY="138.0" text="score" />
+                                <Label fx:id="price3" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane6" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -227,14 +227,14 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name6" layoutX="4.0" layoutY="142.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price6" layoutX="4.0" layoutY="193.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="5.0" layoutY="173.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="191.0" layoutY="137.0" text="score" />
+                                <Label fx:id="name6" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price6" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" top="5.0" />
+                            </VBox.margin>
                         </Pane>
                         <Pane fx:id="productCartPane9" onMouseClicked="#openProductPanel" prefHeight="230.0" prefWidth="230.0" style="-fx-cursor: hand;">
                             <children>
@@ -243,23 +243,23 @@
                                         <Image url="@product.jpg" />
                                     </image>
                                 </ImageView>
-                                <Label fx:id="name9" layoutX="4.0" layoutY="144.0" prefHeight="31.0" prefWidth="220.0" text="name" />
-                                <Label fx:id="price9" layoutX="3.0" layoutY="194.0" prefHeight="31.0" prefWidth="220.0" text="price" />
-                        <Label layoutX="6.0" layoutY="175.0" prefHeight="21.0" prefWidth="220.0" text="id" />
-                        <Label layoutX="192.0" layoutY="138.0" text="score" />
+                                <Label fx:id="name9" layoutX="4.0" layoutY="145.0" prefHeight="31.0" prefWidth="220.0" text="name" />
+                                <Label fx:id="price9" layoutX="4.0" layoutY="189.0" prefHeight="31.0" prefWidth="220.0" text="price" />
+                                <Label layoutX="5.0" layoutY="172.0" prefHeight="21.0" prefWidth="220.0" text="id" />
+                                <Label layoutX="192.0" layoutY="140.0" text="score" />
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="5.0" />
+                            </VBox.margin>
                         </Pane>
                     </children>
                 </VBox>
-              <Text fx:id="userName" layoutX="71.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="117.6708984375" />
-              <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="26.0" layoutY="64.0">
-                  <image>
-                      <Image url="@user.png" />
-                  </image>
-              </ImageView>
+                <Text fx:id="userName" layoutX="71.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="117.6708984375" />
+                <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="26.0" layoutY="64.0" onMouseClicked="#userPanelButtonClicked" style="-fx-cursor: hand;">
+                    <image>
+                        <Image url="@user.png" />
+                    </image>
+                </ImageView>
             </children>
         </Pane>
         <ImageView fitHeight="37.0" fitWidth="86.0" layoutX="711.0" layoutY="774.0" onMouseClicked="#nextPage" style="-fx-cursor: hand;">
@@ -281,7 +281,7 @@
             </image>
         </ImageView>
         <ListView fx:id="categoryListView" layoutX="601.0" layoutY="111.0" onMouseClicked="#selectedCategory" prefHeight="310.0" prefWidth="200.0" visible="false" />
-      <CustomTextField fx:id="pageNumber" layoutX="377.0" layoutY="777.0" prefHeight="31.0" prefWidth="59.0" promptText="page" />
+        <CustomTextField fx:id="pageNumber" layoutX="377.0" layoutY="777.0" prefHeight="31.0" prefWidth="59.0" promptText="page" />
     </children>
 
     <fx:define>

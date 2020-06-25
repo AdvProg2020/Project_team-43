@@ -16,7 +16,7 @@
                 <Font size="20.0" />
             </font>
         </Button>
-        <Button fx:id="backButton" layoutX="54.0" layoutY="384.0" mnemonicParsing="false" onAction="#goBack" prefHeight="44.0" prefWidth="159.0" style="-fx-cursor: hand;" text="Back">
+        <Button fx:id="backButton" layoutX="54.0" layoutY="384.0" mnemonicParsing="false" onAction="#UserPanelGoBack" prefHeight="44.0" prefWidth="159.0" style="-fx-cursor: hand;" text="Back">
             <font>
                 <Font size="20.0" />
             </font>

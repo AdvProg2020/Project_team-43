@@ -1,10 +1,13 @@
 package View.graphic;
 
+import Controller.Graphic.ManagerMenuController;
+import Controller.Graphic.SellerMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Product;
 
 import java.io.IOException;
 
@@ -16,6 +19,13 @@ public class SellerUserWindow extends Application {
     }
 
     private Stage stage;
+    private Application parent;
+    private Product product;
+
+    public void setParent(Application parent, Product product) {
+        this.parent = parent;
+        this.product = product;
+    }
 
     private SellerUserWindow() {
 
@@ -25,7 +35,10 @@ public class SellerUserWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("sellerUserMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sellerUserMenu.fxml"));
+            root = (Parent) loader.load();
+            SellerMenuController controller = (SellerMenuController) loader.getController();
+            controller.setParent(parent, product);
         } catch (IOException e) {
             e.printStackTrace();
         }

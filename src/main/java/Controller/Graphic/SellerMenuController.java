@@ -1,13 +1,14 @@
 package Controller.Graphic;
 
 import Controller.console.SellerProcessor;
+import View.graphic.ProductPanelWindow;
+import View.graphic.ProductWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -17,17 +18,15 @@ import java.io.File;
 import java.text.ParseException;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class SellerMenuController extends Controller {
     public Text companyText;
     public Text companyInfoText;
     public TextField nameNewProduct;
-    public TextField companyNewCompany;
     public TextField priceNewProduct;
     public TextField amountNewProduct;
-    public Text invalidIdOff;
-    public TextField offIdTextField;
     public Text offSellerText;
     public ListView<CheckBox> offProductsListView;
     public DatePicker offStartTimeDate;
@@ -36,19 +35,15 @@ public class SellerMenuController extends Controller {
     public Label offAmountLabel;
     public Label balance;
     public ChoiceBox<String> productIdChoiceBox;
-    SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
     public TextField email;
     public TextField password;
     public TextField phoneNumber;
-    public TextField existingProductId;
     public TextField amountTextField;
     public Text invalidCategory;
     public Text usernameText;
     public ImageView profilePhoto;
-
-    public Text invalidIdProduct;
     public ImageView productPhoto;
     public ListView<String> productFeaturesList;
     public ListView<String> buyersListView;
@@ -67,7 +62,7 @@ public class SellerMenuController extends Controller {
     public ChoiceBox<String> manageProductCompanyChoiceBox;
     public Label manageCompanyLabel;
     public Button applyChangesButton;
-
+    public ChoiceBox<String> offIdChoiceBox;
     public Button applyOffChangesButton;
     public Label manageOffStartTimeLabel;
     public Label manageOffEndTimeLabel;
@@ -79,8 +74,11 @@ public class SellerMenuController extends Controller {
     public ListView<String> orders;
     public ListView<String> order;
     public ImageView closeButton;
+    public ChoiceBox<String> existingProductsIds;
+    public ChoiceBox<String> addProductCompanyChoiceBox;
+    public Button manageProductBrowsePhotoButton;
 
-
+    SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
     private String productPhotoPath;
     private Product product;
@@ -105,7 +103,8 @@ public class SellerMenuController extends Controller {
         initializeAddOff();
         initializeAddProduct();
         initializeViewOrders();
-        setProducts();
+        setProductsIds();
+        setOffsIds();
     }
 
     private void initializeViewOrders() {
@@ -118,6 +117,9 @@ public class SellerMenuController extends Controller {
         for (Category category : Category.getAllCategories()) {
             categoryChoiceBox.getItems().add(category.getName());
         }
+        for (Company company : Company.getAllCompanies()) {
+            addProductCompanyChoiceBox.getItems().add(company.getName());
+        }
         categoryChoiceBox.setOnAction(event -> {
             categoryFeaturesListView.getItems().clear();
             categoryFeaturesListView.setVisible(true);
@@ -129,6 +131,9 @@ public class SellerMenuController extends Controller {
                 categoryFeaturesListView.getItems().add(hBox);
             }
         });
+        for (Product product1 : Product.getAllProductsInList()) {
+            existingProductsIds.getItems().add(product1.getProductId());
+        }
     }
 
     @FXML
@@ -140,11 +145,9 @@ public class SellerMenuController extends Controller {
 
     @FXML
     public void addExistingProduct() {
-        String message = sellerProcessor.addExistingProduct(existingProductId.getText(), amountTextField.getText());
-        System.out.println(message);
+        String message = sellerProcessor.addExistingProduct(existingProductsIds.getSelectionModel().getSelectedItem(), amountTextField.getText());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Product added successfully");
-        alert.setContentText("Waiting for manager to confirm");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
@@ -161,7 +164,7 @@ public class SellerMenuController extends Controller {
                 features.put(((Label) item.getChildren().get(0)).getText().split(":")[0], ((TextField) item.getChildren().get(1)).getText());
             }
             try {
-                sellerProcessor.addNewProduct(nameNewProduct.getText(), companyNewCompany.getText(), category.getName(), priceNewProduct.getText(),
+                sellerProcessor.addNewProduct(nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
                         amountNewProduct.getText(), features, productPhotoPath);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Product added successfully");
@@ -169,7 +172,9 @@ public class SellerMenuController extends Controller {
                 alert.showAndWait();
                 //    Music.getInstance().confirmation();
             } catch (InvalidCommandException e) {
-                System.out.println(e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(e.getMessage());
+                alert.showAndWait();
             }
         }
     }
@@ -184,7 +189,6 @@ public class SellerMenuController extends Controller {
         }
     }
 
-
     public void browsePhotoProduct() {
         // Music.getInstance().open();
         FileChooser fileChooser = new FileChooser();
@@ -192,7 +196,16 @@ public class SellerMenuController extends Controller {
         if (file != null) {
             productPhotoPath = file.getAbsolutePath();
         }
+    }
 
+    public void browsePhotoManageProduct() {
+        // Music.getInstance().open();
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            product.setImagePath(file.getAbsolutePath());
+        }
+        showProductImage();
     }
 
     public void editProduct() {
@@ -246,13 +259,20 @@ public class SellerMenuController extends Controller {
         manageNameLabel.setVisible(true);
         managePriceLabel.setVisible(true);
         manageCompanyLabel.setVisible(true);
+        manageProductBrowsePhotoButton.setVisible(true);
 
 
     }
 
-    public void setProducts() {
-        for (Product product1 : ((Seller) sellerProcessor.getUser()).getProductsNumber().keySet()) {
+    private void setProductsIds() {
+        for (Product product1 : user.getProductsNumber().keySet()) {
             productIdChoiceBox.getItems().add(product1.getProductId());
+        }
+    }
+
+    private void setOffsIds() {
+        for (Off off : user.getOffs()) {
+            offIdChoiceBox.getItems().add(off.getOffId());
         }
     }
 
@@ -260,40 +280,36 @@ public class SellerMenuController extends Controller {
         productFeaturesList.getItems().set(productFeaturesList.getEditingIndex(), stringEditEvent.getNewValue());
     }
 
+    private void showProductImage() {
+        if (product.getImagePath() != null) {
+            productPhoto.setImage(new Image("file:" + product.getImagePath()));
+        } else {
+            productPhoto.setImage(new Image("file:src/main/resources/product.jpg"));
+        }
+    }
+
     public void showProduct() {
 
         String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
-        if (sellerProcessor.checkProduct(id)) {
-            // Music.getInstance().open();
-            buyersListView.getItems().clear();
+        // Music.getInstance().open();
+        buyersListView.getItems().clear();
 
-            product = user.getProductById(id);
-            initializeManageProduct(product);
-            showProductFeaturesList(product);
+        product = user.getProductById(id);
+        initializeManageProduct(product);
+        showProductFeaturesList(product);
+        showProductImage();
 
-            if (product.getImagePath() != null) {
-                productPhoto.setImage(new Image("file:" + product.getImagePath()));
-            } else {
-                productPhoto.setImage(new Image("file:src/main/resources/product.jpg"));
-            }
-
-            for (Buyer buyer : user.getBuyers(product.getProductId())) {
-                buyersListView.getItems().add(buyer.toString());
-            }
-
-            statusText.setText("Status: " + product.getProductState());
-
-            buyerText.setVisible(true);
-            buyersListView.setVisible(true);
-            productPhoto.setVisible(true);
-            statusText.setVisible(true);
-            applyChangesButton.setVisible(true);
-            invalidIdProduct.setVisible(false);
-
-        } else {
-            // Music.getInstance().error();
-            invalidIdProduct.setVisible(true);
+        for (Buyer buyer : user.getBuyers(product.getProductId())) {
+            buyersListView.getItems().add(buyer.toString());
         }
+
+        statusText.setText("Status: " + product.getProductState());
+
+        buyerText.setVisible(true);
+        buyersListView.setVisible(true);
+        productPhoto.setVisible(true);
+        statusText.setVisible(true);
+        applyChangesButton.setVisible(true);
     }
 
     private void showProductFeaturesList(Product product) {
@@ -328,33 +344,28 @@ public class SellerMenuController extends Controller {
     }
 
     public void showOff() {
-        String id = offIdTextField.getText();
-        if (user.hasOffWithId(id)) {
-            //Music.getInstance().open();
-            invalidIdOff.setVisible(false);
-            off = user.getOffById(id);
-            initializeManageOff(off);
+        String id = offIdChoiceBox.getSelectionModel().getSelectedItem();
+        //Music.getInstance().open();
+        off = user.getOffById(id);
+        initializeManageOff(off);
 
-            offProductsListView.setVisible(true);
-            offSellerText.setVisible(true);
-            offState.setVisible(true);
-            manageOffAmountLabel.setVisible(true);
-            manageOffAmountText.setVisible(true);
-            productsOffText.setVisible(true);
-            manageOffEndTimeLabel.setVisible(true);
-            manageOffStartTimeLabel.setVisible(true);
-            manageOffStartTime.setVisible(true);
-            manageOffEndTime.setVisible(true);
-            manageOffAmount.setVisible(true);
-            applyOffChangesButton.setVisible(true);
-        } else {
-            //Music.getInstance().error();
-            invalidIdOff.setVisible(true);
-        }
+        offProductsListView.setVisible(true);
+        offSellerText.setVisible(true);
+        offState.setVisible(true);
+        manageOffAmountLabel.setVisible(true);
+        manageOffAmountText.setVisible(true);
+        productsOffText.setVisible(true);
+        manageOffEndTimeLabel.setVisible(true);
+        manageOffStartTimeLabel.setVisible(true);
+        manageOffStartTime.setVisible(true);
+        manageOffEndTime.setVisible(true);
+        manageOffAmount.setVisible(true);
+        applyOffChangesButton.setVisible(true);
     }
 
     public void editOff(ActionEvent event) {
         //Music.getInstance().confirmation();
+        boolean change = false;
         String amountString = manageOffAmountLabel.getText();
         double amount = Double.parseDouble(amountString.substring(0, amountString.length() - 1));
         String startTime = manageOffStartTime.getEditor().getText();
@@ -363,27 +374,36 @@ public class SellerMenuController extends Controller {
             String id = item.getText().split(" ")[1];
             if (item.isSelected()) {
                 if (!off.hasProduct(user.getProductById(id))) {
+                    change = true;
                     user.editOff(off, "addProduct", id);
                 }
             } else {
                 if (off.hasProduct(user.getProductById(id))) {
+                    change = true;
                     user.editOff(off, "removeProduct", id);
                 }
             }
         }
         if (amount != off.getDiscountAmount()) {
+            change = true;
             user.editOff(off, "discountAmount", String.valueOf(amount));
         }
-        if (!startTime.equals(off.getStartTime().toString())) {
+        Date dateStart = new Date(startTime);
+        Date dateEnd = new Date(endTime);
+        if (!dateStart.equals(off.getStartTime())) {
+            change = true;
             user.editOff(off, "startTime", startTime);
         }
-        if (!endTime.equals(off.getEndTime().toString())) {
+        if (!dateEnd.equals(off.getEndTime())) {
+            change = true;
             user.editOff(off, "endTime", endTime);
         }
+        if (change) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Changes sent to manager");
+            alert.showAndWait();
+        }
         offState.setText("State: " + off.getOffState());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Changes sent to manager");
-        alert.showAndWait();
     }
 
     private void initializeAddOff() {
@@ -419,20 +439,23 @@ public class SellerMenuController extends Controller {
 
     public void showOrder() {
         order.getItems().clear();
-        String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[0].split(" ")[1];
-        SellOrder sellOrder = (SellOrder) Order.getOrderById(orderId);
-        Product product = sellOrder.getProduct();
-        order.getItems().add("Product: " + product.getName() + "\tNumber: " + sellOrder.getNumber());
-        order.getItems().add("Payment: " + sellOrder.getPayment());
-        order.getItems().add("Delivery Status: " + sellOrder.getDeliveryStatus().toString());
-        order.getItems().add("Date: " + sellOrder.getDate().toString());
-        order.getItems().add("Off Amount: " + sellOrder.getOffAmount());
-        order.setVisible(true);
-        closeButton.setVisible(true);
+        if (orders.getSelectionModel().getSelectedItem() != null) {
+            String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[0].split(" ")[1];
+            SellOrder sellOrder = (SellOrder) Order.getOrderById(orderId);
+            Product product = sellOrder.getProduct();
+            order.getItems().add("Product: " + product.getName() + "\tNumber: " + sellOrder.getNumber());
+            order.getItems().add("Payment: " + sellOrder.getPayment());
+            order.getItems().add("Delivery Status: " + sellOrder.getDeliveryStatus().toString());
+            order.getItems().add("Date: " + sellOrder.getDate().toString());
+            order.getItems().add("Off Amount: " + sellOrder.getOffAmount());
+            order.setVisible(true);
+            closeButton.setVisible(true);
+        }
     }
 
     public void closeOrder() {
         order.setVisible(false);
         closeButton.setVisible(false);
     }
+
 }

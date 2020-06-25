@@ -2,6 +2,8 @@ package Controller.Graphic;
 
 import Controller.console.BossProcessor;
 import Controller.console.Processor;
+import View.graphic.ProductPanelWindow;
+import View.graphic.ProductWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -746,4 +748,5 @@ public class ManagerMenuController extends Controller {
             createManagerPhoto.setImage(new Image(file.toURI().toString()));
         }
     }
+
 }

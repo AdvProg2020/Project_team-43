@@ -1,10 +1,7 @@
 package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
-import View.graphic.BuyerUserWindow;
-import View.graphic.MainWindow;
-import View.graphic.ProductWindow;
-import View.graphic.PurchaseWindow;
+import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -246,4 +243,5 @@ public class BuyerMenuController extends Controller {
                 getListView().getItems().remove(getItem());
         }
     }
+
 }

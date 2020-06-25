@@ -1,14 +1,18 @@
 package Controller.Graphic;
 
-import View.graphic.LoginWindow;
-import View.graphic.MainWindow;
-import View.graphic.RegisterWindow;
+import View.graphic.*;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import model.Product;
 
 public class LoggedOutStatusController extends Controller {
     private Stage stage = MainWindow.getInstance().getStage();
+    private Application parent;
+    private Product product;
+
+
     @FXML
     private Button registerButton;
 

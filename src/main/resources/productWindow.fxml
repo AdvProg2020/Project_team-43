@@ -48,6 +48,13 @@
                         <Label fx:id="isOff" layoutX="677.0" layoutY="79.0" text="Label" />
                         <Label fx:id="timesRemain" layoutX="677.0" layoutY="109.0" text="Label" />
                         <Rating fx:id="productScore" layoutX="502.0" layoutY="142.0" prefHeight="10.0" prefWidth="68.0" />
+                        <Label fx:id="numberOfPeopleRated" layoutX="695.0" layoutY="152.0" text="Label" />
+                        <ImageView fitHeight="68.0" fitWidth="73.0" layoutX="808.0" layoutY="14.0" onMouseClicked="#userPanelButtonClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                            <image>
+                                <Image url="@user.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="usernameTextField" layoutX="726.0" layoutY="27.0" text="username" />
 
                     </children>
                 </AnchorPane>
@@ -132,12 +139,12 @@
                 </AnchorPane>
             </content>
         </Tab>
-      <Tab text="video">
+      <Tab text="Untitled Tab">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <StackPane fx:id="videoPane" layoutX="187.0" layoutY="73.0" prefHeight="320.0" prefWidth="508.0" />
-                  <Button layoutX="350.0" layoutY="433.0" mnemonicParsing="false" onMouseClicked="#playVideo" text="Button" />
+                  <StackPane fx:id="videoPane" layoutX="36.0" layoutY="43.0" prefHeight="450.0" prefWidth="828.0" style="-fx-border-radius: 5;" />
+                  <Button layoutX="393.0" layoutY="516.0" mnemonicParsing="false" onMouseClicked="#playVideo" text="Button" />
                </children>
             </AnchorPane>
         </content>
