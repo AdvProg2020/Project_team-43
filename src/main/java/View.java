@@ -13,7 +13,7 @@ public class View extends Application {
     @Override
     public void start(Stage primaryStage) {
         if (!Manager.hasManager()) {
-
+            createFirstManager();
         }
         if (Manager.hasManager())
             MainWindow.getInstance().start(primaryStage);
