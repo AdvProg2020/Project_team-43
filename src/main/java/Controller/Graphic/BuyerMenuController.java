@@ -265,4 +265,8 @@ public class BuyerMenuController extends Controller {
         }
     }
 
+    public void open(){
+        Music.getInstance().open();
+    }
+
 }
