@@ -48,6 +48,11 @@ public class BuyerProcessor extends Processor {
         user.setUserPersonalInfo(userPersonalInfo);
     }
 
+    public void editField(String firstName, String lastName, String email, String phoneNumber, String password) {
+        editField(new UserPersonalInfo(firstName, lastName, email, phoneNumber, password));
+
+    }
+
     public void oldAddToBuyerCart(Pair<Product, Seller> productSellerPair) {
         String result;
         if (newBuyerCart.containsKey(productSellerPair)) {
