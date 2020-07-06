@@ -203,7 +203,7 @@ public class SellerMenuController extends Controller {
 
     public void editProduct() {
         boolean change = false;
-        //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         String name = manageNameTextField.getText();
         String price = managePriceTextField.getText();
         String companyName = manageProductCompanyChoiceBox.getValue();
@@ -279,7 +279,7 @@ public class SellerMenuController extends Controller {
     public void showProduct() {
 
         String id = (productIdChoiceBox.getSelectionModel().getSelectedItem());
-        // Music.getInstance().open();
+        Music.getInstance().open();
         buyersListView.getItems().clear();
 
         product = user.getProductById(id);
@@ -334,7 +334,7 @@ public class SellerMenuController extends Controller {
 
     public void showOff() {
         String id = offIdChoiceBox.getSelectionModel().getSelectedItem();
-        //Music.getInstance().open();
+        Music.getInstance().open();
         off = user.getOffById(id);
         initializeManageOff(off);
 
@@ -353,7 +353,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void editOff() {
-        //Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         boolean change = false;
         String amountString = manageOffAmountLabel.getText();
         double amount = Double.parseDouble(amountString.substring(0, amountString.length() - 1));
@@ -406,7 +406,7 @@ public class SellerMenuController extends Controller {
 
 
     public void addOff() {
-        //  Music.getInstance().confirmation();
+        Music.getInstance().confirmation();
         String startTime = offStartTimeDate.getEditor().getText();
         String endTime = offEndTimeDate.getEditor().getText();
         double amount = Integer.parseInt(offAmountLabel.getText().substring(0, offAmountLabel.getText().length() - 1));

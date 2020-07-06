@@ -166,7 +166,6 @@ public class BuyerMenuController extends Controller {
     public void showCodedDiscount() {
         discountCodeFeatures.getItems().clear();
         String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
-        System.out.println(discountId);
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountId);
         discountCodeFeatures.getItems().add("Amount: " + codedDiscount.getDiscountAmount());
         discountCodeFeatures.getItems().add("Repeat: " + user.remainRepeats(codedDiscount));
