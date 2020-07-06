@@ -10,7 +10,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 import org.apache.commons.io.FilenameUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -179,23 +178,7 @@ public class SellerMenuController extends Controller {
     }
 
     public void browsePhotoUser() throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            final File folder = new File("src/main/resources/photos/users");
-            for (final File photo : folder.listFiles()) {
-                if (photo.isFile()) {
-                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
-                    if (user.getUsername().equals(fileName)) {
-                        photo.delete();
-                    }
-                }
-            }
-            Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            setUserImage(user, profilePhoto);
-        }
+        browsePhotoUser(user, profilePhoto);
     }
 
     public void browsePhotoManageProduct() throws IOException {
@@ -229,20 +212,21 @@ public class SellerMenuController extends Controller {
             String featureName = temp[0].trim();
             String feature = temp[1].trim();
             if (!product.getFeaturesMap().get(featureName).equalsIgnoreCase(feature)) {
-                user.editProduct(product, featureName, feature);
+                change = true;
+                sellerProcessor.editProduct(product.getProductId(), featureName, feature);
             }
         }
         if (!name.equals(product.getName())) {
             change = true;
-            user.editProduct(product, "name", name);
+            sellerProcessor.editProduct(product.getProductId(), "name", name);
         }
         if (!price.equals(String.valueOf(product.getPrice()))) {
             change = true;
-            user.editProduct(product, "price", price);
+            sellerProcessor.editProduct(product.getProductId(), "price", price);
         }
         if (!companyName.equals(product.getCompany().getName())) {
             change = true;
-            user.editProduct(product, "company", companyName);
+            sellerProcessor.editProduct(product.getProductId(), "company", companyName);
         }
         if (change) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -380,28 +364,28 @@ public class SellerMenuController extends Controller {
             if (item.isSelected()) {
                 if (!off.hasProduct(user.getProductById(id))) {
                     change = true;
-                    user.editOff(off, "addProduct", id);
+                    sellerProcessor.editOff(off.getOffId(), "addProduct", id);
                 }
             } else {
                 if (off.hasProduct(user.getProductById(id))) {
                     change = true;
-                    user.editOff(off, "removeProduct", id);
+                    sellerProcessor.editOff(off.getOffId(), "removeProduct", id);
                 }
             }
         }
         if (amount != off.getDiscountAmount()) {
             change = true;
-            user.editOff(off, "discountAmount", String.valueOf(amount));
+            sellerProcessor.editOff(off.getOffId(), "discountAmount", String.valueOf(amount));
         }
         Date dateStart = new Date(startTime);
         Date dateEnd = new Date(endTime);
         if (!dateStart.equals(off.getStartTime())) {
             change = true;
-            user.editOff(off, "startTime", startTime);
+            sellerProcessor.editOff(off.getOffId(), "startTime", startTime);
         }
         if (!dateEnd.equals(off.getEndTime())) {
             change = true;
-            user.editOff(off, "endTime", endTime);
+            sellerProcessor.editOff(off.getOffId(), "endTime", endTime);
         }
         if (change) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
