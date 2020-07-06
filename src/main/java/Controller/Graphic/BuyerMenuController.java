@@ -94,9 +94,11 @@ public class BuyerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
-        UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
+        //UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
+        //      , phoneNumber.getText(), password.getText());
+        buyerProcessor.editField(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
-        buyerProcessor.editField(userPersonalInfo);
+        //buyerProcessor.editField(userPersonalInfo);
     }
 
     public void browsePhotoUser() throws IOException {
@@ -265,7 +267,7 @@ public class BuyerMenuController extends Controller {
         }
     }
 
-    public void open(){
+    public void open() {
         Music.getInstance().open();
     }
 
