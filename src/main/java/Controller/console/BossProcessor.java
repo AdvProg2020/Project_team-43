@@ -483,5 +483,29 @@ public class BossProcessor extends Processor {
         ((Manager) Processor.user).acceptRequest(selectedRequest);
     }
 
+    public void declineRequestFXML(Request selectedRequest) {
+        ((Manager) Processor.user).declineRequest(selectedRequest);
+    }
+
+    public ArrayList<Request> requestsFromController() {
+        return Request.getAllRequests();
+    }
+
+    public void deleteUserFXML(User selectedUser) {
+        ((Manager) Processor.user).deleteUser(selectedUser);
+    }
+
+    public ArrayList<User> usersFromController() {
+        return User.allUsers;
+    }
+
+    public void editCategoryFXML(Category selectedCategory, String newName) {
+        ((Manager) Processor.user).editCategoryName(selectedCategory, newName);
+    }
+
+    public void addCategoryFeatureFXML(Category selectedCategory, String newFeature) throws InvalidCommandException {
+        ((Manager) Processor.user).addCategoryFeature(selectedCategory, newFeature);
+    }
+
 
 }

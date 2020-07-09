@@ -385,8 +385,8 @@ public class ManagerMenuController extends Controller {
 
     public void acceptRequest() {
         try{
-            bossProcessor.acceptRequestFXML(selectedRequest);
             Music.getInstance().confirmation();
+            bossProcessor.acceptRequestFXML(selectedRequest);
         }catch (InvalidCommandException e) {
             showErrorAlert(e.getMessage());
         } catch (ParseException e) {
@@ -407,14 +407,14 @@ public class ManagerMenuController extends Controller {
 
     public void declineRequest() {
         Music.getInstance().confirmation();
-        ((Manager) Processor.user).declineRequest(selectedRequest);
+        bossProcessor.declineRequestFXML(selectedRequest);
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void updateRequestListView() {
         requests.clear();
-        for (Request request : Request.getAllRequests()) {
+        for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
         requestsListView.setItems(requests);
@@ -423,14 +423,14 @@ public class ManagerMenuController extends Controller {
 
     public void deleteUser() {
         Music.getInstance().confirmation();
-        ((Manager) Processor.user).deleteUser(selectedUser);
+        bossProcessor.deleteUserFXML(selectedUser);
         closeUserInfo();
         updateUsersListView();
     }
 
     public void updateUsersListView() {
         users.clear();
-        for (User user : User.allUsers) {
+        for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
         usersListView.setItems(users);
@@ -439,7 +439,7 @@ public class ManagerMenuController extends Controller {
     public void editCategory() {
         Music.getInstance().confirmation();
         if (!categoryName.getText().isEmpty()) {
-            ((Manager) Processor.user).editCategoryName(selectedCategory, categoryName.getText());
+            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
             categoryName.clear();
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
@@ -449,7 +449,7 @@ public class ManagerMenuController extends Controller {
                 for (String s : selectedCategory.getFeatures()) {
                     System.out.println(s);
                 }
-                ((Manager) Processor.user).addCategoryFeature(selectedCategory, newFeature.getText());
+                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
             } catch (InvalidCommandException e) {
                 showErrorAlert(e.getMessage());
             }
