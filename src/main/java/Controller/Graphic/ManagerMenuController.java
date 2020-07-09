@@ -626,7 +626,7 @@ public class ManagerMenuController extends Controller {
 
     public void updateCodedDiscountListView() {
         codedDiscounts.clear();
-        for (CodedDiscount codedDiscount : CodedDiscount.allCodedDiscount) {
+        for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
         }
         codedDiscountListView.setItems(codedDiscounts);
@@ -634,14 +634,14 @@ public class ManagerMenuController extends Controller {
 
     public void updateProductListView() {
         products.clear();
-        for (Product product : Product.allProductsInList) {
+        for (Product product : bossProcessor.ProductsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
         }
     }
 
     public void removeCategory() {
         Music.getInstance().confirmation();
-        ((Manager) Processor.user).removeCategory(selectedCategory);
+        bossProcessor.removeCategoryFXML(selectedCategory);
         closeCategoryInfo();
         updateCategoryListView();
     }
@@ -655,7 +655,7 @@ public class ManagerMenuController extends Controller {
 
     public void updateCategoryListView() {
         categories.clear();
-        for (Category category : Category.getAllCategories()) {
+        for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
@@ -665,7 +665,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().confirmation();
         if (!changedFeature.getText().isEmpty()) {
             try {
-                ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature.getText());
+                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
             } catch (InvalidCommandException e) {
                 showErrorAlert(e.getMessage());
             }

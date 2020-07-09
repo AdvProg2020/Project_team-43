@@ -522,6 +522,26 @@ public class BossProcessor extends Processor {
         ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
     }
 
+    public ArrayList<CodedDiscount> codedDiscountsFromController(){
+        return CodedDiscount.allCodedDiscount;
+    }
+
+    public ArrayList<Product> ProductsFromController(){
+        return Product.allProductsInList;
+    }
+
+    public void removeCategoryFXML(Category selectedCategory){
+        ((Manager) Processor.user).removeCategory(selectedCategory);
+    }
+
+    public ArrayList<Category> categoriesFromController(){
+        return Category.getAllCategories();
+    }
+
+    public void changedFeatureFXML(Category selectedCategory, String selectedFeature, String changedFeature) throws InvalidCommandException {
+        ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature);
+    }
+
 
 
 }
