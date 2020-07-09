@@ -1,5 +1,6 @@
 package Controller.console;
 
+import Controller.Graphic.Controller;
 import View.console.BossView;
 import model.*;
 import model.request.Request;
@@ -152,13 +153,13 @@ public class BossProcessor extends Processor {
     }
 
     public boolean checkCodedDiscountInfo(ArrayList<String> codedDiscountInfo) throws InvalidCommandException {
-        if(!codedDiscountInfo.get(0).matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")){
+        if (!codedDiscountInfo.get(0).matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             throw new InvalidCommandException("invalid start time");
         }
-        if(!codedDiscountInfo.get(1).matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")){
+        if (!codedDiscountInfo.get(1).matches("\\d\\d/\\d\\d/\\d\\d\\d\\d")) {
             throw new InvalidCommandException("invalid end time");
         }
-        if(!dateIsTrue(codedDiscountInfo.get(0), codedDiscountInfo.get(1))){
+        if (!dateIsTrue(codedDiscountInfo.get(0), codedDiscountInfo.get(1))) {
             throw new InvalidCommandException("end time should be after start time");
         }
         if (!codedDiscountInfo.get(2).matches("^\\d*\\.?\\d*$")) {
@@ -170,11 +171,11 @@ public class BossProcessor extends Processor {
         return true;
     }
 
-    public boolean dateIsTrue(String startTime, String endTime){
+    public boolean dateIsTrue(String startTime, String endTime) {
         try {
             Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
             Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
-            if (startDate.after(endDate)){
+            if (startDate.after(endDate)) {
                 return false;
             }
         } catch (ParseException e) {
@@ -431,7 +432,7 @@ public class BossProcessor extends Processor {
 
     public void addCategory(String categoryName) {
         ArrayList<String> features = bossViewManager.getCategoryFeatures();
-        ((Manager)user).addCategory(categoryName, features);
+        ((Manager) user).addCategory(categoryName, features);
     }
 
     public void removeCategory(String categoryName) throws NullPointerException {
@@ -451,6 +452,35 @@ public class BossProcessor extends Processor {
             return;
         } else
             errorMessage("invalid command");
+    }
+
+    ////////////////////////for fxml
+    public User getUserFromController(String userName) {
+        return User.getUserByUserName(userName);
+    }
+
+    public Product getProductFromController(String productId) {
+        return Product.getAllProductById(productId);
+    }
+
+    public CodedDiscount getCodedDiscountFromController(String discountCode) {
+        return CodedDiscount.getDiscountById(discountCode);
+    }
+
+    public Request getRequestFromController(String requestId) {
+        return Request.getRequestById(requestId);
+    }
+
+    public Category getCategoryFromController(String categoryName) {
+        return Category.getCategoryByName(categoryName);
+    }
+
+    public void createManagerProfileFXML(ArrayList<String> managerInfo) {
+        ((Manager) Processor.user).createManagerProfile(managerInfo);
+    }
+
+    public void acceptRequestFXML(Request selectedRequest) throws ParseException, InvalidCommandException {
+        ((Manager) Processor.user).acceptRequest(selectedRequest);
     }
 
 

@@ -144,7 +144,7 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        selectedUser = User.getUserByUserName(userName);
+        selectedUser = bossProcessor.getUserFromController(userName);
         if (selectedUser == null) return;
         showUser(selectedUser);
     }
@@ -165,7 +165,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        selectedProduct = Product.getAllProductById(productId);
+        selectedProduct = bossProcessor.getProductFromController(productId);
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -188,7 +188,7 @@ public class ManagerMenuController extends Controller {
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
-        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
+        selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
 //        }
@@ -209,7 +209,7 @@ public class ManagerMenuController extends Controller {
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(requestIdPrime);
 //        if (matcher.matches()) {
-        selectedRequest = Request.getRequestById(requestIdPrime);
+        selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
         if (selectedRequest == null) return;
         showRequest(selectedRequest);
 //        }
@@ -265,7 +265,7 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        selectedCategory = Category.getCategoryByName(categoryName);
+        selectedCategory = bossProcessor.getCategoryFromController(categoryName);
         if (selectedCategory == null) return;
         showCategory(selectedCategory);
     }
@@ -298,7 +298,7 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(emailCreateManager.getText());
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
-            user.createManagerProfile(managerInfo);
+            bossProcessor.createManagerProfileFXML(managerInfo);
         }
         clearCreateManager();
         updateUsersListView();
@@ -384,14 +384,23 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try {
+        try{
+            bossProcessor.acceptRequestFXML(selectedRequest);
+            Music.getInstance().confirmation();
+        }catch (InvalidCommandException e) {
+            showErrorAlert(e.getMessage());
+        } catch (ParseException e) {
+            showErrorAlert("invalid date");
+        }
+
+        /*try {
             ((Manager) Processor.user).acceptRequest(selectedRequest);
             Music.getInstance().confirmation();
         } catch (InvalidCommandException e) {
             showErrorAlert(e.getMessage());
         } catch (ParseException e) {
             showErrorAlert("invalid date");
-        }
+        }*/
         closeRequestInfo();
         updateRequestListView();
     }
