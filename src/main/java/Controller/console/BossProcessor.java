@@ -507,5 +507,21 @@ public class BossProcessor extends Processor {
         ((Manager) Processor.user).addCategoryFeature(selectedCategory, newFeature);
     }
 
+    public void addCategoryFXML(String createCategoryName, ArrayList<String> features) {
+        ((Manager) Processor.user).addCategory(createCategoryName, features);
+    }
+
+    public void editCodedDiscountFXML(CodedDiscount selectedCodedDiscount, Date startDate, Date endDate, String discountAmount, String discountRepeat) {
+        selectedCodedDiscount.setStartTime(startDate);
+        selectedCodedDiscount.setEndTime(endDate);
+        selectedCodedDiscount.setDiscountAmount(discountAmount);
+        selectedCodedDiscount.setRepeat(discountRepeat);
+    }
+
+    public void removeCodedDiscountFXML(CodedDiscount selectedCodedDiscount) {
+        ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
+    }
+
+
 
 }

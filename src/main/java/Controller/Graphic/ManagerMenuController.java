@@ -500,7 +500,7 @@ public class ManagerMenuController extends Controller {
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
         }
-        ((Manager) Processor.user).addCategory(createCategoryName.getText(), features);
+        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -590,10 +590,7 @@ public class ManagerMenuController extends Controller {
             discountRepeat = selectedCodedDiscount.getRepeat() + "";
         }
         if (beforeAfterDate(startDate, endDate)) {
-            selectedCodedDiscount.setStartTime(startDate);
-            selectedCodedDiscount.setEndTime(endDate);
-            selectedCodedDiscount.setDiscountAmount(discountAmount);
-            selectedCodedDiscount.setRepeat(discountRepeat);
+            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
         } else {
             showErrorAlert("startTime should be before endTime");
             return;
@@ -622,7 +619,7 @@ public class ManagerMenuController extends Controller {
 
     public void removeCodedDiscount() {
         Music.getInstance().confirmation();
-        ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
+        bossProcessor.removeCodedDiscountFXML(selectedCodedDiscount);
         closeCodedDiscountInfo();
         updateCodedDiscountListView();
     }
