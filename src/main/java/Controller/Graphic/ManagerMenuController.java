@@ -634,7 +634,7 @@ public class ManagerMenuController extends Controller {
 
     public void updateProductListView() {
         products.clear();
-        for (Product product : bossProcessor.ProductsFromController()) {
+        for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
         }
     }
@@ -676,7 +676,7 @@ public class ManagerMenuController extends Controller {
 
     public void removeFeature() {
         Music.getInstance().confirmation();
-        ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
+        bossProcessor.deleteFeatureFXML(selectedCategory, selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
         updateCategoryInfoPaneListView();
@@ -692,7 +692,7 @@ public class ManagerMenuController extends Controller {
 
     @FXML
     public void initialize() {
-        user = (Manager) bossProcessor.getUser();
+        user = bossProcessor.getUserFromController();
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
         lastName.setText(userPersonalInfo.getLastName());
@@ -700,23 +700,23 @@ public class ManagerMenuController extends Controller {
         password.setText(userPersonalInfo.getPassword());
         phoneNumber.setText(userPersonalInfo.getPhoneNumber());
         setUserImage(user, profilePhoto);
-        for (User user : User.allUsers) {
+        for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
         usersListView.setItems(users);
-        for (Product product : Product.allProductsInList) {
+        for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getProductId());
         }
         productsListView.setItems(products);
-        for (CodedDiscount discount : CodedDiscount.allCodedDiscount) {
+        for (CodedDiscount discount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(discount.getDiscountCode());
         }
         codedDiscountListView.setItems(codedDiscounts);
-        for (Category category : Category.getAllCategories()) {
+        for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
-        for (Request request : Request.getAllRequests()) {
+        for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
         requestsListView.setItems(requests);

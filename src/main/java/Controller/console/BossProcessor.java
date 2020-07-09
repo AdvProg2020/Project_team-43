@@ -526,7 +526,7 @@ public class BossProcessor extends Processor {
         return CodedDiscount.allCodedDiscount;
     }
 
-    public ArrayList<Product> ProductsFromController(){
+    public ArrayList<Product> productsFromController(){
         return Product.allProductsInList;
     }
 
@@ -540,6 +540,14 @@ public class BossProcessor extends Processor {
 
     public void changedFeatureFXML(Category selectedCategory, String selectedFeature, String changedFeature) throws InvalidCommandException {
         ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature);
+    }
+
+    public void deleteFeatureFXML(Category selectedCategory, String selectedFeature){
+        ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
+    }
+
+    public Manager getUserFromController(){
+        return (Manager)getUser();
     }
 
 
