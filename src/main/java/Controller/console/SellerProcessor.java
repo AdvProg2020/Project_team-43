@@ -187,4 +187,12 @@ public class SellerProcessor extends Processor {
         super.editField(userPersonalInfo);
         ((Seller) user).setCompany(Company.getCompanyByName(companyName));
     }
+
+    public void editProduct(String productId, String field, String newField) {
+        ((Seller) user).editProduct(((Seller) user).getProductById(productId), field, newField);
+    }
+
+    public void editOff(String offId, String field, String newField) {
+        ((Seller) user).editOff(((Seller) user).getOffById(offId), field, newField);
+    }
 }

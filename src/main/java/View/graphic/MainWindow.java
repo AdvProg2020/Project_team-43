@@ -1,17 +1,14 @@
 package View.graphic;
 
-import View.console.MainMenu;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import model.database.Database;
 
-import java.io.IOException;
+import java.io.*;
 
 public class MainWindow extends Application {
     private static MainWindow instance = new MainWindow();

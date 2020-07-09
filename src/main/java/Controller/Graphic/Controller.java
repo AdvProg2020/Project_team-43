@@ -5,12 +5,17 @@ import View.graphic.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Product;
 import model.User;
 import model.UserType;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public abstract class Controller {
     protected Stage stage = MainWindow.getInstance().getStage();
@@ -101,6 +106,26 @@ public abstract class Controller {
         }
         imageView.setImage(new Image("file:" + "src/main/resources/user.png"));
 
+    }
+
+    public void browsePhotoUser(User user, ImageView profilePhoto) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            final File folder = new File("src/main/resources/photos/users");
+            for (final File photo : folder.listFiles()) {
+                if (photo.isFile()) {
+                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
+                    if (user.getUsername().equals(fileName)) {
+                        photo.delete();
+                    }
+                }
+            }
+            Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            setUserImage(user, profilePhoto);
+        }
     }
 
     public void logout() {

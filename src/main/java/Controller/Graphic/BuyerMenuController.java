@@ -94,29 +94,15 @@ public class BuyerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
-        UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
+        //UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
+        //      , phoneNumber.getText(), password.getText());
+        buyerProcessor.editField(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
-        buyerProcessor.editField(userPersonalInfo);
+        //buyerProcessor.editField(userPersonalInfo);
     }
 
     public void browsePhotoUser() throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.jpg"));
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            final File folder = new File("src/main/resources/photos/users");
-            for (final File photo : folder.listFiles()) {
-                if (photo.isFile()) {
-                    String fileName = FilenameUtils.getBaseName(photo.getAbsolutePath());
-                    if (user.getUsername().equals(fileName)) {
-                        photo.delete();
-                    }
-                }
-            }
-            Files.copy(file.toPath(), new File("src/main/resources/photos/users/" + user.getUsername() + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            setUserImage(user, profilePhoto);
-        }
+        browsePhotoUser(user, profilePhoto);
     }
 
     public void setCartCells(Pair<Product, Seller> productSellerPair) {
@@ -180,7 +166,6 @@ public class BuyerMenuController extends Controller {
     public void showCodedDiscount() {
         discountCodeFeatures.getItems().clear();
         String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
-        System.out.println(discountId);
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountId);
         discountCodeFeatures.getItems().add("Amount: " + codedDiscount.getDiscountAmount());
         discountCodeFeatures.getItems().add("Repeat: " + user.remainRepeats(codedDiscount));
@@ -265,7 +250,7 @@ public class BuyerMenuController extends Controller {
         }
     }
 
-    public void open(){
+    public void open() {
         Music.getInstance().open();
     }
 

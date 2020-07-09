@@ -14,8 +14,8 @@ public class Buyer extends User {
 
     private double sumOfPaymentForCoddedDiscount;
 
-    private transient HashMap<CodedDiscount, Integer> codedDiscounts = new HashMap<>();
-    private HashMap<String, Integer> codedDiscountsId = new HashMap<>();
+    private transient HashMap<CodedDiscount, Integer> codedDiscounts;
+    private HashMap<String, Integer> codedDiscountsId;
 
     private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart;
     private transient ArrayList<BuyOrder> orders;
@@ -26,9 +26,9 @@ public class Buyer extends User {
         super(username, userPersonalInfo);
         newBuyerCart = new HashMap<>();
         sumOfPaymentForCoddedDiscount = 0;
-        codedDiscounts = new HashMap<CodedDiscount, Integer>();
+        codedDiscounts = new HashMap<>();
         orders = new ArrayList<BuyOrder>();
-        codedDiscountsId = new HashMap<String, Integer>();
+        codedDiscountsId = new HashMap<>();
         buyOrdersId = new ArrayList<String>();
         allUsers.add(this);
     }
@@ -138,7 +138,7 @@ public class Buyer extends User {
     }
 
     public void checkSumPaymentForOff() {
-        if (sumOfPaymentForCoddedDiscount > 100000) {
+        if (sumOfPaymentForCoddedDiscount > 100) {
             this.makeSpecialCoddedDiscount();
             sumOfPaymentForCoddedDiscount = 0;
         }
