@@ -1,4 +1,4 @@
-package View.GraphicController;
+package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -22,14 +23,17 @@ import javafx.scene.text.Text;
 import model.Category;
 import model.Product;
 import model.Sorting;
+import model.UserType;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
+
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-public class ProductPanelController extends Controller {
+public class ProductPanelController extends Controller implements Initializable {
     private final BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField nameFilterText;
     public RangeSlider priceFilterSlider;
@@ -56,7 +60,8 @@ public class ProductPanelController extends Controller {
     private ListView<String> categoryListView;
     ObservableList<String> categories;
 
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         this.parent = ProductPanelWindow.getInstance();
         pageNumber.setText("1");
         if (Processor.isLogin) {

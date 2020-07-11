@@ -9,17 +9,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Comment  implements Serializable {
+public class Comment implements Serializable {
     private static String fileAddress = "database/Comment.dat";
     public static ArrayList<Comment> allComments = new ArrayList<>();
     public static ArrayList<Comment> acceptedComments = new ArrayList<Comment>();
     public static ArrayList<Comment> inQueueExpectation = new ArrayList<Comment>();
     public static ArrayList<Comment> declineComments = new ArrayList<>();
-    private Buyer buyer;
+    private transient Buyer buyer;
 
 
     private String buyerUserName;
-    private Product product;
+    private transient Product product;
     private String productId;
     private String commentText;
     private State.OpinionState opinionState;
@@ -47,6 +47,7 @@ public class Comment  implements Serializable {
         this.commentText = opinionText;
         this.opinionState = State.OpinionState.WAITING_CONFIRMATION;
         this.isBuy = isBuy;
+        buyerUserName = buyer.getUsername();
         inQueueExpectation.add(this);
     }
 
@@ -54,9 +55,6 @@ public class Comment  implements Serializable {
         this.opinionState = opinionState;
     }
 
-    public Product getProduct() {
-        return product;
-    }
 
     public String getCommentText() {
         return commentText;
@@ -118,13 +116,10 @@ public class Comment  implements Serializable {
     }
 
     private void saveBuyer() {
-        buyerUserName = buyer.getUsername();
-        buyer = null;
     }
 
     private void saveProduct() {
         productId = product.getProductId();
-        product = null;
     }
 
     public static void load() throws FileNotFoundException {

@@ -5,6 +5,7 @@ import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
 import Controller.console.Server;
 import model.User;
+import model.UserPersonalInfo;
 
 import javax.jws.soap.SOAPBinding;
 import java.io.*;
@@ -16,7 +17,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 8585);
+            Socket socket = new Socket("172.20.27.173", 8585);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -30,19 +31,27 @@ public class Client {
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             System.out.println(result);
-            byte[] bytes = new byte[30000];
-            if (result.equals("logged in successful"))
+            if (result.equals("logged in successful")) {
+                byte[] bytes = new byte[30000];
                 dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            User user = (User)is.readObject();
-            Processor.setUser(user);
-            Processor.setIsLogin(true);
+                ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+                ObjectInputStream is = new ObjectInputStream(in);
+                User user = (User) is.readObject();
+                Processor.setUser(user);
+                Processor.setIsLogin(true);
+            }
             return result;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) throws IOException {
+        dataOutputStream.writeUTF("register" + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + username + " " + companyName);
+        return dataInputStream.readUTF();
+
 
     }
+
 }

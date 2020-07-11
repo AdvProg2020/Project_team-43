@@ -1,4 +1,4 @@
-package View.GraphicController;
+package Controller.Graphic;
 
 import Controller.console.BuyerProcessor;
 import View.graphic.MainWindow;
@@ -7,11 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.DeliveryStatus;
 import model.UserPersonalInfo;
 
-import java.io.IOException;
-
-public class RegisterMenuController extends Controller {
+public class RegisterMenuController {
     public TextField userName;
     public TextField firstName;
     public TextField lastName;
@@ -38,13 +37,6 @@ public class RegisterMenuController extends Controller {
         }
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), passWord.getText());
-        String result;
-        try {
-            result = client.register(firstName.getText(), lastName.getText(), email.getText()
-                    , phoneNumber.getText(), passWord.getText(), userName.getText(), companyName.getText());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if (buyerProcessor.register(userPersonalInfo, userName.getText(), companyName.getText()).equals("done")) {
             ((Stage) userName.getScene().getWindow()).close();
             MainWindow.getInstance().start(MainWindow.getInstance().getStage());
