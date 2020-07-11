@@ -15,9 +15,9 @@ public class BuyOrder extends Order  implements Serializable {
     private static String fileAddress = "database/BuyOrder.dat";
     private double payment;
     private double codedDiscountAmount;
-    private transient HashMap<Product, Integer> products = new HashMap<>();
+    private HashMap<Product, Integer> products = new HashMap<>();
     private HashMap<String, Integer> productsId = new HashMap<>();
-    private transient ArrayList<Seller> sellers;
+    private ArrayList<Seller> sellers;
     private ArrayList<String> sellersId = new ArrayList<>();
 
     public String getAddress() {
@@ -37,7 +37,6 @@ public class BuyOrder extends Order  implements Serializable {
         this.deliveryStatus = DeliveryStatus.DELIVERING;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        products = new HashMap<>();
         productsId = new HashMap<>();
         sellersId = new ArrayList<>();
     }
@@ -104,6 +103,7 @@ public class BuyOrder extends Order  implements Serializable {
         for (Product product : products.keySet()) {
             productsId.put(product.getProductId(), products.get(product));
         }
+        products = null;
     }
 
     private static void loadAllProducts() {
@@ -134,6 +134,7 @@ public class BuyOrder extends Order  implements Serializable {
         for (Seller seller : sellers) {
             sellersId.add(seller.getUsername());
         }
+        sellers = null;
     }
 
     private static void loadAllSellers() {

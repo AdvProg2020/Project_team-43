@@ -33,10 +33,10 @@ public class Product  implements Serializable {
     private ProductScore score;
     private ArrayList<Comment> comments;
 
-    private transient Category category;
+    private Category category;
     private String categoryName;
 
-    private transient ArrayList<Seller> sellers;
+    private ArrayList<Seller> sellers;
     private ArrayList<String> sellersName;
 
 
@@ -341,6 +341,7 @@ public class Product  implements Serializable {
 
     public void saveCategory() {
         categoryName = category.getName();
+        category = null;
     }
 
     public static void loadAllSellers() {
@@ -372,5 +373,6 @@ public class Product  implements Serializable {
         for (Seller seller : sellers) {
             sellersName.add(seller.getUsername());
         }
+        sellers = null;
     }
 }

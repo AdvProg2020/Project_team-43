@@ -14,11 +14,11 @@ public class Buyer extends User {
 
     private double sumOfPaymentForCoddedDiscount;
 
-    private transient HashMap<CodedDiscount, Integer> codedDiscounts;
+    private HashMap<CodedDiscount, Integer> codedDiscounts;
     private HashMap<String, Integer> codedDiscountsId;
 
-    private transient HashMap<Pair<Product, Seller>, Integer> newBuyerCart;
-    private transient ArrayList<BuyOrder> orders;
+    private HashMap<Pair<Product, Seller>, Integer> newBuyerCart;
+    private ArrayList<BuyOrder> orders;
     private ArrayList<String> buyOrdersId;
 
 
@@ -233,6 +233,11 @@ public class Buyer extends User {
     public static void saveFields() {
         saveAllCodedDiscounts();
         saveAllBuyOrders();
+        saveAllBuyerCarts();
+    }
+
+    private void saveBuyerCart() {
+        newBuyerCart = null;
     }
 
     public static void loadFields() {
@@ -263,11 +268,18 @@ public class Buyer extends User {
         for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
             codedDiscountsId.put(codedDiscount.getDiscountCode(), codedDiscounts.get(codedDiscount));
         }
+        codedDiscounts = null;
     }
 
     public static void loadAllCodedDiscounts() {
         for (Buyer buyer : getBuyers()) {
             buyer.codedDiscountsLoad();
+        }
+    }
+
+    public static void saveAllBuyerCarts() {
+        for (Buyer buyer : getBuyers()) {
+            buyer.saveBuyerCart();
         }
     }
 
@@ -288,6 +300,7 @@ public class Buyer extends User {
         for (BuyOrder buyOrder : orders) {
             buyOrdersId.add(buyOrder.getOrderId());
         }
+        orders = null;
     }
 
     public static void loadAllBuyOrders() {

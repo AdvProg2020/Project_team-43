@@ -22,9 +22,9 @@ public class Off implements Serializable {
     public static ArrayList<Off> allOffs = new ArrayList<>();
 
     private String offId;
-    private transient Seller seller;
+    private Seller seller;
     private String sellerUserName;
-    private transient ArrayList<Product> products;
+    private ArrayList<Product> products;
     private ArrayList<String> productsId;
     private State.OffState offState;
     private Date startTime;
@@ -38,7 +38,6 @@ public class Off implements Serializable {
         this.endTime = endTime;
         this.discountAmount = discountAmount;
         this.seller = seller;
-        sellerUserName = seller.getUsername();
         products = new ArrayList<>(products1);
         productsId = new ArrayList<>();
         inQueueExpectionOffs.add(this);
@@ -174,7 +173,7 @@ public class Off implements Serializable {
         for (Product product : products) {
             productsId.add(product.getProductId());
         }
-
+        products = null;
     }
 
     private void loadProducts() {
@@ -186,6 +185,7 @@ public class Off implements Serializable {
 
     private void saveSeller() {
         sellerUserName = seller.getUsername();
+        seller = null;
     }
 
     private void loadSeller() {

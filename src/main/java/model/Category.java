@@ -16,7 +16,7 @@ public class Category implements Serializable {
 
     private String name;
     private ArrayList<String> features;
-    private transient ArrayList<Product> products;
+    private ArrayList<Product> products;
     private ArrayList<String> productsId;
 
 
@@ -157,6 +157,7 @@ public class Category implements Serializable {
         for (Product product : products) {
             productsId.add(product.getProductId());
         }
+        products = null;
     }
 
     private static void loadAllProducts() {

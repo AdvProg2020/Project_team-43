@@ -19,13 +19,13 @@ public class Seller extends User  implements Serializable {
     private static String fileAddress = "database/Seller.dat";
     private Company company;
 
-    private transient HashMap<Product, Integer> productsNumber;
+    private HashMap<Product, Integer> productsNumber;
     private HashMap<String, Integer> productsNumberWithId;
 
-    private transient ArrayList<Off> offs;
+    private ArrayList<Off> offs;
     private ArrayList<String> offsId;
 
-    private transient ArrayList<SellOrder> orders;
+    private ArrayList<SellOrder> orders;
     private ArrayList<String> sellOrdersId;
 
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
@@ -283,6 +283,7 @@ public class Seller extends User  implements Serializable {
         for (Product product : productsNumber.keySet()) {
             productsNumberWithId.put(product.getProductId(), productsNumber.get(product));
         }
+        productsNumber = null;
     }
 
     public static void loadAllOffs() {
@@ -312,6 +313,7 @@ public class Seller extends User  implements Serializable {
         for (Off off : offs) {
             offsId.add(off.getOffId());
         }
+        offs = null;
     }
 
     public static void loadAllSellOrders() {
@@ -340,6 +342,7 @@ public class Seller extends User  implements Serializable {
         for (SellOrder sellOrder : orders) {
             sellOrdersId.add(sellOrder.getOrderId());
         }
+        orders = null;
 
     }
 

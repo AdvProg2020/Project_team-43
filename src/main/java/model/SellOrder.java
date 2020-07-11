@@ -14,9 +14,9 @@ public class SellOrder extends Order  implements Serializable {
     private static String fileAddress = "database/SellOrder.dat";
     private double payment;
     private double offAmount;
-    private transient Product product;
+    private Product product;
     private String productId;
-    private transient Buyer buyer;
+    private Buyer buyer;
     private String buyerUsername;
     private DeliveryStatus deliveryStatus;
     private int number;
@@ -87,10 +87,12 @@ public class SellOrder extends Order  implements Serializable {
 
     private void saveProduct() {
         productId = product.getProductId();
+        product = null;
     }
 
     private void saveBuyer() {
         buyerUsername = buyer.getUsername();
+        buyer = null;
     }
 
     private static void loadAllBuyers() {
