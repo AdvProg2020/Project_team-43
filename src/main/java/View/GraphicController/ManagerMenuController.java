@@ -1,39 +1,23 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BossProcessor;
-import Controller.console.Processor;
-import View.graphic.ProductPanelWindow;
-import View.graphic.ProductWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import model.*;
 import model.request.*;
-import org.apache.commons.io.FilenameUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ManagerMenuController extends Controller {
     BossProcessor bossProcessor = BossProcessor.getInstance();

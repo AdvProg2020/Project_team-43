@@ -10,7 +10,7 @@
             prefHeight="600.0" prefWidth="900.0"
             style="-fx-background-image: url('fuck.jpeg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 "
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Controller.Graphic.MainMenuController">
+            fx:controller="View.GraphicController.MainMenuController">
     <children>
         <Button fx:id="userPanelButton" layoutX="54.0" layoutY="173.0" mnemonicParsing="false"
                 onAction="#userPanelButtonClicked" prefHeight="44.0" prefWidth="159.0" style="-fx-cursor: hand;"

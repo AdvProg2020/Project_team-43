@@ -1,6 +1,5 @@
 package Controller.console;
 
-import Controller.Graphic.Controller;
 import View.console.BossView;
 import model.*;
 import model.request.Request;

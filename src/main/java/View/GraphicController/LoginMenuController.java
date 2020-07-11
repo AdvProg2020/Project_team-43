@@ -1,10 +1,7 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
-import View.graphic.LoginWindow;
 import View.graphic.MainWindow;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
