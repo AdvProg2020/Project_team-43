@@ -14,11 +14,11 @@ public class Comment {
     public static ArrayList<Comment> acceptedComments = new ArrayList<Comment>();
     public static ArrayList<Comment> inQueueExpectation = new ArrayList<Comment>();
     public static ArrayList<Comment> declineComments = new ArrayList<>();
-    private transient Buyer buyer;
+    private Buyer buyer;
 
 
     private String buyerUserName;
-    private transient Product product;
+    private Product product;
     private String productId;
     private String commentText;
     private State.OpinionState opinionState;
@@ -42,9 +42,7 @@ public class Comment {
 
     public Comment(Product product, String opinionText, boolean isBuy, Buyer buyer) {
         this.product = product;
-        this.productId = product.getProductId();
         this.buyer = buyer;
-        this.buyerUserName = this.buyer.getUsername();
         this.commentText = opinionText;
         this.opinionState = State.OpinionState.WAITING_CONFIRMATION;
         this.isBuy = isBuy;
@@ -102,6 +100,30 @@ public class Comment {
     }
 
     public static void saveFields() {
+        saveAllBuyers();
+        saveAllProducts();
+    }
+
+    private static void saveAllProducts() {
+        for (Comment comment : allComments) {
+            comment.saveProduct();
+        }
+    }
+
+    private static void saveAllBuyers() {
+        for (Comment comment : allComments) {
+            comment.saveBuyer();
+        }
+    }
+
+    private void saveBuyer() {
+        buyerUserName = buyer.getUsername();
+        buyer = null;
+    }
+
+    private void saveProduct() {
+        productId = product.getProductId();
+        product = null;
     }
 
     public static void load() throws FileNotFoundException {

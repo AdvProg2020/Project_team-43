@@ -15,7 +15,7 @@ public class Category {
 
     private String name;
     private ArrayList<String> features;
-    private transient ArrayList<Product> products;
+    private ArrayList<Product> products;
     private ArrayList<String> productsId;
 
 
@@ -156,6 +156,7 @@ public class Category {
         for (Product product : products) {
             productsId.add(product.getProductId());
         }
+        products = null;
     }
 
     private static void loadAllProducts() {
