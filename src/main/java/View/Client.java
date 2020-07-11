@@ -2,7 +2,9 @@ package View;
 
 
 import Controller.console.Processor;
+
 import model.User;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -12,7 +14,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 2020);
+            Socket socket = new Socket("172.20.27.172", 2020);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
