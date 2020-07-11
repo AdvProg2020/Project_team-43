@@ -5,7 +5,6 @@ import model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-
 import java.util.ArrayList;
 
 public class CommentTest {
@@ -55,22 +54,23 @@ public class CommentTest {
     }
 
     @Test
-    public void acceptCommentTest() {
+    public void acceptCommentTest(){
         setAll();
         Comment newComment = new Comment(product1, "opinionText", true, buyer);
-        bossProcessor.manageComments("accept comment " + (Comment.inQueueExpectation.size() - 1));
+        bossProcessor.manageComments("accept comment "+ (Comment.inQueueExpectation.size()-1));
         Assert.assertFalse(Comment.inQueueExpectation.contains(newComment));
         Assert.assertTrue(Comment.acceptedComments.contains(newComment));
     }
-
     @Test
-    public void declineCommentTest() {
+    public void declineCommentTest(){
         setAll();
         Comment newComment = new Comment(product1, "opinionText", true, buyer);
-        bossProcessor.manageComments("decline comment " + (Comment.inQueueExpectation.size() - 1));
+        bossProcessor.manageComments("decline comment "+ (Comment.inQueueExpectation.size()-1));
         Assert.assertFalse(Comment.inQueueExpectation.contains(newComment));
         Assert.assertTrue(Comment.declineComments.contains(newComment));
     }
+
+
 
     @Test
     public void loadCommentsTest() {

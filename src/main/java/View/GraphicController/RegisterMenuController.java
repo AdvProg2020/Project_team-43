@@ -27,7 +27,7 @@ public class RegisterMenuController extends Controller {
 
     public void registerButtonClicked(ActionEvent actionEvent) {
         if (buyerChoice.isSelected()) {
-            companyName.setText("");
+            companyName.setText("null");
         }
         alertMessage.setVisible(false);
         if (passWord.getText().length() < 8) {
@@ -38,14 +38,14 @@ public class RegisterMenuController extends Controller {
         }
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), passWord.getText());
-        String result;
+        String result = null;
         try {
             result = client.register(firstName.getText(), lastName.getText(), email.getText()
                     , phoneNumber.getText(), passWord.getText(), userName.getText(), companyName.getText());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (buyerProcessor.register(userPersonalInfo, userName.getText(), companyName.getText()).equals("done")) {
+        if (result.equals("done")) {
             ((Stage) userName.getScene().getWindow()).close();
             MainWindow.getInstance().start(MainWindow.getInstance().getStage());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

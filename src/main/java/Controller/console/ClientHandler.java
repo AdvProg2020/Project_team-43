@@ -2,14 +2,15 @@ package Controller.console;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Collections;
 
 public class ClientHandler extends Thread {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private Socket socket;
-    private final Server server;
+    private ServerImp server;
 
-    public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, Server server) {
+    public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
         this.socket = socket;
@@ -21,7 +22,7 @@ public class ClientHandler extends Thread {
         handleClient();
     }
 
-    private void handleClient() {
+    public void handleClient() {
         try {
             while (true) {
                 String command = dataInputStream.readUTF();
@@ -29,16 +30,12 @@ public class ClientHandler extends Thread {
                 if (command.startsWith("login")) {
                     login(command.split(" ")[1], command.split(" ")[2]);
                 } else if (command.startsWith("register")) {
-                    result = server.register(command.split(" ")[1], command.split(" ")[2], command.split(" ")[3],
-                            command.split(" ")[4]
-                            , command.split(" ")[5]
-                            , command.split(" ")[6], command.split(" ")[7]);
+                    String[] commands = command.split(" ");
+                    result = server.register(commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], commands[7]);
                     dataOutputStream.writeUTF(result);
                     dataOutputStream.flush();
-
                 }
                 System.out.println(command);
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
