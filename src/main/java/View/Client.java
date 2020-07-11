@@ -1,13 +1,9 @@
 package View;
 
 
-import Controller.console.BuyerProcessor;
 import Controller.console.Processor;
-import Controller.console.Server;
 import model.User;
-import model.UserPersonalInfo;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.*;
 import java.net.Socket;
 
@@ -17,7 +13,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 2020);
+            Socket socket = new Socket("localhost", 2020);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
