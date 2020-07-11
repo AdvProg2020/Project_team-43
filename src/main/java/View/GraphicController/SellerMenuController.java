@@ -326,7 +326,6 @@ public class SellerMenuController extends Controller {
                 checkBox.setSelected(true);
             }
             offProductsListView.getItems().add(checkBox);
-
         }
         manageOffStartTime.setValue(off.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         manageOffEndTime.setValue(off.getEndTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -396,12 +395,13 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeAddOff() {
-        System.out.println(user.getProductsNumber()==null);
         offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(newValue.intValue() + "%"));
         for (Product product : user.getProductsNumber().keySet()) {
-            CheckBox checkBox = new CheckBox();
-            checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
-            offProducts.getItems().add(checkBox);
+            if (product.getProductState() == State.ProductState.CONFIRMED) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
+                offProducts.getItems().add(checkBox);
+            }
         }
     }
 
@@ -469,8 +469,7 @@ public class SellerMenuController extends Controller {
             System.out.println("Done!");
         }
     }
-
-    public void open(){
+    public void open() {
         Music.getInstance().open();
     }
 }
