@@ -24,7 +24,6 @@ import model.Product;
 import model.Sorting;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
