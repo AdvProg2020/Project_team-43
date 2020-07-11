@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProductScore {
+public class ProductScore  implements Serializable {
     private int buyers;
     private double avgScore;
     private final ArrayList<String> userNamesOfUsersRated;

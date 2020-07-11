@@ -7,13 +7,14 @@ import model.request.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Manager extends User {
+public class Manager extends User  implements Serializable {
     private static String fileAddress = "database/Manager.dat";
     public static ArrayList<Request> allRequest = Request.getAllRequests();
 

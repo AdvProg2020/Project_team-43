@@ -21,7 +21,7 @@
 <?import org.controlsfx.control.textfield.CustomTextField?>
 
 <?import java.util.ArrayList?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Graphic.ProductPanelController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="822.0" prefWidth="1074.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GraphicController.ProductPanelController">
     <children>
         <Pane focusTraversable="true" layoutX="809.0" layoutY="111.0" prefHeight="699.0" prefWidth="258.0" style="-fx-background-color: #e8ede4; -fx-background-radius: 10;">
             <effect>

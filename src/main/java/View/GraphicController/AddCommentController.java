@@ -1,4 +1,4 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
 import View.graphic.MainWindow;
@@ -12,7 +12,7 @@ import model.Buyer;
 import model.Comment;
 import model.Product;
 
-public class AddCommentController {
+public class AddCommentController extends Controller {
 
     public TextArea commentText;
     public Button submitCommentButton;

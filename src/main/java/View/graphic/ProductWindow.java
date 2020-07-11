@@ -1,6 +1,6 @@
 package View.graphic;
 
-import Controller.Graphic.ProductWindowController;
+import View.GraphicController.ProductWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

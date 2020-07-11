@@ -1,10 +1,7 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
-import View.graphic.LoginWindow;
 import View.graphic.MainWindow;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class LoginMenuController {
+public class LoginMenuController extends Controller {
 
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     @FXML
@@ -31,7 +28,7 @@ public class LoginMenuController {
         wrongPassword.setVisible(false);
         String username = usernameTextField.getText();
         String password = passwordField.getText();
-        String result = buyerProcessor.login(username, password);
+        String result = client.login(username, password);
         System.out.println(result);
         if (result.equals("logged in successful")) {
             ((Stage) passwordField.getScene().getWindow()).close();

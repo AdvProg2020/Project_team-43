@@ -5,10 +5,11 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Comment {
+public class Comment  implements Serializable {
     private static String fileAddress = "database/Comment.dat";
     public static ArrayList<Comment> allComments = new ArrayList<>();
     public static ArrayList<Comment> acceptedComments = new ArrayList<Comment>();

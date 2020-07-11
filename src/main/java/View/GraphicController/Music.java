@@ -1,11 +1,11 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class Music {
+public class Music extends Controller{
     private static Music ourInstance = new Music();
     private MediaPlayer closeSound;
     private MediaPlayer openSound;

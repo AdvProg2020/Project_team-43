@@ -1,12 +1,10 @@
 package View.graphic;
 
-import Controller.Graphic.BuyerMenuController;
-import Controller.Graphic.ManagerMenuController;
+import View.GraphicController.BuyerMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Product;
 

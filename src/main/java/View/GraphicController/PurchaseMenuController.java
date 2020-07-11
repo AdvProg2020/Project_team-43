@@ -1,4 +1,4 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
 import View.graphic.BuyerUserWindow;
@@ -11,10 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.CodedDiscount;
 
 

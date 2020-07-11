@@ -389,6 +389,10 @@ public class Processor {
 
     }
 
+    public static void setUser(User user) {
+        Processor.user = user;
+    }
+
     public String login(String username, String password) {
         if (!User.hasUserWithUserName(username))
             return "there is no user with this username";

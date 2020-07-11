@@ -1,6 +1,7 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
+import View.Client;
 import View.graphic.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -18,6 +19,12 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public abstract class Controller {
+    protected static Client client;
+
+    public static void setClient(Client client) {
+        Controller.client = client;
+    }
+
     protected Stage stage = MainWindow.getInstance().getStage();
     protected Application parent;
     protected Product product;

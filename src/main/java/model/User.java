@@ -7,10 +7,11 @@ import model.database.Saver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class User {
+public abstract class User implements Serializable {
     private static final int startMoney = 100000;
 
     public static ArrayList<User> allUsers = new ArrayList<>();

@@ -5,10 +5,11 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Category {
+public class Category implements Serializable {
     private static String fileAddress = "database/Category.dat";
     private static ArrayList<Category> allCategories = new ArrayList<Category>();
 

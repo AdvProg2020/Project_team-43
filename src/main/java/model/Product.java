@@ -6,9 +6,10 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
-public class Product {
+public class Product  implements Serializable {
     private static String fileAddress = "database/Product.dat";
     private static ArrayList<Product> allProducts = new ArrayList<>();
     private static HashMap<String, String> SellerUsernameToProductId = new HashMap<>();

@@ -1,7 +1,6 @@
 package View.graphic;
 
-import Controller.Graphic.LoggedOutStatusController;
-import Controller.Graphic.ProductWindowController;
+import View.GraphicController.LoggedOutStatusController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

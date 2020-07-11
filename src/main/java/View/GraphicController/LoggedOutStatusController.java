@@ -1,4 +1,4 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import View.graphic.*;
 import javafx.application.Application;

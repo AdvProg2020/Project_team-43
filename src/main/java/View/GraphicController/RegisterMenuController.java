@@ -1,4 +1,4 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
 import View.graphic.MainWindow;
@@ -7,10 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.DeliveryStatus;
 import model.UserPersonalInfo;
 
-public class RegisterMenuController {
+public class RegisterMenuController extends Controller{
     public TextField userName;
     public TextField firstName;
     public TextField lastName;
