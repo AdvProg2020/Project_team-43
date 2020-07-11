@@ -3,13 +3,9 @@ import View.GraphicController.Controller;
 import View.console.App;
 import View.graphic.MainWindow;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.Manager;
-import model.UserPersonalInfo;
+
 import View.Client;
 
 public class View extends Application {

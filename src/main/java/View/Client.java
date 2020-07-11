@@ -17,7 +17,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 8585);
+            Socket socket = new Socket("127.0.0.1", 2020);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -49,7 +49,9 @@ public class Client {
 
     public String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) throws IOException {
         dataOutputStream.writeUTF("register" + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + username + " " + companyName);
-        return dataInputStream.readUTF();
+        dataOutputStream.flush();
+        String result = dataInputStream.readUTF();
+        return result;
 
 
     }

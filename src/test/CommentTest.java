@@ -70,12 +70,7 @@ public class CommentTest {
         Assert.assertTrue(Comment.declineComments.contains(newComment));
     }
 
-    @Test
-    public void loadFieldTest() {
-        setAll();
-        Comment.loadFields();
-        Assert.assertEquals(comment.getProduct(), product1);
-    }
+
 
     @Test
     public void loadCommentsTest() {

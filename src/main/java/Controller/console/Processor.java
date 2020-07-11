@@ -380,7 +380,7 @@ public class Processor {
         if (User.hasUserWithUserName(userName)) {
             return "there is a user with this username";
         }
-        if (companyName.equals("")) {
+        if (companyName.equals("") || companyName.equals("null")) {
             Buyer.addBuyer(userPersonalInfo, userName);
         } else {
             SellerRequest.addSellerRequest(userPersonalInfo, userName, companyName);
