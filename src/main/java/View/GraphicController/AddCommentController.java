@@ -12,7 +12,7 @@ import model.Buyer;
 import model.Comment;
 import model.Product;
 
-public class AddCommentController {
+public class AddCommentController extends Controller {
 
     public TextArea commentText;
     public Button submitCommentButton;

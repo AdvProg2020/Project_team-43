@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class LoginMenuController {
+public class LoginMenuController extends Controller {
 
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     @FXML
@@ -28,7 +28,7 @@ public class LoginMenuController {
         wrongPassword.setVisible(false);
         String username = usernameTextField.getText();
         String password = passwordField.getText();
-        String result = buyerProcessor.login(username, password);
+        String result = client.login(username, password);
         System.out.println(result);
         if (result.equals("logged in successful")) {
             ((Stage) passwordField.getScene().getWindow()).close();

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import model.Product;
 import model.UserType;
 
-public class MainMenuController {
+public class MainMenuController extends Controller{
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     private Stage stage = MainWindow.getInstance().getStage();
     @FXML

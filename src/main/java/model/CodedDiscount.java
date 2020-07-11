@@ -3,6 +3,7 @@ package model;
 import model.database.Loader;
 import model.database.Saver;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class CodedDiscount {
+public class CodedDiscount  implements Serializable {
     private static String fileAddress = "database/CodedDiscount.dat";
 
     public static int constructId;

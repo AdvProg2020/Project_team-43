@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
 
-public class ProductPanelController extends Controller implements Initializable {
+public class ProductPanelController extends Controller {
     private final BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField nameFilterText;
     public RangeSlider priceFilterSlider;
@@ -56,8 +56,7 @@ public class ProductPanelController extends Controller implements Initializable 
     private ListView<String> categoryListView;
     ObservableList<String> categories;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         this.parent = ProductPanelWindow.getInstance();
         pageNumber.setText("1");
         if (Processor.isLogin) {
