@@ -2,7 +2,6 @@ package Controller.console;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Collections;
 
 public class ClientHandler extends Thread {
     private DataInputStream dataInputStream;
