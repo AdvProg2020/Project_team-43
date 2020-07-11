@@ -5,10 +5,11 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Company {
+public class Company  implements Serializable {
     private static String fileAddress = "database/Company.dat";
     public static ArrayList<Company> allCompanies = new ArrayList<>();
 

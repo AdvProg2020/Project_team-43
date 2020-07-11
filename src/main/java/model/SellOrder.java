@@ -5,11 +5,12 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class SellOrder extends Order {
+public class SellOrder extends Order  implements Serializable {
     private static String fileAddress = "database/SellOrder.dat";
     private double payment;
     private double offAmount;

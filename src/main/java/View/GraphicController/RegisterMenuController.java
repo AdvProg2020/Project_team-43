@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.UserPersonalInfo;
 
-public class RegisterMenuController {
+public class RegisterMenuController extends Controller{
     public TextField userName;
     public TextField firstName;
     public TextField lastName;

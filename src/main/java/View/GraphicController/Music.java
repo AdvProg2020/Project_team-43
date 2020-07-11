@@ -5,7 +5,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class Music {
+public class Music extends Controller{
     private static Music ourInstance = new Music();
     private MediaPlayer closeSound;
     private MediaPlayer openSound;

@@ -5,6 +5,7 @@ import model.database.Saver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.Date;
 //import java.util.Date;
 
-public class Off {
+public class Off implements Serializable {
     private static String fileAddress = "database/Off.dat";
     public static int constructId = 0;
     public static ArrayList<Off> acceptedOffs = new ArrayList<>();
