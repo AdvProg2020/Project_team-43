@@ -1,6 +1,7 @@
 package Controller.console;
 
 import View.console.App;
+import model.UserPersonalInfo;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -12,6 +13,7 @@ public class Server {
         new Server().run();
 
     }
+
     public void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(8585);
         while (true) {
@@ -20,6 +22,12 @@ public class Server {
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             new ClientHandler(dataInputStream, dataOutputStream, socket, this).start();
         }
-
     }
+
+    public synchronized String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) {
+        UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName, lastName, email
+                , phone, password);
+        return BuyerProcessor.getInstance().register(userPersonalInfo, username, companyName);
+    }
+
 }

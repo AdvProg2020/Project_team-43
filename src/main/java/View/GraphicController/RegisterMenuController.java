@@ -9,7 +9,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.UserPersonalInfo;
 
-public class RegisterMenuController extends Controller{
+import java.io.IOException;
+
+public class RegisterMenuController extends Controller {
     public TextField userName;
     public TextField firstName;
     public TextField lastName;
@@ -36,6 +38,13 @@ public class RegisterMenuController extends Controller{
         }
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), passWord.getText());
+        String result;
+        try {
+            result = client.register(firstName.getText(), lastName.getText(), email.getText()
+                    , phoneNumber.getText(), passWord.getText(), userName.getText(), companyName.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (buyerProcessor.register(userPersonalInfo, userName.getText(), companyName.getText()).equals("done")) {
             ((Stage) userName.getScene().getWindow()).close();
             MainWindow.getInstance().start(MainWindow.getInstance().getStage());
