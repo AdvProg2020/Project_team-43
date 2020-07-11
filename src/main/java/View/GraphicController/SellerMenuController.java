@@ -396,6 +396,7 @@ public class SellerMenuController extends Controller {
     }
 
     private void initializeAddOff() {
+        System.out.println(user.getProductsNumber()==null);
         offAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> offAmountLabel.textProperty().setValue(newValue.intValue() + "%"));
         for (Product product : user.getProductsNumber().keySet()) {
             CheckBox checkBox = new CheckBox();

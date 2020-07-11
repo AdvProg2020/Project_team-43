@@ -27,13 +27,6 @@ public class MainWindow extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
 
-        stage.setOnCloseRequest((a) -> {
-            try {
-                Database.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         stage.getIcons().add(new Image("file:src/main/resources/fuck.jpeg"));
 
         Parent root = null;
