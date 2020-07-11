@@ -1,18 +1,9 @@
 package View.graphic;
 
-import Controller.Graphic.Controller;
-import Controller.Graphic.MainMenuController;
-import Controller.console.BuyerProcessor;
-import View.console.MainMenu;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 

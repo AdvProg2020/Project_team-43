@@ -1,7 +1,6 @@
 package View.graphic;
 
-import Controller.Graphic.AddCommentController;
-import Controller.Graphic.ProductWindowController;
+import View.GraphicController.AddCommentController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

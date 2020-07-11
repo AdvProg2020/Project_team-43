@@ -1,7 +1,6 @@
-package Controller.Graphic;
+package View.GraphicController;
 
 import Controller.console.BuyerProcessor;
-import View.console.LoggedOutStatus;
 import View.graphic.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

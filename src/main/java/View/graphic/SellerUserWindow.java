@@ -1,7 +1,6 @@
 package View.graphic;
 
-import Controller.Graphic.ManagerMenuController;
-import Controller.Graphic.SellerMenuController;
+import View.GraphicController.SellerMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
