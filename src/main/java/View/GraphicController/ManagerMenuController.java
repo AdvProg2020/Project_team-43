@@ -128,7 +128,8 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        selectedUser = bossProcessor.getUserFromController(userName);
+        //selectedUser = bossProcessor.getUserFromController(userName);
+        //TODO : object ro byd begirim
         if (selectedUser == null) return;
         showUser(selectedUser);
     }
@@ -149,7 +150,8 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        selectedProduct = bossProcessor.getProductFromController(productId);
+//        selectedProduct = bossProcessor.getProductFromController(productId);
+        //TODO : object begirim
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -172,7 +174,8 @@ public class ManagerMenuController extends Controller {
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
-        selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
+//        selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
+        //TODO : object begirim
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
 //        }
@@ -193,7 +196,8 @@ public class ManagerMenuController extends Controller {
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(requestIdPrime);
 //        if (matcher.matches()) {
-        selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
+//        selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
+        //TODO : object begirim
         if (selectedRequest == null) return;
         showRequest(selectedRequest);
 //        }
@@ -249,7 +253,8 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        selectedCategory = bossProcessor.getCategoryFromController(categoryName);
+//        selectedCategory = bossProcessor.getCategoryFromController(categoryName);
+        //TODO : object begirim
         if (selectedCategory == null) return;
         showCategory(selectedCategory);
     }
@@ -282,7 +287,8 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(emailCreateManager.getText());
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
-            bossProcessor.createManagerProfileFXML(managerInfo);
+//            bossProcessor.createManagerProfileFXML(managerInfo);
+            Controller.client.createManagerProfile(managerInfo.get(0), managerInfo.get(1), managerInfo.get(2), managerInfo.get(3), managerInfo.get(4), managerInfo.get(5));
         }
         clearCreateManager();
         updateUsersListView();
@@ -368,14 +374,15 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try{
-            Music.getInstance().confirmation();
-            bossProcessor.acceptRequestFXML(selectedRequest);
-        }catch (InvalidCommandException e) {
-            showErrorAlert(e.getMessage());
-        } catch (ParseException e) {
-            showErrorAlert("invalid date");
-        }
+//        try {
+        Music.getInstance().confirmation();
+//            bossProcessor.acceptRequestFXML(selectedRequest);
+        client.acceptRequest(selectedRequest.getRequestId());
+//        } catch (InvalidCommandException e) {
+//            showErrorAlert(e.getMessage());
+//        } catch (ParseException e) {
+//            showErrorAlert("invalid date");
+//        }
 
         /*try {
             ((Manager) Processor.user).acceptRequest(selectedRequest);
@@ -391,13 +398,15 @@ public class ManagerMenuController extends Controller {
 
     public void declineRequest() {
         Music.getInstance().confirmation();
-        bossProcessor.declineRequestFXML(selectedRequest);
+//        bossProcessor.declineRequestFXML(selectedRequest);
+        client.declineRequest(selectedRequest.getRequestId());
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void updateRequestListView() {
         requests.clear();
+        //TODO : array list begirim
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
@@ -407,13 +416,15 @@ public class ManagerMenuController extends Controller {
 
     public void deleteUser() {
         Music.getInstance().confirmation();
-        bossProcessor.deleteUserFXML(selectedUser);
+//        bossProcessor.deleteUserFXML(selectedUser);
+        client.deleteUser(selectedUser.getUsername());
         closeUserInfo();
         updateUsersListView();
     }
 
     public void updateUsersListView() {
         users.clear();
+        //TODO : array list begirim
         for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
@@ -423,7 +434,8 @@ public class ManagerMenuController extends Controller {
     public void editCategory() {
         Music.getInstance().confirmation();
         if (!categoryName.getText().isEmpty()) {
-            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+//            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+            client.editCategory(selectedCategory.getName(), categoryName.getText());
             categoryName.clear();
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();

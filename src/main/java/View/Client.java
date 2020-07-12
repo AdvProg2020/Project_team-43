@@ -3,6 +3,7 @@ package View;
 
 import Controller.console.Processor;
 
+import model.Category;
 import model.User;
 
 import java.io.*;
@@ -53,4 +54,54 @@ public class Client {
 
     }
 
+    public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
+        try {
+            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void acceptRequest(String requestId) {
+        try {
+            dataOutputStream.writeUTF("acceptRequest" + " " + requestId);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void declineRequest(String requestId) {
+        try {
+            dataOutputStream.writeUTF("declineRequest" + " " + requestId);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUser(String userName) {
+        try {
+            dataOutputStream.writeUTF("deleteUser" + " " + userName);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editCategory(String categoryName, String newName) {
+        try {
+            dataOutputStream.writeUTF("editCategory" +" " + categoryName +" " + newName);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
