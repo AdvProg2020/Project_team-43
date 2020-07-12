@@ -413,4 +413,9 @@ public class Processor {
         user.setUserPersonalInfo(userPersonalInfo);
     }
 
+    public void editField(String firstName, String lastName, String email, String phoneNumber, String password) {
+        editField(new UserPersonalInfo(firstName, lastName, email, phoneNumber, password));
+
+    }
+
 }

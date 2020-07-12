@@ -89,11 +89,11 @@ public class BuyerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
-        //UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
-        //      , phoneNumber.getText(), password.getText());
+        client.updateUser(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
         buyerProcessor.editField(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
-        //buyerProcessor.editField(userPersonalInfo);
+
     }
 
     public void browsePhotoUser() throws IOException {
@@ -109,8 +109,13 @@ public class BuyerMenuController extends Controller {
 
     public void showOrder() {
         order.getItems().clear();
+        BuyOrder buyOrder = null;
         String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[1];
-        BuyOrder buyOrder = (BuyOrder) Order.getOrderById(orderId);
+        for (BuyOrder userOrder : user.getOrders()) {
+            if (userOrder.getOrderId().equals(orderId))
+                buyOrder = userOrder;
+
+        }
         HashMap<Product, Integer> products = buyOrder.getProducts();
         int i = 0;
         for (Product product : products.keySet()) {
@@ -161,7 +166,11 @@ public class BuyerMenuController extends Controller {
     public void showCodedDiscount() {
         discountCodeFeatures.getItems().clear();
         String discountId = discountCodes.getSelectionModel().getSelectedItem().split(" ")[1];
-        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountId);
+        CodedDiscount codedDiscount = null;
+        for (CodedDiscount userDiscount : user.getDiscounts()) {
+            if (userDiscount.getDiscountCode().equals(discountId))
+                codedDiscount = userDiscount;
+        }
         discountCodeFeatures.getItems().add("Amount: " + codedDiscount.getDiscountAmount());
         discountCodeFeatures.getItems().add("Repeat: " + user.remainRepeats(codedDiscount));
         discountCodeFeatures.getItems().add("Start Time: " + codedDiscount.getStartTime());

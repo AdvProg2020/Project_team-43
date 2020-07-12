@@ -368,10 +368,10 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try{
+        try {
             Music.getInstance().confirmation();
             bossProcessor.acceptRequestFXML(selectedRequest);
-        }catch (InvalidCommandException e) {
+        } catch (InvalidCommandException e) {
             showErrorAlert(e.getMessage());
         } catch (ParseException e) {
             showErrorAlert("invalid date");
@@ -708,6 +708,8 @@ public class ManagerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
+        client.updateUser(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);

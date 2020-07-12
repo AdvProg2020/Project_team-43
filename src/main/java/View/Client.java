@@ -47,10 +47,19 @@ public class Client {
     public String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) throws IOException {
         dataOutputStream.writeUTF("register" + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + username + " " + companyName);
         dataOutputStream.flush();
-        String result = dataInputStream.readUTF();
-        return result;
+        return dataInputStream.readUTF();
+    }
 
+    public String updateUser(String firstName, String lastName, String email, String phoneNumber, String password) {
 
+        try {
+            dataOutputStream.writeUTF("update " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + password);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "connection failed";
     }
 
 }
