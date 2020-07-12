@@ -129,6 +129,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
         selectedUser = bossProcessor.getUserFromController(userName);
+        //TODO : object ro byd begirim
         if (selectedUser == null) return;
         showUser(selectedUser);
     }
@@ -150,6 +151,7 @@ public class ManagerMenuController extends Controller {
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
         selectedProduct = bossProcessor.getProductFromController(productId);
+        //TODO : object begirim
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -173,6 +175,7 @@ public class ManagerMenuController extends Controller {
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
         selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
+        //TODO : object begirim
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
 //        }
@@ -194,6 +197,7 @@ public class ManagerMenuController extends Controller {
 //        Matcher matcher = pattern.matcher(requestIdPrime);
 //        if (matcher.matches()) {
         selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
+        //TODO : object begirim
         if (selectedRequest == null) return;
         showRequest(selectedRequest);
 //        }
@@ -250,6 +254,7 @@ public class ManagerMenuController extends Controller {
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
         selectedCategory = bossProcessor.getCategoryFromController(categoryName);
+        //TODO : object begirim
         if (selectedCategory == null) return;
         showCategory(selectedCategory);
     }
@@ -368,10 +373,10 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try{
+        try {
             Music.getInstance().confirmation();
             bossProcessor.acceptRequestFXML(selectedRequest);
-        }catch (InvalidCommandException e) {
+        } catch (InvalidCommandException e) {
             showErrorAlert(e.getMessage());
         } catch (ParseException e) {
             showErrorAlert("invalid date");
@@ -398,6 +403,7 @@ public class ManagerMenuController extends Controller {
 
     public void updateRequestListView() {
         requests.clear();
+        //TODO : array list begirim
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
@@ -414,6 +420,7 @@ public class ManagerMenuController extends Controller {
 
     public void updateUsersListView() {
         users.clear();
+        //TODO : array list begirim
         for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
@@ -708,6 +715,8 @@ public class ManagerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
+        client.updateUser(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);

@@ -1,12 +1,16 @@
 package Controller.console;
 
-import model.UserPersonalInfo;
+import model.*;
+import model.request.Request;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.util.ArrayList;
 
 public class ServerImp {
+    BossProcessor bossProcessor = BossProcessor.getInstance();
     public void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(2020);
         ServerImp server = new ServerImp();
