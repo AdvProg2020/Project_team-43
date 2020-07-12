@@ -715,6 +715,8 @@ public class ManagerMenuController extends Controller {
 
     public void update() {
         Music.getInstance().confirmation();
+        client.updateUser(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
