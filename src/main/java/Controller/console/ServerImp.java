@@ -16,7 +16,6 @@ public class ServerImp {
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             new ClientHandler(dataInputStream, dataOutputStream, socket, server).start();
             System.out.println("connected");
-
         }
     }
 
