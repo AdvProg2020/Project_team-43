@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.*;
 import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -320,12 +321,14 @@ public class SellerMenuController extends Controller {
         manageOffAmountLabel.setText((int) off.getDiscountAmount() + "%");
         manageOffAmount.valueProperty().addListener((observableValue, oldValue, newValue) -> manageOffAmountLabel.textProperty().setValue(newValue.intValue() + "%"));
         for (Product product : user.getProductsNumber().keySet()) {
-            CheckBox checkBox = new CheckBox();
-            checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
-            if (off.hasProduct(product)) {
-                checkBox.setSelected(true);
+            if (product.getProductState() == State.ProductState.CONFIRMED) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setText("ID: " + product.getProductId() + "  Name: " + product.getName() + "  Price: " + product.getPrice() + "  Category: " + product.getCategory().getName());
+                if (off.hasProduct(product)) {
+                    checkBox.setSelected(true);
+                }
+                offProductsListView.getItems().add(checkBox);
             }
-            offProductsListView.getItems().add(checkBox);
         }
         manageOffStartTime.setValue(off.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         manageOffEndTime.setValue(off.getEndTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
@@ -469,6 +472,7 @@ public class SellerMenuController extends Controller {
             System.out.println("Done!");
         }
     }
+
     public void open() {
         Music.getInstance().open();
     }
