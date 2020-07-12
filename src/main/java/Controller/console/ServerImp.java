@@ -30,35 +30,4 @@ public class ServerImp {
         return BuyerProcessor.getInstance().register(userPersonalInfo, username, companyName);
     }
 
-    public void createManagerProfile(ArrayList<String> managerInfo) {
-        bossProcessor.createManagerProfileFXML(managerInfo);
-    }
-
-    public void acceptRequest(String requestId) {
-        Request request = Request.getRequestById(requestId);
-        try {
-            bossProcessor.acceptRequestFXML(request);
-        } catch (InvalidCommandException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void declineRequest(String requestId) {
-        Request request = Request.getRequestById(requestId);
-        bossProcessor.declineRequestFXML(request);
-
-    }
-
-    public void deleteUser(String userName) {
-        User user = User.getUserByUserName(userName);
-        bossProcessor.deleteUserFXML(user);
-
-    }
-
-    public void editCategory(String categoryName, String newName) {
-        Category category = Category.getCategoryByName(categoryName);
-        bossProcessor.editCategoryFXML(category, newName);
-    }
 }
