@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.BuyerProcessor;
+import controller.client.BuyerProcessor;
 import View.graphic.BuyerUserWindow;
 import View.graphic.MainWindow;
 import com.jfoenix.controls.JFXTextField;

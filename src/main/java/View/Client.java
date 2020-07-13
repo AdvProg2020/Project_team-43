@@ -1,9 +1,8 @@
 package View;
 
 
-import Controller.console.Processor;
+import controller.client.Processor;
 
-import model.Category;
 import model.User;
 
 import java.io.*;
@@ -12,6 +11,7 @@ import java.net.Socket;
 public class Client {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
+    private String token;
 
     public void run() {
         try {
@@ -29,7 +29,8 @@ public class Client {
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             System.out.println(result);
-            if (result.equals("logged in successful")) {
+            if (checkResultForLogin(result)) {
+                token = result;
                 byte[] bytes = new byte[30000];
                 dataInputStream.read(bytes);
                 ByteArrayInputStream in = new ByteArrayInputStream(bytes);
@@ -43,6 +44,13 @@ public class Client {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    private boolean checkResultForLogin(String result) {
+        if (result.equals("incorrect password"))
+            return false;
+        return !result.equals("there is no user with this username");
+
     }
 
     public String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) throws IOException {
@@ -105,7 +113,7 @@ public class Client {
 
     public void editCategory(String categoryName, String newName) {
         try {
-            dataOutputStream.writeUTF("editCategory" +" " + categoryName +" " + newName);
+            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {

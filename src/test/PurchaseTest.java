@@ -1,6 +1,6 @@
 
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
+import controller.client.BuyerProcessor;
+import controller.client.Processor;
 import javafx.util.Pair;
 import model.*;
 import org.junit.After;

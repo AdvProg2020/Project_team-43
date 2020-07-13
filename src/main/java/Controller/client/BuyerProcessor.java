@@ -1,4 +1,4 @@
-package Controller.console;
+package controller.client;
 
 import View.console.BuyerShowAndCatch;
 import javafx.util.Pair;

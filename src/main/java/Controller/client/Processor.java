@@ -1,4 +1,4 @@
-package Controller.console;
+package controller.client;
 
 import javafx.util.Pair;
 import View.console.ShowAndCatch;
@@ -19,6 +19,7 @@ public class Processor {
 
     public static boolean isLogin;
     public static User user;
+
     protected static ShowAndCatch viewManager = ShowAndCatch.getInstance();
     protected FilterManager productFilter;
 

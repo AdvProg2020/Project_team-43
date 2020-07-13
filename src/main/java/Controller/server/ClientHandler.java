@@ -1,13 +1,19 @@
-package Controller.console;
+package controller.server;
+
+import controller.client.BuyerProcessor;
+import javafx.util.Pair;
+import model.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class ClientHandler extends Thread {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private Socket socket;
     private ServerImp server;
+    private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -40,18 +46,28 @@ public class ClientHandler extends Thread {
     }
 
     private void login(String username, String password) throws IOException {
-        String result = BuyerProcessor.getInstance().login(username, password);
+        String result = server.login(username, password);
         dataOutputStream.writeUTF(result);
         dataOutputStream.flush();
-        if (result.equals("logged in successful")) {
+        if (checkResultForLogin(result)) {
+            if (User.getUserByUserName(username).getUserType() == UserType.BUYER) {
+                ((Buyer) User.getUserByUserName(username)).setNewBuyerCart(newBuyerCart);
+            }
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(BuyerProcessor.getInstance().getUser());
+            oos.writeObject(User.getUserByUserName(username));
             oos.close();
             byte[] rawData = buffer.toByteArray();
             dataOutputStream.write(rawData);
             dataOutputStream.flush();
         }
+    }
+
+    private boolean checkResultForLogin(String result) {
+        if (result.equals("incorrect password"))
+            return false;
+        return !result.equals("there is no user with this username");
+
     }
 
     private void register(String command) throws IOException {

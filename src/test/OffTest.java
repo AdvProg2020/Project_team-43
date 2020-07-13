@@ -1,6 +1,6 @@
 
-import Controller.console.Processor;
-import Controller.console.SellerProcessor;
+import controller.client.Processor;
+import controller.client.SellerProcessor;
 import model.*;
 import model.request.OffRequest;
 import model.request.Request;

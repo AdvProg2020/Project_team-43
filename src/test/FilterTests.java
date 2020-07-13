@@ -1,5 +1,5 @@
 
-import Controller.console.Processor;
+import controller.client.Processor;
 import model.Category;
 import model.Company;
 import model.Product;

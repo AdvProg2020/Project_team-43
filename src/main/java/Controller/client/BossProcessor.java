@@ -1,4 +1,4 @@
-package Controller.console;
+package controller.client;
 
 import View.console.BossView;
 import model.*;
@@ -521,19 +521,19 @@ public class BossProcessor extends Processor {
         ((Manager) Processor.user).removeCodedDiscount(selectedCodedDiscount);
     }
 
-    public ArrayList<CodedDiscount> codedDiscountsFromController(){
+    public ArrayList<CodedDiscount> codedDiscountsFromController() {
         return CodedDiscount.allCodedDiscount;
     }
 
-    public ArrayList<Product> productsFromController(){
+    public ArrayList<Product> productsFromController() {
         return Product.allProductsInList;
     }
 
-    public void removeCategoryFXML(Category selectedCategory){
+    public void removeCategoryFXML(Category selectedCategory) {
         ((Manager) Processor.user).removeCategory(selectedCategory);
     }
 
-    public ArrayList<Category> categoriesFromController(){
+    public ArrayList<Category> categoriesFromController() {
         return Category.getAllCategories();
     }
 
@@ -541,14 +541,13 @@ public class BossProcessor extends Processor {
         ((Manager) Processor.user).editFeatureName(selectedCategory, selectedFeature, changedFeature);
     }
 
-    public void deleteFeatureFXML(Category selectedCategory, String selectedFeature){
+    public void deleteFeatureFXML(Category selectedCategory, String selectedFeature) {
         ((Manager) Processor.user).deleteFeature(selectedCategory, selectedFeature);
     }
 
-    public Manager getUserFromController(){
-        return (Manager)getUser();
+    public Manager getUserFromController() {
+        return (Manager) getUser();
     }
-
 
 
 }

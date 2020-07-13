@@ -1,12 +1,11 @@
 
-import Controller.console.BossProcessor;
-import Controller.console.Processor;
+import controller.client.BossProcessor;
+import controller.client.Processor;
 import model.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.BuyerProcessor;
+import controller.client.BuyerProcessor;
 import View.graphic.MainWindow;
 import View.graphic.ProductWindow;
 import javafx.beans.binding.Bindings;

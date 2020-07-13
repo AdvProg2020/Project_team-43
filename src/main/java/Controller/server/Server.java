@@ -1,4 +1,4 @@
-package Controller.console;
+package controller.server;
 
 import View.console.App;
 
