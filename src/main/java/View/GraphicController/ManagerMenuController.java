@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.BossProcessor;
+import controller.client.BossProcessor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

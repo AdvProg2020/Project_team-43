@@ -1,9 +1,9 @@
 package View.console;
 
-import Controller.console.BossProcessor;
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
-import Controller.console.SellerProcessor;
+import controller.client.BossProcessor;
+import controller.client.BuyerProcessor;
+import controller.client.Processor;
+import controller.client.SellerProcessor;
 
 import java.util.HashMap;
 import java.util.Scanner;

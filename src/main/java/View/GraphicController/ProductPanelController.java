@@ -1,14 +1,13 @@
 package View.GraphicController;
 
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
+import controller.client.BuyerProcessor;
+import controller.client.Processor;
 import View.graphic.*;
 import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -24,9 +23,8 @@ import model.Product;
 import model.Sorting;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.RangeSlider;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 public class ProductPanelController extends Controller {

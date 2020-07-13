@@ -1,7 +1,7 @@
 
-import Controller.console.BossProcessor;
-import Controller.console.BuyerProcessor;
-import Controller.console.Processor;
+import controller.client.BossProcessor;
+import controller.client.BuyerProcessor;
+import controller.client.Processor;
 import model.Buyer;
 import model.InvalidCommandException;
 import model.UserPersonalInfo;

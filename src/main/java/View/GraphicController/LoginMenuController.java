@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.BuyerProcessor;
+import controller.client.BuyerProcessor;
 import View.graphic.MainWindow;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -30,13 +30,13 @@ public class LoginMenuController extends Controller {
         String password = passwordField.getText();
         String result = client.login(username, password);
         System.out.println(result);
-        if (result.equals("logged in successful")) {
-            ((Stage) passwordField.getScene().getWindow()).close();
-            MainWindow.getInstance().start(MainWindow.getInstance().getStage());
-        } else if (result.equals("there is no user with this username")) {
+        if (result.equals("there is no user with this username")) {
             wrongUsername.setVisible(true);
         } else if (result.equals("incorrect password")) {
             wrongPassword.setVisible(true);
+        } else {
+            ((Stage) passwordField.getScene().getWindow()).close();
+            MainWindow.getInstance().start(MainWindow.getInstance().getStage());
         }
     }
 

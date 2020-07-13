@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.BuyerProcessor;
+import controller.client.BuyerProcessor;
 import View.graphic.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

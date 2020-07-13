@@ -1,6 +1,6 @@
 package View.GraphicController;
 
-import Controller.console.SellerProcessor;
+import controller.client.SellerProcessor;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -434,7 +434,12 @@ public class SellerMenuController extends Controller {
         order.getItems().clear();
         if (orders.getSelectionModel().getSelectedItem() != null) {
             String orderId = orders.getSelectionModel().getSelectedItem().split("\t")[0].split(" ")[1];
-            SellOrder sellOrder = (SellOrder) Order.getOrderById(orderId);
+            SellOrder sellOrder = null;
+            for (SellOrder userOrder : user.getOrders()) {
+                if (userOrder.getOrderId().equals(orderId))
+                    sellOrder = userOrder;
+            }
+
             Product product = sellOrder.getProduct();
             order.getItems().add("Product: " + product.getName() + "\tNumber: " + sellOrder.getNumber());
             order.getItems().add("Payment: " + sellOrder.getPayment());
