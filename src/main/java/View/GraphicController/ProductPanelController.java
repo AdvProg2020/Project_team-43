@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.Category;
+import model.Off;
 import model.Product;
 import model.Sorting;
 import org.controlsfx.control.CheckComboBox;
@@ -49,13 +50,17 @@ public class ProductPanelController extends Controller {
     public TextField pageNumber;
     private int startProductIndex = 0;
 
-    private ArrayList<Product> allProducts = Product.getAllProductsInList();
+    private ArrayList<Category> allCategoriesFromServer;
+    private ArrayList<Product> allProductsFromServer;
+    private ArrayList<Product> allProducts;
     public CheckBox availableFilterCheckBox;
     @FXML
     private ListView<String> categoryListView;
     ObservableList<String> categories;
 
     public void initialize() {
+        initProducts();
+        initCategories();
         this.parent = ProductPanelWindow.getInstance();
         pageNumber.setText("1");
         if (Processor.isLogin) {
@@ -78,12 +83,22 @@ public class ProductPanelController extends Controller {
         }));
         BuyerProcessor.getInstance().newProductFilter();
         categoryListView.setVisible(false);
-        for (Category category : Category.getAllCategories()) {
+        for (Category category : allCategoriesFromServer) {
             categories.add(category.getName());
         }
         categoryListView.setItems(categories);
         getProductsAfterSort();
         showProducts();
+    }
+
+    private void initCategories() {
+        allCategoriesFromServer = client.getAllCategories();
+        Category.setAllCategories(allCategoriesFromServer);
+    }
+
+    private void initProducts() {
+        allProductsFromServer = client.getAllProducts();
+        allProducts = allProductsFromServer;
     }
 
     public void showProducts() {
@@ -148,7 +163,7 @@ public class ProductPanelController extends Controller {
 
     public void filter() {
         Music.getInstance().confirmation();
-        allProducts = Product.getAllProductsInList();
+        allProducts = allProductsFromServer;
         if (!nameFilterText.getText().equals("")) {
             buyerProcessor.filter("by name " + nameFilterText.getText());
         } else {
@@ -223,9 +238,18 @@ public class ProductPanelController extends Controller {
         filter();
     }
 
+    private Category getCategoryByName(String name) {
+        for (Category category : allCategoriesFromServer) {
+            if (category.getName().equals(name)) {
+                return category;
+            }
+        }
+        return null;
+    }
+
     public void showCategoryFeatures() {
         featuresOfCategoryForFilter.getItems().clear();
-        for (String feature : Category.getCategoryByName(categoryName.getText()).getFeatures()) {
+        for (String feature : getCategoryByName(categoryName.getText()).getFeatures()) {
             HBox hBox = new HBox();
             CheckComboBox<String> checkComboBox = new CheckComboBox<String>();
             checkComboBox.getCheckModel().getCheckedItems().addListener((ListChangeListener<String>) c -> filter());
@@ -261,7 +285,9 @@ public class ProductPanelController extends Controller {
     }
 
     public void filterOff() {
+
         if (offFilterCheckBox1.isSelected()) {
+            setOffs();
             buyerProcessor.filter("off");
         } else {
             buyerProcessor.disableFilter("off");
@@ -269,12 +295,28 @@ public class ProductPanelController extends Controller {
         filter();
     }
 
+    private void setOffs() {
+        Off.setAcceptedOffs(client.getOffs());
+        for (Off off : Off.getAcceptedOffs()) {
+            System.out.println(off.getOffId()+"fuck");
+        }
+    }
+
     public void openProductPanel(MouseEvent mouseEvent) {
         Music.getInstance().open();
-        Product product = Product.getProductById((((Label) ((Pane) mouseEvent.getSource()).getChildren().get(3)).getText().split(" ")[1]));
+        Product product = getProductById((((Label) ((Pane) mouseEvent.getSource()).getChildren().get(3)).getText().split(" ")[1]));
         ProductWindow.getInstance().setProduct(product, ProductPanelWindow.getInstance());
         ProductWindow.getInstance().start(MainWindow.getInstance().getStage());
 
+    }
+
+    private Product getProductById(String id) {
+        for (Product product1 : allProductsFromServer) {
+            if (product1.getProductId().equals(id)) {
+                return product1;
+            }
+        }
+        return null;
     }
 
 }

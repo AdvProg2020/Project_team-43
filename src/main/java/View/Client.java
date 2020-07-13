@@ -3,10 +3,14 @@ package View;
 
 import controller.client.Processor;
 
+import model.Category;
+import model.Off;
+import model.Product;
 import model.User;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Client {
     private DataInputStream dataInputStream;
@@ -31,11 +35,7 @@ public class Client {
             System.out.println(result);
             if (checkResultForLogin(result)) {
                 token = result;
-                byte[] bytes = new byte[30000];
-                dataInputStream.read(bytes);
-                ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-                ObjectInputStream is = new ObjectInputStream(in);
-                User user = (User) is.readObject();
+                User user = (User) getObject();
                 Processor.setUser(user);
                 Processor.setIsLogin(true);
             }
@@ -78,6 +78,58 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Product> getAllProducts() {
+        try {
+            dataOutputStream.writeUTF("getAllProducts");
+            dataOutputStream.flush();
+            ArrayList<Product> allProducts = (ArrayList<Product>) getObject();
+            return allProducts;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Off> getOffs() {
+        try {
+            dataOutputStream.writeUTF("getAllOffs");
+            dataOutputStream.flush();
+            ArrayList<Off> allOffs = (ArrayList<Off>) getObject();
+            return allOffs;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Category> getAllCategories() {
+        try {
+            dataOutputStream.writeUTF("getAllCategories");
+            dataOutputStream.flush();
+            ArrayList<Category> allCategories = (ArrayList<Category>) getObject();
+            return allCategories;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private Object getObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {

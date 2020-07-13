@@ -180,5 +180,7 @@ public class Category implements Serializable {
         saveAllProducts();
     }
 
-
+    public static void setAllCategories(ArrayList<Category> allCategories) {
+        Category.allCategories = allCategories;
+    }
 }

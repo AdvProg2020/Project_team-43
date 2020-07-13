@@ -38,14 +38,36 @@ public class ClientHandler extends Thread {
                 } else if (command.startsWith("update")) {
                     update(command);
                 } else if (command.startsWith("logout")) {
-                    server.logout(command.split(" ")[1]);
-                    newBuyerCart.clear();
+                    logout(command);
+                } else if (command.equals("getAllProducts")) {
+                    getAllProducts();
+                } else if (command.equals("getAllOffs")) {
+                    getAllOffs();
+                } else if (command.equals("getAllCategories")) {
+                    getAllCategories();
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void getAllCategories() {
+        sendObject(server.getAllCategories());
+    }
+
+    private void getAllOffs() {
+        sendObject(server.getAllOffs());
+    }
+
+    private void getAllProducts() {
+        sendObject(server.getAllProducts());
+    }
+
+    private void logout(String command) {
+        server.logout(command.split(" ")[1]);
+        newBuyerCart.clear();
     }
 
     private void login(String username, String password) throws IOException {
@@ -56,13 +78,21 @@ public class ClientHandler extends Thread {
             if (User.getUserByUserName(username).getUserType() == UserType.BUYER) {
                 ((Buyer) User.getUserByUserName(username)).setNewBuyerCart(newBuyerCart);
             }
+            sendObject(User.getUserByUserName(username));
+        }
+    }
+
+    private void sendObject(Object object) {
+        try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(User.getUserByUserName(username));
+            oos.writeObject(object);
             oos.close();
             byte[] rawData = buffer.toByteArray();
             dataOutputStream.write(rawData);
             dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

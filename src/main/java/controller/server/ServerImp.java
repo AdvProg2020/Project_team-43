@@ -6,6 +6,7 @@ import model.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -49,6 +50,17 @@ public class ServerImp {
     }
 
 
+    public ArrayList<Product> getAllProducts() {
+        return Product.getAllProductsInList();
+    }
+
+    public ArrayList<Off> getAllOffs() {
+        return Off.getAcceptedOffs();
+    }
+
+    public ArrayList<Category> getAllCategories() {
+        return Category.getAllCategories();
+    }
 }
 
 class ExpireToken extends Thread {

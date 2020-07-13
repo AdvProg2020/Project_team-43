@@ -48,6 +48,7 @@ public class MainMenuController extends Controller {
             LoginWindow.getInstance().start(stage);
         } else {
             client.logout();
+            buyerProcessor.logout();
             buyerProcessor.clearCart();
             loginButton.setText("Login");
         }
