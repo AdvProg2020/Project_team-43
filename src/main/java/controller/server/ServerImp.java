@@ -1,7 +1,6 @@
 package controller.server;
 
 import controller.client.BuyerProcessor;
-import javafx.util.Pair;
 import model.*;
 
 import java.io.*;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 
 
 public class ServerImp {
-    private HashMap<String, User> users;
+    private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
 
     public void run() throws IOException {
@@ -29,7 +28,9 @@ public class ServerImp {
     public String login(String username, String password) {
         String result = serverProcessor.login(username, password);
         if (result.equals("logged in successful")) {
-            return serverProcessor.createToken();
+            String token = serverProcessor.createToken();
+            users.put(token, User.getUserByUserName(username));
+            return token;
         }
         return result;
     }
