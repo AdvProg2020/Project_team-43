@@ -15,7 +15,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("localhost", 2020);
+            Socket socket = new Socket("127.0.0.1", 2020);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -69,6 +69,15 @@ public class Client {
             e.printStackTrace();
         }
         return "connection failed";
+    }
+
+    public void logout() {
+        try {
+            dataOutputStream.writeUTF("logout " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {

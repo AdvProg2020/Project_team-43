@@ -158,7 +158,7 @@ public class PurchaseTest {
     @Test
     public void logoutBuyerCartTest() {
         Processor.user = buyer;
-        buyerProcessor.logout();
+        buyerProcessor.clearCart();
         Assert.assertEquals(BuyerProcessor.getNewBuyerCart().size(), 0);
     }
 

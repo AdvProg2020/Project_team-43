@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import model.Product;
 import model.UserType;
 
-public class MainMenuController extends Controller{
+public class MainMenuController extends Controller {
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     private Stage stage = MainWindow.getInstance().getStage();
     @FXML
@@ -47,7 +47,8 @@ public class MainMenuController extends Controller{
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoginWindow.getInstance().start(stage);
         } else {
-            buyerProcessor.logout();
+            client.logout();
+            buyerProcessor.clearCart();
             loginButton.setText("Login");
         }
     }

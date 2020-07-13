@@ -226,13 +226,7 @@ public class BuyerProcessor extends Processor {
         ((Buyer) user).setNewBuyerCart(newBuyerCart);
     }
 
-    public void logout() {
-        user = null;
-        isLogin = false;
-        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            productSellerPair.getValue().increaseProduct(productSellerPair.getKey(),
-                    newBuyerCart.get(productSellerPair));
-        }
+    public void clearCart() {
         newBuyerCart.clear();
     }
 

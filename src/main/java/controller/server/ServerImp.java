@@ -30,12 +30,17 @@ public class ServerImp {
         if (result.equals("logged in successful")) {
             String token = serverProcessor.createToken();
             users.put(token, User.getUserByUserName(username));
+            new ExpireToken(this, token).start();
             return token;
         }
         return result;
     }
 
-
+    public void logout(String token) {
+        if (users.containsKey(token)) {
+            users.remove(token);
+        }
+    }
 
     public synchronized String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName, lastName, email
@@ -43,4 +48,25 @@ public class ServerImp {
         return BuyerProcessor.getInstance().register(userPersonalInfo, username, companyName);
     }
 
+
+}
+
+class ExpireToken extends Thread {
+    private ServerImp serverImp;
+    private String token;
+
+    public ExpireToken(ServerImp serverImp, String token) {
+        this.token = token;
+        this.serverImp = serverImp;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(1_000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        serverImp.logout(token);
+    }
 }

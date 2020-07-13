@@ -407,7 +407,10 @@ public class Processor {
     }
 
     public void logout() {
-        BuyerProcessor.getInstance().logout();
+        user = null;
+        isLogin = false;
+        if (user.getUserType() == UserType.BUYER)
+            BuyerProcessor.getInstance().clearCart();
     }
 
     public void editField(UserPersonalInfo userPersonalInfo) {

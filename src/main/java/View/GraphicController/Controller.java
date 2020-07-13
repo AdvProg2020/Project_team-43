@@ -136,7 +136,8 @@ public abstract class Controller {
     }
 
     public void logout() {
-        BuyerProcessor.getInstance().logout();
+        BuyerProcessor.getInstance().clearCart();
+        client.logout();
         userPanelGoBack();
     }
 

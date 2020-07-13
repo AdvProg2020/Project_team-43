@@ -37,6 +37,9 @@ public class ClientHandler extends Thread {
                     register(command);
                 } else if (command.startsWith("update")) {
                     update(command);
+                } else if (command.startsWith("logout")) {
+                    server.logout(command.split(" ")[1]);
+                    newBuyerCart.clear();
                 }
                 System.out.println(command);
             }
