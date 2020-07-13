@@ -683,6 +683,7 @@ public class ManagerMenuController extends Controller {
 
     @FXML
     public void initialize() {
+        init();
         user = bossProcessor.getUserFromController();
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
         firstName.setText(userPersonalInfo.getFirstName());
@@ -720,6 +721,14 @@ public class ManagerMenuController extends Controller {
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
+    }
+
+    private void init() {
+        Category.setAllCategories(client.getAllCategories());
+        User.setAllUsers(client.getAllUsers());
+        Product.setAllProductsInList(client.getAllProducts());
+        Request.setAllRequests(client.getAllRequests());
+        CodedDiscount.setAllCodedDiscount(client.getAllCodedDiscounts());
     }
 
     public void browsePhotoUser() throws IOException {

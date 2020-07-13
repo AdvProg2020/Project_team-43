@@ -6,9 +6,10 @@ import model.Product;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Request {
+public abstract class Request implements Serializable {
     private static int constructId = 0;
     protected static ArrayList<Request> allRequests = new ArrayList<>();
     protected String requestId;
@@ -91,5 +92,7 @@ public abstract class Request {
         OffRequest.saveFields();
     }
 
-
+    public static void setAllRequests(ArrayList<Request> allRequests) {
+        Request.allRequests = allRequests;
+    }
 }

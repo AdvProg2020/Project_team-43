@@ -4,6 +4,7 @@ package View;
 import controller.client.Processor;
 
 import model.*;
+import model.request.Request;
 
 import java.io.*;
 import java.net.Socket;
@@ -107,6 +108,42 @@ public class Client {
             dataOutputStream.flush();
             ArrayList<Category> allCategories = (ArrayList<Category>) getObject();
             return allCategories;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        try {
+            dataOutputStream.writeUTF("getAllUsers");
+            dataOutputStream.flush();
+            ArrayList<User> allUsers = (ArrayList<User>) getObject();
+            return allUsers;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Request> getAllRequests() {
+        try {
+            dataOutputStream.writeUTF("getAllRequests");
+            dataOutputStream.flush();
+            ArrayList<Request> allRequests = (ArrayList<Request>) getObject();
+            return allRequests;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<CodedDiscount> getAllCodedDiscounts() {
+        try {
+            dataOutputStream.writeUTF("getAllCodedDiscounts");
+            dataOutputStream.flush();
+            ArrayList<CodedDiscount> allCodedDiscounts = (ArrayList<CodedDiscount>) getObject();
+            return allCodedDiscounts;
         } catch (IOException e) {
             e.printStackTrace();
         }

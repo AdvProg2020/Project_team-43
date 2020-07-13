@@ -1,7 +1,9 @@
 package controller.server;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import controller.client.BuyerProcessor;
 import model.*;
+import model.request.Request;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -54,6 +56,11 @@ public class ServerImp {
         return Product.getAllProductsInList();
     }
 
+    public ArrayList<Request> getAllRequests() {
+        System.out.println("salam");
+        return Request.getAllRequests();
+    }
+
     public ArrayList<Off> getAllOffs() {
         return Off.getAcceptedOffs();
     }
@@ -93,6 +100,13 @@ public class ServerImp {
     }
 
 
+    public ArrayList<User> getAllUsers() {
+        return User.getAllUsers();
+    }
+
+    public ArrayList<CodedDiscount> getAllCodedDiscounts() {
+        return CodedDiscount.getAllCodedDiscount();
+    }
 }
 
 class ExpireToken extends Thread {

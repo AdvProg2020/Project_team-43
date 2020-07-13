@@ -55,6 +55,12 @@ public class ClientHandler extends Thread {
                     rateProduct(command);
                 } else if (command.equals("getAllCompanies")) {
                     getAllCompanies();
+                } else if (command.equals("getAllUsers")) {
+                    getAllUsers();
+                } else if (command.matches("getAllRequests")) {
+                    getAllRequests();
+                } else if (command.matches("getAllCodedDiscounts")) {
+                    getAllCodedDiscounts();
                 }
                 System.out.println(command);
             }
@@ -95,8 +101,16 @@ public class ClientHandler extends Thread {
         sendObject(server.getAllCategories());
     }
 
+    private void getAllUsers() {
+        sendObject(server.getAllUsers());
+    }
+
     private void getAllCompanies() {
         sendObject(server.getAllCompanies());
+    }
+
+    private void getAllCodedDiscounts() {
+        sendObject(server.getAllCodedDiscounts());
     }
 
     private void getAllOffs() {
@@ -105,6 +119,10 @@ public class ClientHandler extends Thread {
 
     private void getAllProducts() {
         sendObject(server.getAllProducts());
+    }
+
+    private void getAllRequests() {
+        sendObject(server.getAllRequests());
     }
 
     private void logout(String command) {

@@ -128,4 +128,8 @@ public class CodedDiscount  implements Serializable {
     public static void save() throws IOException {
         Saver.save(allCodedDiscount, fileAddress);
     }
+
+    public static void setAllCodedDiscount(ArrayList<CodedDiscount> allCodedDiscount) {
+        CodedDiscount.allCodedDiscount = allCodedDiscount;
+    }
 }

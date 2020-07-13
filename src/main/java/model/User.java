@@ -124,4 +124,8 @@ public abstract class User implements Serializable {
     public void setUserPersonalInfo(UserPersonalInfo userPersonalInfo) {
         this.userPersonalInfo = userPersonalInfo;
     }
+
+    public static void setAllUsers(ArrayList<User> allUsers) {
+        User.allUsers = allUsers;
+    }
 }
