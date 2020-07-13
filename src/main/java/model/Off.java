@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-//import java.util.Date;
 
 public class Off implements Serializable {
     private static String fileAddress = "database/Off.dat";
@@ -108,11 +107,18 @@ public class Off implements Serializable {
 
     public static double isProductInOff(Product product) {
         for (Off off : acceptedOffs) {
-            if (off.getProducts().contains(product))
-                return off.getDiscountAmount();
+            for (Product offProduct : off.getProducts()) {
+                if (offProduct.getProductId().equals(product.getProductId()))
+                    return off.getDiscountAmount();
+            }
         }
         return 0;
     }
+
+    public static void setAcceptedOffs(ArrayList<Off> acceptedOffs) {
+        Off.acceptedOffs = acceptedOffs;
+    }
+
     public static Off getOffProductInOff(Product product) {
         for (Off off : acceptedOffs) {
             if (off.getProducts().contains(product))

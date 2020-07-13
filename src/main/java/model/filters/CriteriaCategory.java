@@ -22,7 +22,7 @@ public class CriteriaCategory implements Criteria {
     public ArrayList<Product> meetCriteria(ArrayList<Product> products) {
         ArrayList<Product> meetCriteria = new ArrayList<>();
         for (Product product : products) {
-            if (product.getCategory() == category)
+            if (product.getCategory().getName().equals(category.getName()))
                 meetCriteria.add(product);
         }
         return meetCriteria;

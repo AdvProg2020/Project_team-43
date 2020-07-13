@@ -1,5 +1,6 @@
 
 import View.GraphicController.Controller;
+import View.console.App;
 import View.graphic.MainWindow;
 import javafx.application.Application;
 
