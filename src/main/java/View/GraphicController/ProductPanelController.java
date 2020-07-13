@@ -27,6 +27,7 @@ import org.controlsfx.control.RangeSlider;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+
 public class ProductPanelController extends Controller {
     private final BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     public TextField nameFilterText;

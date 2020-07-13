@@ -278,7 +278,7 @@ public class ProductWindowController extends Controller {
         });
     }
 
-    public void open(){
+    public void open() {
         Music.getInstance().open();
     }
 
@@ -322,8 +322,8 @@ public class ProductWindowController extends Controller {
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(volumeSlider.isPressed()){
-                    mediaPlayer.setVolume(volumeSlider.getValue()/100);
+                if (volumeSlider.isPressed()) {
+                    mediaPlayer.setVolume(volumeSlider.getValue() / 100);
                 }
             }
         });

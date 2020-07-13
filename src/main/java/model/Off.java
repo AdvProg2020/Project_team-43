@@ -113,6 +113,7 @@ public class Off implements Serializable {
         }
         return 0;
     }
+
     public static Off getOffProductInOff(Product product) {
         for (Off off : acceptedOffs) {
             if (off.getProducts().contains(product))

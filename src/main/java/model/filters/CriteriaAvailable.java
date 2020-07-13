@@ -6,12 +6,15 @@ import java.util.ArrayList;
 
 public class CriteriaAvailable implements Criteria {
     private String name;
+
     public CriteriaAvailable() {
-        this.name="available";
+        this.name = "available";
     }
+
     public String getName() {
         return name;
     }
+
     @Override
     public ArrayList<Product> meetCriteria(ArrayList<Product> products) {
         ArrayList<Product> meetCriteria = new ArrayList<>();
