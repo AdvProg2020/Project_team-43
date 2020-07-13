@@ -87,8 +87,11 @@ public class Buyer extends User {
 
     public boolean hasBuyProduct(Product product) {
         for (BuyOrder order : orders) {
-            if (order.getProducts().containsKey(product))
-                return true;
+            for (Product buyProduct : order.getProducts().keySet()) {
+                if (buyProduct.getProductId().equals(product.getProductId()))
+                    return true;
+            }
+
         }
         return false;
 

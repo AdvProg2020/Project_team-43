@@ -61,6 +61,32 @@ public class ServerImp {
     public ArrayList<Category> getAllCategories() {
         return Category.getAllCategories();
     }
+
+    public void addComment(String token, String commentText, String isBuy, String productId) {
+        Product.getProductById(productId).addComment(new Comment(Product.getProductById(productId),
+                commentText, isBuy.equalsIgnoreCase("true"), (Buyer) users.get(token)));
+    }
+
+    public String checkToken(String token) {
+        if (users.containsKey(token))
+            return "valid";
+        return "expired";
+    }
+
+    public String setToken(String username, String password) {
+        String result = serverProcessor.checkUsernamePassword(username, password);
+        if (result.equals("valid")) {
+            String token = serverProcessor.createToken();
+            users.put(token, User.getUserByUserName(username));
+            new ExpireToken(this, token).start();
+            return token;
+        }
+        return "invalid info";
+    }
+
+    public void rateProduct(String productId, int rating, String token) {
+        Product.getProductById(productId).rateProduct(rating, users.get(token));
+    }
 }
 
 class ExpireToken extends Thread {
@@ -75,7 +101,7 @@ class ExpireToken extends Thread {
     @Override
     public void run() {
         try {
-            Thread.sleep(1_000);
+            Thread.sleep(300_000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
-public class Product  implements Serializable {
+public class Product implements Serializable {
     private static String fileAddress = "database/Product.dat";
     private static ArrayList<Product> allProducts = new ArrayList<>();
     private static HashMap<String, String> SellerUsernameToProductId = new HashMap<>();
 
     public static int constructId = 0;
+
+    public static void setAllProductsInList(ArrayList<Product> allProductsInList) {
+        Product.allProductsInList = allProductsInList;
+    }
 
     public static ArrayList<Product> allProductsInList = new ArrayList<Product>();
     public static ArrayList<Product> allProductsInQueueExpect = new ArrayList<Product>();
@@ -374,5 +378,13 @@ public class Product  implements Serializable {
             sellersName.add(seller.getUsername());
         }
         sellers = null;
+    }
+
+    public Seller getSellerByUserName(String username) {
+        for (Seller seller : sellers) {
+            if (seller.getUsername().equals(username))
+                return seller;
+        }
+        return null;
     }
 }

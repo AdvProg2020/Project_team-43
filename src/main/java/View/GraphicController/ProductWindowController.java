@@ -103,11 +103,11 @@ public class ProductWindowController extends Controller {
     public void checkOff() {
         timesRemain.setVisible(false);
         isOff.setVisible(false);
+        System.out.println(Off.isProductInOff(product));
         if (Off.isProductInOff(product) != 0) {
             isOff.setText("off amount : " + Off.isProductInOff(product));
             isOff.setVisible(true);
             Off off = Off.getOffProductInOff(product);
-
             DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
             assert off != null;
             timesRemain.setText(timeFormat.format(off.getEndTime().getTime() - new Date().getTime()));
@@ -158,7 +158,7 @@ public class ProductWindowController extends Controller {
     }
 
     public void addToCart() {
-        Seller seller = (Seller) Seller.getUserByUserName(sellers.getValue());
+        Seller seller = product.getSellerByUserName(sellers.getValue());
         new Alert(Alert.AlertType.INFORMATION, BuyerProcessor.getInstance().addToBuyerCart(new Pair<>(product, seller))).showAndWait();
     }
 
@@ -179,6 +179,7 @@ public class ProductWindowController extends Controller {
             Music.getInstance().error();
             error.setText("you rated before");
         } else {
+            client.rateProduct(product, (int) rating.getRating(), BuyerProcessor.getInstance().getUser());
             product.rateProduct((int) rating.getRating(), BuyerProcessor.getInstance().getUser());
             Music.getInstance().confirmation();
             error.setText("done");
@@ -228,7 +229,7 @@ public class ProductWindowController extends Controller {
             return;
         }
         product2 = Product.getProductById(secondProductId.getText());
-        if (!product2.getCategory().equals(product.getCategory())) {
+        if (!product2.getCategory().getName().equals(product.getCategory().getName())) {
             new Alert(Alert.AlertType.ERROR, "not same category").showAndWait();
             return;
         }

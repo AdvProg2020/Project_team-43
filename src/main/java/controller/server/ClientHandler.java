@@ -45,9 +45,45 @@ public class ClientHandler extends Thread {
                     getAllOffs();
                 } else if (command.equals("getAllCategories")) {
                     getAllCategories();
+                } else if (command.startsWith("comment")) {
+                    comment(command);
+                } else if (command.startsWith("checkValid")) {
+                    checkValidationOfToken(command.split(" ")[1]);
+                } else if (command.startsWith("get_token")) {
+                    setToken(command.split(" ")[1], command.split(" ")[2]);
+                } else if (command.startsWith("rate")) {
+                    rateProduct(command);
                 }
                 System.out.println(command);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void setToken(String username, String password) {
+        String token = server.setToken(username, password);
+        try {
+            dataOutputStream.writeUTF(token);
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void rateProduct(String command) {
+        String[] commands = command.split(" ");
+        String productId = commands[1];
+        int rating = Integer.parseInt(commands[2]);
+        String token = commands[3];
+        server.rateProduct(productId, rating, token);
+
+    }
+
+    private void checkValidationOfToken(String token) {
+        try {
+            dataOutputStream.writeUTF(server.checkToken(token));
+            dataOutputStream.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -68,6 +104,15 @@ public class ClientHandler extends Thread {
     private void logout(String command) {
         server.logout(command.split(" ")[1]);
         newBuyerCart.clear();
+    }
+
+    private void comment(String command) {
+        String[] commands = command.split("----");
+        String token = commands[1];
+        String commentText = commands[2];
+        String isBuy = commands[3];
+        String productId = commands[4];
+        server.addComment(token, commentText, isBuy, productId);
     }
 
     private void login(String username, String password) throws IOException {

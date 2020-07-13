@@ -27,6 +27,7 @@ public class AddCommentController extends Controller {
     public void submitComment() {
         Music.getInstance().confirmation();
         boolean isBuy = ((Buyer) BuyerProcessor.getInstance().getUser()).hasBuyProduct(product);
+        client.addComment(commentText.getText(), isBuy, product, BuyerProcessor.getInstance().getUser());
         Comment commentOfBuyer = new Comment(product, commentText.getText(), isBuy, (Buyer) BuyerProcessor.getInstance().getUser());
         product.addComment(commentOfBuyer);
         ((Stage) submitCommentButton.getScene().getWindow()).close();

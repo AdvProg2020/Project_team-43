@@ -14,6 +14,14 @@ public class ServerProcessor {
         return "logged in successful";
     }
 
+    public String checkUsernamePassword(String username, String password) {
+        if (!User.hasUserWithUserName(username))
+            return "invalid";
+        if (!Objects.requireNonNull(User.getUserByUserName(username)).getUserPersonalInfo().getPassword().equals(password))
+            return "invalid";
+        return "valid";
+    }
+
     public String createToken() {
         return UUID.randomUUID().toString();
     }

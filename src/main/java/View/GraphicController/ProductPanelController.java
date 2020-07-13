@@ -59,6 +59,7 @@ public class ProductPanelController extends Controller {
     ObservableList<String> categories;
 
     public void initialize() {
+        setOffs();
         initProducts();
         initCategories();
         this.parent = ProductPanelWindow.getInstance();
@@ -99,6 +100,7 @@ public class ProductPanelController extends Controller {
     private void initProducts() {
         allProductsFromServer = client.getAllProducts();
         allProducts = allProductsFromServer;
+        Product.setAllProductsInList(allProductsFromServer);
     }
 
     public void showProducts() {
@@ -287,7 +289,6 @@ public class ProductPanelController extends Controller {
     public void filterOff() {
 
         if (offFilterCheckBox1.isSelected()) {
-            setOffs();
             buyerProcessor.filter("off");
         } else {
             buyerProcessor.disableFilter("off");
@@ -297,9 +298,6 @@ public class ProductPanelController extends Controller {
 
     private void setOffs() {
         Off.setAcceptedOffs(client.getOffs());
-        for (Off off : Off.getAcceptedOffs()) {
-            System.out.println(off.getOffId()+"fuck");
-        }
     }
 
     public void openProductPanel(MouseEvent mouseEvent) {

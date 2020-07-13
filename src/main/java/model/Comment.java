@@ -43,6 +43,7 @@ public class Comment implements Serializable {
 
     public Comment(Product product, String opinionText, boolean isBuy, Buyer buyer) {
         this.product = product;
+        this.productId = product.getProductId();
         this.buyer = buyer;
         this.commentText = opinionText;
         this.opinionState = State.OpinionState.WAITING_CONFIRMATION;
@@ -99,6 +100,10 @@ public class Comment implements Serializable {
     }
 
     public static void saveFields() {
+        allComments.clear();
+        allComments.addAll(acceptedComments);
+        allComments.addAll(inQueueExpectation);
+        allComments.addAll(declineComments);
         saveAllBuyers();
         saveAllProducts();
     }
@@ -143,10 +148,6 @@ public class Comment implements Serializable {
     }
 
     public static void save() throws IOException {
-        allComments.clear();
-        allComments.addAll(acceptedComments);
-        allComments.addAll(inQueueExpectation);
-        allComments.addAll(declineComments);
         Saver.save(allComments, fileAddress);
     }
 }

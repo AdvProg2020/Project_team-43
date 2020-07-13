@@ -121,8 +121,10 @@ public class Off implements Serializable {
 
     public static Off getOffProductInOff(Product product) {
         for (Off off : acceptedOffs) {
-            if (off.getProducts().contains(product))
-                return off;
+            for (Product offProduct : off.getProducts()) {
+                if (offProduct.getProductId().equals(product.getProductId()))
+                    return off;
+            }
         }
         return null;
     }

@@ -132,6 +132,42 @@ public class Client {
         return null;
     }
 
+    public void addComment(String commentText, boolean isBuy, Product product, User user) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("comment" + "----" + token + "----" + commentText + "----" + isBuy + "----" + product.getProductId());
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void checkTokenValidation(User user) {
+        try {
+            dataOutputStream.writeUTF("checkValid " + token);
+            dataOutputStream.flush();
+            String result = dataInputStream.readUTF();
+            if (result.equals("expired")) {
+                setNewToken(user.getUsername(), user.getUserPersonalInfo().getPassword());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void setNewToken(String username, String password) {
+        try {
+            dataOutputStream.writeUTF("get_token " + username + " " + password);
+            dataOutputStream.flush();
+            String result = dataInputStream.readUTF();
+            if (!result.equals("invalid info")) {
+                token = result;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password);
@@ -177,6 +213,17 @@ public class Client {
             dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName);
             dataOutputStream.flush();
             dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void rateProduct(Product product, int rating, User user) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("rate" + " " + product.getProductId() + " " + rating + " " + token);
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
