@@ -74,7 +74,7 @@ public class ProductWindowController extends Controller {
 
 
     private Product product;
-    Application parent;
+    private Application parent;
 
     public void setProductAndParent(Product product, Application parent) {
         this.product = product;

@@ -53,6 +53,8 @@ public class ClientHandler extends Thread {
                     setToken(command.split(" ")[1], command.split(" ")[2]);
                 } else if (command.startsWith("rate")) {
                     rateProduct(command);
+                } else if (command.equals("getAllCompanies")) {
+                    getAllCompanies();
                 }
                 System.out.println(command);
             }
@@ -91,6 +93,10 @@ public class ClientHandler extends Thread {
 
     private void getAllCategories() {
         sendObject(server.getAllCategories());
+    }
+
+    private void getAllCompanies() {
+        sendObject(server.getAllCompanies());
     }
 
     private void getAllOffs() {

@@ -73,4 +73,8 @@ public class Company  implements Serializable {
     public static ArrayList<Company> getAllCompanies() {
         return allCompanies;
     }
+
+    public static void setAllCompanies(ArrayList<Company> allCompanies) {
+        Company.allCompanies = allCompanies;
+    }
 }

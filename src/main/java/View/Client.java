@@ -3,10 +3,7 @@ package View;
 
 import controller.client.Processor;
 
-import model.Category;
-import model.Off;
-import model.Product;
-import model.User;
+import model.*;
 
 import java.io.*;
 import java.net.Socket;
@@ -110,6 +107,18 @@ public class Client {
             dataOutputStream.flush();
             ArrayList<Category> allCategories = (ArrayList<Category>) getObject();
             return allCategories;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Company> getAllCompanies() {
+        try {
+            dataOutputStream.writeUTF("getAllCompanies");
+            dataOutputStream.flush();
+            ArrayList<Company> allCompanies = (ArrayList<Company>) getObject();
+            return allCompanies;
         } catch (IOException e) {
             e.printStackTrace();
         }

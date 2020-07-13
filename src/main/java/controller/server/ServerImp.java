@@ -62,6 +62,10 @@ public class ServerImp {
         return Category.getAllCategories();
     }
 
+    public ArrayList<Company> getAllCompanies() {
+        return Company.getAllCompanies();
+    }
+
     public void addComment(String token, String commentText, String isBuy, String productId) {
         Product.getProductById(productId).addComment(new Comment(Product.getProductById(productId),
                 commentText, isBuy.equalsIgnoreCase("true"), (Buyer) users.get(token)));
@@ -87,6 +91,8 @@ public class ServerImp {
     public void rateProduct(String productId, int rating, String token) {
         Product.getProductById(productId).rateProduct(rating, users.get(token));
     }
+
+
 }
 
 class ExpireToken extends Thread {

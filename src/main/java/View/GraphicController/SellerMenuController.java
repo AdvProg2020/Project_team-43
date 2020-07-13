@@ -87,6 +87,7 @@ public class SellerMenuController extends Controller {
 
     @FXML
     public void initialize() {
+        init();
         user = (Seller) sellerProcessor.getUser();
         usernameText.setText(user.getUsername());
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
@@ -104,6 +105,11 @@ public class SellerMenuController extends Controller {
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
+    }
+
+    private void init() {
+        Category.setAllCategories(client.getAllCategories());
+        Company.setAllCompanies(client.getAllCompanies());
     }
 
     private void initializeViewOrders() {
