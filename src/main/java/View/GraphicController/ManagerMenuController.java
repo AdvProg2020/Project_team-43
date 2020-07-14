@@ -433,7 +433,7 @@ public class ManagerMenuController extends Controller {
             }
 //                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
             String result = client.addCategoryFeature(selectedCategory.getName(), newFeature.getText());
-            if(result.equals("invalidCommandException")){
+            if (result.equals("invalidCommandException")) {
                 showErrorAlert("invalidCommandException");
             }
             updateCategoryInfoPaneListView();
@@ -483,7 +483,8 @@ public class ManagerMenuController extends Controller {
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
         }
-        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
+//        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
+        client.createCategory(createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -498,10 +499,10 @@ public class ManagerMenuController extends Controller {
         codedDiscountInfo.add(createEndDay.getText() + "/" + createEndMonth.getText() + "/" + createEndYear.getText());
         codedDiscountInfo.add(createDiscountAmount.getText());
         codedDiscountInfo.add(createRepeat.getText());
-        try {
-            bossProcessor.createCodedDiscount(codedDiscountInfo);
-        } catch (InvalidCommandException | ParseException e) {
-            showErrorAlert(e.getMessage());
+//            bossProcessor.createCodedDiscount(codedDiscountInfo);
+        String result = client.createCodedDiscount(codedDiscountInfo.get(0), codedDiscountInfo.get(1), codedDiscountInfo.get(2), codedDiscountInfo.get(3));
+        if(result.equals("dateException")){
+            showErrorAlert("date exception");
         }
         updateCodedDiscountListView();
         clearCreateCodedDiscount();

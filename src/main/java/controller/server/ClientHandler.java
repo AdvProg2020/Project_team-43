@@ -78,8 +78,10 @@ public class ClientHandler extends Thread {
                     deleteUser(command);
                 } else if (command.startsWith("editCategory")) {
                     editCategory(command);
-                } else if(command.startsWith("addCategoryFeature")){
+                } else if (command.startsWith("addCategoryFeature")) {
                     addCategoryFeature(command);
+                } else if(command.startsWith("createCodedDiscount")){
+                    createCodedDiscount(command);
                 }
                 System.out.println(command);
             }
@@ -273,7 +275,8 @@ public class ClientHandler extends Thread {
         Request request = Request.getRequestById(command.split(" ")[1]);
         server.declineRequest(request, command.split(" ")[2]);
         try {
-            dataOutputStream.writeUTF("declineRequest done");dataOutputStream.flush();
+            dataOutputStream.writeUTF("declineRequest done");
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -290,7 +293,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private synchronized void editCategory(String command){
+    private synchronized void editCategory(String command) {
         Category category = Category.getCategoryByName(command.split(" ")[1]);
         String newName = command.split(" ")[2];
         server.editCategory(category, newName, command.split(" ")[3]);
@@ -301,17 +304,36 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-     private void addCategoryFeature(String command){
-         Category category = Category.getCategoryByName(command.split(" ")[1]);
-         String feature = command.split(" ")[2];
-         server.addCategoryFeature(category, feature, command.split(" ")[3]);
-         try {
-             dataOutputStream.writeUTF(server.addCategoryFeature(category, feature, command.split(" ")[3]));
-             dataOutputStream.flush();
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-     }
+
+    private void addCategoryFeature(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        String feature = command.split(" ")[2];
+        server.addCategoryFeature(category, feature, command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF(server.addCategoryFeature(category, feature, command.split(" ")[3]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createCodedDiscount(String command) {
+        String startDate = command.split(" ")[1];
+        String endDate = command.split(" ")[2];
+        String amount = command.split(" ")[3];
+        String repeat = command.split(" ")[4];
+        ArrayList<String> codedDiscountInfo = new ArrayList<>();
+        codedDiscountInfo.add(startDate);
+        codedDiscountInfo.add(endDate);
+        codedDiscountInfo.add(amount);
+        codedDiscountInfo.add(repeat);
+        try {
+            dataOutputStream.writeUTF(server.createCodedDiscount(codedDiscountInfo, command.split(" ")[5]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

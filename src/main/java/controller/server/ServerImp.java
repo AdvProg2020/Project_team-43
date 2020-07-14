@@ -199,6 +199,16 @@ public class ServerImp {
         }
     }
 
+    public String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token){
+        User user = users.get(token);
+        try {
+            ((Manager) user).createDiscountCoded(codedDiscountInfo);
+            return "done";
+        } catch (ParseException e) {
+            return "dateException";
+        }
+    }
+
 }
 
 class ExpireToken extends Thread {

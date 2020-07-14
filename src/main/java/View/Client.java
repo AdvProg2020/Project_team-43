@@ -8,6 +8,7 @@ import model.*;
 import model.request.Request;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -272,9 +273,30 @@ public class Client {
         }
     }
 
-    public String addCategoryFeature(String categoryName, String featureName){
+    public String addCategoryFeature(String categoryName, String featureName) {
         try {
             dataOutputStream.writeUTF("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    public void createCategory(String categoryName, ArrayList<String> features) {
+        try {
+            //todo send arraylist
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String createCodedDiscount(String startDate, String endDate, String amount, String repeat) {
+        try {
+            dataOutputStream.writeUTF("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
