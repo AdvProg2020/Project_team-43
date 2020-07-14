@@ -604,7 +604,8 @@ public class ManagerMenuController extends Controller {
 
     public void removeCodedDiscount() {
         Music.getInstance().confirmation();
-        bossProcessor.removeCodedDiscountFXML(selectedCodedDiscount);
+//        bossProcessor.removeCodedDiscountFXML(selectedCodedDiscount);
+        client.removeCodedDiscount(selectedCodedDiscount.getDiscountCode());
         closeCodedDiscountInfo();
         updateCodedDiscountListView();
     }

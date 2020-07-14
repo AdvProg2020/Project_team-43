@@ -186,11 +186,12 @@ public class ServerImp {
         ((Manager) user).deleteUser(user1);
     }
 
-    public void editCategory(Category category, String name, String token){
+    public void editCategory(Category category, String name, String token) {
         User user = users.get(token);
         ((Manager) user).editCategoryName(category, name);
     }
-    public String addCategoryFeature(Category category, String featureName, String token){
+
+    public String addCategoryFeature(Category category, String featureName, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).addCategoryFeature(category, featureName);
@@ -200,7 +201,7 @@ public class ServerImp {
         }
     }
 
-    public String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token){
+    public String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).createDiscountCoded(codedDiscountInfo);
@@ -210,12 +211,17 @@ public class ServerImp {
         }
     }
 
-    public void editCodedDiscount(CodedDiscount code, Date startDate, Date endDate, String amount, String repeat, String token){
+    public void editCodedDiscount(CodedDiscount code, Date startDate, Date endDate, String amount, String repeat, String token) {
         User user = users.get(token);
         code.setStartTime(startDate);
         code.setEndTime(endDate);
         code.setDiscountAmount(amount);
         code.setRepeat(repeat);
+    }
+
+    public void removeCodedDiscount(CodedDiscount code, String token) {
+        User user = users.get(token);
+        ((Manager) user).removeCodedDiscount(code);
     }
 
 }

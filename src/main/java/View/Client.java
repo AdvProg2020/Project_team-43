@@ -305,6 +305,16 @@ public class Client {
         }
     }
 
+    public void removeCodedDiscount(String code){
+        try {
+            dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " +  token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String createCodedDiscount(String startDate, String endDate, String amount, String repeat) {
         try {
             dataOutputStream.writeUTF("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token);

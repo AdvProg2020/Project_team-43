@@ -87,6 +87,8 @@ public class ClientHandler extends Thread {
                     createCodedDiscount(command);
                 } else if(command.startsWith("editCodedDiscount")){
                     editCodedDiscount(command);
+                } else if(command.startsWith("removeCodedDiscount")){
+                    removeCodedDiscount(command);
                 }
                 System.out.println(command);
             }
@@ -355,13 +357,22 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
         try {
-            dataOutputStream.writeUTF("done");
+            dataOutputStream.writeUTF("editCodedDiscount done");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    private void removeCodedDiscount(String command){
+        CodedDiscount code = CodedDiscount.getDiscountById(command.split(" ")[1]);
+        server.removeCodedDiscount(code, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("removeCodedDiscount done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
