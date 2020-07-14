@@ -314,4 +314,40 @@ public class Client {
         }
         return null;
     }
+
+    public void useDiscountCode(User user, String codedDiscount) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("useCode " + codedDiscount + " " + token);
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void purchaseWithCredit(User user, String address, String phoneNumber, double discount) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("purchase " + address + " " + phoneNumber + " " + discount + " " + token);
+            dataOutputStream.flush();
+            sendObject(((Buyer) user).getNewBuyerCart());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void sendObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

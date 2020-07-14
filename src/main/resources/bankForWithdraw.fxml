@@ -16,7 +16,6 @@
     <children>
         <AnchorPane prefHeight="433.0" prefWidth="601.0">
             <children>
-                <Label layoutX="43.0" layoutY="144.0" text="bank password"/>
                 <JFXTextField fx:id="amount" layoutX="177.0" layoutY="186.0"/>
                 <Label layoutX="57.0" layoutY="204.0" text="amount"/>
                 <JFXTextField fx:id="accountId" layoutX="177.0" layoutY="25.0"/>

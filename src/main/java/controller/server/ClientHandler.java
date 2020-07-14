@@ -65,6 +65,10 @@ public class ClientHandler extends Thread {
                     chargeAccount(command);
                 } else if (command.startsWith("withdraw")) {
                     withdraw(command);
+                } else if (command.startsWith("useCode")) {
+                    useCodedDiscount(command);
+                } else if (command.startsWith("purchase")) {
+                    purchase(command);
                 }
                 System.out.println(command);
             }
@@ -73,12 +77,53 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void purchase(String command) {
+        String[] commands = command.split(" ");
+        String address = commands[1];
+        String phoneNumber = commands[2];
+        String discount = commands[3];
+        String token = commands[4];
+        HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
+        server.purchase(address,phoneNumber,discount,token,newBuyerCart);
+
+
+    }
+
+    private Object getObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void useCodedDiscount(String command) {
+        String discountCode = command.split(" ")[1];
+        String token = command.split(" ")[2];
+        server.useCodedDiscount(discountCode, token);
+    }
+
     private void withdraw(String command) {
         String[] commands = command.split(" ");
         String amount = commands[1];
         String accountId = commands[2];
         String token = commands[3];
         String result = server.withdraw(amount, accountId, token);
+
+        try {
+            dataOutputStream.writeUTF(result);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

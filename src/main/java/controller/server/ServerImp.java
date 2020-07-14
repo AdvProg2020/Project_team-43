@@ -1,6 +1,7 @@
 package controller.server;
 
 import controller.client.BuyerProcessor;
+import javafx.util.Pair;
 import model.*;
 import model.request.Request;
 
@@ -154,6 +155,16 @@ public class ServerImp {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void useCodedDiscount(String discountCode, String token) {
+        ((Buyer) users.get(token)).changeRemainDiscount(CodedDiscount.getDiscountById(discountCode));
+    }
+
+    public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+        ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
+        ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
+
     }
 }
 

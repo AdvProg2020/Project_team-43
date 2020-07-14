@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Seller extends User  implements Serializable {
+public class Seller extends User implements Serializable {
     private static String fileAddress = "database/Seller.dat";
     private Company company;
 

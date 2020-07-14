@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.CodedDiscount;
@@ -28,6 +29,7 @@ public class PurchaseMenuController extends Controller {
 
 
     public void initialize() {
+        initCodedDiscounts();
         totalAmount.setText(Double.toString(BuyerProcessor.getInstance().getRealValueOfCart()));
         payment.setText(Double.toString(BuyerProcessor.getInstance().showTotalPrice()));
         sale.setText(Double.toString(Double.parseDouble(totalAmount.getText()) - Double.parseDouble(payment.getText())));
@@ -56,6 +58,10 @@ public class PurchaseMenuController extends Controller {
         );
     }
 
+    private void initCodedDiscounts() {
+        CodedDiscount.setAllCodedDiscount(client.getAllCodedDiscounts());
+    }
+
     public void setDiscount() {
         payment.setText(Double.toString(Double.parseDouble(payment.getText()) *
                 (100 - CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount()) / 100));
@@ -69,20 +75,34 @@ public class PurchaseMenuController extends Controller {
     }
 
 
-    public void purchase() {
+    public void purchaseFromCredit() {
         Music.getInstance().confirmation();
-        double discount = 0;
-        if (validLabel.getText().equals("valid")) {
-            discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
-            BuyerProcessor.getInstance().useDiscountCode(CodedDiscount.getDiscountById(discountCode.getText()));
+        if (BuyerProcessor.getInstance().getUser().getBalance() < Double.parseDouble(payment.getText())) {
+            new Alert(Alert.AlertType.INFORMATION, "not enough money").showAndWait();
+            return;
         }
+        double discount = checkDiscount();
+        client.purchaseWithCredit(BuyerProcessor.getInstance().getUser(), address.getText(), phoneNumber.getText(), discount);
         String result = BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
         new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
         cancelPurchase();
     }
 
+    private double checkDiscount() {
+        if (validLabel.getText().equals("valid")) {
+            double discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
+            client.useDiscountCode(BuyerProcessor.getInstance().getUser(), discountCode.getText());
+            BuyerProcessor.getInstance().useDiscountCode(CodedDiscount.getDiscountById(discountCode.getText()));
+            return discount;
+        }
+        return 0;
+    }
+
     public void cancelPurchase() {
         Music.getInstance().backPage();
         BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
+    }
+
+    public void purchaseFromBank(MouseEvent event) {
     }
 }
