@@ -169,6 +169,19 @@ public class Client {
         return null;
     }
 
+    private void sendObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private Object getObject() {
         try {
@@ -287,8 +300,11 @@ public class Client {
 
     public void createCategory(String categoryName, ArrayList<String> features) {
         try {
-            //todo send arraylist
+            features.add(categoryName);
+            dataOutputStream.writeUTF("createCategory");
             dataOutputStream.flush();
+            dataInputStream.readUTF();
+            sendObject(features);
             dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();

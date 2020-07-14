@@ -224,6 +224,11 @@ public class ServerImp {
         ((Manager) user).removeCodedDiscount(code);
     }
 
+    public void createCategory(String categoryName, ArrayList<String> categoryInfo, String token){
+        User user = users.get(token);
+        ((Manager) user).addCategory(categoryName, categoryInfo);
+    }
+
     public void removeCategory(Category category, String token){
         User user = users.get(token);
         ((Manager) user).removeCategory(category);

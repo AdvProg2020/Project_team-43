@@ -89,13 +89,15 @@ public class ClientHandler extends Thread {
                     editCodedDiscount(command);
                 } else if (command.startsWith("removeCodedDiscount")) {
                     removeCodedDiscount(command);
+                } else if (command.startsWith("createCategory")) {
+                    createCategory();
                 } else if (command.startsWith("removeCategory")) {
                     removeCategory(command);
                 } else if (command.startsWith("removeProduct")) {
                     removeProduct(command);
-                } else if(command.startsWith("changeFeature")){
+                } else if (command.startsWith("changeFeature")) {
                     changeFeature(command);
-                } else if(command.startsWith("removeFeature")){
+                } else if (command.startsWith("removeFeature")) {
                     removeFeature(command);
                 }
                 System.out.println(command);
@@ -225,6 +227,21 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Object getObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private boolean checkResultForLogin(String result) {
@@ -383,6 +400,21 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void createCategory() {
+        try {
+            dataOutputStream.writeUTF("ready to get");
+            dataOutputStream.flush();
+            ArrayList<String> categoryInfo = (ArrayList<String>) getObject();
+            String categoryName = categoryInfo.remove(categoryInfo.size() - 2);
+            String token = categoryInfo.remove(categoryInfo.size() - 1);
+            server.createCategory(categoryName, categoryInfo, token);
+            dataOutputStream.writeUTF("createCategory done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void removeCategory(String command) {
         Category category = Category.getCategoryByName(command.split(" ")[1]);
         server.removeCategory(category, command.split(" ")[2]);
@@ -408,16 +440,17 @@ public class ClientHandler extends Thread {
     public void changeFeature(String command) {
         Category category = Category.getCategoryByName(command.split("----")[1]);
         try {
-            dataOutputStream.writeUTF(server.changeFeature(category, command.split("----")[2], command.split("----")[3], command.split("----")[4] ));
+            dataOutputStream.writeUTF(server.changeFeature(category, command.split("----")[2], command.split("----")[3], command.split("----")[4]));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
     public String removeFeature(String command) {
         Category category = Category.getCategoryByName(command.split(" ")[1]);
-        server.removeFeature(category, command.split(" ")[2] ,command.split(" ")[3]);
+        server.removeFeature(category, command.split(" ")[2], command.split(" ")[3]);
         try {
             dataOutputStream.writeUTF("removeFeature done");
             dataOutputStream.flush();
@@ -427,4 +460,6 @@ public class ClientHandler extends Thread {
         }
         return "done";
     }
+
+
 }
