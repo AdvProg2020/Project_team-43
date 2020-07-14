@@ -7,7 +7,10 @@ import model.request.Request;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -161,7 +164,29 @@ public class ServerImp {
     }
 
     public void addNewProduct(String name, String companyName, String categoryName, String priceString, String number, String token, HashMap<String, String> features) {
-        ((Seller)users.get(token)).addNewProduct(name, Company.getCompanyByName(companyName), Double.parseDouble(priceString), Category.getCategoryByName(categoryName), Integer.parseInt(number), features);
+        ((Seller) users.get(token)).addNewProduct(name, Company.getCompanyByName(companyName), Double.parseDouble(priceString), Category.getCategoryByName(categoryName), Integer.parseInt(number), features);
+    }
+
+    public synchronized void editProduct(String id, String field, String newField, String token) {
+        Seller seller = (Seller) users.get(token);
+        seller.editProduct(seller.getProductById(id), field, newField);
+    }
+
+    public void editOff(String id, String field, String newField, String token) {
+        Seller seller = (Seller) users.get(token);
+        seller.editOff(seller.getOffById(id), field, newField);
+    }
+
+    public void addOff(String startTime, String endTime, String amount, String token, ArrayList<String> productIds) {
+        try {
+            Seller seller = (Seller) users.get(token);
+            Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
+            Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
+            Double discountAmount = Double.parseDouble(amount);
+            seller.addOff(startTimeDate, endTimeDate, discountAmount, productIds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
 

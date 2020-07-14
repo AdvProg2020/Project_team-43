@@ -105,6 +105,37 @@ public class Client {
         }
     }
 
+    public void addOff(Seller user, String startTime, String endTime, double amount, ArrayList<String> productIds) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("addOff " + startTime + " " + endTime + " " + amount + " " + token);
+            dataOutputStream.flush();
+            sendObject(productIds);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editProduct(Seller user, String productId, String field, String newField) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("editProduct " + productId + " " + field + " " + newField + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editOff(Seller user, String offId, String field, String newField) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("editOff " + offId + " " + field + " " + newField + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void sendObject(Object object) {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();

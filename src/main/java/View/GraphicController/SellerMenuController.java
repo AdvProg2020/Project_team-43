@@ -232,19 +232,23 @@ public class SellerMenuController extends Controller {
             if (!product.getFeaturesMap().get(featureName).equalsIgnoreCase(feature)) {
                 change = true;
                 sellerProcessor.editProduct(product.getProductId(), featureName, feature);
+                client.editProduct(user, product.getProductId(), featureName, feature);
             }
         }
         if (!name.equals(product.getName())) {
             change = true;
             sellerProcessor.editProduct(product.getProductId(), "name", name);
+            client.editProduct(user, product.getProductId(), "name", name);
         }
         if (!price.equals(String.valueOf(product.getPrice()))) {
             change = true;
             sellerProcessor.editProduct(product.getProductId(), "price", price);
+            client.editProduct(user, product.getProductId(), "price", price);
         }
         if (!companyName.equals(product.getCompany().getName())) {
             change = true;
             sellerProcessor.editProduct(product.getProductId(), "company", companyName);
+            client.editProduct(user, product.getProductId(), "company", companyName);
         }
         if (change) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -384,27 +388,32 @@ public class SellerMenuController extends Controller {
                 if (!off.hasProduct(user.getProductById(id))) {
                     change = true;
                     sellerProcessor.editOff(off.getOffId(), "addProduct", id);
+                    client.editOff(user, off.getOffId(), "addProduct", id);
                 }
             } else {
                 if (off.hasProduct(user.getProductById(id))) {
                     change = true;
                     sellerProcessor.editOff(off.getOffId(), "removeProduct", id);
+                    client.editOff(user, off.getOffId(), "removeProduct", id);
                 }
             }
         }
         if (amount != off.getDiscountAmount()) {
             change = true;
             sellerProcessor.editOff(off.getOffId(), "discountAmount", String.valueOf(amount));
+            client.editOff(user, off.getOffId(), "discountAmount", String.valueOf(amount));
         }
         Date dateStart = new Date(startTime);
         Date dateEnd = new Date(endTime);
         if (!dateStart.equals(off.getStartTime())) {
             change = true;
             sellerProcessor.editOff(off.getOffId(), "startTime", startTime);
+            client.editOff(user, off.getOffId(), "startTime", startTime);
         }
         if (!dateEnd.equals(off.getEndTime())) {
             change = true;
             sellerProcessor.editOff(off.getOffId(), "endTime", endTime);
+            client.editOff(user, off.getOffId(), "endTime", endTime);
         }
         if (change) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -439,6 +448,7 @@ public class SellerMenuController extends Controller {
         }
         try {
             String result = sellerProcessor.addOff(startTime, endTime, amount, productIds);
+            client.addOff(user, startTime, endTime, amount, productIds);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(result);
             alert.showAndWait();

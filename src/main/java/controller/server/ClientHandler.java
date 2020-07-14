@@ -70,12 +70,31 @@ public class ClientHandler extends Thread {
                     chargeAccount(command);
                 } else if (command.startsWith("withdraw")) {
                     withdraw(command);
+                } else if (command.startsWith("editProduct")) {
+                    editProduct(command.split(" "));
+                } else if (command.startsWith("editOff")) {
+                    editOff(command.split(" "));
+                } else if (command.startsWith("addOff")) {
+                    addOff(command.split(" "));
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void addOff(String[] commands) {
+        ArrayList<String> productIds = (ArrayList<String>) getObject();
+        server.addOff(commands[1], commands[2], commands[3], commands[4], productIds);
+    }
+
+    private void editOff(String[] commands) {
+        server.editOff(commands[1], commands[2], commands[3], commands[4]);
+    }
+
+    private void editProduct(String[] commands) {
+        server.editProduct(commands[1], commands[2], commands[3], commands[4]);
     }
 
     private void addNewProduct(String[] commands) {
