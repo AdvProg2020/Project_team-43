@@ -224,6 +224,10 @@ public class ServerImp {
         ((Manager) user).removeCodedDiscount(code);
     }
 
+    public void removeCategory(Category category, String token){
+        User user = users.get(token);
+        ((Manager) user).removeCategory(category);
+    }
 }
 
 class ExpireToken extends Thread {

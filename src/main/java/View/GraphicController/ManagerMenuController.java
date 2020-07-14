@@ -629,14 +629,15 @@ public class ManagerMenuController extends Controller {
 
     public void removeCategory() {
         Music.getInstance().confirmation();
-        bossProcessor.removeCategoryFXML(selectedCategory);
+//        bossProcessor.removeCategoryFXML(selectedCategory);
+        client.removeCategory(selectedCategory.getName());
         closeCategoryInfo();
         updateCategoryListView();
     }
 
     public void removeProduct() {
         Music.getInstance().confirmation();
-        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+//        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
         closeProductInfo();
         updateProductListView();
     }

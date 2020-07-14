@@ -305,9 +305,9 @@ public class Client {
         }
     }
 
-    public void removeCodedDiscount(String code){
+    public void removeCodedDiscount(String code) {
         try {
-            dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " +  token);
+            dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -324,6 +324,16 @@ public class Client {
             e.printStackTrace();
         }
         return "done";
+    }
+
+    public void removeCategory(String categoryName) {
+        try {
+            dataOutputStream.writeUTF("removeCategory" + " " + categoryName + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void rateProduct(Product product, int rating, User user) {
