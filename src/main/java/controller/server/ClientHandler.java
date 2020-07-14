@@ -6,6 +6,7 @@ import model.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientHandler extends Thread {
@@ -57,14 +58,24 @@ public class ClientHandler extends Thread {
                     getAllCompanies();
                 } else if (command.equals("getAllUsers")) {
                     getAllUsers();
-                } else if (command.matches("getAllRequests")) {
+                } else if (command.equals("getAllRequests")) {
                     getAllRequests();
-                } else if (command.matches("getAllCodedDiscounts")) {
+                } else if (command.equals("getAllCodedDiscounts")) {
                     getAllCodedDiscounts();
+                } else if (command.startsWith("addExistingProduct")) {
+                    addExistingProduct(command.split(" "));
+                } else if (command.startsWith("addNewProduct")) {
+                    addNewProduct(command.split(" "));
                 } else if (command.startsWith("charge")) {
                     chargeAccount(command);
                 } else if (command.startsWith("withdraw")) {
                     withdraw(command);
+                } else if (command.startsWith("editProduct")) {
+                    editProduct(command.split(" "));
+                } else if (command.startsWith("editOff")) {
+                    editOff(command.split(" "));
+                } else if (command.startsWith("addOff")) {
+                    addOff(command.split(" "));
                 } else if (command.startsWith("useCode")) {
                     useCodedDiscount(command);
                 } else if (command.startsWith("purchase")) {
@@ -75,6 +86,31 @@ public class ClientHandler extends Thread {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void addOff(String[] commands) {
+        ArrayList<String> productIds = (ArrayList<String>) getObject();
+        server.addOff(commands[1], commands[2], commands[3], commands[4], productIds);
+    }
+
+    private void editOff(String[] commands) {
+        server.editOff(commands[1], commands[2], commands[3], commands[4]);
+    }
+
+    private void editProduct(String[] commands) {
+        server.editProduct(commands[1], commands[2], commands[3], commands[4]);
+    }
+
+    private void addNewProduct(String[] commands) {
+        HashMap<String, String> features = (HashMap<String, String>) getObject();
+        server.addNewProduct(commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], features);
+    }
+
+    private void addExistingProduct(String[] commands) {
+        String id = commands[1];
+        String amount = commands[2];
+        String token = commands[3];
+        server.addExistingProduct(id, amount, token);
     }
 
     private void purchase(String command) {
@@ -239,6 +275,22 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
+
+    private Object getObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private boolean checkResultForLogin(String result) {
         if (result.equals("incorrect password"))

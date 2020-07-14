@@ -11,7 +11,6 @@ import model.UserType;
 
 public class MainMenuController extends Controller {
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
-    private Stage stage = MainWindow.getInstance().getStage();
     @FXML
     private Button loginButton;
 
@@ -62,10 +61,5 @@ public class MainMenuController extends Controller {
     public void productsPanelButtonClicked() {
         Music.getInstance().open();
         ProductPanelWindow.getInstance().start(stage);
-    }
-
-    public void test(ActionEvent actionEvent) {
-        ProductWindow.getInstance().setProduct(Product.getProductById("4"), MainWindow.getInstance());
-        ProductWindow.getInstance().start(stage);
     }
 }
