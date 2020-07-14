@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -207,6 +208,14 @@ public class ServerImp {
         } catch (ParseException e) {
             return "dateException";
         }
+    }
+
+    public void editCodedDiscount(CodedDiscount code, Date startDate, Date endDate, String amount, String repeat, String token){
+        User user = users.get(token);
+        code.setStartTime(startDate);
+        code.setEndTime(endDate);
+        code.setDiscountAmount(amount);
+        code.setRepeat(repeat);
     }
 
 }

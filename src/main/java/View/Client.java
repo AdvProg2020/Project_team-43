@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Client {
     private DataInputStream dataInputStream;
@@ -287,6 +288,16 @@ public class Client {
     public void createCategory(String categoryName, ArrayList<String> features) {
         try {
             //todo send arraylist
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editCodedDiscount(String code, String startDate, String endDate, String discountAmount, String repeat) {
+        try {
+            dataOutputStream.writeUTF("editCodedDiscount" + "----" + code + "----" + startDate + "----" + endDate + "----" + discountAmount + "----" + repeat + "----" + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {

@@ -8,7 +8,10 @@ import model.request.Request;
 import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ClientHandler extends Thread {
@@ -82,6 +85,8 @@ public class ClientHandler extends Thread {
                     addCategoryFeature(command);
                 } else if(command.startsWith("createCodedDiscount")){
                     createCodedDiscount(command);
+                } else if(command.startsWith("editCodedDiscount")){
+                    editCodedDiscount(command);
                 }
                 System.out.println(command);
             }
@@ -333,6 +338,29 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void editCodedDiscount(String command){
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(command.split("----")[1]);
+        String startDate = command.split("----")[2];
+        String endDate = command.split("----")[3];
+        String amount = command.split("----")[4];
+        String repeat = command.split("----")[5];
+        try {
+            Date theStartDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(startDate);
+            Date theEndDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(endDate);
+            server.editCodedDiscount(codedDiscount, theStartDate, theEndDate, amount, repeat, command.split("----")[6]);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            dataOutputStream.writeUTF("done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

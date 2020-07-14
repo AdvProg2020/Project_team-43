@@ -574,7 +574,8 @@ public class ManagerMenuController extends Controller {
             discountRepeat = selectedCodedDiscount.getRepeat() + "";
         }
         if (beforeAfterDate(startDate, endDate)) {
-            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
+//            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
+            client.editCodedDiscount(selectedCodedDiscount.getDiscountCode(), startDate.toString(), endDate.toString(), discountAmount, discountRepeat );
         } else {
             showErrorAlert("startTime should be before endTime");
             return;
