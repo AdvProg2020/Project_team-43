@@ -185,6 +185,10 @@ public class BuyerMenuController extends Controller {
         closeDiscountButton.setVisible(false);
     }
 
+    public void increaseBalance() {
+        BankWindow.getInstance().start(MainWindow.getInstance().getStage());
+    }
+
 
     private class XCell extends ListCell<String> {
         Buyer buyer;

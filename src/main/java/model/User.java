@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class User implements Serializable {
-    private static final int startMoney = 100000;
+    private static final int startMoney = 0;
 
     public static ArrayList<User> allUsers = new ArrayList<>();
 

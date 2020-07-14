@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -486,5 +487,12 @@ public class SellerMenuController extends Controller {
 
     public void open() {
         Music.getInstance().open();
+    }
+
+    public void increaseBalance() {
+
+    }
+
+    public void decreaseBalance() {
     }
 }
