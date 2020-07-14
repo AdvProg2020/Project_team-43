@@ -151,7 +151,12 @@ public class SellerMenuController extends Controller {
 
     @FXML
     public void addExistingProduct() {
-        String message = sellerProcessor.addExistingProduct(existingProductsIds.getSelectionModel().getSelectedItem(), amountTextField.getText());
+        String id = existingProductsIds.getSelectionModel().getSelectedItem();
+        String amount = amountTextField.getText();
+        String message = sellerProcessor.addExistingProduct(id, amount);
+        if (!message.equals("Amount must be an integer")) {
+            client.addExistingProduct(id, amount, user);
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);
         alert.showAndWait();
@@ -171,6 +176,8 @@ public class SellerMenuController extends Controller {
             }
             try {
                 sellerProcessor.addNewProduct(nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
+                        amountNewProduct.getText(), features);
+                client.addNewProduct(user, nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
                         amountNewProduct.getText(), features);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Product added successfully");

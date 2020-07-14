@@ -57,7 +57,6 @@ public class ServerImp {
     }
 
     public ArrayList<Request> getAllRequests() {
-        System.out.println("salam");
         return Request.getAllRequests();
     }
 
@@ -106,6 +105,14 @@ public class ServerImp {
 
     public ArrayList<CodedDiscount> getAllCodedDiscounts() {
         return CodedDiscount.getAllCodedDiscount();
+    }
+
+    public void addExistingProduct(String id, String amount, String token) {
+        ((Seller) users.get(token)).addExistingProduct(id, Integer.parseInt(amount));
+    }
+
+    public void addNewProduct(String name, String companyName, String categoryName, String priceString, String number, String token, HashMap<String, String> features) {
+        ((Seller)users.get(token)).addNewProduct(name, Company.getCompanyByName(companyName), Double.parseDouble(priceString), Category.getCategoryByName(categoryName), Integer.parseInt(number), features);
     }
 }
 
