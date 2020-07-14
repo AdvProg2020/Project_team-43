@@ -272,6 +272,15 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void deleteUser(String command){
+        User user = User.getUserByUserName(command.split(" ")[1]);
+        server.deleteUser(user, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("deleteUser done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -180,6 +180,11 @@ public class ServerImp {
         ((Manager) user).declineRequest(request);
     }
 
+    public void deleteUser(User user1, String token){
+        User user = users.get(token);
+        ((Manager) user).deleteUser(user1);
+    }
+
 }
 
 class ExpireToken extends Thread {
