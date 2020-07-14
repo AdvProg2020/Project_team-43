@@ -1,5 +1,6 @@
 package View.GraphicController;
 
+import View.graphic.BankForChargeWindow;
 import controller.client.BuyerProcessor;
 import View.graphic.BuyerUserWindow;
 import View.graphic.MainWindow;
@@ -88,6 +89,17 @@ public class PurchaseMenuController extends Controller {
         cancelPurchase();
     }
 
+    public void purchaseFromBank() {
+        BankForChargeController.setChargeForBuy(true);
+        BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
+        double discount = checkDiscount();
+        BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
+        client.purchaseWithCredit(BuyerProcessor.getInstance().getUser(), address.getText(), phoneNumber.getText(), discount);
+        String result = BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
+        new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
+        cancelPurchase();
+    }
+
     private double checkDiscount() {
         if (validLabel.getText().equals("valid")) {
             double discount = CodedDiscount.getDiscountById(discountCode.getText()).getDiscountAmount();
@@ -103,6 +115,5 @@ public class PurchaseMenuController extends Controller {
         BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 
-    public void purchaseFromBank(MouseEvent event) {
-    }
+
 }
