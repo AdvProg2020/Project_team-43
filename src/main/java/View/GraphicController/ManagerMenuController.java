@@ -501,7 +501,7 @@ public class ManagerMenuController extends Controller {
         codedDiscountInfo.add(createRepeat.getText());
 //            bossProcessor.createCodedDiscount(codedDiscountInfo);
         String result = client.createCodedDiscount(codedDiscountInfo.get(0), codedDiscountInfo.get(1), codedDiscountInfo.get(2), codedDiscountInfo.get(3));
-        if(result.equals("dateException")){
+        if (result.equals("dateException")) {
             showErrorAlert("date exception");
         }
         updateCodedDiscountListView();
@@ -575,7 +575,7 @@ public class ManagerMenuController extends Controller {
         }
         if (beforeAfterDate(startDate, endDate)) {
 //            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
-            client.editCodedDiscount(selectedCodedDiscount.getDiscountCode(), startDate.toString(), endDate.toString(), discountAmount, discountRepeat );
+            client.editCodedDiscount(selectedCodedDiscount.getDiscountCode(), startDate.toString(), endDate.toString(), discountAmount, discountRepeat);
         } else {
             showErrorAlert("startTime should be before endTime");
             return;
@@ -638,6 +638,7 @@ public class ManagerMenuController extends Controller {
     public void removeProduct() {
         Music.getInstance().confirmation();
 //        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+        client.removeProduct(selectedProduct.getProductId());
         closeProductInfo();
         updateProductListView();
     }
@@ -654,10 +655,10 @@ public class ManagerMenuController extends Controller {
     public void changeFeature() {
         Music.getInstance().confirmation();
         if (!changedFeature.getText().isEmpty()) {
-            try {
-                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
-            } catch (InvalidCommandException e) {
-                showErrorAlert(e.getMessage());
+//                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
+            String result = client.changeFeature(selectedCategory.getName(), selectedFeature, changedFeature.getText());
+            if(result.equals("invalidCommandException")){
+                showErrorAlert("invalidCommandException");
             }
             changeFeaturePane.setVisible(false);
             updateCategoryInfoPaneListView();
@@ -666,7 +667,8 @@ public class ManagerMenuController extends Controller {
 
     public void removeFeature() {
         Music.getInstance().confirmation();
-        bossProcessor.deleteFeatureFXML(selectedCategory, selectedFeature);
+//        bossProcessor.deleteFeatureFXML(selectedCategory, selectedFeature);
+        client.removeFeature(selectedCategory.getName(), selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
         updateCategoryInfoPaneListView();

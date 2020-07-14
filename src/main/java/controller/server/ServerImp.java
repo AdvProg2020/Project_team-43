@@ -228,7 +228,28 @@ public class ServerImp {
         User user = users.get(token);
         ((Manager) user).removeCategory(category);
     }
+
+    public void removeProduct(Product product, String token){
+        User user = users.get(token);
+        ((Manager) user).removeProduct(product);
+    }
+
+    public String changeFeature(Category category, String oldFeature, String newFeature, String token){
+        User user = users.get(token);
+        try {
+            ((Manager) user).editFeatureName(category, oldFeature, newFeature);
+            return "changeFeature done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        }
+    }
+
+    public void removeFeature(Category category, String feature, String token){
+        User user = users.get(token);
+        ((Manager) user).deleteFeature(category, feature);
+    }
 }
+
 
 class ExpireToken extends Thread {
     private ServerImp serverImp;

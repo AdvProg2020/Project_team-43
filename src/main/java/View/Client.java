@@ -336,6 +336,38 @@ public class Client {
         }
     }
 
+    public void removeProduct(String productId) {
+        try {
+            dataOutputStream.writeUTF("removeProduct" + " " + productId + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String changeFeature(String categoryName, String oldFeature, String newFeature) {
+        try {
+            dataOutputStream.writeUTF("changeFeature" + "----" + categoryName + "----" + oldFeature + "----" + newFeature + "----" + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    public void removeFeature(String categoryName, String feature) {
+        try {
+            dataOutputStream.writeUTF("removeFeature" + " " + categoryName + " " + feature + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void rateProduct(Product product, int rating, User user) {
         try {
             checkTokenValidation(user);

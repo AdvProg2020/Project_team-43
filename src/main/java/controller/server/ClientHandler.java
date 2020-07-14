@@ -83,14 +83,20 @@ public class ClientHandler extends Thread {
                     editCategory(command);
                 } else if (command.startsWith("addCategoryFeature")) {
                     addCategoryFeature(command);
-                } else if(command.startsWith("createCodedDiscount")){
+                } else if (command.startsWith("createCodedDiscount")) {
                     createCodedDiscount(command);
-                } else if(command.startsWith("editCodedDiscount")){
+                } else if (command.startsWith("editCodedDiscount")) {
                     editCodedDiscount(command);
-                } else if(command.startsWith("removeCodedDiscount")){
+                } else if (command.startsWith("removeCodedDiscount")) {
                     removeCodedDiscount(command);
-                } else if(command.startsWith("removeCategory")){
+                } else if (command.startsWith("removeCategory")) {
                     removeCategory(command);
+                } else if (command.startsWith("removeProduct")) {
+                    removeProduct(command);
+                } else if(command.startsWith("changeFeature")){
+                    changeFeature(command);
+                } else if(command.startsWith("removeFeature")){
+                    removeFeature(command);
                 }
                 System.out.println(command);
             }
@@ -344,7 +350,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void editCodedDiscount(String command){
+    private void editCodedDiscount(String command) {
         CodedDiscount codedDiscount = CodedDiscount.getDiscountById(command.split("----")[1]);
         String startDate = command.split("----")[2];
         String endDate = command.split("----")[3];
@@ -366,7 +372,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void removeCodedDiscount(String command){
+    private void removeCodedDiscount(String command) {
         CodedDiscount code = CodedDiscount.getDiscountById(command.split(" ")[1]);
         server.removeCodedDiscount(code, command.split(" ")[2]);
         try {
@@ -377,7 +383,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void removeCategory(String command){
+    private void removeCategory(String command) {
         Category category = Category.getCategoryByName(command.split(" ")[1]);
         server.removeCategory(category, command.split(" ")[2]);
         try {
@@ -388,4 +394,37 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void removeProduct(String command) {
+        Product product = Product.getAllProductById(command.split(" ")[1]);
+        server.removeProduct(product, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("removeProduct done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeFeature(String command) {
+        Category category = Category.getCategoryByName(command.split("----")[1]);
+        try {
+            dataOutputStream.writeUTF(server.changeFeature(category, command.split("----")[2], command.split("----")[3], command.split("----")[4] ));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public String removeFeature(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        server.removeFeature(category, command.split(" ")[2] ,command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF("removeFeature done");
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
 }
