@@ -3,6 +3,7 @@ package controller.server;
 import controller.client.BuyerProcessor;
 import javafx.util.Pair;
 import model.*;
+import model.request.Request;
 
 import javax.print.DocFlavor;
 import java.io.*;
@@ -69,6 +70,12 @@ public class ClientHandler extends Thread {
                     withdraw(command);
                 } else if (command.startsWith("createManagerProfile")) {
                     createManagerProfile(command);
+                } else if(command.startsWith("acceptRequest")){
+                    acceptRequest(command);
+                } else if(command.startsWith("declineRequest")){
+                    declineRequest(command);
+                } else if(command.startsWith("deleteUser")){
+                    deleteUser(command);
                 }
                 System.out.println(command);
             }
@@ -246,6 +253,25 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
+
+    private void acceptRequest(String command){
+        Request request = Request.getRequestById(command.split(" ")[1]);
+        try {
+            dataOutputStream.writeUTF(server.acceptRequest(request, command.split(" ")[2]));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void declineRequest(String command){
+        Request request = Request.getRequestById(command.split(" ")[1]);
+        server.declineRequest(request, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("declineRequest done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

@@ -286,7 +286,7 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
 //            bossProcessor.createManagerProfileFXML(managerInfo);
-            client.createManagerProfile(managerInfo.get(0),managerInfo.get(1),managerInfo.get(2),managerInfo.get(3),managerInfo.get(4),managerInfo.get(5));
+            client.createManagerProfile(managerInfo.get(0), managerInfo.get(1), managerInfo.get(2), managerInfo.get(3), managerInfo.get(4), managerInfo.get(5));
         }
         clearCreateManager();
         updateUsersListView();
@@ -372,37 +372,26 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try {
-            Music.getInstance().confirmation();
-            bossProcessor.acceptRequestFXML(selectedRequest);
-        } catch (InvalidCommandException e) {
-            showErrorAlert(e.getMessage());
-        } catch (ParseException e) {
+        Music.getInstance().confirmation();
+//            bossProcessor.acceptRequestFXML(selectedRequest);
+        String result = client.acceptRequest(selectedRequest.getRequestId());
+        if (result.equals("dateException")) {
             showErrorAlert("invalid date");
         }
-
-        /*try {
-            ((Manager) Processor.user).acceptRequest(selectedRequest);
-            Music.getInstance().confirmation();
-        } catch (InvalidCommandException e) {
-            showErrorAlert(e.getMessage());
-        } catch (ParseException e) {
-            showErrorAlert("invalid date");
-        }*/
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void declineRequest() {
         Music.getInstance().confirmation();
-        bossProcessor.declineRequestFXML(selectedRequest);
+//        bossProcessor.declineRequestFXML(selectedRequest);
+        client.declineRequest(selectedRequest.getRequestId());
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void updateRequestListView() {
         requests.clear();
-        //TODO : array list begirim
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
@@ -412,7 +401,8 @@ public class ManagerMenuController extends Controller {
 
     public void deleteUser() {
         Music.getInstance().confirmation();
-        bossProcessor.deleteUserFXML(selectedUser);
+//        bossProcessor.deleteUserFXML(selectedUser);
+        client.deleteUser(selectedUser.getUsername());
         closeUserInfo();
         updateUsersListView();
     }

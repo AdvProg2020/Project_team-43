@@ -7,6 +7,7 @@ import model.request.Request;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -156,11 +157,29 @@ public class ServerImp {
         return null;
     }
 
-    public void createManagerProfile(ArrayList<String >managerInfo, String token ){
+    public void createManagerProfile(ArrayList<String> managerInfo, String token) {
 //        todo check token
         User user = users.get(token);
-        ((Manager)user).createManagerProfile(managerInfo);
+        ((Manager) user).createManagerProfile(managerInfo);
     }
+
+    public String acceptRequest(Request request, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).acceptRequest(request);
+            return "done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        } catch (ParseException e) {
+            return "dateException";
+        }
+    }
+
+    public void declineRequest(Request request, String token) {
+        User user = users.get(token);
+        ((Manager) user).declineRequest(request);
+    }
+
 }
 
 class ExpireToken extends Thread {

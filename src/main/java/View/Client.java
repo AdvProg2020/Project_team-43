@@ -230,19 +230,21 @@ public class Client {
         }
     }
 
-    public void acceptRequest(String requestId) {
+    public String acceptRequest(String requestId) {
         try {
-            dataOutputStream.writeUTF("acceptRequest" + " " + requestId);
+            dataOutputStream.writeUTF("acceptRequest" + " " + requestId + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
+            return dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "done";
+
     }
 
     public void declineRequest(String requestId) {
         try {
-            dataOutputStream.writeUTF("declineRequest" + " " + requestId);
+            dataOutputStream.writeUTF("declineRequest" + " " + requestId + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -252,7 +254,7 @@ public class Client {
 
     public void deleteUser(String userName) {
         try {
-            dataOutputStream.writeUTF("deleteUser" + " " + userName);
+            dataOutputStream.writeUTF("deleteUser" + " " + userName + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
