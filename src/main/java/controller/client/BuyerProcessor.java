@@ -191,6 +191,20 @@ public class BuyerProcessor extends Processor {
         ((Buyer) user).decreaseCart(product, (Seller) User.getUserByUserName(sellerName));
     }
 
+    public void newIncreaseProduct(Product product, Seller seller) {
+        int inCart = ((Buyer) user).getNewBuyerCart().get(new Pair<>(product, seller));
+        if (Objects.requireNonNull(seller).productNumber(product) > inCart) {
+            ((Buyer) user).increaseCart(product, seller);
+        } else
+            errorMessage("not available any more");
+
+    }
+
+    public void newDecreaseProduct(Product product, Seller seller) {
+        ((Buyer) user).decreaseCart(product, seller);
+
+    }
+
     public double showTotalPrice() {
         return ((Buyer) user).getNewCartPrice();
     }

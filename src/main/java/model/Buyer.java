@@ -66,22 +66,31 @@ public class Buyer extends User {
 
 
     public void increaseCart(Product product, Seller seller) {
-        Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
-        newBuyerCart.replace(productSellerPair,
-                newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) + 1);
-
+        Set<Pair<Product, Seller>> cart = newBuyerCart.keySet();
+        for (Pair<Product, Seller> pair : cart) {
+            if (pair.getKey().getProductId().equals(product.getProductId()) && pair.getValue().getUsername().equals(seller.getUsername())) {
+                newBuyerCart.replace(pair, newBuyerCart.get(pair) + 1);
+                break;
+            }
+        }
     }
 
 
     public void decreaseCart(Product product, Seller seller) {
-        Pair<Product, Seller> productSellerPair = new Pair<>(product, seller);
-        if (newBuyerCart.get(productSellerPair) == 1) {
-            newBuyerCart.remove(productSellerPair);
+        Set<Pair<Product, Seller>> cart = newBuyerCart.keySet();
+        for (Pair<Product, Seller> pair : cart) {
+            if (pair.getKey().getProductId().equals(product.getProductId()) && pair.getValue().getUsername().equals(seller.getUsername())) {
+                if (newBuyerCart.get(pair) == 1) {
+                    newBuyerCart.remove(pair);
 
-        } else {
-            newBuyerCart.replace(productSellerPair,
-                    newBuyerCart.get(productSellerPair), newBuyerCart.get(productSellerPair) - 1);
+                } else {
+                    newBuyerCart.replace(pair,
+                            newBuyerCart.get(pair), newBuyerCart.get(pair) - 1);
+                }
+                break;
+            }
         }
+
 
     }
 

@@ -211,14 +211,14 @@ public class BuyerMenuController extends Controller {
             setText(null);
             setGraphic(null);
             if (item != null && !empty) {
-                Product product = null;
+                Pair<Product, Seller> pairForLabel = null;
                 for (Pair<Product, Seller> pair : buyer.getNewBuyerCart().keySet()) {
                     if (pair.getKey().getName().equalsIgnoreCase(item.split("\t")[0])) {
-                        product = pair.getKey();
+                        pairForLabel = pair;
                     }
                 }
                 setProductImage(product, imageView, 70, 100);
-                label.setText(item);
+                setLabel(pairForLabel);
                 setGraphic(hbox);
             }
         }
@@ -227,20 +227,20 @@ public class BuyerMenuController extends Controller {
         private void addRemoveItem(String item, boolean add) {
             String productName = item.split("\t")[0];
             String sellerName = item.split("\t")[1];
-            for (Pair<Product, Seller> productSellerPair : buyer.getNewBuyerCart().keySet()) {
+            HashMap<Pair<Product, Seller>, Integer> cart = buyer.getNewBuyerCart();
+            for (Pair<Product, Seller> productSellerPair : cart.keySet()) {
                 if (productSellerPair.getKey().getName().equals(productName) &&
                         productSellerPair.getValue().getUsername().equals(sellerName)) {
                     if (add) {
-                        BuyerProcessor.getInstance().increaseProduct(productSellerPair.getKey().getProductId(),
-                                productSellerPair.getValue().getUsername());
+                        BuyerProcessor.getInstance().newIncreaseProduct(productSellerPair.getKey(), productSellerPair.getValue());
                     } else {
-                        BuyerProcessor.getInstance().decreaseProduct(productSellerPair.getKey().getProductId(),
-                                productSellerPair.getValue().getUsername());
+                        BuyerProcessor.getInstance().newDecreaseProduct(productSellerPair.getKey(),
+                                productSellerPair.getValue());
                     }
                     setLabel(productSellerPair);
+                    setTotalPrice(Double.toString(user.getNewCartPrice()));
+                    break;
                 }
-                setTotalPrice(Double.toString(user.getNewCartPrice()));
-
             }
         }
 

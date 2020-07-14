@@ -1,6 +1,7 @@
 package View;
 
 
+import controller.client.BuyerProcessor;
 import controller.client.Processor;
 
 import model.*;
@@ -36,6 +37,9 @@ public class Client {
                 User user = (User) getObject();
                 Processor.setUser(user);
                 Processor.setIsLogin(true);
+                if (user.getUserType() == UserType.BUYER) {
+                    BuyerProcessor.getInstance().setNewBuyerCart();
+                }
             }
             return result;
         } catch (Exception e) {

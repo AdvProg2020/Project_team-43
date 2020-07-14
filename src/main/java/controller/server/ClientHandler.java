@@ -13,7 +13,7 @@ public class ClientHandler extends Thread {
     private DataOutputStream dataOutputStream;
     private Socket socket;
     private ServerImp server;
-    private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
+    //private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -127,7 +127,7 @@ public class ClientHandler extends Thread {
 
     private void logout(String command) {
         server.logout(command.split(" ")[1]);
-        newBuyerCart.clear();
+        //newBuyerCart.clear();
     }
 
     private void comment(String command) {
@@ -145,7 +145,7 @@ public class ClientHandler extends Thread {
         dataOutputStream.flush();
         if (checkResultForLogin(result)) {
             if (User.getUserByUserName(username).getUserType() == UserType.BUYER) {
-                ((Buyer) User.getUserByUserName(username)).setNewBuyerCart(newBuyerCart);
+                //((Buyer) User.getUserByUserName(username)).setNewBuyerCart(newBuyerCart);
             }
             sendObject(User.getUserByUserName(username));
         }
