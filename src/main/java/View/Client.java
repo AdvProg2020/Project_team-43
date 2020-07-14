@@ -404,17 +404,5 @@ public class Client {
         }
     }
 
-    private void sendObject(Object object) {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(object);
-            oos.close();
-            byte[] rawData = buffer.toByteArray();
-            dataOutputStream.write(rawData);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
