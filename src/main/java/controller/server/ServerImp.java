@@ -180,9 +180,23 @@ public class ServerImp {
         ((Manager) user).declineRequest(request);
     }
 
-    public void deleteUser(User user1, String token){
+    public void deleteUser(User user1, String token) {
         User user = users.get(token);
         ((Manager) user).deleteUser(user1);
+    }
+
+    public void editCategory(Category category, String name, String token){
+        User user = users.get(token);
+        ((Manager) user).editCategoryName(category, name);
+    }
+    public String addCategoryFeature(Category category, String featureName, String token){
+        User user = users.get(token);
+        try {
+            ((Manager) user).addCategoryFeature(category, featureName);
+            return "done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        }
     }
 
 }

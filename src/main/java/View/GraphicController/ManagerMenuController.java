@@ -391,6 +391,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateRequestListView() {
+        init();
         requests.clear();
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
@@ -408,8 +409,8 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateUsersListView() {
+        init();
         users.clear();
-        //TODO : array list begirim
         for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
@@ -419,19 +420,21 @@ public class ManagerMenuController extends Controller {
     public void editCategory() {
         Music.getInstance().confirmation();
         if (!categoryName.getText().isEmpty()) {
-            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+//            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+            client.editCategory(selectedCategory.getName(), categoryName.getText());
             categoryName.clear();
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
         }
         if (!newFeature.getText().isEmpty()) {
-            try {
-                for (String s : selectedCategory.getFeatures()) {
-                    System.out.println(s);
-                }
-                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
-            } catch (InvalidCommandException e) {
-                showErrorAlert(e.getMessage());
+
+            for (String s : selectedCategory.getFeatures()) {
+                System.out.println(s);
+            }
+//                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
+            String result = client.addCategoryFeature(selectedCategory.getName(), newFeature.getText());
+            if(result.equals("invalidCommandException")){
+                showErrorAlert("invalidCommandException");
             }
             updateCategoryInfoPaneListView();
             newFeature.clear();
@@ -605,6 +608,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCodedDiscountListView() {
+        init();
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -613,6 +617,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateProductListView() {
+        init();
         products.clear();
         for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
@@ -634,6 +639,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCategoryListView() {
+        init();
         categories.clear();
         for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());

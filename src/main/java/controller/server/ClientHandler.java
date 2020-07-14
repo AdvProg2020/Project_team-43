@@ -70,12 +70,16 @@ public class ClientHandler extends Thread {
                     withdraw(command);
                 } else if (command.startsWith("createManagerProfile")) {
                     createManagerProfile(command);
-                } else if(command.startsWith("acceptRequest")){
+                } else if (command.startsWith("acceptRequest")) {
                     acceptRequest(command);
-                } else if(command.startsWith("declineRequest")){
+                } else if (command.startsWith("declineRequest")) {
                     declineRequest(command);
-                } else if(command.startsWith("deleteUser")){
+                } else if (command.startsWith("deleteUser")) {
                     deleteUser(command);
+                } else if (command.startsWith("editCategory")) {
+                    editCategory(command);
+                } else if(command.startsWith("addCategoryFeature")){
+                    addCategoryFeature(command);
                 }
                 System.out.println(command);
             }
@@ -239,7 +243,7 @@ public class ClientHandler extends Thread {
         String phone = command.split(" ")[5];
         String password = command.split(" ")[6];
         String token = command.split(" ")[7];
-        ArrayList<String> managerInfo  = new ArrayList<>();
+        ArrayList<String> managerInfo = new ArrayList<>();
         managerInfo.add(username);
         managerInfo.add(firstName);
         managerInfo.add(lastName);
@@ -249,38 +253,65 @@ public class ClientHandler extends Thread {
         server.createManagerProfile(managerInfo, token);
         try {
             dataOutputStream.writeUTF("createManagerProfile done");
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void acceptRequest(String command){
+    private void acceptRequest(String command) {
         Request request = Request.getRequestById(command.split(" ")[1]);
         try {
             dataOutputStream.writeUTF(server.acceptRequest(request, command.split(" ")[2]));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void declineRequest(String command){
-        Request request = Request.getRequestById(command.split(" ")[1]);
-        server.declineRequest(request, command.split(" ")[2]);
-        try {
-            dataOutputStream.writeUTF("declineRequest done");
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void deleteUser(String command){
+    private void declineRequest(String command) {
+        Request request = Request.getRequestById(command.split(" ")[1]);
+        server.declineRequest(request, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("declineRequest done");dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteUser(String command) {
         User user = User.getUserByUserName(command.split(" ")[1]);
         server.deleteUser(user, command.split(" ")[2]);
         try {
             dataOutputStream.writeUTF("deleteUser done");
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private synchronized void editCategory(String command){
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        String newName = command.split(" ")[2];
+        server.editCategory(category, newName, command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF("editCategory done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+     private void addCategoryFeature(String command){
+         Category category = Category.getCategoryByName(command.split(" ")[1]);
+         String feature = command.split(" ")[2];
+         server.addCategoryFeature(category, feature, command.split(" ")[3]);
+         try {
+             dataOutputStream.writeUTF(server.addCategoryFeature(category, feature, command.split(" ")[3]));
+             dataOutputStream.flush();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+     }
 
 
 }

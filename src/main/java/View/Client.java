@@ -222,7 +222,7 @@ public class Client {
 
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
-            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password +" " + token);
+            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -264,13 +264,23 @@ public class Client {
 
     public void editCategory(String categoryName, String newName) {
         try {
-            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName);
+            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public String addCategoryFeature(String categoryName, String featureName){
+        try {
+            dataOutputStream.writeUTF("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
     }
 
     public void rateProduct(Product product, int rating, User user) {
