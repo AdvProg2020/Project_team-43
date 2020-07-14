@@ -128,9 +128,12 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        selectedUser = bossProcessor.getUserFromController(userName);
-        //TODO : object ro byd begirim
-        if (selectedUser == null) return;
+        init();
+        updateUsersListView();
+        selectedUser = User.getUserByUserName(userName);
+        if (selectedUser == null) {
+            return;
+        }
         showUser(selectedUser);
     }
 
@@ -150,8 +153,9 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        selectedProduct = bossProcessor.getProductFromController(productId);
-        //TODO : object begirim
+        init();
+        updateProductListView();
+        selectedProduct = Product.getAllProductById(productId);
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -174,8 +178,9 @@ public class ManagerMenuController extends Controller {
 //        Pattern pattern = Pattern.compile("\\[(.+)\\]");
 //        Matcher matcher = pattern.matcher(discountCodePrime);
 //        if (matcher.matches()) {
-        selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
-        //TODO : object begirim
+        init();
+        updateCodedDiscountListView();
+        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
 //        }
