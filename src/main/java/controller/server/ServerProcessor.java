@@ -25,5 +25,13 @@ public class ServerProcessor {
     public String createToken() {
         return UUID.randomUUID().toString();
     }
+
+    public void chargeUser(String amount, User user) {
+        user.setBalance(user.getBalance() + Integer.parseInt(amount));
+    }
+
+    public void withdraw(String amount, User user) {
+        user.setBalance(user.getBalance() - Integer.parseInt(amount));
+    }
 }
 

@@ -66,6 +66,10 @@ public class ClientHandler extends Thread {
                     addExistingProduct(command.split(" "));
                 } else if (command.startsWith("addNewProduct")) {
                     addNewProduct(command.split(" "));
+                } else if (command.startsWith("charge")) {
+                    chargeAccount(command);
+                } else if (command.startsWith("withdraw")) {
+                    withdraw(command);
                 }
                 System.out.println(command);
             }
@@ -84,6 +88,32 @@ public class ClientHandler extends Thread {
         String amount = commands[2];
         String token = commands[3];
         server.addExistingProduct(id, amount, token);
+    }
+
+    private void withdraw(String command) {
+        String[] commands = command.split(" ");
+        String amount = commands[1];
+        String accountId = commands[2];
+        String token = commands[3];
+        String result = server.withdraw(amount, accountId, token);
+
+    }
+
+    private void chargeAccount(String command) {
+        String commands[] = command.split(" ");
+        String bankUsername = commands[1];
+        String bankPassword = commands[2];
+        String amount = commands[3];
+        String accountId = commands[4];
+        String token = commands[5];
+        String result = server.chargeAccount(bankUsername, bankPassword, amount, accountId, token);
+        try {
+            dataOutputStream.writeUTF(result);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void setToken(String username, String password) {

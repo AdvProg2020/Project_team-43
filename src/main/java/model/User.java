@@ -28,6 +28,10 @@ public abstract class User implements Serializable {
         return userPersonalInfo;
     }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public User(String username, UserPersonalInfo userPersonalInfo) {
         this.username = username;
         this.userPersonalInfo = userPersonalInfo;

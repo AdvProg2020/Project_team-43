@@ -8,16 +8,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class BankWindow extends Application {
-    private static BankWindow instance = new BankWindow();
+public class BankForChargeWindow extends Application {
+    private static BankForChargeWindow instance = new BankForChargeWindow();
 
-    public static BankWindow getInstance() {
+    public static BankForChargeWindow getInstance() {
         return instance;
     }
 
     private Stage stage;
 
-    private BankWindow() {
+    private BankForChargeWindow() {
 
     }
 
@@ -25,7 +25,7 @@ public class BankWindow extends Application {
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("bank.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("bankForCharge.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
