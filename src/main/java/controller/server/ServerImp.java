@@ -122,10 +122,13 @@ public class ServerImp {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos.writeUTF("get_token " + bankUsername + " " + bankPassword);
+            dos.flush();
             String bankToken = dis.readUTF();
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + accountId + " " + shopAccountId);
+            dos.flush();
             String payID = dis.readUTF();
             dos.writeUTF("pay" + " " + payID);
+            dos.flush();
             String result = dis.readUTF();
             if (result.equals("done successfully")) {
                 serverProcessor.chargeUser(amount, users.get(token));
@@ -144,10 +147,13 @@ public class ServerImp {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
+            dos.flush();
             String bankToken = dis.readUTF();
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
+            dos.flush();
             String payID = dis.readUTF();
             dos.writeUTF("pay" + " " + payID);
+            dos.flush();
             String result = dis.readUTF();
             if (result.equals("done successfully")) {
                 serverProcessor.withdraw(amount, users.get(token));
