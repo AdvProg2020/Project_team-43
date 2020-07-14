@@ -175,15 +175,11 @@ public class ManagerMenuController extends Controller {
         if (codedDiscountListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-//        Matcher matcher = pattern.matcher(discountCodePrime);
-//        if (matcher.matches()) {
         init();
         updateCodedDiscountListView();
         selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
-//        }
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -198,15 +194,11 @@ public class ManagerMenuController extends Controller {
         if (requestsListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
-//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-//        Matcher matcher = pattern.matcher(requestIdPrime);
-//        if (matcher.matches()) {
-        selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
-        //TODO : object begirim
+        init();
+        updateRequestListView();
+        selectedRequest = Request.getRequestById(requestIdPrime);
         if (selectedRequest == null) return;
         showRequest(selectedRequest);
-//        }
-
     }
 
     public void showRequest(Request request) {
@@ -258,8 +250,9 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        selectedCategory = bossProcessor.getCategoryFromController(categoryName);
-        //TODO : object begirim
+        init();
+        updateCategoryListView();
+        selectedCategory = Category.getCategoryByName(categoryName);
         if (selectedCategory == null) return;
         showCategory(selectedCategory);
     }
