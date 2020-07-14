@@ -285,7 +285,8 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(emailCreateManager.getText());
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
-            bossProcessor.createManagerProfileFXML(managerInfo);
+//            bossProcessor.createManagerProfileFXML(managerInfo);
+            client.createManagerProfile(managerInfo.get(0),managerInfo.get(1),managerInfo.get(2),managerInfo.get(3),managerInfo.get(4),managerInfo.get(5));
         }
         clearCreateManager();
         updateUsersListView();

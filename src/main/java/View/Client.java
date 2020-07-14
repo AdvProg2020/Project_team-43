@@ -222,7 +222,7 @@ public class Client {
 
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
-            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password);
+            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password +" " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {

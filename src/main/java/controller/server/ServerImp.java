@@ -155,6 +155,12 @@ public class ServerImp {
         }
         return null;
     }
+
+    public void createManagerProfile(ArrayList<String >managerInfo, String token ){
+//        todo check token
+        User user = users.get(token);
+        ((Manager)user).createManagerProfile(managerInfo);
+    }
 }
 
 class ExpireToken extends Thread {

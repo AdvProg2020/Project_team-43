@@ -4,8 +4,10 @@ import controller.client.BuyerProcessor;
 import javafx.util.Pair;
 import model.*;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ClientHandler extends Thread {
@@ -65,6 +67,8 @@ public class ClientHandler extends Thread {
                     chargeAccount(command);
                 } else if (command.startsWith("withdraw")) {
                     withdraw(command);
+                } else if (command.startsWith("createManagerProfile")) {
+                    createManagerProfile(command);
                 }
                 System.out.println(command);
             }
@@ -218,6 +222,29 @@ public class ClientHandler extends Thread {
         dataOutputStream.writeUTF("done");
         dataOutputStream.flush();
 
+    }
+
+    private void createManagerProfile(String command) {
+        String username = command.split(" ")[1];
+        String firstName = command.split(" ")[2];
+        String lastName = command.split(" ")[3];
+        String email = command.split(" ")[4];
+        String phone = command.split(" ")[5];
+        String password = command.split(" ")[6];
+        String token = command.split(" ")[7];
+        ArrayList<String> managerInfo  = new ArrayList<>();
+        managerInfo.add(username);
+        managerInfo.add(firstName);
+        managerInfo.add(lastName);
+        managerInfo.add(email);
+        managerInfo.add(phone);
+        managerInfo.add(password);
+        server.createManagerProfile(managerInfo, token);
+        try {
+            dataOutputStream.writeUTF("createManagerProfile done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
