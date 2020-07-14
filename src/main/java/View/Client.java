@@ -9,6 +9,7 @@ import model.request.Request;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 public class Client {
@@ -218,6 +219,7 @@ public class Client {
         }
     }
 
+
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password);
@@ -278,5 +280,38 @@ public class Client {
             e.printStackTrace();
         }
 
+    }
+
+    public String chargeAccount(String bankUsername, String bankPassword, String amount, String accountId, User user) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("charge " + bankUsername + " " + bankPassword + " " + amount + " " + accountId + " " + token);
+            dataOutputStream.flush();
+            String result = dataInputStream.readUTF();
+            if (result.equals("done successfully"))
+                user.setBalance(user.getBalance() + Integer.parseInt(amount));
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String withDraw(String amount, String accountId, User user) {
+        try {
+            if (user.getBalance() < Double.parseDouble(amount)) {
+                checkTokenValidation(user);
+                dataOutputStream.writeUTF("withdraw " + amount + " " + accountId + " " + token);
+                dataOutputStream.flush();
+                String result = dataInputStream.readUTF();
+                if (result.equals("done successfully")) {
+                    user.setBalance(user.getBalance() - Integer.parseInt(amount));
+                }
+            }
+            return "not enough money in wallet";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

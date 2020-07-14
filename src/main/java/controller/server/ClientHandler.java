@@ -61,12 +61,42 @@ public class ClientHandler extends Thread {
                     getAllRequests();
                 } else if (command.matches("getAllCodedDiscounts")) {
                     getAllCodedDiscounts();
+                } else if (command.startsWith("charge")) {
+                    chargeAccount(command);
+                } else if (command.startsWith("withdraw")) {
+                    withdraw(command);
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void withdraw(String command) {
+        String[] commands = command.split(" ");
+        String amount = commands[1];
+        String accountId = commands[2];
+        String token = commands[3];
+        String result = server.withdraw(amount, accountId, token);
+
+    }
+
+    private void chargeAccount(String command) {
+        String commands[] = command.split(" ");
+        String bankUsername = commands[1];
+        String bankPassword = commands[2];
+        String amount = commands[3];
+        String accountId = commands[4];
+        String token = commands[5];
+        String result = server.chargeAccount(bankUsername, bankPassword, amount, accountId, token);
+        try {
+            dataOutputStream.writeUTF(result);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void setToken(String username, String password) {

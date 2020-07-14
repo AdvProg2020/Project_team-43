@@ -186,7 +186,7 @@ public class BuyerMenuController extends Controller {
     }
 
     public void increaseBalance() {
-        BankWindow.getInstance().start(MainWindow.getInstance().getStage());
+        BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 
 

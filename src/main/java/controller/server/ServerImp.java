@@ -1,6 +1,5 @@
 package controller.server;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import controller.client.BuyerProcessor;
 import model.*;
 import model.request.Request;
@@ -15,6 +14,11 @@ import java.util.HashMap;
 public class ServerImp {
     private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
+    private final String shopAccountId = "";//TODO
+    public static final int PORT = 2020;
+    public static final String IP = "127.0.0.1";
+    private final String shopAccountUsername = "";//TODO
+    private final String shopAccountPassword = "";//TODO
 
     public void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(2020);
@@ -106,6 +110,50 @@ public class ServerImp {
 
     public ArrayList<CodedDiscount> getAllCodedDiscounts() {
         return CodedDiscount.getAllCodedDiscount();
+    }
+
+    public synchronized String chargeAccount(String bankUsername, String bankPassword, String amount, String accountId, String token) {
+        try {
+            Socket socket = new Socket(IP, PORT);
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            dos.writeUTF("get_token " + bankUsername + " " + bankPassword);
+            String bankToken = dis.readUTF();
+            dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + accountId + " " + shopAccountId);
+            String payID = dis.readUTF();
+            dos.writeUTF("pay" + " " + payID);
+            String result = dis.readUTF();
+            if (result.equals("done successfully")) {
+                serverProcessor.chargeUser(amount, users.get(token));
+            }
+            socket.close();
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public synchronized String withdraw(String amount, String accountId, String token) {
+        try {
+            Socket socket = new Socket(IP, PORT);
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
+            String bankToken = dis.readUTF();
+            dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
+            String payID = dis.readUTF();
+            dos.writeUTF("pay" + " " + payID);
+            String result = dis.readUTF();
+            if (result.equals("done successfully")) {
+                serverProcessor.withdraw(amount, users.get(token));
+            }
+            socket.close();
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
