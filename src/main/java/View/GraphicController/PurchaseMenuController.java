@@ -1,6 +1,7 @@
 package View.GraphicController;
 
 import View.graphic.BankForChargeWindow;
+import View.graphic.PurchaseWithBankWindow;
 import controller.client.BuyerProcessor;
 import View.graphic.BuyerUserWindow;
 import View.graphic.MainWindow;
@@ -27,6 +28,7 @@ public class PurchaseMenuController extends Controller {
     public Text totalAmount;
     public Text sale;
     public Text payment;
+    public ImageView paymentButtonBank;
 
 
     public void initialize() {
@@ -38,6 +40,7 @@ public class PurchaseMenuController extends Controller {
                 (phoneNumber.getText().matches("\\d+")), phoneNumber.textProperty());
         BooleanBinding addressValid = Bindings.createBooleanBinding(() -> address.getText().length() > 0, address.textProperty());
         paymentButton.disableProperty().bind(addressValid.not().or(phoneNumberValid.not()));
+        paymentButtonBank.disableProperty().bind(addressValid.not().or(phoneNumberValid.not()));
         validLabel.setVisible(false);
         discountCode.textProperty().addListener((observable) -> {
                     if (!discountCode.getText().equals("")) {
@@ -90,14 +93,10 @@ public class PurchaseMenuController extends Controller {
     }
 
     public void purchaseFromBank() {
-        BankForChargeController.setChargeForBuy(true);
-        BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
-        double discount = checkDiscount();
-        BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
-        client.purchaseWithCredit(BuyerProcessor.getInstance().getUser(), address.getText(), phoneNumber.getText(), discount);
-        String result = BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
-        new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
-        cancelPurchase();
+        PurchaseWithBankWindow.getInstance().setAddress(address.getText());
+        PurchaseWithBankWindow.getInstance().setCodedDiscount(discountCode.getText());
+        PurchaseWithBankWindow.getInstance().setPhoneNumber(phoneNumber.getText());
+        PurchaseWithBankWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 
     private double checkDiscount() {

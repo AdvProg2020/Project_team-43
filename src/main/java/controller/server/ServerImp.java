@@ -18,14 +18,14 @@ import java.util.HashMap;
 public class ServerImp {
     private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
-    private final String shopAccountId = "";//TODO
+    private final String shopAccountId = "10001";//TODO
     public static final int PORT = 2020;
     public static final String IP = "127.0.0.1";
-    private final String shopAccountUsername = "";//TODO
-    private final String shopAccountPassword = "";//TODO
+    private final String shopAccountUsername = "a";//TODO
+    private final String shopAccountPassword = "a";//TODO
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(2020);
+        ServerSocket serverSocket = new ServerSocket(2222);
         ServerImp server = new ServerImp();
         while (true) {
             Socket socket = serverSocket.accept();
@@ -124,9 +124,11 @@ public class ServerImp {
             dos.writeUTF("get_token " + bankUsername + " " + bankPassword);
             dos.flush();
             String bankToken = dis.readUTF();
+            System.out.println("bankToken" + bankToken);
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + accountId + " " + shopAccountId);
             dos.flush();
             String payID = dis.readUTF();
+            System.out.println("payId" + payID);
             dos.writeUTF("pay" + " " + payID);
             dos.flush();
             String result = dis.readUTF();

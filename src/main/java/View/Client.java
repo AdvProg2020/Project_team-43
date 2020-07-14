@@ -20,7 +20,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 2020);
+            Socket socket = new Socket("127.0.0.1", 2222);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -357,6 +357,7 @@ public class Client {
             String result = dataInputStream.readUTF();
             if (result.equals("done successfully"))
                 user.setBalance(user.getBalance() + Integer.parseInt(amount));
+            System.out.println(result);
             return result;
         } catch (IOException e) {
             e.printStackTrace();

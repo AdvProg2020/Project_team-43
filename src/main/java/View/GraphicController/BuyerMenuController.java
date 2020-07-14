@@ -221,7 +221,7 @@ public class BuyerMenuController extends Controller {
                         pairForLabel = pair;
                     }
                 }
-                setProductImage(product, imageView, 70, 100);
+                setProductImage(pairForLabel.getKey(), imageView, 70, 100);
                 setLabel(pairForLabel);
                 setGraphic(hbox);
             }
