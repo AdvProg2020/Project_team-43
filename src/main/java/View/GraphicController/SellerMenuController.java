@@ -111,6 +111,7 @@ public class SellerMenuController extends Controller {
     private void init() {
         Category.setAllCategories(client.getAllCategories());
         Company.setAllCompanies(client.getAllCompanies());
+        Product.setAllProductsInList(client.getAllProducts());
     }
 
     private void initializeViewOrders() {

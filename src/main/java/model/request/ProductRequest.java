@@ -14,9 +14,9 @@ import java.util.Arrays;
 
 public class ProductRequest extends Request {
     private static String fileAddress = "database/ProductRequest.dat";
-    private transient Product product;
+    private Product product;
     private String productId;
-    private transient Seller seller;
+    private Seller seller;
     private String sellerUsername;
     private int number;
 
@@ -63,6 +63,7 @@ public class ProductRequest extends Request {
 
     private void saveProduct() {
         this.productId = product.getProductId();
+        product = null;
     }
 
     private static void loadAllProducts() {
@@ -87,6 +88,7 @@ public class ProductRequest extends Request {
 
     private void saveSeller() {
         this.sellerUsername = seller.getUsername();
+        seller = null;
     }
 
     private static void loadAllSellers() {

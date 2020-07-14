@@ -95,4 +95,5 @@ public abstract class Request implements Serializable {
     public static void setAllRequests(ArrayList<Request> allRequests) {
         Request.allRequests = allRequests;
     }
+
 }
