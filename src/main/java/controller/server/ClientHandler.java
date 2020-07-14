@@ -120,25 +120,9 @@ public class ClientHandler extends Thread {
         String discount = commands[3];
         String token = commands[4];
         HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
-        server.purchase(address,phoneNumber,discount,token,newBuyerCart);
-
-
+        server.purchase(address, phoneNumber, discount, token, newBuyerCart);
     }
 
-    private Object getObject() {
-        try {
-            byte[] bytes = new byte[30000];
-            dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            return is.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private void useCodedDiscount(String command) {
         String discountCode = command.split(" ")[1];
