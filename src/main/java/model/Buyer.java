@@ -188,7 +188,14 @@ public class Buyer extends User {
     }
 
     public boolean checkDiscountCode(CodedDiscount discount) {
-        if (!this.codedDiscounts.containsKey(discount))
+        int flag = 0;
+        for (CodedDiscount codedDiscount : codedDiscounts.keySet()) {
+            if (codedDiscount.getDiscountCode().equals(discount.getDiscountCode())) {
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0)
             return false;
         return discount.checkTime();
     }

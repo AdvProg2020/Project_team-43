@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class EditOffRequest extends Request {
     private static String fileAddress = "database/EditOffRequest.dat";
-    private transient Off off;
+    private Off off;
     private String offId;
     private String field;
     private String input;
@@ -63,6 +63,7 @@ public class EditOffRequest extends Request {
 
     private void saveOff() {
         this.offId = off.getOffId();
+        off = null;
     }
 
     private static void loadAllOffs() {

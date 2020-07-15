@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class EditProductRequest extends Request {
     private static String fileAddress = "database/EditProductRequest.dat";
-    private transient Product product;
+    private Product product;
     private String productId;
     private String field;
     private String input;
@@ -63,6 +63,7 @@ public class EditProductRequest extends Request {
 
     private void saveProduct() {
         this.productId = product.getProductId();
+        product = null;
     }
 
     private static void loadAllProducts() {

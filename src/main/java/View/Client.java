@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Client {
     private DataInputStream dataInputStream;
@@ -21,7 +22,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 2020);
+            Socket socket = new Socket("127.0.0.1", 2222);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -79,6 +80,72 @@ public class Client {
     public void logout() {
         try {
             dataOutputStream.writeUTF("logout " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addExistingProduct(String id, String amount, Seller user) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("addExistingProduct " + id + " " + amount + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addNewProduct(User user, String name, String companyName, String categoryName, String priceString, String number, HashMap<String, String> features) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("addNewProduct " + name + " " + companyName + " " + categoryName + " " + priceString + " " + number + " " + token);
+            dataOutputStream.flush();
+            sendObject(features);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addOff(Seller user, String startTime, String endTime, double amount, ArrayList<String> productIds) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("addOff " + startTime + " " + endTime + " " + amount + " " + token);
+            dataOutputStream.flush();
+            sendObject(productIds);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editProduct(Seller user, String productId, String field, String newField) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("editProduct " + productId + " " + field + " " + newField + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editOff(Seller user, String offId, String field, String newField) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("editOff " + offId + " " + field + " " + newField + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -403,6 +470,7 @@ public class Client {
             String result = dataInputStream.readUTF();
             if (result.equals("done successfully"))
                 user.setBalance(user.getBalance() + Integer.parseInt(amount));
+            System.out.println(result);
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -427,4 +495,28 @@ public class Client {
         }
         return null;
     }
+
+    public void useDiscountCode(User user, String codedDiscount) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("useCode " + codedDiscount + " " + token);
+            dataOutputStream.flush();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void purchaseWithCredit(User user, String address, String phoneNumber, double discount) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("purchase " + address + " " + phoneNumber + " " + discount + " " + token);
+            dataOutputStream.flush();
+            sendObject(((Buyer) user).getNewBuyerCart());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 }

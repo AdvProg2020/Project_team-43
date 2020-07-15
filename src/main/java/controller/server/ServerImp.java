@@ -8,6 +8,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,14 +18,14 @@ import java.util.HashMap;
 public class ServerImp {
     private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
-    private final String shopAccountId = "";//TODO
+    private final String shopAccountId = "10001";//TODO
     public static final int PORT = 2020;
     public static final String IP = "127.0.0.1";
-    private final String shopAccountUsername = "";//TODO
-    private final String shopAccountPassword = "";//TODO
+    private final String shopAccountUsername = "a";//TODO
+    private final String shopAccountPassword = "a";//TODO
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(2020);
+        ServerSocket serverSocket = new ServerSocket(2222);
         ServerImp server = new ServerImp();
         while (true) {
             Socket socket = serverSocket.accept();
@@ -120,10 +122,15 @@ public class ServerImp {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos.writeUTF("get_token " + bankUsername + " " + bankPassword);
+            dos.flush();
             String bankToken = dis.readUTF();
+            System.out.println("bankToken" + bankToken);
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + accountId + " " + shopAccountId);
+            dos.flush();
             String payID = dis.readUTF();
+            System.out.println("payId" + payID);
             dos.writeUTF("pay" + " " + payID);
+            dos.flush();
             String result = dis.readUTF();
             if (result.equals("done successfully")) {
                 serverProcessor.chargeUser(amount, users.get(token));
@@ -144,8 +151,10 @@ public class ServerImp {
             dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
             String bankToken = dis.readUTF();
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
+            dos.flush();
             String payID = dis.readUTF();
             dos.writeUTF("pay" + " " + payID);
+            dos.flush();
             String result = dis.readUTF();
             if (result.equals("done successfully")) {
                 serverProcessor.withdraw(amount, users.get(token));
@@ -255,6 +264,47 @@ public class ServerImp {
     }
 }
 
+
+    public void addExistingProduct(String id, String amount, String token) {
+        ((Seller) users.get(token)).addExistingProduct(id, Integer.parseInt(amount));
+    }
+
+    public void addNewProduct(String name, String companyName, String categoryName, String priceString, String number, String token, HashMap<String, String> features) {
+        ((Seller) users.get(token)).addNewProduct(name, Company.getCompanyByName(companyName), Double.parseDouble(priceString), Category.getCategoryByName(categoryName), Integer.parseInt(number), features);
+    }
+
+    public synchronized void editProduct(String id, String field, String newField, String token) {
+        Seller seller = (Seller) users.get(token);
+        seller.editProduct(seller.getProductById(id), field, newField);
+    }
+
+    public void editOff(String id, String field, String newField, String token) {
+        Seller seller = (Seller) users.get(token);
+        seller.editOff(seller.getOffById(id), field, newField);
+    }
+
+    public void addOff(String startTime, String endTime, String amount, String token, ArrayList<String> productIds) {
+        try {
+            Seller seller = (Seller) users.get(token);
+            Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
+            Date endTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(endTime);
+            Double discountAmount = Double.parseDouble(amount);
+            seller.addOff(startTimeDate, endTimeDate, discountAmount, productIds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useCodedDiscount(String discountCode, String token) {
+        ((Buyer) users.get(token)).changeRemainDiscount(CodedDiscount.getDiscountById(discountCode));
+    }
+
+    public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+        ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
+        ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
+
+    }
+}
 
 class ExpireToken extends Thread {
     private ServerImp serverImp;

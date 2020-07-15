@@ -25,6 +25,10 @@ public abstract class Controller {
         Controller.client = client;
     }
 
+    public static Client getClient() {
+        return client;
+    }
+
     protected Stage stage = MainWindow.getInstance().getStage();
     protected Application parent;
     protected Product product;
@@ -138,6 +142,7 @@ public abstract class Controller {
     public void logout() {
         BuyerProcessor.getInstance().clearCart();
         client.logout();
+        BuyerProcessor.getInstance().logout();
         userPanelGoBack();
     }
 

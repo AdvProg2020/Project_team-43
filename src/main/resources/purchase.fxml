@@ -21,12 +21,6 @@
         <JFXTextField fx:id="discountCode" layoutX="626.0" layoutY="323.0" prefHeight="31.0" prefWidth="231.0"/>
         <Label fx:id="validLabel" layoutX="796.0" layoutY="360.0" prefHeight="21.0" prefWidth="62.0"/>
         <Text fill="WHITE" layoutX="493.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="discount code"/>
-        <ImageView fx:id="paymentButton" fitHeight="53.0" fitWidth="172.0" layoutX="658.0" layoutY="441.0"
-                   onMouseClicked="#purchase" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-            <image>
-                <Image url="@pay_button.png"/>
-            </image>
-        </ImageView>
         <Text fx:id="totalAmount" layoutX="480.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0"
               text="total amount"/>
         <Text fx:id="sale" layoutX="480.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sale"/>
@@ -38,6 +32,18 @@
                    pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
             <image>
                 <Image url="@back.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="paymentButtonBank" fitHeight="50.0" fitWidth="179.0" layoutX="645.0" layoutY="419.0" onMouseClicked="#purchaseFromBank"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@button_bank-account.png"/>
+            </image>
+        </ImageView>
+        <ImageView fx:id="paymentButton" fitHeight="50.0" fitWidth="160.0" layoutX="657.0" layoutY="486.0"
+                   onMouseClicked="#purchaseFromCredit" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@button_by-credit.png"/>
             </image>
         </ImageView>
     </children>
