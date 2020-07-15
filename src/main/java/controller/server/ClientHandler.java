@@ -308,7 +308,7 @@ public class ClientHandler extends Thread {
         return null;
     }
 
-    private Object getObject() {
+    /*private Object getObject() {
         try {
             byte[] bytes = new byte[30000];
             dataInputStream.read(bytes);
@@ -321,7 +321,7 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
 
     private boolean checkResultForLogin(String result) {

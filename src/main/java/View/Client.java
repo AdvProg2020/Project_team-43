@@ -236,7 +236,7 @@ public class Client {
         return null;
     }
 
-    private void sendObject(Object object) {
+    /*private void sendObject(Object object) {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
@@ -248,7 +248,7 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private Object getObject() {
         try {

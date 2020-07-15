@@ -1,6 +1,7 @@
 package controller.server;
 
 import controller.client.BuyerProcessor;
+import javafx.util.Pair;
 import model.*;
 import model.request.Request;
 
@@ -262,8 +263,6 @@ public class ServerImp {
         User user = users.get(token);
         ((Manager) user).deleteFeature(category, feature);
     }
-}
-
 
     public void addExistingProduct(String id, String amount, String token) {
         ((Seller) users.get(token)).addExistingProduct(id, Integer.parseInt(amount));
