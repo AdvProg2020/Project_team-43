@@ -304,6 +304,7 @@ public class Client {
 
     public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -314,6 +315,7 @@ public class Client {
 
     public String acceptRequest(String requestId) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("acceptRequest" + " " + requestId + " " + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
@@ -326,6 +328,7 @@ public class Client {
 
     public void declineRequest(String requestId) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("declineRequest" + " " + requestId + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -336,6 +339,7 @@ public class Client {
 
     public void deleteUser(String userName) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("deleteUser" + " " + userName + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -356,6 +360,7 @@ public class Client {
 
     public String addCategoryFeature(String categoryName, String featureName) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
@@ -367,6 +372,7 @@ public class Client {
 
     public void createCategory(String categoryName, ArrayList<String> features) {
         try {
+            checkTokenValidation(Processor.user);
             features.add(categoryName);
             dataOutputStream.writeUTF("createCategory");
             dataOutputStream.flush();
@@ -380,6 +386,7 @@ public class Client {
 
     public void editCodedDiscount(String code, String startDate, String endDate, String discountAmount, String repeat) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("editCodedDiscount" + "----" + code + "----" + startDate + "----" + endDate + "----" + discountAmount + "----" + repeat + "----" + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -390,6 +397,7 @@ public class Client {
 
     public void removeCodedDiscount(String code) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -400,6 +408,7 @@ public class Client {
 
     public String createCodedDiscount(String startDate, String endDate, String amount, String repeat) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
@@ -411,6 +420,7 @@ public class Client {
 
     public void removeCategory(String categoryName) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("removeCategory" + " " + categoryName + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -421,6 +431,7 @@ public class Client {
 
     public void removeProduct(String productId) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("removeProduct" + " " + productId + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
@@ -431,6 +442,7 @@ public class Client {
 
     public String changeFeature(String categoryName, String oldFeature, String newFeature) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("changeFeature" + "----" + categoryName + "----" + oldFeature + "----" + newFeature + "----" + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
@@ -442,6 +454,7 @@ public class Client {
 
     public void removeFeature(String categoryName, String feature) {
         try {
+            checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("removeFeature" + " " + categoryName + " " + feature + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
