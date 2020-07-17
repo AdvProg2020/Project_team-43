@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,7 +150,6 @@ public class ServerImp {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
-            dos.flush();
             String bankToken = dis.readUTF();
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
             dos.flush();
@@ -166,6 +166,117 @@ public class ServerImp {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String createManagerProfile(ArrayList<String> managerInfo, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).createManagerProfile(managerInfo);
+        } catch (InvalidCommandException e) {
+            return e.getMessage();
+        }
+
+        return "done";
+    }
+    public String createSupporterProfile(ArrayList<String> supporterInfo, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).createSupporterProfile(supporterInfo);
+        } catch (InvalidCommandException e) {
+            return e.getMessage();
+        }
+
+        return "done";
+    }
+
+    public String acceptRequest(Request request, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).acceptRequest(request);
+            return "done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        } catch (ParseException e) {
+            return "dateException";
+        }
+    }
+
+    public void declineRequest(Request request, String token) {
+        User user = users.get(token);
+        ((Manager) user).declineRequest(request);
+    }
+
+    public void deleteUser(User user1, String token) {
+        User user = users.get(token);
+        ((Manager) user).deleteUser(user1);
+    }
+
+    public void editCategory(Category category, String name, String token) {
+        User user = users.get(token);
+        ((Manager) user).editCategoryName(category, name);
+    }
+
+    public String addCategoryFeature(Category category, String featureName, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).addCategoryFeature(category, featureName);
+            return "done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        }
+    }
+
+    public String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).createDiscountCoded(codedDiscountInfo);
+            return "done";
+        } catch (ParseException e) {
+            return "dateException";
+        }
+    }
+
+    public void editCodedDiscount(CodedDiscount code, Date startDate, Date endDate, String amount, String repeat, String token) {
+        User user = users.get(token);
+        code.setStartTime(startDate);
+        code.setEndTime(endDate);
+        code.setDiscountAmount(amount);
+        code.setRepeat(repeat);
+    }
+
+    public void removeCodedDiscount(CodedDiscount code, String token) {
+        User user = users.get(token);
+        ((Manager) user).removeCodedDiscount(code);
+    }
+
+    public void createCategory(String categoryName, ArrayList<String> categoryInfo, String token){
+        User user = users.get(token);
+        ((Manager) user).addCategory(categoryName, categoryInfo);
+    }
+
+    public void removeCategory(Category category, String token){
+        User user = users.get(token);
+        ((Manager) user).removeCategory(category);
+    }
+
+    public void removeProduct(Product product, String token){
+        User user = users.get(token);
+        ((Manager) user).removeProduct(product);
+    }
+
+    public String changeFeature(Category category, String oldFeature, String newFeature, String token){
+        User user = users.get(token);
+        try {
+            ((Manager) user).editFeatureName(category, oldFeature, newFeature);
+            return "changeFeature done";
+        } catch (InvalidCommandException e) {
+            return "invalidCommandException";
+        }
+    }
+
+    public void removeFeature(Category category, String feature, String token){
+        User user = users.get(token);
+        ((Manager) user).deleteFeature(category, feature);
     }
 
     public void addExistingProduct(String id, String amount, String token) {

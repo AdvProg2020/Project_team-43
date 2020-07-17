@@ -806,5 +806,44 @@
             </AnchorPane>
         </content>
       </Tab>
+      <Tab text="create supporter">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Pane layoutX="127.0" layoutY="70.0" prefHeight="461.0" prefWidth="308.0" style="-fx-background-color: #138030; -fx-background-radius: 5;">
+                     <children>
+                        <Text layoutX="14.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name :" />
+                        <Text layoutX="14.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password :" />
+                        <Text layoutX="14.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email :" />
+                        <Text layoutX="14.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name :" />
+                        <Text layoutX="14.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone :" />
+                        <TextField fx:id="userNameCreateSupporter" layoutX="95.0" layoutY="145.0" prefHeight="31.0" prefWidth="185.0" />
+                        <TextField fx:id="firstNameCreateSupporter" layoutX="94.0" layoutY="189.0" prefHeight="30.0" prefWidth="185.0" />
+                        <TextField fx:id="lastNameCreateSupporter" layoutX="94.0" layoutY="231.0" prefHeight="30.0" prefWidth="185.0" />
+                        <TextField fx:id="passwordCreateSupporter" layoutX="94.0" layoutY="271.0" prefHeight="30.0" prefWidth="185.0" />
+                        <TextField fx:id="emailCreateSupporter" layoutX="95.0" layoutY="313.0" prefHeight="30.0" prefWidth="185.0" />
+                        <TextField fx:id="phoneCreateSupporter" layoutX="94.0" layoutY="355.0" prefHeight="30.0" prefWidth="185.0" />
+                        <Text layoutX="14.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user name :" />
+                        <ImageView fx:id="createSupporterPhoto" fitHeight="131.0" fitWidth="122.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@user.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="38.0" fitWidth="182.0" layoutX="96.0" layoutY="411.0" onMouseClicked="#createSupporterProfile">
+                           <image>
+                              <Image url="@button_create-supporter-profile.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Text fill="#097dc9" layoutX="134.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="create Supporter profile" wrappingWidth="271.6708984375">
+                     <font>
+                        <Font name="Broadway" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
     </tabs>
 </TabPane>

@@ -8,9 +8,11 @@ import model.*;
 import model.request.Request;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Client {
@@ -234,6 +236,19 @@ public class Client {
         return null;
     }
 
+    /*private void sendObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
 
     private Object getObject() {
         try {
@@ -287,29 +302,47 @@ public class Client {
     }
 
 
-    public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
+    public String createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
-            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password);
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
+            return dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "done";
     }
 
-    public void acceptRequest(String requestId) {
+    public String createSupporterProfile(String userName, String firstName, String lastName, String email, String phone, String password){
         try {
-            dataOutputStream.writeUTF("acceptRequest" + " " + requestId);
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("createSupporterProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
+            return dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "done";
+    }
+
+    public String acceptRequest(String requestId) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("acceptRequest" + " " + requestId + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+
     }
 
     public void declineRequest(String requestId) {
         try {
-            dataOutputStream.writeUTF("declineRequest" + " " + requestId);
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("declineRequest" + " " + requestId + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -319,7 +352,8 @@ public class Client {
 
     public void deleteUser(String userName) {
         try {
-            dataOutputStream.writeUTF("deleteUser" + " " + userName);
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("deleteUser" + " " + userName + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -329,7 +363,112 @@ public class Client {
 
     public void editCategory(String categoryName, String newName) {
         try {
-            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName);
+            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String addCategoryFeature(String categoryName, String featureName) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    public void createCategory(String categoryName, ArrayList<String> features) {
+        try {
+            checkTokenValidation(Processor.user);
+            features.add(categoryName);
+            dataOutputStream.writeUTF("createCategory");
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+            sendObject(features);
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editCodedDiscount(String code, String startDate, String endDate, String discountAmount, String repeat) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("editCodedDiscount" + "----" + code + "----" + startDate + "----" + endDate + "----" + discountAmount + "----" + repeat + "----" + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeCodedDiscount(String code) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String createCodedDiscount(String startDate, String endDate, String amount, String repeat) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    public void removeCategory(String categoryName) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("removeCategory" + " " + categoryName + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeProduct(String productId) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("removeProduct" + " " + productId + " " + token);
+            dataOutputStream.flush();
+            dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String changeFeature(String categoryName, String oldFeature, String newFeature) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("changeFeature" + "----" + categoryName + "----" + oldFeature + "----" + newFeature + "----" + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
+    public void removeFeature(String categoryName, String feature) {
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("removeFeature" + " " + categoryName + " " + feature + " " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {

@@ -41,6 +41,12 @@ public class ManagerMenuController extends Controller {
     public TextField emailCreateManager;
     public TextField passwordCreateManager;
     public TextField phoneCreateManager;
+    public TextField userNameCreateSupporter;
+    public TextField firstNameCreateSupporter;
+    public TextField lastNameCreateSupporter;
+    public TextField emailCreateSupporter;
+    public TextField passwordCreateSupporter;
+    public TextField phoneCreateSupporter;
     public Text discountCode;
     public TextField startYear;
     public TextField startMonth;
@@ -128,9 +134,12 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        selectedUser = bossProcessor.getUserFromController(userName);
-        //TODO : object ro byd begirim
-        if (selectedUser == null) return;
+        init();
+        updateUsersListView();
+        selectedUser = User.getUserByUserName(userName);
+        if (selectedUser == null) {
+            return;
+        }
         showUser(selectedUser);
     }
 
@@ -150,8 +159,9 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        selectedProduct = bossProcessor.getProductFromController(productId);
-        //TODO : object begirim
+        init();
+        updateProductListView();
+        selectedProduct = Product.getAllProductById(productId);
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -171,14 +181,11 @@ public class ManagerMenuController extends Controller {
         if (codedDiscountListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-//        Matcher matcher = pattern.matcher(discountCodePrime);
-//        if (matcher.matches()) {
-        selectedCodedDiscount = bossProcessor.getCodedDiscountFromController(discountCodePrime);
-        //TODO : object begirim
+        init();
+        updateCodedDiscountListView();
+        selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
         if (selectedCodedDiscount == null) return;
         showCodedDiscount(selectedCodedDiscount);
-//        }
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
@@ -193,15 +200,11 @@ public class ManagerMenuController extends Controller {
         if (requestsListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
-//        Pattern pattern = Pattern.compile("\\[(.+)\\]");
-//        Matcher matcher = pattern.matcher(requestIdPrime);
-//        if (matcher.matches()) {
-        selectedRequest = bossProcessor.getRequestFromController(requestIdPrime);
-        //TODO : object begirim
+        init();
+        updateRequestListView();
+        selectedRequest = Request.getRequestById(requestIdPrime);
         if (selectedRequest == null) return;
         showRequest(selectedRequest);
-//        }
-
     }
 
     public void showRequest(Request request) {
@@ -253,8 +256,9 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        selectedCategory = bossProcessor.getCategoryFromController(categoryName);
-        //TODO : object begirim
+        init();
+        updateCategoryListView();
+        selectedCategory = Category.getCategoryByName(categoryName);
         if (selectedCategory == null) return;
         showCategory(selectedCategory);
     }
@@ -287,10 +291,42 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(emailCreateManager.getText());
             managerInfo.add(phoneCreateManager.getText());
             managerInfo.add(passwordCreateManager.getText());
-            bossProcessor.createManagerProfileFXML(managerInfo);
+//            bossProcessor.createManagerProfileFXML(managerInfo);
+            String result = client.createManagerProfile(managerInfo.get(0), managerInfo.get(1), managerInfo.get(2), managerInfo.get(3), managerInfo.get(4), managerInfo.get(5));
+            if(!result.equals("done")){
+                showErrorAlert(result);
+            }
         }
         clearCreateManager();
         updateUsersListView();
+    }
+
+    public void createSupporterProfile() {
+        Music.getInstance().confirmation();
+        if (!hasEmptyFieldInCreateManager()) {
+            ArrayList<String> supporterInfo = new ArrayList<>();
+            supporterInfo.add(userNameCreateSupporter.getText());
+            supporterInfo.add(firstNameCreateSupporter.getText());
+            supporterInfo.add(lastNameCreateSupporter.getText());
+            supporterInfo.add(emailCreateSupporter.getText());
+            supporterInfo.add(phoneCreateSupporter.getText());
+            supporterInfo.add(passwordCreateSupporter.getText());
+            String result = client.createSupporterProfile(supporterInfo.get(0), supporterInfo.get(1), supporterInfo.get(2), supporterInfo.get(3), supporterInfo.get(4), supporterInfo.get(5));
+            if(!result.equals("done")){
+                showErrorAlert(result);
+            }
+        }
+        clearCreateSupporter();
+        updateUsersListView();
+    }
+
+    private void clearCreateSupporter() {
+        userNameCreateSupporter.clear();
+        firstNameCreateSupporter.clear();
+        lastNameCreateSupporter.clear();
+        emailCreateSupporter.clear();
+        phoneCreateSupporter.clear();
+        passwordCreateSupporter.clear();
     }
 
     private void clearCreateManager() {
@@ -373,37 +409,27 @@ public class ManagerMenuController extends Controller {
     }
 
     public void acceptRequest() {
-        try {
-            Music.getInstance().confirmation();
-            bossProcessor.acceptRequestFXML(selectedRequest);
-        } catch (InvalidCommandException e) {
-            showErrorAlert(e.getMessage());
-        } catch (ParseException e) {
+        Music.getInstance().confirmation();
+//            bossProcessor.acceptRequestFXML(selectedRequest);
+        String result = client.acceptRequest(selectedRequest.getRequestId());
+        if (result.equals("dateException")) {
             showErrorAlert("invalid date");
         }
-
-        /*try {
-            ((Manager) Processor.user).acceptRequest(selectedRequest);
-            Music.getInstance().confirmation();
-        } catch (InvalidCommandException e) {
-            showErrorAlert(e.getMessage());
-        } catch (ParseException e) {
-            showErrorAlert("invalid date");
-        }*/
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void declineRequest() {
         Music.getInstance().confirmation();
-        bossProcessor.declineRequestFXML(selectedRequest);
+//        bossProcessor.declineRequestFXML(selectedRequest);
+        client.declineRequest(selectedRequest.getRequestId());
         closeRequestInfo();
         updateRequestListView();
     }
 
     public void updateRequestListView() {
+        init();
         requests.clear();
-        //TODO : array list begirim
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
         }
@@ -413,14 +439,15 @@ public class ManagerMenuController extends Controller {
 
     public void deleteUser() {
         Music.getInstance().confirmation();
-        bossProcessor.deleteUserFXML(selectedUser);
+//        bossProcessor.deleteUserFXML(selectedUser);
+        client.deleteUser(selectedUser.getUsername());
         closeUserInfo();
         updateUsersListView();
     }
 
     public void updateUsersListView() {
+        init();
         users.clear();
-        //TODO : array list begirim
         for (User user : bossProcessor.usersFromController()) {
             users.add(user.getUsername());
         }
@@ -430,19 +457,21 @@ public class ManagerMenuController extends Controller {
     public void editCategory() {
         Music.getInstance().confirmation();
         if (!categoryName.getText().isEmpty()) {
-            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+//            bossProcessor.editCategoryFXML(selectedCategory, categoryName.getText());
+            client.editCategory(selectedCategory.getName(), categoryName.getText());
             categoryName.clear();
             categoryName.setPromptText(selectedCategory.getName());
             updateCategoryListView();
         }
         if (!newFeature.getText().isEmpty()) {
-            try {
-                for (String s : selectedCategory.getFeatures()) {
-                    System.out.println(s);
-                }
-                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
-            } catch (InvalidCommandException e) {
-                showErrorAlert(e.getMessage());
+
+            for (String s : selectedCategory.getFeatures()) {
+                System.out.println(s);
+            }
+//                bossProcessor.addCategoryFeatureFXML(selectedCategory, newFeature.getText());
+            String result = client.addCategoryFeature(selectedCategory.getName(), newFeature.getText());
+            if (result.equals("invalidCommandException")) {
+                showErrorAlert("invalidCommandException");
             }
             updateCategoryInfoPaneListView();
             newFeature.clear();
@@ -491,7 +520,8 @@ public class ManagerMenuController extends Controller {
         for (Object item : createCategoryFeaturesListView.getItems()) {
             features.add(item.toString());
         }
-        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
+//        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
+        client.createCategory(createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -506,10 +536,10 @@ public class ManagerMenuController extends Controller {
         codedDiscountInfo.add(createEndDay.getText() + "/" + createEndMonth.getText() + "/" + createEndYear.getText());
         codedDiscountInfo.add(createDiscountAmount.getText());
         codedDiscountInfo.add(createRepeat.getText());
-        try {
-            bossProcessor.createCodedDiscount(codedDiscountInfo);
-        } catch (InvalidCommandException | ParseException e) {
-            showErrorAlert(e.getMessage());
+//            bossProcessor.createCodedDiscount(codedDiscountInfo);
+        String result = client.createCodedDiscount(codedDiscountInfo.get(0), codedDiscountInfo.get(1), codedDiscountInfo.get(2), codedDiscountInfo.get(3));
+        if (result.equals("dateException")) {
+            showErrorAlert("date exception");
         }
         updateCodedDiscountListView();
         clearCreateCodedDiscount();
@@ -581,7 +611,8 @@ public class ManagerMenuController extends Controller {
             discountRepeat = selectedCodedDiscount.getRepeat() + "";
         }
         if (beforeAfterDate(startDate, endDate)) {
-            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
+//            bossProcessor.editCodedDiscountFXML(selectedCodedDiscount, startDate, endDate, discountAmount, discountRepeat);
+            client.editCodedDiscount(selectedCodedDiscount.getDiscountCode(), startDate.toString(), endDate.toString(), discountAmount, discountRepeat);
         } else {
             showErrorAlert("startTime should be before endTime");
             return;
@@ -610,12 +641,14 @@ public class ManagerMenuController extends Controller {
 
     public void removeCodedDiscount() {
         Music.getInstance().confirmation();
-        bossProcessor.removeCodedDiscountFXML(selectedCodedDiscount);
+//        bossProcessor.removeCodedDiscountFXML(selectedCodedDiscount);
+        client.removeCodedDiscount(selectedCodedDiscount.getDiscountCode());
         closeCodedDiscountInfo();
         updateCodedDiscountListView();
     }
 
     public void updateCodedDiscountListView() {
+        init();
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -624,6 +657,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateProductListView() {
+        init();
         products.clear();
         for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
@@ -632,19 +666,22 @@ public class ManagerMenuController extends Controller {
 
     public void removeCategory() {
         Music.getInstance().confirmation();
-        bossProcessor.removeCategoryFXML(selectedCategory);
+//        bossProcessor.removeCategoryFXML(selectedCategory);
+        client.removeCategory(selectedCategory.getName());
         closeCategoryInfo();
         updateCategoryListView();
     }
 
     public void removeProduct() {
         Music.getInstance().confirmation();
-        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+//        bossProcessor.processRemoveProduct(selectedProduct.getProductId());
+        client.removeProduct(selectedProduct.getProductId());
         closeProductInfo();
         updateProductListView();
     }
 
     public void updateCategoryListView() {
+        init();
         categories.clear();
         for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());
@@ -655,10 +692,10 @@ public class ManagerMenuController extends Controller {
     public void changeFeature() {
         Music.getInstance().confirmation();
         if (!changedFeature.getText().isEmpty()) {
-            try {
-                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
-            } catch (InvalidCommandException e) {
-                showErrorAlert(e.getMessage());
+//                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
+            String result = client.changeFeature(selectedCategory.getName(), selectedFeature, changedFeature.getText());
+            if(result.equals("invalidCommandException")){
+                showErrorAlert("invalidCommandException");
             }
             changeFeaturePane.setVisible(false);
             updateCategoryInfoPaneListView();
@@ -667,7 +704,8 @@ public class ManagerMenuController extends Controller {
 
     public void removeFeature() {
         Music.getInstance().confirmation();
-        bossProcessor.deleteFeatureFXML(selectedCategory, selectedFeature);
+//        bossProcessor.deleteFeatureFXML(selectedCategory, selectedFeature);
+        client.removeFeature(selectedCategory.getName(), selectedFeature);
         changedFeature.clear();
         changeFeaturePane.setVisible(false);
         updateCategoryInfoPaneListView();

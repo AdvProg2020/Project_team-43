@@ -3,10 +3,15 @@ package controller.server;
 import controller.client.BuyerProcessor;
 import javafx.util.Pair;
 import model.*;
+import model.request.Request;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ClientHandler extends Thread {
@@ -70,6 +75,36 @@ public class ClientHandler extends Thread {
                     chargeAccount(command);
                 } else if (command.startsWith("withdraw")) {
                     withdraw(command);
+                } else if (command.startsWith("createManagerProfile")) {
+                    createManagerProfile(command);
+                } else if (command.startsWith("createSupporterProfile")) {
+                    createSupporterProfile(command);
+                } else if (command.startsWith("acceptRequest")) {
+                    acceptRequest(command);
+                } else if (command.startsWith("declineRequest")) {
+                    declineRequest(command);
+                } else if (command.startsWith("deleteUser")) {
+                    deleteUser(command);
+                } else if (command.startsWith("editCategory")) {
+                    editCategory(command);
+                } else if (command.startsWith("addCategoryFeature")) {
+                    addCategoryFeature(command);
+                } else if (command.startsWith("createCodedDiscount")) {
+                    createCodedDiscount(command);
+                } else if (command.startsWith("editCodedDiscount")) {
+                    editCodedDiscount(command);
+                } else if (command.startsWith("removeCodedDiscount")) {
+                    removeCodedDiscount(command);
+                } else if (command.startsWith("createCategory")) {
+                    createCategory();
+                } else if (command.startsWith("removeCategory")) {
+                    removeCategory(command);
+                } else if (command.startsWith("removeProduct")) {
+                    removeProduct(command);
+                } else if (command.startsWith("changeFeature")) {
+                    changeFeature(command);
+                } else if (command.startsWith("removeFeature")) {
+                    removeFeature(command);
                 } else if (command.startsWith("editProduct")) {
                     editProduct(command.split(" "));
                 } else if (command.startsWith("editOff")) {
@@ -275,6 +310,21 @@ public class ClientHandler extends Thread {
         return null;
     }
 
+    /*private Object getObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }*/
+
 
     private boolean checkResultForLogin(String result) {
         if (result.equals("incorrect password"))
@@ -299,6 +349,221 @@ public class ClientHandler extends Thread {
         dataOutputStream.writeUTF("done");
         dataOutputStream.flush();
 
+    }
+
+    private void createManagerProfile(String command) {
+        String username = command.split(" ")[1];
+        String firstName = command.split(" ")[2];
+        String lastName = command.split(" ")[3];
+        String email = command.split(" ")[4];
+        String phone = command.split(" ")[5];
+        String password = command.split(" ")[6];
+        String token = command.split(" ")[7];
+        ArrayList<String> managerInfo = new ArrayList<>();
+        managerInfo.add(username);
+        managerInfo.add(firstName);
+        managerInfo.add(lastName);
+        managerInfo.add(email);
+        managerInfo.add(phone);
+        managerInfo.add(password);
+
+        try {
+            dataOutputStream.writeUTF(server.createManagerProfile(managerInfo, token));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createSupporterProfile(String command) {
+        String username = command.split(" ")[1];
+        String firstName = command.split(" ")[2];
+        String lastName = command.split(" ")[3];
+        String email = command.split(" ")[4];
+        String phone = command.split(" ")[5];
+        String password = command.split(" ")[6];
+        String token = command.split(" ")[7];
+        ArrayList<String> supporterInfo = new ArrayList<>();
+        supporterInfo.add(username);
+        supporterInfo.add(firstName);
+        supporterInfo.add(lastName);
+        supporterInfo.add(email);
+        supporterInfo.add(phone);
+        supporterInfo.add(password);
+        try {
+            dataOutputStream.writeUTF(server.createSupporterProfile(supporterInfo, token));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void acceptRequest(String command) {
+        Request request = Request.getRequestById(command.split(" ")[1]);
+        try {
+            dataOutputStream.writeUTF(server.acceptRequest(request, command.split(" ")[2]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void declineRequest(String command) {
+        Request request = Request.getRequestById(command.split(" ")[1]);
+        server.declineRequest(request, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("declineRequest done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteUser(String command) {
+        User user = User.getUserByUserName(command.split(" ")[1]);
+        server.deleteUser(user, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("deleteUser done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private synchronized void editCategory(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        String newName = command.split(" ")[2];
+        server.editCategory(category, newName, command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF("editCategory done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addCategoryFeature(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        String feature = command.split(" ")[2];
+        server.addCategoryFeature(category, feature, command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF(server.addCategoryFeature(category, feature, command.split(" ")[3]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createCodedDiscount(String command) {
+        String startDate = command.split(" ")[1];
+        String endDate = command.split(" ")[2];
+        String amount = command.split(" ")[3];
+        String repeat = command.split(" ")[4];
+        ArrayList<String> codedDiscountInfo = new ArrayList<>();
+        codedDiscountInfo.add(startDate);
+        codedDiscountInfo.add(endDate);
+        codedDiscountInfo.add(amount);
+        codedDiscountInfo.add(repeat);
+        try {
+            dataOutputStream.writeUTF(server.createCodedDiscount(codedDiscountInfo, command.split(" ")[5]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editCodedDiscount(String command) {
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(command.split("----")[1]);
+        String startDate = command.split("----")[2];
+        String endDate = command.split("----")[3];
+        String amount = command.split("----")[4];
+        String repeat = command.split("----")[5];
+        try {
+            Date theStartDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(startDate);
+            Date theEndDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(endDate);
+            server.editCodedDiscount(codedDiscount, theStartDate, theEndDate, amount, repeat, command.split("----")[6]);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            dataOutputStream.writeUTF("editCodedDiscount done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeCodedDiscount(String command) {
+        CodedDiscount code = CodedDiscount.getDiscountById(command.split(" ")[1]);
+        server.removeCodedDiscount(code, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("removeCodedDiscount done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createCategory() {
+        try {
+            dataOutputStream.writeUTF("ready to get");
+            dataOutputStream.flush();
+            ArrayList<String> categoryInfo = (ArrayList<String>) getObject();
+            String categoryName = categoryInfo.remove(categoryInfo.size() - 2);
+            String token = categoryInfo.remove(categoryInfo.size() - 1);
+            server.createCategory(categoryName, categoryInfo, token);
+            dataOutputStream.writeUTF("createCategory done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeCategory(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        server.removeCategory(category, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("removeCodedDiscount done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeProduct(String command) {
+        Product product = Product.getAllProductById(command.split(" ")[1]);
+        server.removeProduct(product, command.split(" ")[2]);
+        try {
+            dataOutputStream.writeUTF("removeProduct done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeFeature(String command) {
+        Category category = Category.getCategoryByName(command.split("----")[1]);
+        try {
+            dataOutputStream.writeUTF(server.changeFeature(category, command.split("----")[2], command.split("----")[3], command.split("----")[4]));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String removeFeature(String command) {
+        Category category = Category.getCategoryByName(command.split(" ")[1]);
+        server.removeFeature(category, command.split(" ")[2], command.split(" ")[3]);
+        try {
+            dataOutputStream.writeUTF("removeFeature done");
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
     }
 
 
