@@ -1,14 +1,21 @@
 package model;
 
 
-public class Supporter extends User{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class Supporter extends User {
+    private Map<String, List<String>> users;
     private boolean isOnline = false;
 
     public Supporter(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
         setUserType();
+        users = new HashMap<>();
     }
+
     @Override
     public void setUserType() {
         userType = UserType.Supporter;
@@ -18,10 +25,15 @@ public class Supporter extends User{
         return isOnline;
     }
 
-    public void online(){
+    public void online() {
         isOnline = true;
     }
-    public void offline(){
+
+    public void offline() {
         isOnline = false;
+    }
+
+    public Map<String, List<String>> getUsers() {
+        return users;
     }
 }
