@@ -58,7 +58,7 @@ public class Manager extends User  implements Serializable {
         new Manager(userName, newPersonalInfo);
     }
 
-    public void createSupporter(ArrayList<String> supporterInfo)throws InvalidCommandException{
+    public void createSupporterProfile(ArrayList<String> supporterInfo)throws InvalidCommandException{
         String userName = supporterInfo.get(0);
         if(User.hasUserWithUserName(userName)){
             throw new InvalidCommandException("user with this userName Exists");

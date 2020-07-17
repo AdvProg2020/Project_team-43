@@ -41,6 +41,12 @@ public class ManagerMenuController extends Controller {
     public TextField emailCreateManager;
     public TextField passwordCreateManager;
     public TextField phoneCreateManager;
+    public TextField userNameCreateSupporter;
+    public TextField firstNameCreateSupporter;
+    public TextField lastNameCreateSupporter;
+    public TextField emailCreateSupporter;
+    public TextField passwordCreateSupporter;
+    public TextField phoneCreateSupporter;
     public Text discountCode;
     public TextField startYear;
     public TextField startMonth;
@@ -293,6 +299,34 @@ public class ManagerMenuController extends Controller {
         }
         clearCreateManager();
         updateUsersListView();
+    }
+
+    public void createSupporterProfile() {
+        Music.getInstance().confirmation();
+        if (!hasEmptyFieldInCreateManager()) {
+            ArrayList<String> supporterInfo = new ArrayList<>();
+            supporterInfo.add(userNameCreateSupporter.getText());
+            supporterInfo.add(firstNameCreateSupporter.getText());
+            supporterInfo.add(lastNameCreateSupporter.getText());
+            supporterInfo.add(emailCreateSupporter.getText());
+            supporterInfo.add(phoneCreateSupporter.getText());
+            supporterInfo.add(passwordCreateSupporter.getText());
+            String result = client.createSupporterProfile(supporterInfo.get(0), supporterInfo.get(1), supporterInfo.get(2), supporterInfo.get(3), supporterInfo.get(4), supporterInfo.get(5));
+            if(!result.equals("done")){
+                showErrorAlert(result);
+            }
+        }
+        clearCreateSupporter();
+        updateUsersListView();
+    }
+
+    private void clearCreateSupporter() {
+        userNameCreateSupporter.clear();
+        firstNameCreateSupporter.clear();
+        lastNameCreateSupporter.clear();
+        emailCreateSupporter.clear();
+        phoneCreateSupporter.clear();
+        passwordCreateSupporter.clear();
     }
 
     private void clearCreateManager() {

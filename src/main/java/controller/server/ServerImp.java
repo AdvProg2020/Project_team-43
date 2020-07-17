@@ -169,10 +169,19 @@ public class ServerImp {
     }
 
     public String createManagerProfile(ArrayList<String> managerInfo, String token) {
-//        todo check token
         User user = users.get(token);
         try {
             ((Manager) user).createManagerProfile(managerInfo);
+        } catch (InvalidCommandException e) {
+            return e.getMessage();
+        }
+
+        return "done";
+    }
+    public String createSupporterProfile(ArrayList<String> supporterInfo, String token) {
+        User user = users.get(token);
+        try {
+            ((Manager) user).createSupporterProfile(supporterInfo);
         } catch (InvalidCommandException e) {
             return e.getMessage();
         }

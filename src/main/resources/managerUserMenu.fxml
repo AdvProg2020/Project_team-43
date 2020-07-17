@@ -818,7 +818,7 @@
                         <Text layoutX="14.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name :" />
                         <Text layoutX="14.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone :" />
                         <TextField fx:id="userNameCreateSupporter" layoutX="95.0" layoutY="145.0" prefHeight="31.0" prefWidth="185.0" />
-                        <TextField fx:id="firstNameCreateSuppporter" layoutX="94.0" layoutY="189.0" prefHeight="30.0" prefWidth="185.0" />
+                        <TextField fx:id="firstNameCreateSupporter" layoutX="94.0" layoutY="189.0" prefHeight="30.0" prefWidth="185.0" />
                         <TextField fx:id="lastNameCreateSupporter" layoutX="94.0" layoutY="231.0" prefHeight="30.0" prefWidth="185.0" />
                         <TextField fx:id="passwordCreateSupporter" layoutX="94.0" layoutY="271.0" prefHeight="30.0" prefWidth="185.0" />
                         <TextField fx:id="emailCreateSupporter" layoutX="95.0" layoutY="313.0" prefHeight="30.0" prefWidth="185.0" />

@@ -77,6 +77,8 @@ public class ClientHandler extends Thread {
                     withdraw(command);
                 } else if (command.startsWith("createManagerProfile")) {
                     createManagerProfile(command);
+                } else if (command.startsWith("createSupporterProfile")) {
+                    createSupporterProfile(command);
                 } else if (command.startsWith("acceptRequest")) {
                     acceptRequest(command);
                 } else if (command.startsWith("declineRequest")) {
@@ -367,6 +369,29 @@ public class ClientHandler extends Thread {
 
         try {
             dataOutputStream.writeUTF(server.createManagerProfile(managerInfo, token));
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createSupporterProfile(String command) {
+        String username = command.split(" ")[1];
+        String firstName = command.split(" ")[2];
+        String lastName = command.split(" ")[3];
+        String email = command.split(" ")[4];
+        String phone = command.split(" ")[5];
+        String password = command.split(" ")[6];
+        String token = command.split(" ")[7];
+        ArrayList<String> supporterInfo = new ArrayList<>();
+        supporterInfo.add(username);
+        supporterInfo.add(firstName);
+        supporterInfo.add(lastName);
+        supporterInfo.add(email);
+        supporterInfo.add(phone);
+        supporterInfo.add(password);
+        try {
+            dataOutputStream.writeUTF(server.createSupporterProfile(supporterInfo, token));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

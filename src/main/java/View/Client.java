@@ -314,6 +314,18 @@ public class Client {
         return "done";
     }
 
+    public String createSupporterProfile(String userName, String firstName, String lastName, String email, String phone, String password){
+        try {
+            checkTokenValidation(Processor.user);
+            dataOutputStream.writeUTF("createSupporterProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
+            dataOutputStream.flush();
+            return dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "done";
+    }
+
     public String acceptRequest(String requestId) {
         try {
             checkTokenValidation(Processor.user);
