@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="947.0" side="LEFT" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GraphicController.SupporterMenuController">
+  <tabs>
+      <Tab onSelectionChanged="#open" text="personal Info">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="705.0" prefWidth="981.0" style="-fx-background-image: url('light-green-backgrounds-wallpaper-2.jpg'); -fx-background-repeat: stretch; -fx-background-position: center center; -fx-background-size: 900 600 ;">
+               <children>
+                  <Pane layoutX="336.0" layoutY="57.0" prefHeight="407.0" prefWidth="414.0" style="-fx-background-color: #ccfce0; -fx-background-radius: 10;">
+                     <children>
+                        <Text layoutX="38.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="phone number" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="38.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="35.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="password" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="35.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="last name" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="34.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="first name" textAlignment="CENTER">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="lastName" layoutX="177.0" layoutY="24.0" prefHeight="31.0" prefWidth="187.0" promptText="first name" />
+                        <TextField fx:id="firstName" layoutX="176.0" layoutY="76.0" prefHeight="31.0" prefWidth="188.0" promptText="last name" />
+                        <TextField fx:id="email" layoutX="176.0" layoutY="125.0" prefHeight="31.0" prefWidth="187.0" promptText="email" />
+                        <TextField fx:id="password" layoutX="176.0" layoutY="175.0" promptText="password" />
+                        <TextField fx:id="phoneNumber" layoutX="178.0" layoutY="226.0" prefHeight="31.0" prefWidth="186.0" promptText="phone number" />
+                        <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="34.0" layoutY="291.0" onMouseClicked="#update" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@button_update.png" />
+                           </image>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="63.0" layoutY="64.0" prefHeight="304.0" prefWidth="191.0" style="-fx-background-color: #448760; -fx-background-radius: 10;">
+                     <children>
+                        <ImageView fx:id="profilePhoto" fitHeight="179.0" fitWidth="179.0" layoutX="4.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@user.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="userName" fontSmoothingType="LCD" layoutX="12.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="163.6708984375">
+                           <font>
+                              <Font name="Century" size="20.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="11.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Supporter" wrappingWidth="166.6708984375">
+                           <font>
+                              <Font name="Century" size="17.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="33.0" fitWidth="119.0" layoutX="64.0" layoutY="257.0" onMouseClicked="#browsePhotoUser" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@button_browse-photo.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <ImageView fitHeight="45.0" fitWidth="94.0" layoutX="31.0" layoutY="442.0" onMouseClicked="#userPanelGoBack" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@button_back.png" />
+                     </image>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="98.0" fitWidth="94.0" layoutX="778.0" layoutY="11.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@logout-512.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="supportive chat">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>

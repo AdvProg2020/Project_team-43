@@ -189,7 +189,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void showCodedDiscount(CodedDiscount codedDiscount) {
-        //TODO : set date
         discountCode.setText(codedDiscount.getDiscountCode());
         discountAmount.setPromptText("" + codedDiscount.getDiscountAmount());
         repeat.setPromptText("" + codedDiscount.getRepeat());
