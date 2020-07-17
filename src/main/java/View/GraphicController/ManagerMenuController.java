@@ -303,7 +303,7 @@ public class ManagerMenuController extends Controller {
 
     public void createSupporterProfile() {
         Music.getInstance().confirmation();
-        if (!hasEmptyFieldInCreateManager()) {
+        if (!hasEmptyFieldInCreateSupporter()) {
             ArrayList<String> supporterInfo = new ArrayList<>();
             supporterInfo.add(userNameCreateSupporter.getText());
             supporterInfo.add(firstNameCreateSupporter.getText());
@@ -360,6 +360,33 @@ public class ManagerMenuController extends Controller {
             return true;
         }
         if (phoneCreateManager.getText().isEmpty()) {
+            showErrorAlert("please fill the phone field");
+            return true;
+        }
+        return false;
+    }
+    public boolean hasEmptyFieldInCreateSupporter() {
+        if (userNameCreateSupporter.getText().isEmpty()) {
+            showErrorAlert("please fill the user name field");
+            return true;
+        }
+        if (firstNameCreateSupporter.getText().isEmpty()) {
+            showErrorAlert("please fill the first name field");
+            return true;
+        }
+        if (lastNameCreateSupporter.getText().isEmpty()) {
+            showErrorAlert("please fill the last name field");
+            return true;
+        }
+        if (passwordCreateSupporter.getText().isEmpty()) {
+            showErrorAlert("please fill the password field");
+            return true;
+        }
+        if (emailCreateSupporter.getText().isEmpty()) {
+            showErrorAlert("please fill the email field");
+            return true;
+        }
+        if (phoneCreateSupporter.getText().isEmpty()) {
             showErrorAlert("please fill the phone field");
             return true;
         }

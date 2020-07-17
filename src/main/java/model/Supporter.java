@@ -12,8 +12,9 @@ public class Supporter extends User {
 
     public Supporter(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
-        setUserType();
         users = new HashMap<>();
+        allUsers.add(this);
+
     }
 
     @Override

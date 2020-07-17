@@ -322,20 +322,6 @@ public class ClientHandler extends Thread {
         return null;
     }
 
-    /*private Object getObject() {
-        try {
-            byte[] bytes = new byte[30000];
-            dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            return is.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
 
 
     private boolean checkResultForLogin(String result) {

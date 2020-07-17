@@ -26,6 +26,9 @@ public class MainMenuController extends Controller {
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
             SellerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SellerUserWindow.getInstance().start(stage);
+        } else if (buyerProcessor.getUser().getUserType()==UserType.Supporter) {
+            SupporterUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
+            SupporterUserWindow.getInstance().start(stage);
         } else {
             BuyerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             BuyerUserWindow.getInstance().start(stage);

@@ -35,7 +35,7 @@ public class SupporterMenuController extends Controller {
     public void update() {
         Music.getInstance().confirmation();
         client.updateUser(firstName.getText(), lastName.getText(), email.getText()
-                , phoneNumber.getText(), password.getText());
+                , phoneNumber.getText(), password.getText(), user);
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);
