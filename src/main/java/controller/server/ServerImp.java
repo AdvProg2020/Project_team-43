@@ -37,6 +37,10 @@ public class ServerImp {
         }
     }
 
+    public User getUser(String token) {
+        return users.get(token);
+    }
+
     public String login(String username, String password) {
         String result = serverProcessor.login(username, password);
         if (result.equals("logged in successful")) {
@@ -318,7 +322,6 @@ public class ServerImp {
     public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
         ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
-
     }
 
     public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, String token) {

@@ -534,16 +534,18 @@ public class Client {
         }
     }
 
-    public void purchaseWithCredit(User user, String address, String phoneNumber, double discount) {
+    public String purchaseWithCredit(User user, String address, String phoneNumber, double discount) {
         try {
             checkTokenValidation(user);
             dataOutputStream.writeUTF("purchase " + address + " " + phoneNumber + " " + discount + " " + token);
             dataOutputStream.flush();
+            dataInputStream.readUTF();
             sendObject(((Buyer) user).getNewBuyerCart());
-
+            return dataInputStream.readUTF();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return null;
     }
 
 

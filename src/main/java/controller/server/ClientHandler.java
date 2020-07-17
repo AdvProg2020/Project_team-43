@@ -154,8 +154,21 @@ public class ClientHandler extends Thread {
         String phoneNumber = commands[2];
         String discount = commands[3];
         String token = commands[4];
+        try {
+            dataOutputStream.writeUTF("ready for get cart");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
         server.purchase(address, phoneNumber, discount, token, newBuyerCart);
+        try {
+            dataOutputStream.writeUTF("done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
