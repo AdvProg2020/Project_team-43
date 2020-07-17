@@ -44,8 +44,11 @@ public class Manager extends User  implements Serializable {
         User.allUsers.remove(user);
     }
 
-    public void createManagerProfile(ArrayList<String> managerInfo) {
+    public void createManagerProfile(ArrayList<String> managerInfo)throws InvalidCommandException {
         String userName = managerInfo.get(0);
+        if(User.hasUserWithUserName(userName)){
+            throw new InvalidCommandException("user with this userName Exists");
+        }
         String firstName = managerInfo.get(1);
         String lastName = managerInfo.get(2);
         String email = managerInfo.get(3);
@@ -53,6 +56,17 @@ public class Manager extends User  implements Serializable {
         String password = managerInfo.get(5);
         UserPersonalInfo newPersonalInfo = new UserPersonalInfo(firstName, lastName, email, phoneNumber, password);
         new Manager(userName, newPersonalInfo);
+    }
+
+    public void createSupporter(ArrayList<String> supporterInfo){
+        String userName = supporterInfo.get(0);
+        String firstName = supporterInfo.get(1);
+        String lastName = supporterInfo.get(2);
+        String email = supporterInfo.get(3);
+        String phoneNumber = supporterInfo.get(4);
+        String password = supporterInfo.get(5);
+        UserPersonalInfo newPersonalInfo = new UserPersonalInfo(firstName, lastName, email, phoneNumber, password);
+        new Supporter(userName, newPersonalInfo);
     }
 
     public void removeProduct(Product product) {

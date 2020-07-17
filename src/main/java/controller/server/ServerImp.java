@@ -168,10 +168,16 @@ public class ServerImp {
         return null;
     }
 
-    public void createManagerProfile(ArrayList<String> managerInfo, String token) {
+    public String createManagerProfile(ArrayList<String> managerInfo, String token) {
 //        todo check token
         User user = users.get(token);
-        ((Manager) user).createManagerProfile(managerInfo);
+        try {
+            ((Manager) user).createManagerProfile(managerInfo);
+        } catch (InvalidCommandException e) {
+            return e.getMessage();
+        }
+
+        return "done";
     }
 
     public String acceptRequest(Request request, String token) {

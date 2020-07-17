@@ -302,15 +302,16 @@ public class Client {
     }
 
 
-    public void createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
+    public String createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
+            return dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "done";
     }
 
     public String acceptRequest(String requestId) {

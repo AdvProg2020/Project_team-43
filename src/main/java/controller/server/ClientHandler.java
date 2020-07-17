@@ -364,9 +364,9 @@ public class ClientHandler extends Thread {
         managerInfo.add(email);
         managerInfo.add(phone);
         managerInfo.add(password);
-        server.createManagerProfile(managerInfo, token);
+
         try {
-            dataOutputStream.writeUTF("createManagerProfile done");
+            dataOutputStream.writeUTF(server.createManagerProfile(managerInfo, token));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
