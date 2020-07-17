@@ -9,8 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.fxml.FXML;
 import model.*;
-import model.request.Request;
-
 import java.io.IOException;
 
 
@@ -30,6 +28,22 @@ public class SupporterMenuController extends Controller {
 
 
 
+    public void sendMessage(){
+
+    }
+
+    public void update() {
+        Music.getInstance().confirmation();
+        client.updateUser(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
+        UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
+                , phoneNumber.getText(), password.getText());
+        bossProcessor.editField(userPersonalInfo);
+    }
+
+    public void emojiAction(){
+
+    }
 
     public void initialize(){
         init();
@@ -41,7 +55,7 @@ public class SupporterMenuController extends Controller {
         phoneNumber.setPromptText(user.getUserPersonalInfo().getPhoneNumber());
         userName.setText(user.getUsername());
         setUserImage(user, profilePhoto);
-        usersListView.setItems(users);
+        updateUsersListView();
     }
 
     public void updateUsersListView() {
