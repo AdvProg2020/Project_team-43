@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class BankAPI {
     public static final int PORT = 2020;
-    public static final String IP = "192.168.1.36";
+    public static final String IP = "127.0.0.1";
 
     private static DataOutputStream outputStream;
     private static DataInputStream inputStream;

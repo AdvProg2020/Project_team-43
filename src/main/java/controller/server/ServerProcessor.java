@@ -1,6 +1,7 @@
 package controller.server;
 
 import model.User;
+import model.UserPersonalInfo;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -32,6 +33,10 @@ public class ServerProcessor {
 
     public void withdraw(String amount, User user) {
         user.setBalance(user.getBalance() - Integer.parseInt(amount));
+    }
+
+    public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, User user) {
+        user.setUserPersonalInfo(new UserPersonalInfo(firstName, lastName, email, phoneNumber, password));
     }
 }
 

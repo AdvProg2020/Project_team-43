@@ -6,6 +6,7 @@ import controller.client.BuyerProcessor;
 import View.graphic.BuyerUserWindow;
 import View.graphic.MainWindow;
 import com.jfoenix.controls.JFXTextField;
+import controller.client.Processor;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.scene.control.Alert;
@@ -16,7 +17,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import model.Buyer;
 import model.CodedDiscount;
+
+import java.util.HashMap;
 
 
 public class PurchaseMenuController extends Controller {
@@ -86,10 +90,9 @@ public class PurchaseMenuController extends Controller {
             return;
         }
         double discount = checkDiscount();
-        client.purchaseWithCredit(BuyerProcessor.getInstance().getUser(), address.getText(), phoneNumber.getText(), discount);
-        String result = BuyerProcessor.getInstance().payment(address.getText(), phoneNumber.getText(), discount);
+        String result = client.purchaseWithCredit(BuyerProcessor.getInstance().getUser(), address.getText(), phoneNumber.getText(), discount);
         new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
-        cancelPurchase();
+        endPurchase();
     }
 
     public void purchaseFromBank() {
@@ -110,6 +113,16 @@ public class PurchaseMenuController extends Controller {
     }
 
     public void cancelPurchase() {
+        Music.getInstance().backPage();
+        BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
+    }
+
+    public void endPurchase() {
+        String username = Processor.user.getUsername();
+        String password = Processor.user.getUserPersonalInfo().getPassword();
+        client.logout();
+        client.login(username, password);
+        ((Buyer)BuyerProcessor.getInstance().getUser()).setNewBuyerCart(new HashMap<>());
         Music.getInstance().backPage();
         BuyerUserWindow.getInstance().start(MainWindow.getInstance().getStage());
     }

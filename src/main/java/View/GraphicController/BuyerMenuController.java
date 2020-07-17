@@ -2,6 +2,7 @@ package View.GraphicController;
 
 import controller.client.BuyerProcessor;
 import View.graphic.*;
+import controller.client.Processor;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -90,7 +91,7 @@ public class BuyerMenuController extends Controller {
     public void update() {
         Music.getInstance().confirmation();
         client.updateUser(firstName.getText(), lastName.getText(), email.getText()
-                , phoneNumber.getText(), password.getText());
+                , phoneNumber.getText(), password.getText(), Processor.user);
         buyerProcessor.editField(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
 

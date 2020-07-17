@@ -138,7 +138,7 @@ public class Buyer extends User {
             decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
         }
         makingSellOrders();
-        this.newBuyerCart.clear();
+        this.newBuyerCart = new HashMap<>();
     }
 
     public void decreaseInSeller(Pair<Product, Seller> productSellerPair, int decreaseNumber) {
@@ -146,7 +146,6 @@ public class Buyer extends User {
             productSellerPair.getValue().decreaseProduct(productSellerPair.getKey());
         }
         productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - decreaseNumber);
-
     }
 
     public void checkSumPaymentForOff() {
@@ -158,14 +157,13 @@ public class Buyer extends User {
 
     public void makingSellOrders() {
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            Seller seller = productSellerPair.getValue();
+            Seller seller = (Seller) User.getUserByUserName(productSellerPair.getValue().getUsername());
             Product product = productSellerPair.getKey();
             double discount = seller.getOffDiscountAmount(product);
             SellOrder sellOrder = new SellOrder(discount, new Date(),
                     product.getPrice() * newBuyerCart.get(productSellerPair), product, this, newBuyerCart.get(productSellerPair));
             seller.settleMoney(product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair));
             seller.addOrder(sellOrder);
-
         }
 
     }

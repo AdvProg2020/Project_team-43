@@ -110,7 +110,11 @@ public class BossProcessor extends Processor {
     public void processCreateManagerProfile() {
         ArrayList<String> managerInfo = new ArrayList<String>();
         bossViewManager.getManagerInfo(managerInfo);
-        ((Manager) user).createManagerProfile(managerInfo);
+        try {
+            ((Manager) user).createManagerProfile(managerInfo);
+        } catch (InvalidCommandException e) {
+            e.printStackTrace();
+        }
     }
 
     public void manageAllProducts(String command) throws InvalidCommandException {
@@ -475,7 +479,11 @@ public class BossProcessor extends Processor {
     }
 
     public void createManagerProfileFXML(ArrayList<String> managerInfo) {
-        ((Manager) Processor.user).createManagerProfile(managerInfo);
+        try {
+            ((Manager) Processor.user).createManagerProfile(managerInfo);
+        } catch (InvalidCommandException e) {
+            e.printStackTrace();
+        }
     }
 
     public void acceptRequestFXML(Request selectedRequest) throws ParseException, InvalidCommandException {
