@@ -34,7 +34,7 @@ public class SupporterUserWindow extends Application{
     public void start(Stage primaryStage) {
         Parent root = null;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("SupporterUserMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("supporterUserMenu.fxml"));
             root = (Parent) loader.load();
             SupporterMenuController controller = (SupporterMenuController) loader.getController();
             controller.setParent(parent, product);

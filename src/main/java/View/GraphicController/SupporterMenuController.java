@@ -2,6 +2,7 @@ package View.GraphicController;
 
 import controller.client.BossProcessor;
 import controller.client.Processor;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -26,7 +27,9 @@ public class SupporterMenuController extends Controller {
     public ListView usersListView;
     ObservableList<String> users;
 
-
+    public SupporterMenuController() {
+        users = FXCollections.observableArrayList();
+    }
 
     public void sendMessage(){
 
