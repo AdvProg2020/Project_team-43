@@ -171,7 +171,6 @@ public class ClientHandler extends Thread {
         String accountId = commands[2];
         String token = commands[3];
         String result = server.withdraw(amount, accountId, token);
-
         try {
             dataOutputStream.writeUTF(result);
             dataOutputStream.flush();
@@ -345,7 +344,13 @@ public class ClientHandler extends Thread {
     private void update(String command) throws IOException {
         String result = null;
         String[] commands = command.split(" ");
-        BuyerProcessor.getInstance().editField(commands[1], commands[2], commands[3], commands[4], commands[5]);
+        String firstName = commands[1];
+        String lastName = commands[2];
+        String email = commands[3];
+        String phoneNumber = commands[4];
+        String password = commands[5];
+        String token = commands[6];
+        server.updateUser(firstName, lastName, email, phoneNumber, password, token);
         dataOutputStream.writeUTF("done");
         dataOutputStream.flush();
 

@@ -1,6 +1,7 @@
 package View.GraphicController;
 
 import controller.client.BossProcessor;
+import controller.client.Processor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -755,7 +756,7 @@ public class ManagerMenuController extends Controller {
     public void update() {
         Music.getInstance().confirmation();
         client.updateUser(firstName.getText(), lastName.getText(), email.getText()
-                , phoneNumber.getText(), password.getText());
+                , phoneNumber.getText(), password.getText(), Processor.user);
         UserPersonalInfo userPersonalInfo = new UserPersonalInfo(firstName.getText(), lastName.getText(), email.getText()
                 , phoneNumber.getText(), password.getText());
         bossProcessor.editField(userPersonalInfo);

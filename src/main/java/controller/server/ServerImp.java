@@ -150,6 +150,7 @@ public class ServerImp {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
+            dos.flush();
             String bankToken = dis.readUTF();
             dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
             dos.flush();
@@ -178,6 +179,7 @@ public class ServerImp {
 
         return "done";
     }
+
     public String createSupporterProfile(ArrayList<String> supporterInfo, String token) {
         User user = users.get(token);
         try {
@@ -249,22 +251,22 @@ public class ServerImp {
         ((Manager) user).removeCodedDiscount(code);
     }
 
-    public void createCategory(String categoryName, ArrayList<String> categoryInfo, String token){
+    public void createCategory(String categoryName, ArrayList<String> categoryInfo, String token) {
         User user = users.get(token);
         ((Manager) user).addCategory(categoryName, categoryInfo);
     }
 
-    public void removeCategory(Category category, String token){
+    public void removeCategory(Category category, String token) {
         User user = users.get(token);
         ((Manager) user).removeCategory(category);
     }
 
-    public void removeProduct(Product product, String token){
+    public void removeProduct(Product product, String token) {
         User user = users.get(token);
         ((Manager) user).removeProduct(product);
     }
 
-    public String changeFeature(Category category, String oldFeature, String newFeature, String token){
+    public String changeFeature(Category category, String oldFeature, String newFeature, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).editFeatureName(category, oldFeature, newFeature);
@@ -274,7 +276,7 @@ public class ServerImp {
         }
     }
 
-    public void removeFeature(Category category, String feature, String token){
+    public void removeFeature(Category category, String feature, String token) {
         User user = users.get(token);
         ((Manager) user).deleteFeature(category, feature);
     }
@@ -317,6 +319,10 @@ public class ServerImp {
         ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
         ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
 
+    }
+
+    public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, String token) {
+        serverProcessor.updateUser(firstName, lastName, email, phoneNumber, password, users.get(token));
     }
 }
 

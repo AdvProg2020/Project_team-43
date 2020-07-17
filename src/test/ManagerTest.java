@@ -49,7 +49,11 @@ public class ManagerTest {
         info.add("email");
         info.add("phone number");
         info.add("password");
-        manager.createManagerProfile(info);
+        try {
+            manager.createManagerProfile(info);
+        } catch (InvalidCommandException e) {
+            e.printStackTrace();
+        }
         Assert.assertTrue(User.hasUserWithUserName("sadra2"));
     }
     @Test(expected = NullPointerException.class)

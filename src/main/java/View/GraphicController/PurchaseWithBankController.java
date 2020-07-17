@@ -4,7 +4,6 @@ import View.graphic.BuyerUserWindow;
 import View.graphic.MainWindow;
 import com.jfoenix.controls.JFXTextField;
 import controller.client.BuyerProcessor;
-import javafx.scene.input.MouseEvent;
 import model.CodedDiscount;
 
 public class PurchaseWithBankController extends Controller {

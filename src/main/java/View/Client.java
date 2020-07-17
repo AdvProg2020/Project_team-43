@@ -65,10 +65,11 @@ public class Client {
         return dataInputStream.readUTF();
     }
 
-    public String updateUser(String firstName, String lastName, String email, String phoneNumber, String password) {
+    public String updateUser(String firstName, String lastName, String email, String phoneNumber, String password, User user) {
 
         try {
-            dataOutputStream.writeUTF("update " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + password);
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("update " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + password + " " + token);
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -314,7 +315,7 @@ public class Client {
         return "done";
     }
 
-    public String createSupporterProfile(String userName, String firstName, String lastName, String email, String phone, String password){
+    public String createSupporterProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             checkTokenValidation(Processor.user);
             dataOutputStream.writeUTF("createSupporterProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
@@ -506,7 +507,7 @@ public class Client {
 
     public String withDraw(String amount, String accountId, User user) {
         try {
-            if (user.getBalance() < Double.parseDouble(amount)) {
+            if (user.getBalance() > Double.parseDouble(amount)) {
                 checkTokenValidation(user);
                 dataOutputStream.writeUTF("withdraw " + amount + " " + accountId + " " + token);
                 dataOutputStream.flush();
@@ -514,6 +515,7 @@ public class Client {
                 if (result.equals("done successfully")) {
                     user.setBalance(user.getBalance() - Integer.parseInt(amount));
                 }
+                return result;
             }
             return "not enough money in wallet";
         } catch (Exception e) {
