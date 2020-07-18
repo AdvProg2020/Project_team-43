@@ -126,11 +126,12 @@
                   <AnchorPane fx:id="chatPane" layoutX="187.0" layoutY="27.0" prefHeight="570.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                      <children>
                         <TextArea fx:id="textMessage" accessibleRole="PARENT" layoutX="21.0" layoutY="507.0" prefHeight="37.0" prefWidth="480.0" promptText="Type your message" wrapText="true" />
-                        <ScrollPane fx:id="privatePane" accessibleRole="PARENT" hbarPolicy="NEVER" layoutX="-2.0" layoutY="-2.0" prefHeight="501.0" prefWidth="657.0" vvalue="1.0">
+                        <Button fx:id="btnSend" accessibleRole="PARENT" layoutX="510.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#sendMessage" prefHeight="30.0" prefWidth="34.0" />
+                        <ScrollPane fx:id="scrollPane21" accessibleRole="PARENT" hbarPolicy="NEVER" prefHeight="501.0" prefWidth="657.0" vvalue="1.0">
                            <content>
-                              <VBox fx:id="privateChatBox" prefHeight="490.0" prefWidth="656.0" />
-                           </content></ScrollPane>
-                        <Button fx:id="btnSend" accessibleRole="PARENT" layoutX="510.0" layoutY="506.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="34.0" />
+                              <VBox fx:id="privateChatBox" prefHeight="490.0" prefWidth="653.0" />
+                           </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
                </children>
@@ -161,12 +162,12 @@
                         <AnchorPane fx:id="chatPane1" layoutX="187.0" layoutY="27.0" prefHeight="570.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                            <children>
                               <TextArea fx:id="globalTextMessage" accessibleRole="PARENT" layoutX="21.0" layoutY="507.0" prefHeight="37.0" prefWidth="480.0" promptText="Type your message" wrapText="true" />
-                              <ScrollPane fx:id="globalPane" accessibleRole="PARENT" hbarPolicy="NEVER" layoutX="-2.0" layoutY="-2.0" prefHeight="501.0" prefWidth="657.0" vvalue="1.0">
+                              <ScrollPane fx:id="scrollPane2" accessibleRole="PARENT" hbarPolicy="NEVER" layoutX="-2.0" layoutY="-2.0" prefHeight="501.0" prefWidth="657.0" vvalue="1.0">
                                  <content>
                                     <VBox fx:id="globalChatBox" prefHeight="490.0" prefWidth="653.0" />
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="globalbtnSend" accessibleRole="PARENT" layoutX="510.0" layoutY="506.0" mnemonicParsing="false" onAction="#sendMessage" onMouseClicked="#globalSendMessage" prefHeight="30.0" prefWidth="34.0" />
+                              <Button fx:id="btnSend2" accessibleRole="PARENT" layoutX="510.0" layoutY="506.0" mnemonicParsing="false" onMouseClicked="#globalSendMessage" prefHeight="30.0" prefWidth="34.0" />
                            </children>
                         </AnchorPane>
                      </children>

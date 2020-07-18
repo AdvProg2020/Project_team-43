@@ -46,8 +46,8 @@ public class SupporterMenuController extends Controller {
     public TextArea globalTextMessage;
     public VBox privateChatBox;
     public VBox globalChatBox;
-    public ScrollPane privatePane;
-    public ScrollPane globalPane;
+    public ScrollPane scrollPane;
+    public ScrollPane scrollPane2;
     public ObservableList<String> users;
     public User selectedUser;
 
@@ -60,8 +60,11 @@ public class SupporterMenuController extends Controller {
 
     }
 
-    public void globalSendMessage(){
-
+    public void globalSendMessage() {
+        String message = globalTextMessage.getText().trim();
+        if (message.equals("")) return;
+        //todo server
+        updateChatRoom(user.getUsername(), message, globalChatBox);
     }
 
     public void update() {
@@ -79,17 +82,17 @@ public class SupporterMenuController extends Controller {
         init();
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) return;
-        setChatRoom(selectedUser);
+        setChatRoomPrivate(selectedUser);
     }
 
-    public void setChatRoom(User user) {
+    public void setChatRoomPrivate(User user) {
         //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
             Matcher matcher = pattern.matcher(message);
-            if(matcher.matches()){
-                updateChatRoom(matcher.group(1), matcher.group(2));
+            if (matcher.matches()) {
+                updateChatRoom(matcher.group(1), matcher.group(2), privateChatBox);
             }
         }
     }
@@ -157,12 +160,32 @@ public class SupporterMenuController extends Controller {
         userName.setText(user.getUsername());
         setUserImage(user, profilePhoto);
         updateUsersVBox();
-        updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");
-
-
-
-
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
 
     }
 
