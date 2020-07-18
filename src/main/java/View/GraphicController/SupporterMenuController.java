@@ -25,6 +25,8 @@ import model.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class SupporterMenuController extends Controller {
@@ -71,7 +73,15 @@ public class SupporterMenuController extends Controller {
     }
 
     public void setChatRoom(User user) {
-
+        //todo get supporter.map from server
+        chatBox.getChildren().clear();
+        Pattern pattern = Pattern.compile("(.+) : (.*)");
+        for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
+            Matcher matcher = pattern.matcher(message);
+            if(matcher.matches()){
+                updateChatRoom(matcher.group(1), matcher.group(2));
+            }
+        }
     }
 
     public void updateChatRoom(String username, String message) {
