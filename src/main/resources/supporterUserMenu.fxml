@@ -12,6 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -112,7 +113,7 @@
                   <AnchorPane fx:id="svgPane" layoutY="30.0" prefHeight="570.0" prefWidth="611.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                      <children>
                         <Line endX="101.0" endY="530.0" layoutX="149.0" layoutY="34.0" startX="101.0" startY="-64.0" />
-                        <JFXListView fx:id="usersListView" layoutX="3.0" layoutY="7.0" prefHeight="554.0" prefWidth="240.0" />
+                        <JFXListView fx:id="usersListView" layoutX="3.0" layoutY="7.0" onMouseClicked="#chatWithUser" prefHeight="554.0" prefWidth="240.0" />
                      </children></AnchorPane>
                   <AnchorPane fx:id="titleBar" prefHeight="30.0" prefWidth="614.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -124,8 +125,11 @@
                      </children></AnchorPane>
                   <AnchorPane fx:id="chatPane" layoutX="187.0" layoutY="27.0" prefHeight="570.0" prefWidth="655.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                      <children>
-                        <TextArea fx:id="txtMsg" accessibleRole="PARENT" layoutX="21.0" layoutY="507.0" prefHeight="37.0" prefWidth="480.0" promptText="Type your message" wrapText="true" />
-                        <ScrollPane fx:id="scrollPane" accessibleRole="PARENT" hbarPolicy="NEVER" layoutX="-2.0" layoutY="-2.0" prefHeight="491.0" prefWidth="657.0" vvalue="1.0" />
+                        <TextArea fx:id="textMessage" accessibleRole="PARENT" layoutX="21.0" layoutY="507.0" prefHeight="37.0" prefWidth="480.0" promptText="Type your message" wrapText="true" />
+                        <ScrollPane fx:id="scrollPane" accessibleRole="PARENT" hbarPolicy="NEVER" layoutX="-2.0" layoutY="-2.0" prefHeight="491.0" prefWidth="657.0" vvalue="1.0">
+                           <content>
+                              <VBox fx:id="chatBox" prefHeight="490.0" prefWidth="656.0" />
+                           </content></ScrollPane>
                         <Button fx:id="btnSend" accessibleRole="PARENT" layoutX="510.0" layoutY="506.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="30.0" prefWidth="34.0" />
                         <Button fx:id="btnEmoji" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="468.0" layoutY="507.0" maxWidth="-Infinity" minHeight="19.0" minWidth="39.0" mnemonicParsing="false" onAction="#emojiAction" styleClass="btnEmoji" text="😊" />
                      </children>
