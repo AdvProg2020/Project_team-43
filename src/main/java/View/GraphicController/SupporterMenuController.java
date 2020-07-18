@@ -41,23 +41,30 @@ public class SupporterMenuController extends Controller {
     public ImageView profilePhoto;
     public Text userName;
     public JFXListView usersListView;
-    public JFXListView onlineListView;
+    public JFXListView onlineUsersListView;
     public TextArea textMessage;
     public TextArea globalTextMessage;
     public VBox privateChatBox;
     public VBox globalChatBox;
-    public ScrollPane scrollPane;
+    public ScrollPane scrollPane21;
     public ScrollPane scrollPane2;
     public ObservableList<String> users;
+    public ObservableList<String> onlineUsers;
     public User selectedUser;
 
     public SupporterMenuController() {
         bossProcessor = BossProcessor.getInstance();
         users = FXCollections.observableArrayList();
+        onlineUsers = FXCollections.observableArrayList();
     }
 
     public void sendMessage() {
-
+        String message = textMessage.getText().trim();
+        if(message.equals(""))return;
+        //todo server
+        updateChatRoom(user.getUsername(), message, privateChatBox);
+        textMessage.clear();
+        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
     }
 
     public void globalSendMessage() {
@@ -65,6 +72,8 @@ public class SupporterMenuController extends Controller {
         if (message.equals("")) return;
         //todo server
         updateChatRoom(user.getUsername(), message, globalChatBox);
+        globalTextMessage.clear();
+        scrollPane2.vvalueProperty().bind(globalChatBox.heightProperty());
     }
 
     public void update() {
@@ -159,7 +168,8 @@ public class SupporterMenuController extends Controller {
         phoneNumber.setPromptText(user.getUserPersonalInfo().getPhoneNumber());
         userName.setText(user.getUsername());
         setUserImage(user, profilePhoto);
-        updateUsersVBox();
+        updateUsersListView();
+        updateOnlineUserListView();
         updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
         updateChatRoom("null", "salam bi namoos", privateChatBox);
         updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
@@ -189,7 +199,7 @@ public class SupporterMenuController extends Controller {
 
     }
 
-    public void updateUsersVBox() {
+    public void updateUsersListView() {
         init();
         for (String userName : ((Supporter) user).getUsers().keySet()) {
             Text text = new Text(userName);
@@ -200,6 +210,16 @@ public class SupporterMenuController extends Controller {
         users.add("mamad");
         usersListView.setItems(users);
 
+    }
+
+    public void updateOnlineUserListView(){
+        init();
+        for (User user : User.allUsers) {
+            //todo check is online or not
+
+        }
+
+        onlineUsersListView.setItems(onlineUsers);
     }
 
     private void init() {
