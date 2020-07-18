@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -40,8 +41,13 @@ public class SupporterMenuController extends Controller {
     public ImageView profilePhoto;
     public Text userName;
     public JFXListView usersListView;
+    public JFXListView onlineListView;
     public TextArea textMessage;
-    public VBox chatBox;
+    public TextArea globalTextMessage;
+    public VBox privateChatBox;
+    public VBox globalChatBox;
+    public ScrollPane privatePane;
+    public ScrollPane globalPane;
     public ObservableList<String> users;
     public User selectedUser;
 
@@ -51,6 +57,10 @@ public class SupporterMenuController extends Controller {
     }
 
     public void sendMessage() {
+
+    }
+
+    public void globalSendMessage(){
 
     }
 
@@ -74,7 +84,7 @@ public class SupporterMenuController extends Controller {
 
     public void setChatRoom(User user) {
         //todo get supporter.map from server
-        chatBox.getChildren().clear();
+        privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
             Matcher matcher = pattern.matcher(message);
@@ -84,7 +94,7 @@ public class SupporterMenuController extends Controller {
         }
     }
 
-    public void updateChatRoom(String username, String message) {
+    public void updateChatRoom(String username, String message, VBox vbox) {
         if (message.equals("")) return;
         Text text = new Text(message);
         text.setFill(Color.WHITE);
@@ -118,7 +128,7 @@ public class SupporterMenuController extends Controller {
 
             tempFlow.getStyleClass().add("tempFlowFlipped");
             flow.getStyleClass().add("textFlowFlipped");
-            chatBox.setAlignment(Pos.TOP_LEFT);
+            privateChatBox.setAlignment(Pos.TOP_LEFT);
             hbox.setAlignment(Pos.CENTER_LEFT);
             hbox.getChildren().add(img);
             hbox.getChildren().add(flow);
@@ -133,7 +143,7 @@ public class SupporterMenuController extends Controller {
         }
 
         hbox.getStyleClass().add("hbox");
-        Platform.runLater(() -> chatBox.getChildren().addAll(hbox));
+        Platform.runLater(() -> vbox.getChildren().addAll(hbox));
     }
 
     public void initialize() {
@@ -149,16 +159,7 @@ public class SupporterMenuController extends Controller {
         updateUsersVBox();
         updateChatRoom(user.getUsername(), "salam kos kesh");
         updateChatRoom("null", "salam bi namoos");
-        updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");
-        updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");
-        updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");
-        updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");updateChatRoom(user.getUsername(), "salam kos kesh");
-        updateChatRoom("null", "salam bi namoos");
+
 
 
 
