@@ -1,5 +1,6 @@
 package View.GraphicController;
 
+import com.jfoenix.controls.JFXListView;
 import controller.client.BossProcessor;
 import controller.client.Processor;
 import javafx.collections.FXCollections;
@@ -7,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.fxml.FXML;
 import model.*;
@@ -15,7 +18,7 @@ import java.io.IOException;
 
 
 public class SupporterMenuController extends Controller {
-    public BossProcessor bossProcessor = BossProcessor.getInstance();
+    public BossProcessor bossProcessor;
     public User user;
     public TextField firstName;
     public TextField lastName;
@@ -24,10 +27,11 @@ public class SupporterMenuController extends Controller {
     public TextField phoneNumber;
     public ImageView profilePhoto;
     public Text userName;
-    public ListView usersListView;
-    ObservableList<String> users;
+    public JFXListView usersListView;
+    public ObservableList<String> users;
 
     public SupporterMenuController() {
+        bossProcessor = BossProcessor.getInstance();
         users = FXCollections.observableArrayList();
     }
 
@@ -58,16 +62,21 @@ public class SupporterMenuController extends Controller {
         phoneNumber.setPromptText(user.getUserPersonalInfo().getPhoneNumber());
         userName.setText(user.getUsername());
         setUserImage(user, profilePhoto);
-        updateUsersListView();
+        updateUsersVBox();
+
     }
 
-    public void updateUsersListView() {
+    public void updateUsersVBox() {
         init();
-        users.clear();
         for (String userName : ((Supporter) user).getUsers().keySet()) {
-            users.add(userName);
+            Text text = new Text(userName);
+            text.setFont(new Font("Monospaced", 10));
         }
+        users.add("mamad");
+        users.add("mamad");
+        users.add("mamad");
         usersListView.setItems(users);
+
     }
 
     private void init() {
