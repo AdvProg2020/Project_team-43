@@ -229,7 +229,6 @@ public class Buyer extends User {
 
     public static void load() throws FileNotFoundException {
         Buyer[] buyers = (Buyer[]) Loader.load(Buyer[].class, fileAddress);
-
         if (buyers != null) {
             ArrayList<Buyer> allBuyers = new ArrayList<>(Arrays.asList(buyers));
             allUsers.addAll(allBuyers);

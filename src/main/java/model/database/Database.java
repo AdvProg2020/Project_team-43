@@ -18,6 +18,7 @@ public class Database {
         Order.load();
         Product.load();
         Request.load();
+        Supporter.load();
 
         User.loadFields();
         Request.loadFields();
@@ -47,6 +48,7 @@ public class Database {
         Off.save();
         Request.save();
         Category.save();
+        Supporter.save();
 
     }
 }

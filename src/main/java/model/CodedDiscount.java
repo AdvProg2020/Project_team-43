@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.ArrayList;
 
-public class CodedDiscount  implements Serializable {
+public class CodedDiscount implements Serializable {
     private static String fileAddress = "database/CodedDiscount.dat";
 
     public static int constructId;

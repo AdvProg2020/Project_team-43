@@ -4,6 +4,6 @@ public enum UserType {
     BUYER,
     SELLER,
     MANAGER,
-    Supporter,
+    SUPPORTER,
     DELETED
 }

@@ -2,11 +2,8 @@ package View.GraphicController;
 
 import controller.client.BuyerProcessor;
 import View.graphic.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import model.Product;
 import model.UserType;
 
 public class MainMenuController extends Controller {
@@ -26,7 +23,7 @@ public class MainMenuController extends Controller {
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
             SellerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SellerUserWindow.getInstance().start(stage);
-        } else if (buyerProcessor.getUser().getUserType()==UserType.Supporter) {
+        } else if (buyerProcessor.getUser().getUserType()==UserType.SUPPORTER) {
             SupporterUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SupporterUserWindow.getInstance().start(stage);
         } else {

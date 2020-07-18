@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Product;
-import model.Supporter;
 import model.User;
 import model.UserType;
 import org.apache.commons.io.FilenameUtils;
@@ -57,7 +56,7 @@ public abstract class Controller {
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
             SellerUserWindow.getInstance().setParent(parent, null);
             SellerUserWindow.getInstance().start(stage);
-        }else if (buyerProcessor.getUser().getUserType() == UserType.Supporter) {
+        }else if (buyerProcessor.getUser().getUserType() == UserType.SUPPORTER) {
             SupporterUserWindow.getInstance().setParent(parent, null);
             SupporterUserWindow.getInstance().start(stage);
         }
