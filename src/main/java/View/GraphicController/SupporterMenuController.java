@@ -61,9 +61,6 @@ public class SupporterMenuController extends Controller {
         bossProcessor.editField(userPersonalInfo);
     }
 
-    public void emojiAction() {
-
-    }
 
     public void chatWithUser() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
