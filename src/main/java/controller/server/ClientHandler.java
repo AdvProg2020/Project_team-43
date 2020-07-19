@@ -161,9 +161,12 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
         HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
-        server.purchase(address, phoneNumber, discount, token, newBuyerCart);
+        boolean result = server.purchase(address, phoneNumber, discount, token, newBuyerCart);
         try {
-            dataOutputStream.writeUTF("done");
+            if (result)
+                dataOutputStream.writeUTF("done");
+            else
+                dataOutputStream.writeUTF("fail");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -321,7 +324,6 @@ public class ClientHandler extends Thread {
         }
         return null;
     }
-
 
 
     private boolean checkResultForLogin(String result) {

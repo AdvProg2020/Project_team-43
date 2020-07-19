@@ -123,7 +123,16 @@ public class Buyer extends User {
         return price;
     }
 
-    public void purchase(double discount, String address, String phoneNumber) {
+    public boolean purchase(double discount, String address, String phoneNumber) {
+        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            synchronized (productSellerPair) {
+                if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
+                    decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
+                } else {
+                    return false;
+                }
+            }
+        }
         HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
@@ -134,11 +143,9 @@ public class Buyer extends User {
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
         this.checkSumPaymentForOff();
-        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
-        }
         makingSellOrders();
         this.newBuyerCart = new HashMap<>();
+        return true;
     }
 
     public void decreaseInSeller(Pair<Product, Seller> productSellerPair, int decreaseNumber) {

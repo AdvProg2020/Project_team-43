@@ -9,7 +9,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -271,18 +270,22 @@ public class ServerImp {
     }
 
     public String changeFeature(Category category, String oldFeature, String newFeature, String token) {
-        User user = users.get(token);
-        try {
-            ((Manager) user).editFeatureName(category, oldFeature, newFeature);
-            return "changeFeature done";
-        } catch (InvalidCommandException e) {
-            return "invalidCommandException";
+        synchronized (category) {
+            User user = users.get(token);
+            try {
+                ((Manager) user).editFeatureName(category, oldFeature, newFeature);
+                return "changeFeature done";
+            } catch (InvalidCommandException e) {
+                return "invalidCommandException";
+            }
         }
     }
 
     public void removeFeature(Category category, String feature, String token) {
-        User user = users.get(token);
-        ((Manager) user).deleteFeature(category, feature);
+        synchronized (category) {
+            User user = users.get(token);
+            ((Manager) user).deleteFeature(category, feature);
+        }
     }
 
     public void addExistingProduct(String id, String amount, String token) {
@@ -319,9 +322,9 @@ public class ServerImp {
         ((Buyer) users.get(token)).changeRemainDiscount(CodedDiscount.getDiscountById(discountCode));
     }
 
-    public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+    public boolean purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
-        ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
+        return ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
     }
 
     public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, String token) {
