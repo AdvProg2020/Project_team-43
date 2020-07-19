@@ -283,7 +283,7 @@ public class BuyerMenuController extends Controller {
 
     public void sendMessage() {
         String message = textMessage.getText().trim();
-        if(message.equals(""))return;
+        if (message.equals("")) return;
         //todo server
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
@@ -354,10 +354,11 @@ public class BuyerMenuController extends Controller {
     public void chatWithUser() {
         String userName = supportersListView.getSelectionModel().getSelectedItem().toString();
         init();
-        selectedSupporter = (Supporter)User.getUserByUserName(userName);
+        selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
         setChatRoomPrivate(selectedSupporter);
     }
+
     private void init() {
         User.setAllUsers(client.getAllUsers());
     }
@@ -373,6 +374,7 @@ public class BuyerMenuController extends Controller {
             }
         }
     }
+
     public void open() {
         Music.getInstance().open();
     }
