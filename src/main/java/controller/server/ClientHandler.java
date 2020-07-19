@@ -19,6 +19,7 @@ public class ClientHandler extends Thread {
     private DataOutputStream dataOutputStream;
     private Socket socket;
     private ServerImp server;
+    private String username;
     //private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
@@ -26,6 +27,15 @@ public class ClientHandler extends Thread {
         this.dataOutputStream = dataOutputStream;
         this.socket = socket;
         this.server = server;
+        username = "null";
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     @Override
@@ -116,12 +126,18 @@ public class ClientHandler extends Thread {
                     useCodedDiscount(command);
                 } else if (command.startsWith("purchase")) {
                     purchase(command);
+                } else if (command.startsWith("setOnline")) {
+                    setOnline(command);
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void setOnline(String command) {
+        server.setOnline(command.split(" ")[1]);
     }
 
     private void addOff(String[] commands) {
@@ -272,8 +288,8 @@ public class ClientHandler extends Thread {
     }
 
     private void logout(String command) {
+        username = "null";
         server.logout(command.split(" ")[1]);
-        //newBuyerCart.clear();
     }
 
     private void comment(String command) {
@@ -290,9 +306,7 @@ public class ClientHandler extends Thread {
         dataOutputStream.writeUTF(result);
         dataOutputStream.flush();
         if (checkResultForLogin(result)) {
-            if (User.getUserByUserName(username).getUserType() == UserType.BUYER) {
-                //((Buyer) User.getUserByUserName(username)).setNewBuyerCart(newBuyerCart);
-            }
+            setUsername(username);
             sendObject(User.getUserByUserName(username));
         }
     }

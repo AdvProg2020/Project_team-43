@@ -22,7 +22,7 @@ public class Client {
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 6666);
+            Socket socket = new Socket("127.0.0.1", 8888);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {

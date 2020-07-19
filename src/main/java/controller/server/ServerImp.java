@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 
 public class ServerImp {
+    private ArrayList<ClientHandler> allClientsThreads;
     private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
@@ -26,13 +27,15 @@ public class ServerImp {
     private final String shopAccountPassword = "a";//TODO
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(6666);
-        ServerImp server = new ServerImp();
+        ServerSocket serverSocket = new ServerSocket(8888);
+        ServerImp server = this;
         while (true) {
             Socket socket = serverSocket.accept();
             DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            new ClientHandler(dataInputStream, dataOutputStream, socket, server).start();
+            ClientHandler clientHandler = new ClientHandler(dataInputStream, dataOutputStream, socket, server);
+            allClientsThreads.add(clientHandler);
+            clientHandler.start();
             System.out.println("connected");
         }
     }
@@ -357,6 +360,11 @@ public class ServerImp {
 
     public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, String token) {
         serverProcessor.updateUser(firstName, lastName, email, phoneNumber, password, users.get(token));
+    }
+
+    public void setOnline(String token) {
+        Supporter supporter = (Supporter)users.get(token);
+        supporter.setOnline(true);
     }
 }
 

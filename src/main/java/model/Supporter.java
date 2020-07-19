@@ -68,4 +68,8 @@ public class Supporter extends User {
             e.printStackTrace();
         }
     }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
 }
