@@ -173,7 +173,7 @@ public class ServerImp {
         return null;
     }
 
-    public String createManagerProfile(ArrayList<String> managerInfo, String token) {
+    public synchronized String createManagerProfile(ArrayList<String> managerInfo, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).createManagerProfile(managerInfo);
@@ -184,7 +184,7 @@ public class ServerImp {
         return "done";
     }
 
-    public String createSupporterProfile(ArrayList<String> supporterInfo, String token) {
+    public synchronized String createSupporterProfile(ArrayList<String> supporterInfo, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).createSupporterProfile(supporterInfo);
@@ -197,42 +197,52 @@ public class ServerImp {
 
     public String acceptRequest(Request request, String token) {
         User user = users.get(token);
-        try {
-            ((Manager) user).acceptRequest(request);
-            return "done";
-        } catch (InvalidCommandException e) {
-            return "invalidCommandException";
-        } catch (ParseException e) {
-            return "dateException";
+        synchronized (request) {
+            try {
+                ((Manager) user).acceptRequest(request);
+                return "done";
+            } catch (InvalidCommandException e) {
+                return "invalidCommandException";
+            } catch (ParseException e) {
+                return "dateException";
+            }
         }
     }
 
     public void declineRequest(Request request, String token) {
         User user = users.get(token);
-        ((Manager) user).declineRequest(request);
+        synchronized (request) {
+            ((Manager) user).declineRequest(request);
+        }
     }
 
-    public void deleteUser(User user1, String token) {
+    public synchronized void deleteUser(User user1, String token) {
         User user = users.get(token);
-        ((Manager) user).deleteUser(user1);
+        synchronized (user1) {
+            ((Manager) user).deleteUser(user1);
+        }
     }
 
     public void editCategory(Category category, String name, String token) {
         User user = users.get(token);
-        ((Manager) user).editCategoryName(category, name);
+        synchronized (category) {
+            ((Manager) user).editCategoryName(category, name);
+        }
     }
 
     public String addCategoryFeature(Category category, String featureName, String token) {
         User user = users.get(token);
-        try {
-            ((Manager) user).addCategoryFeature(category, featureName);
-            return "done";
-        } catch (InvalidCommandException e) {
-            return "invalidCommandException";
+        synchronized (category) {
+            try {
+                ((Manager) user).addCategoryFeature(category, featureName);
+                return "done";
+            } catch (InvalidCommandException e) {
+                return "invalidCommandException";
+            }
         }
     }
 
-    public String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token) {
+    public synchronized String createCodedDiscount(ArrayList<String> codedDiscountInfo, String token) {
         User user = users.get(token);
         try {
             ((Manager) user).createDiscountCoded(codedDiscountInfo);
@@ -244,66 +254,84 @@ public class ServerImp {
 
     public void editCodedDiscount(CodedDiscount code, Date startDate, Date endDate, String amount, String repeat, String token) {
         User user = users.get(token);
-        code.setStartTime(startDate);
-        code.setEndTime(endDate);
-        code.setDiscountAmount(amount);
-        code.setRepeat(repeat);
+        synchronized (code) {
+            code.setStartTime(startDate);
+            code.setEndTime(endDate);
+            code.setDiscountAmount(amount);
+            code.setRepeat(repeat);
+        }
     }
 
-    public void removeCodedDiscount(CodedDiscount code, String token) {
+    public synchronized void removeCodedDiscount(CodedDiscount code, String token) {
         User user = users.get(token);
-        ((Manager) user).removeCodedDiscount(code);
+        synchronized (code) {
+            ((Manager) user).removeCodedDiscount(code);
+        }
     }
 
-    public void createCategory(String categoryName, ArrayList<String> categoryInfo, String token) {
+    public synchronized void createCategory(String categoryName, ArrayList<String> categoryInfo, String token) {
         User user = users.get(token);
         ((Manager) user).addCategory(categoryName, categoryInfo);
     }
 
-    public void removeCategory(Category category, String token) {
+    public synchronized void removeCategory(Category category, String token) {
         User user = users.get(token);
-        ((Manager) user).removeCategory(category);
+        synchronized (category) {
+            ((Manager) user).removeCategory(category);
+        }
     }
 
-    public void removeProduct(Product product, String token) {
+    public synchronized void removeProduct(Product product, String token) {
         User user = users.get(token);
-        ((Manager) user).removeProduct(product);
+        synchronized (product) {
+            ((Manager) user).removeProduct(product);
+        }
     }
 
     public String changeFeature(Category category, String oldFeature, String newFeature, String token) {
         User user = users.get(token);
-        try {
-            ((Manager) user).editFeatureName(category, oldFeature, newFeature);
-            return "changeFeature done";
-        } catch (InvalidCommandException e) {
-            return "invalidCommandException";
+        synchronized (category) {
+            try {
+                ((Manager) user).editFeatureName(category, oldFeature, newFeature);
+                return "changeFeature done";
+            } catch (InvalidCommandException e) {
+                return "invalidCommandException";
+            }
         }
     }
 
     public void removeFeature(Category category, String feature, String token) {
         User user = users.get(token);
-        ((Manager) user).deleteFeature(category, feature);
+        synchronized (category) {
+            ((Manager) user).deleteFeature(category, feature);
+        }
     }
 
-    public void addExistingProduct(String id, String amount, String token) {
+    public synchronized void addExistingProduct(String id, String amount, String token) {
         ((Seller) users.get(token)).addExistingProduct(id, Integer.parseInt(amount));
     }
 
-    public void addNewProduct(String name, String companyName, String categoryName, String priceString, String number, String token, HashMap<String, String> features) {
+    public synchronized void addNewProduct(String name, String companyName, String categoryName, String priceString, String number, String token, HashMap<String, String> features) {
         ((Seller) users.get(token)).addNewProduct(name, Company.getCompanyByName(companyName), Double.parseDouble(priceString), Category.getCategoryByName(categoryName), Integer.parseInt(number), features);
     }
 
     public synchronized void editProduct(String id, String field, String newField, String token) {
         Seller seller = (Seller) users.get(token);
-        seller.editProduct(seller.getProductById(id), field, newField);
+        Product product = seller.getProductById(id);
+        synchronized (product) {
+            seller.editProduct(product, field, newField);
+        }
     }
 
     public void editOff(String id, String field, String newField, String token) {
         Seller seller = (Seller) users.get(token);
-        seller.editOff(seller.getOffById(id), field, newField);
+        Off off = seller.getOffById(id);
+        synchronized (off) {
+            seller.editOff(off, field, newField);
+        }
     }
 
-    public void addOff(String startTime, String endTime, String amount, String token, ArrayList<String> productIds) {
+    public synchronized void addOff(String startTime, String endTime, String amount, String token, ArrayList<String> productIds) {
         try {
             Seller seller = (Seller) users.get(token);
             Date startTimeDate = new SimpleDateFormat("dd/MM/yyyy").parse(startTime);
@@ -316,7 +344,10 @@ public class ServerImp {
     }
 
     public void useCodedDiscount(String discountCode, String token) {
-        ((Buyer) users.get(token)).changeRemainDiscount(CodedDiscount.getDiscountById(discountCode));
+        CodedDiscount codedDiscount = CodedDiscount.getDiscountById(discountCode);
+        synchronized (codedDiscount) {
+            ((Buyer) users.get(token)).changeRemainDiscount(codedDiscount);
+        }
     }
 
     public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
