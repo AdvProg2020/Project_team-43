@@ -350,9 +350,9 @@ public class ServerImp {
         }
     }
 
-    public void purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+    public boolean purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
         ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
-        ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
+        return ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
     }
 
     public void updateUser(String firstName, String lastName, String email, String phoneNumber, String password, String token) {
