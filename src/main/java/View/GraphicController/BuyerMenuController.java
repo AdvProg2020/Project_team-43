@@ -292,12 +292,13 @@ public class BuyerMenuController extends Controller {
     }
 
     public void sendMessage() {
+        String userName = supportersListView.getSelectionModel().getSelectedItem();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        //todo server
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        client.sendMessage(user, userName, message);
     }
 
     public void globalSendMessage() {
@@ -367,7 +368,7 @@ public class BuyerMenuController extends Controller {
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
         setChatRoomPrivate(selectedSupporter);
-        client.acknowledgeSupporter(user,userName);
+        client.acknowledge(this, privateChatBox);
     }
 
     private void init() {

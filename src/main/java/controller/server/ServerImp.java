@@ -376,11 +376,11 @@ public class ServerImp {
         return usernames;
     }
 
-    public void acknowledgeSupporter(String username, String token) {
+    public void acknowledgeSupporter(String username, String token, String message) {
         User user = users.get(token);
         for (ClientHandler clientsThread : allClientsThreads) {
             if (clientsThread.getUsername().equals(username)) {
-                clientsThread.acknowledgeChat(user);
+                clientsThread.acknowledgeChat(user, message);
 
             }
         }

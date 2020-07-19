@@ -60,12 +60,13 @@ public class SupporterMenuController extends Controller {
     }
 
     public void sendMessage() {
+        String userName = "alireza";
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        //todo server
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        client.sendMessage(user, userName, message);
     }
 
     public void globalSendMessage() {
@@ -237,6 +238,6 @@ public class SupporterMenuController extends Controller {
 
     public void setOnline() {
         client.setUserOnline(user);
-        client.acknowledge((Supporter) user);
+        client.acknowledge(this, privateChatBox);
     }
 }

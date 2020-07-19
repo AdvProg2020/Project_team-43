@@ -1,9 +1,12 @@
 package View;
 
 
+import View.GraphicController.BuyerMenuController;
+import View.GraphicController.SupporterMenuController;
 import controller.client.BuyerProcessor;
 import controller.client.Processor;
 
+import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
 
@@ -559,29 +562,43 @@ public class Client {
         return null;
     }
 
-    public void acknowledgeSupporter(Buyer user, String userName) {
-        checkTokenValidation(user);
+    public void sendMessage(User user, String userName, String message) {
+        //checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("acknowledgeSupporter " + userName + " " + token);
+            dataOutputStream.writeUTF("sendMessage " + userName + " " + token);
+            dataOutputStream.flush();
+            dataOutputStream.writeUTF(message);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void acknowledge(Supporter user) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        String command = dataInputStream.readUTF();
-                        System.out.println(command);
-                        String username = command.split(" ")[0];
-                        String message = command.split(" ")[1];
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    public void acknowledge(SupporterMenuController supporterMenuController, VBox vBox) {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String command = dataInputStream.readUTF();
+                    String username = command.split(" ")[0];
+                    String message = command.substring(command.indexOf(" ") + 1);
+                    supporterMenuController.updateChatRoom(username, message, vBox);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public void acknowledge(BuyerMenuController buyerMenuController, VBox vBox) {
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String command = dataInputStream.readUTF();
+                    String username = command.split(" ")[0];
+                    String message = command.substring(command.indexOf(" ") + 1);
+                    buyerMenuController.updateChatRoom(username, message, vBox);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
