@@ -6,6 +6,7 @@ import controller.client.Processor;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -60,7 +61,7 @@ public class SupporterMenuController extends Controller {
 
     public void sendMessage() {
         String message = textMessage.getText().trim();
-        if(message.equals(""))return;
+        if (message.equals("")) return;
         //todo server
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
@@ -212,7 +213,7 @@ public class SupporterMenuController extends Controller {
 
     }
 
-    public void updateOnlineUserListView(){
+    public void updateOnlineUserListView() {
         init();
         for (User user : User.allUsers) {
             //todo check is online or not
@@ -234,4 +235,7 @@ public class SupporterMenuController extends Controller {
         Music.getInstance().open();
     }
 
+    public void setOnline() {
+        client.setUserOnline(user);
+    }
 }

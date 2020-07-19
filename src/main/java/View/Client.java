@@ -536,4 +536,14 @@ public class Client {
     }
 
 
+    public void setUserOnline(User user) {
+        try {
+            checkTokenValidation(user);
+            dataOutputStream.writeUTF("setOnline " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
