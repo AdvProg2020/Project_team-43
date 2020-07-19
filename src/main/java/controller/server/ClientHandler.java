@@ -37,6 +37,7 @@ public class ClientHandler extends Thread {
         try {
             while (true) {
                 String command = dataInputStream.readUTF();
+                System.out.println(command);
                 if (command.startsWith("login")) {
                     login(command.split(" ")[1], command.split(" ")[2]);
                 } else if (command.startsWith("register")) {

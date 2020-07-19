@@ -1,21 +1,31 @@
 package View.GraphicController;
 
+import com.jfoenix.controls.JFXListView;
 import controller.client.BuyerProcessor;
 import View.graphic.*;
 import controller.client.Processor;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 import model.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BuyerMenuController extends Controller {
     private static boolean isBack = false;
@@ -39,6 +49,18 @@ public class BuyerMenuController extends Controller {
     public ImageView closeDiscountButton;
     public ListView<String> discountCodeFeatures;
     private Buyer user;
+    public JFXListView supportersListView;
+    public JFXListView onlineUsersListView;
+    public TextArea textMessage;
+    public TextArea globalTextMessage;
+    public VBox privateChatBox;
+    public VBox globalChatBox;
+    public ScrollPane scrollPane21;
+    public ScrollPane scrollPane2;
+    public Supporter selectedSupporter;
+    public ObservableList<String> users;
+    public ObservableList<String> onlineUsers;
+
 
     @FXML
     public void initialize() {
@@ -259,6 +281,98 @@ public class BuyerMenuController extends Controller {
         }
     }
 
+    public void sendMessage() {
+        String message = textMessage.getText().trim();
+        if(message.equals(""))return;
+        //todo server
+        updateChatRoom(user.getUsername(), message, privateChatBox);
+        textMessage.clear();
+        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+    }
+
+    public void globalSendMessage() {
+        String message = globalTextMessage.getText().trim();
+        if (message.equals("")) return;
+        //todo server
+        updateChatRoom(user.getUsername(), message, globalChatBox);
+        globalTextMessage.clear();
+        scrollPane2.vvalueProperty().bind(globalChatBox.heightProperty());
+    }
+
+    public void updateChatRoom(String username, String message, VBox vbox) {
+        if (message.equals("")) return;
+        Text text = new Text(message);
+        text.setFill(Color.WHITE);
+        text.getStyleClass().add("message");
+        TextFlow tempFlow = new TextFlow();
+        if (!user.getUsername().equals(username)) {
+            Text txtName = new Text(username + "\n");
+            txtName.getStyleClass().add("txtName");
+            tempFlow.getChildren().add(txtName);
+        }
+
+        tempFlow.getChildren().add(text);
+        tempFlow.setMaxWidth(200);
+
+        TextFlow flow = new TextFlow(tempFlow);
+
+        HBox hbox = new HBox(12);
+
+        Circle img = new Circle(32, 32, 16);
+        /*try {
+            String path = new File(("sadra.jpg")).toURI().toString();
+            img.setFill(new ImagePattern(new Image(path)));
+        } catch (Exception ex) {
+            String path = new File("sadra.jpg").toURI().toString();
+            img.setFill(new ImagePattern(new Image(path)));
+        }/*/
+
+//        img.getStyleClass().add("imageView");
+
+        if (!user.getUsername().equals(username)) {
+
+            tempFlow.getStyleClass().add("tempFlowFlipped");
+            flow.getStyleClass().add("textFlowFlipped");
+            privateChatBox.setAlignment(Pos.TOP_LEFT);
+            hbox.setAlignment(Pos.CENTER_LEFT);
+            hbox.getChildren().add(img);
+            hbox.getChildren().add(flow);
+
+        } else {
+            text.setFill(Color.WHITE);
+            tempFlow.getStyleClass().add("tempFlow");
+            flow.getStyleClass().add("textFlow");
+            hbox.setAlignment(Pos.BOTTOM_RIGHT);
+            hbox.getChildren().add(flow);
+            hbox.getChildren().add(img);
+        }
+
+        hbox.getStyleClass().add("hbox");
+        Platform.runLater(() -> vbox.getChildren().addAll(hbox));
+    }
+
+    public void chatWithUser() {
+        String userName = supportersListView.getSelectionModel().getSelectedItem().toString();
+        init();
+        selectedSupporter = (Supporter)User.getUserByUserName(userName);
+        if (selectedSupporter == null) return;
+        setChatRoomPrivate(selectedSupporter);
+    }
+    private void init() {
+        User.setAllUsers(client.getAllUsers());
+    }
+
+    public void setChatRoomPrivate(User user) {
+        //todo get supporter.map from server
+        privateChatBox.getChildren().clear();
+        Pattern pattern = Pattern.compile("(.+) : (.*)");
+        for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
+            Matcher matcher = pattern.matcher(message);
+            if (matcher.matches()) {
+                updateChatRoom(matcher.group(1), matcher.group(2), privateChatBox);
+            }
+        }
+    }
     public void open() {
         Music.getInstance().open();
     }
