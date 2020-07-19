@@ -26,7 +26,7 @@ public class ServerImp {
     private final String shopAccountPassword = "a";//TODO
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(2222);
+        ServerSocket serverSocket = new ServerSocket(6666);
         ServerImp server = new ServerImp();
         while (true) {
             Socket socket = serverSocket.accept();
