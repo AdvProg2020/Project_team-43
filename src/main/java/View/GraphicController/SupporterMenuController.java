@@ -95,7 +95,7 @@ public class SupporterMenuController extends Controller {
         setChatRoomPrivate(selectedUser);
     }
 
-    public void setChatRoomPrivate(User user) {
+    private void setChatRoomPrivate(User user) {
         //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
@@ -237,5 +237,6 @@ public class SupporterMenuController extends Controller {
 
     public void setOnline() {
         client.setUserOnline(user);
+        client.acknowledge((Supporter) user);
     }
 }

@@ -546,4 +546,44 @@ public class Client {
         }
 
     }
+
+    public ArrayList<String> getAllOnlineSupporters(Buyer user) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("getOnlineSupporters " + token);
+            dataOutputStream.flush();
+            return (ArrayList<String>) getObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void acknowledgeSupporter(Buyer user, String userName) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("acknowledgeSupporter " + userName + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void acknowledge(Supporter user) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        String command = dataInputStream.readUTF();
+                        System.out.println(command);
+                        String username = command.split(" ")[0];
+                        String message = command.split(" ")[1];
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
 }

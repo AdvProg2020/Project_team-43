@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 
 public class ServerImp {
-    private ArrayList<ClientHandler> allClientsThreads;
+    private ArrayList<ClientHandler> allClientsThreads = new ArrayList<>();
     private HashMap<String, User> users = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
@@ -362,8 +362,28 @@ public class ServerImp {
     }
 
     public void setOnline(String token) {
-        Supporter supporter = (Supporter)users.get(token);
-        supporter.setOnline(true);
+        Supporter supporter = (Supporter) users.get(token);
+        supporter.setOnline(!supporter.isOnline());
+    }
+
+    public Object getOnlineSupporters() {
+        ArrayList<String> usernames = new ArrayList<>();
+        for (User user : User.getAllUsers()) {
+            if (user.getUserType() == UserType.SUPPORTER && ((Supporter) user).isOnline()) {
+                usernames.add(user.getUsername());
+            }
+        }
+        return usernames;
+    }
+
+    public void acknowledgeSupporter(String username, String token) {
+        User user = users.get(token);
+        for (ClientHandler clientsThread : allClientsThreads) {
+            if (clientsThread.getUsername().equals(username)) {
+                clientsThread.acknowledgeChat(user);
+
+            }
+        }
     }
 }
 

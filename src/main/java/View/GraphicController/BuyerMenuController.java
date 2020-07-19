@@ -23,7 +23,10 @@ import javafx.util.Pair;
 import model.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +52,7 @@ public class BuyerMenuController extends Controller {
     public ImageView closeDiscountButton;
     public ListView<String> discountCodeFeatures;
     private Buyer user;
-    public JFXListView supportersListView;
+    public JFXListView<String> supportersListView;
     public JFXListView onlineUsersListView;
     public TextArea textMessage;
     public TextArea globalTextMessage;
@@ -212,6 +215,13 @@ public class BuyerMenuController extends Controller {
         BankForChargeWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 
+    public void getOnlineSupporters() {
+        ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
+        supportersListView.getItems().clear();
+        supportersListView.getItems().addAll(supportersUsername);
+
+    }
+
 
     private class XCell extends ListCell<String> {
         Buyer buyer;
@@ -352,25 +362,29 @@ public class BuyerMenuController extends Controller {
     }
 
     public void chatWithUser() {
-        String userName = supportersListView.getSelectionModel().getSelectedItem().toString();
+        String userName = supportersListView.getSelectionModel().getSelectedItem();
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
         setChatRoomPrivate(selectedSupporter);
+        client.acknowledgeSupporter(user,userName);
     }
 
     private void init() {
         User.setAllUsers(client.getAllUsers());
     }
 
-    public void setChatRoomPrivate(User user) {
+    private void setChatRoomPrivate(Supporter supporter) {
         //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
-        for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
-            Matcher matcher = pattern.matcher(message);
-            if (matcher.matches()) {
-                updateChatRoom(matcher.group(1), matcher.group(2), privateChatBox);
+        Map<String, List<String>> users = supporter.getUsers();
+        if (users.containsKey(user.getUsername())) {
+            for (String message : users.get(user.getUsername())) {
+                Matcher matcher = pattern.matcher(message);
+                if (matcher.matches()) {
+                    updateChatRoom(matcher.group(1), matcher.group(2), privateChatBox);
+                }
             }
         }
     }

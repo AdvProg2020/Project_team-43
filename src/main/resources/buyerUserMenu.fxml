@@ -209,7 +209,7 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab text="supportive chat">
+        <Tab onSelectionChanged="#getOnlineSupporters" text="supportive chat">
             <content>
                 <AnchorPane fx:id="rootPane" prefHeight="614.0" prefWidth="889.0" stylesheets="@PublicChat.css">
                     <children>

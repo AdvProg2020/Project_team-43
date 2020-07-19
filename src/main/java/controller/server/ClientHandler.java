@@ -128,12 +128,26 @@ public class ClientHandler extends Thread {
                     purchase(command);
                 } else if (command.startsWith("setOnline")) {
                     setOnline(command);
+                } else if (command.startsWith("getOnlineSupporters")) {
+                    getOnlineSupporters();
+                } else if (command.startsWith("acknowledgeSupporter")) {
+                    acknowledgeSupporter(command);
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void acknowledgeSupporter(String command) {
+        String username = command.split(" ")[1];
+        String token = command.split(" ")[2];
+        server.acknowledgeSupporter(username, token);
+    }
+
+    private void getOnlineSupporters() {
+        sendObject(server.getOnlineSupporters());
     }
 
     private void setOnline(String command) {
@@ -588,4 +602,12 @@ public class ClientHandler extends Thread {
     }
 
 
+    public void acknowledgeChat(User user) {
+        try {
+            dataOutputStream.writeUTF(user.getUsername() + " fuckYou");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
