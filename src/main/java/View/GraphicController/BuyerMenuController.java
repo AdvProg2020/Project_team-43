@@ -364,6 +364,7 @@ public class BuyerMenuController extends Controller {
 
     public void chatWithUser() {
         String userName = supportersListView.getSelectionModel().getSelectedItem();
+        if(selectedSupporter == (Supporter)User.getUserByUserName(userName))return;
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
@@ -376,7 +377,6 @@ public class BuyerMenuController extends Controller {
     }
 
     private void setChatRoomPrivate(Supporter supporter) {
-        //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         Map<String, List<String>> users = supporter.getUsers();
