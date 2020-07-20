@@ -567,7 +567,7 @@ public class Client {
     }
 
     public void sendMessage(User user, String userName, String message) {
-        //checkTokenValidation(user);
+        checkTokenValidation(user);
         try {
             dataOutputStream.writeUTF("sendMessage " + userName + " " + token);
             dataOutputStream.flush();
@@ -583,7 +583,6 @@ public class Client {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
-                    System.out.println("thread" + command);
                     String username = command.split(" ")[0];
                     String message = command.substring(command.indexOf(" ") + 1);
                     supporterMenuController.updateUsersListView();
@@ -605,7 +604,6 @@ public class Client {
                 while (true) {
                     try {
                         String command = dataInputStream.readUTF();
-                        System.out.println("thread" + command);
                         String username = command.split(" ")[0];
                         String message = command.substring(command.indexOf(" ") + 1);
                         buyerMenuController.updateChatRoom(username, message, vBox);
@@ -621,7 +619,6 @@ public class Client {
 
     public void fuckThread() {
         if (thread != null && thread.isAlive()) {
-            System.out.println("fuck33");
             thread.stop();
             thread = null;
         }
@@ -633,7 +630,6 @@ public class Client {
 
     public void fuck2Thread() {
         if (thread != null && thread.isAlive()) {
-            System.out.println("fuck33");
             thread.stop();
             thread = null;
             try {

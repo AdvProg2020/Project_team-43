@@ -221,8 +221,10 @@ public class BuyerMenuController extends Controller {
         isChatTabOpen = !isChatTabOpen;
         if (isChatTabOpen) {
             ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
-            supportersListView.getItems().clear();
-            supportersListView.getItems().addAll(supportersUsername);
+            Platform.runLater(() -> {
+                supportersListView.getItems().clear();
+                supportersListView.getItems().addAll(supportersUsername);
+            });
         } else {
             client.fuck2Thread();
         }
@@ -305,7 +307,9 @@ public class BuyerMenuController extends Controller {
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        client.fuck2Thread();
         client.sendMessage(user, userName, message);
+        client.acknowledge(this, privateChatBox);
     }
 
     public void globalSendMessage() {
