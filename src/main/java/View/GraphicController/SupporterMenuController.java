@@ -187,8 +187,10 @@ public class SupporterMenuController extends Controller {
             text.setFont(new Font("Monospaced", 10));
             users.add(userName);
         }
-        usersListView.getItems().clear();
-        usersListView.getItems().addAll(users);
+        Platform.runLater(() -> {
+            usersListView.getItems().clear();
+            usersListView.getItems().addAll(users);
+        });
     }
 
     public void updateOnlineUserListView() {

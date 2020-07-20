@@ -10,11 +10,12 @@
         <module name="phase2" />
         <module name="code" />
         <module name="project" />
+        <module name="porojectAP" />
         <module name="Project_team-43" />
         <module name="maven" />
         <module name="Project_team-43New" />
         <module name="newPro" />
-        <module name="porojectAP" />
+        <module name="projectTeam43" />
         <module name="bamazon" />
       </profile>
     </annotationProcessing>

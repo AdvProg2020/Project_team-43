@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerMenuController extends Controller {
+    private boolean isChatTabOpen;
     private static boolean isBack = false;
     public ListView<String> products;
     public Text userName;
@@ -67,6 +68,7 @@ public class BuyerMenuController extends Controller {
 
     @FXML
     public void initialize() {
+        isChatTabOpen = false;
         user = (Buyer) buyerProcessor.getUser();
         userName.setText(user.getUsername());
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
@@ -216,9 +218,14 @@ public class BuyerMenuController extends Controller {
     }
 
     public void getOnlineSupporters() {
-        ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
-        supportersListView.getItems().clear();
-        supportersListView.getItems().addAll(supportersUsername);
+        isChatTabOpen = !isChatTabOpen;
+        if (isChatTabOpen) {
+            ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
+            supportersListView.getItems().clear();
+            supportersListView.getItems().addAll(supportersUsername);
+        } else {
+            client.fuck2Thread();
+        }
 
     }
 

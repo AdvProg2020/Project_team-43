@@ -590,8 +590,8 @@ public class Client {
                     if (((supporterMenuController.selectedUser != null && supporterMenuController.selectedUser.getUsername().equals(username)) || supporterMenuController.users.isEmpty())) {
                         supporterMenuController.updateChatRoom(username, message, vBox);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    System.out.println("done");
                 }
             }
         });
