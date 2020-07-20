@@ -364,6 +364,7 @@ public class BuyerMenuController extends Controller {
 
     public void chatWithUser() {
         String userName = supportersListView.getSelectionModel().getSelectedItem();
+        if (selectedSupporter != null && selectedSupporter.getUsername().equals(userName)) return;
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
@@ -372,7 +373,10 @@ public class BuyerMenuController extends Controller {
     }
 
     private void init() {
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
+        if (!client.threadIsNull())
+            client.acknowledge(this, privateChatBox);
     }
 
     private void setChatRoomPrivate(Supporter supporter) {

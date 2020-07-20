@@ -22,6 +22,7 @@ public class Client {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
     private String token;
+    private Thread thread;
 
     public void run() {
         try {
@@ -541,7 +542,7 @@ public class Client {
 
     public void setUserOnline(User user) {
         try {
-            checkTokenValidation(user);
+            //checkTokenValidation(user);
             dataOutputStream.writeUTF("setOnline " + token);
             dataOutputStream.flush();
         } catch (IOException e) {
@@ -575,7 +576,7 @@ public class Client {
     }
 
     public void acknowledge(SupporterMenuController supporterMenuController, VBox vBox) {
-        new Thread(() -> {
+        thread = new Thread(() -> {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
@@ -586,11 +587,12 @@ public class Client {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thread.start();
     }
 
     public void acknowledge(BuyerMenuController buyerMenuController, VBox vBox) {
-        new Thread(() -> {
+        thread = new Thread(() -> {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
@@ -601,6 +603,16 @@ public class Client {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thread.start();
+    }
+
+    public void fuckThread() {
+        if (thread != null && thread.isAlive())
+            thread.stop();
+    }
+
+    public boolean threadIsNull() {
+        return thread == null;
     }
 }

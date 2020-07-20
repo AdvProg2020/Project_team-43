@@ -172,33 +172,6 @@ public class SupporterMenuController extends Controller {
         setUserImage(user, profilePhoto);
         updateUsersListView();
         updateOnlineUserListView();
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
-        updateChatRoom("null", "salam bi namoos", privateChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
-        updateChatRoom("null", "salam bi namoos", globalChatBox);
-
     }
 
     public void updateUsersListView() {
@@ -207,9 +180,6 @@ public class SupporterMenuController extends Controller {
             Text text = new Text(userName);
             text.setFont(new Font("Monospaced", 10));
         }
-        users.add("mamad");
-        users.add("mamad");
-        users.add("mamad");
         usersListView.setItems(users);
 
     }
@@ -225,7 +195,10 @@ public class SupporterMenuController extends Controller {
     }
 
     private void init() {
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
+        if (!client.threadIsNull())
+            client.acknowledge(this, privateChatBox);
     }
 
     public void browsePhotoUser() throws IOException {
@@ -238,6 +211,11 @@ public class SupporterMenuController extends Controller {
 
     public void setOnline() {
         client.setUserOnline(user);
-        client.acknowledge(this, privateChatBox);
+        ((Supporter) user).setOnline(!((Supporter) user).isOnline());
+        if (((Supporter) user).isOnline()) {
+            client.acknowledge(this, privateChatBox);
+        } else {
+            client.fuckThread();
+        }
     }
 }
