@@ -41,7 +41,7 @@ public class SupporterMenuController extends Controller {
     public TextField phoneNumber;
     public ImageView profilePhoto;
     public Text userName;
-    public JFXListView usersListView;
+    public JFXListView<String> usersListView;
     public JFXListView onlineUsersListView;
     public TextArea textMessage;
     public TextArea globalTextMessage;
@@ -66,7 +66,9 @@ public class SupporterMenuController extends Controller {
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        client.fuck2Thread();
         client.sendMessage(user, userName, message);
+        client.acknowledge(this, privateChatBox);
     }
 
     public void globalSendMessage() {
@@ -89,19 +91,18 @@ public class SupporterMenuController extends Controller {
 
 
     public void chatWithUser() {
-        String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        if(selectedUser==User.getUserByUserName(userName))return;
-        init();
+        //init();
+        String userName = usersListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) return;
         setChatRoomPrivate(selectedUser);
     }
 
     private void setChatRoomPrivate(User user) {
-        init();
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
-        for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
+        for (String message : ((Supporter) this.user).getUsers().get(user.getUsername())) {
             Matcher matcher = pattern.matcher(message);
             if (matcher.matches()) {
                 updateChatRoom(matcher.group(1), matcher.group(2), privateChatBox);
@@ -162,8 +163,8 @@ public class SupporterMenuController extends Controller {
     }
 
     public void initialize() {
-        init();
         user = Processor.user;
+        init();
         firstName.setPromptText(user.getUserPersonalInfo().getFirstName());
         lastName.setPromptText(user.getUserPersonalInfo().getLastName());
         email.setPromptText(user.getUserPersonalInfo().getEmail());
@@ -173,18 +174,25 @@ public class SupporterMenuController extends Controller {
         setUserImage(user, profilePhoto);
         updateUsersListView();
         updateOnlineUserListView();
-
     }
 
     public void updateUsersListView() {
-        init();
+        if (Thread.currentThread().getName().equals("fuck")) {
+            User.setAllUsers(client.getAllUsers());
+            user = User.getUserByUserName(user.getUsername());
+        } else {
+            init();
+        }
+        users.clear();
         for (String userName : ((Supporter) user).getUsers().keySet()) {
             Text text = new Text(userName);
             text.setFont(new Font("Monospaced", 10));
             users.add(userName);
         }
-        usersListView.setItems(users);
-
+        Platform.runLater(() -> {
+            usersListView.getItems().clear();
+            usersListView.getItems().addAll(users);
+        });
     }
 
     public void updateOnlineUserListView() {
@@ -198,7 +206,11 @@ public class SupporterMenuController extends Controller {
     }
 
     private void init() {
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
+        user = User.getUserByUserName(user.getUsername());
+        if (!client.threadIsNull())
+            client.acknowledge(this, privateChatBox);
     }
 
     public void browsePhotoUser() throws IOException {
@@ -211,6 +223,12 @@ public class SupporterMenuController extends Controller {
 
     public void setOnline() {
         client.setUserOnline(user);
-        client.acknowledge(this, privateChatBox);
+        ((Supporter) user).setOnline(!((Supporter) user).isOnline());
+        if (((Supporter) user).isOnline()) {
+            client.acknowledge(this, privateChatBox);
+        } else {
+            client.fuck2Thread();
+        }
+
     }
 }

@@ -3,7 +3,11 @@ package View.GraphicController;
 import View.graphic.BankForChargeWindow;
 import View.graphic.BankForWithdrawWindow;
 import View.graphic.MainWindow;
+import com.jfoenix.controls.JFXListView;
+import controller.client.Processor;
 import controller.client.SellerProcessor;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -82,6 +86,8 @@ public class SellerMenuController extends Controller {
     public Button manageProductBrowsePhotoButton;
     public Label productAvailableCount;
     public Button browseVideoButton;
+    public JFXListView<HBox> FilesJFXListView;
+    public TextField filePriceTextField;
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
@@ -108,6 +114,7 @@ public class SellerMenuController extends Controller {
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
+        updateFilesJFXListView();
     }
 
     private void init() {
@@ -516,4 +523,43 @@ public class SellerMenuController extends Controller {
     public void decreaseBalance() {
         BankForWithdrawWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
+
+    private File file;
+
+    public void browseFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
+        file = fileChooser.showOpenDialog(stage);
+    }
+
+    public void addFile() {
+        if (file != null) {
+            if (!filePriceTextField.getText().matches("\\d+")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Price must be integer");
+                alert.showAndWait();
+                return;
+            }
+            client.addFile(user, Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
+            sellerProcessor.addFile(Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
+            updateFilesJFXListView();
+        }
+    }
+
+    private void updateFilesJFXListView() {
+        FilesJFXListView.getItems().clear();
+        for (FileProduct file : user.getFiles()) {
+            HBox hBox = new HBox();
+            hBox.getChildren().add(new Label(file.getFileName() + "   Price: " + file.getPrice() + "   "));
+            Button button = new Button("remove");
+            button.setOnAction(event -> {
+                client.removeFile(user, file.getAddress());
+                sellerProcessor.removeFile(file.getAddress());
+                updateFilesJFXListView();
+            });
+            hBox.getChildren().add(button);
+            FilesJFXListView.getItems().add(hBox);
+        }
+    }
+
 }

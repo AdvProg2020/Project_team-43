@@ -7,13 +7,11 @@ import model.request.EditProductRequest;
 import model.request.OffRequest;
 import model.request.ProductRequest;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class Seller extends User implements Serializable {
     private static String fileAddress = "database/Seller.dat";
@@ -27,6 +25,7 @@ public class Seller extends User implements Serializable {
 
     private ArrayList<SellOrder> orders;
     private ArrayList<String> sellOrdersId;
+    private ArrayList<FileProduct> files;
 
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
@@ -37,7 +36,30 @@ public class Seller extends User implements Serializable {
         productsNumberWithId = new HashMap<>();
         offsId = new ArrayList<>();
         sellOrdersId = new ArrayList<>();
+        files = new ArrayList<>();
         setUserType();
+    }
+
+    public void addFile(String fileName, int price, String extension, String fileAddress) {
+        files.add(new FileProduct(fileName, fileAddress, this.username, extension, price));
+    }
+
+    public void removeFile(FileProduct fileProduct) {
+        files.remove(fileProduct);
+        FileProduct.removeFile(fileProduct);
+    }
+
+    public FileProduct getFileByAddress(String fileAddress) {
+        for (FileProduct file : files) {
+            if (file.getAddress().equals(fileAddress)) {
+                return file;
+            }
+        }
+        return null;
+    }
+
+    public List<FileProduct> getFiles() {
+        return Collections.unmodifiableList(files);
     }
 
     @Override
