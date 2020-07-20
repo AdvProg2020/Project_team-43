@@ -132,6 +132,9 @@ public class ClientHandler extends Thread {
                     getOnlineSupporters();
                 } else if (command.startsWith("sendMessage")) {
                     acknowledgeSupporter(command);
+                } else if (command.startsWith("endInputStream")) {
+                    dataOutputStream.writeUTF("fuck");
+                    dataOutputStream.flush();
                 }
                 System.out.println(command);
             }
@@ -142,8 +145,6 @@ public class ClientHandler extends Thread {
 
     private void acknowledgeSupporter(String command) {
         try {
-            dataOutputStream.writeUTF("send message");
-            dataOutputStream.flush();
             String message = dataInputStream.readUTF();
             System.out.println(message);
             String username = command.split(" ")[1];

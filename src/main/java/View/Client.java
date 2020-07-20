@@ -6,7 +6,9 @@ import View.GraphicController.SupporterMenuController;
 import controller.client.BuyerProcessor;
 import controller.client.Processor;
 
+import javafx.application.Application;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.*;
 import model.request.Request;
 
@@ -23,10 +25,11 @@ public class Client {
     private DataOutputStream dataOutputStream;
     private String token;
     private Thread thread;
+    private Socket socket;
 
     public void run() {
         try {
-            Socket socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("127.0.0.1", 8888);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -250,7 +253,7 @@ public class Client {
             ObjectInputStream is = new ObjectInputStream(in);
             return is.readObject();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("done");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -568,7 +571,6 @@ public class Client {
         try {
             dataOutputStream.writeUTF("sendMessage " + userName + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
             dataOutputStream.writeUTF(message);
             dataOutputStream.flush();
         } catch (IOException e) {
@@ -581,10 +583,11 @@ public class Client {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
+                    System.out.println("thread" + command);
                     String username = command.split(" ")[0];
                     String message = command.substring(command.indexOf(" ") + 1);
                     supporterMenuController.updateUsersListView();
-                    if(supporterMenuController.selectedUser!=null && supporterMenuController.selectedUser.getUsername().equals(username)) {
+                    if (((supporterMenuController.selectedUser != null && supporterMenuController.selectedUser.getUsername().equals(username)) || supporterMenuController.users.isEmpty())) {
                         supporterMenuController.updateChatRoom(username, message, vBox);
                     }
                 } catch (IOException e) {
@@ -592,32 +595,55 @@ public class Client {
                 }
             }
         });
+        thread.setName("fuck");
         thread.start();
     }
 
     public void acknowledge(BuyerMenuController buyerMenuController, VBox vBox) {
-        thread = new Thread(() -> {
-            while (true) {
-                try {
-                    String command = dataInputStream.readUTF();
-                    String username = command.split(" ")[0];
-                    String message = command.substring(command.indexOf(" ") + 1);
-                    buyerMenuController.updateChatRoom(username, message, vBox);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        thread = new Thread() {
+            public void run() {
+                while (true) {
+                    try {
+                        String command = dataInputStream.readUTF();
+                        System.out.println("thread" + command);
+                        String username = command.split(" ")[0];
+                        String message = command.substring(command.indexOf(" ") + 1);
+                        buyerMenuController.updateChatRoom(username, message, vBox);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        });
+        };
+        thread.setName("fuck");
         thread.start();
     }
 
     public void fuckThread() {
-        if (thread != null && thread.isAlive())
+        if (thread != null && thread.isAlive()) {
+            System.out.println("fuck33");
             thread.stop();
+            thread = null;
+        }
     }
 
     public boolean threadIsNull() {
         return thread == null;
     }
 
+    public void fuck2Thread() {
+        if (thread != null && thread.isAlive()) {
+            System.out.println("fuck33");
+            thread.stop();
+            thread = null;
+            try {
+                dataOutputStream.writeUTF("endInputStream");
+                dataOutputStream.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
+
