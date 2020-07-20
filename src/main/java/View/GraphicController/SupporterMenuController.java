@@ -68,7 +68,7 @@ public class SupporterMenuController extends Controller {
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
         client.fuck2Thread();
         client.sendMessage(user, userName, message);
-        client.acknowledge(this,privateChatBox);
+        client.acknowledge(this, privateChatBox);
     }
 
     public void globalSendMessage() {
