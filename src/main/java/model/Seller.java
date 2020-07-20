@@ -10,10 +10,7 @@ import model.request.ProductRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class Seller extends User implements Serializable {
     private static String fileAddress = "database/Seller.dat";
@@ -27,6 +24,7 @@ public class Seller extends User implements Serializable {
 
     private ArrayList<SellOrder> orders;
     private ArrayList<String> sellOrdersId;
+    private ArrayList<String> filesAddresses;
 
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
@@ -37,7 +35,20 @@ public class Seller extends User implements Serializable {
         productsNumberWithId = new HashMap<>();
         offsId = new ArrayList<>();
         sellOrdersId = new ArrayList<>();
+        filesAddresses = new ArrayList<>();
         setUserType();
+    }
+
+    public void addFile(String fileAddress) {
+        filesAddresses.add(fileAddress);
+    }
+
+    public void removeFile(String fileAddress) {
+        filesAddresses.remove(fileAddress);
+    }
+
+    public List<String> getFilesAddresses() {
+        return Collections.unmodifiableList(filesAddresses);
     }
 
     @Override

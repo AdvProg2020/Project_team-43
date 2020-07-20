@@ -3,7 +3,9 @@ package View.GraphicController;
 import View.graphic.BankForChargeWindow;
 import View.graphic.BankForWithdrawWindow;
 import View.graphic.MainWindow;
+import com.jfoenix.controls.JFXListView;
 import controller.client.SellerProcessor;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -82,6 +84,7 @@ public class SellerMenuController extends Controller {
     public Button manageProductBrowsePhotoButton;
     public Label productAvailableCount;
     public Button browseVideoButton;
+    public JFXListView<HBox> FilesJFXListView;
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
@@ -516,4 +519,22 @@ public class SellerMenuController extends Controller {
     public void decreaseBalance() {
         BankForWithdrawWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
+
+    public void browseFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            user.addFile(file.getAbsolutePath());
+            updateFilesJFXListView();
+        }
+    }
+
+    private void updateFilesJFXListView() {
+        FilesJFXListView.getItems().clear();
+        HBox hBox = new HBox();
+        //hBox.getChildren().add();
+        //FilesJFXListView.getItems().add();
+    }
+
 }

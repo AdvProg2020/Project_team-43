@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -461,11 +462,17 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="369.0" layoutY="60.0" text="Upload your File">
+                  <Label layoutX="545.0" layoutY="166.0" text="Select your File">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="28.0" />
                      </font>
                   </Label>
+                  <Button fx:id="manageProductBrowsePhotoButton1" layoutX="599.0" layoutY="231.0" mnemonicParsing="false" onAction="#browseFile" text="Browse">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <JFXListView fx:id="FilesJFXListView" layoutX="162.0" layoutY="100.0" prefHeight="400.0" prefWidth="227.0" />
                </children>
             </AnchorPane>
         </content>
