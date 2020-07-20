@@ -63,12 +63,15 @@ public class SupporterMenuController extends Controller {
         String userName = selectedUser.getUsername();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        updateChatRoom(user.getUsername(), message, privateChatBox);
-        textMessage.clear();
-        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        Platform.runLater(() -> {
+            updateChatRoom(user.getUsername(), message, privateChatBox);
+            textMessage.clear();
+            scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        });
+
         client.fuck2Thread();
         client.sendMessage(user, userName, message);
-        client.acknowledge(this,privateChatBox);
+        client.acknowledge(this, privateChatBox);
     }
 
     public void globalSendMessage() {
@@ -91,12 +94,12 @@ public class SupporterMenuController extends Controller {
 
 
     public void chatWithUser() {
-        //init();
+        init();
         String userName = usersListView.getSelectionModel().getSelectedItem();
         if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) return;
-        setChatRoomPrivate(selectedUser);
+        Platform.runLater(() -> setChatRoomPrivate(selectedUser));
     }
 
     private void setChatRoomPrivate(User user) {
@@ -183,13 +186,13 @@ public class SupporterMenuController extends Controller {
         } else {
             init();
         }
-        users.clear();
-        for (String userName : ((Supporter) user).getUsers().keySet()) {
-            Text text = new Text(userName);
-            text.setFont(new Font("Monospaced", 10));
-            users.add(userName);
-        }
         Platform.runLater(() -> {
+            users.clear();
+            for (String userName : ((Supporter) user).getUsers().keySet()) {
+                Text text = new Text(userName);
+                text.setFont(new Font("Monospaced", 10));
+                users.add(userName);
+            }
             usersListView.getItems().clear();
             usersListView.getItems().addAll(users);
         });
@@ -206,7 +209,7 @@ public class SupporterMenuController extends Controller {
     }
 
     private void init() {
-        client.fuckThread();
+        client.fuck2Thread();
         User.setAllUsers(client.getAllUsers());
         user = User.getUserByUserName(user.getUsername());
         if (!client.threadIsNull())

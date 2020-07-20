@@ -304,9 +304,11 @@ public class BuyerMenuController extends Controller {
         String userName = supportersListView.getSelectionModel().getSelectedItem();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        updateChatRoom(user.getUsername(), message, privateChatBox);
-        textMessage.clear();
-        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        Platform.runLater(() -> {
+            updateChatRoom(user.getUsername(), message, privateChatBox);
+            textMessage.clear();
+            scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        });
         client.fuck2Thread();
         client.sendMessage(user, userName, message);
         client.acknowledge(this, privateChatBox);
@@ -379,19 +381,18 @@ public class BuyerMenuController extends Controller {
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
-        setChatRoomPrivate(selectedSupporter);
+        Platform.runLater(() -> setChatRoomPrivate(selectedSupporter));
         client.acknowledge(this, privateChatBox);
     }
 
     private void init() {
-        client.fuckThread();
+        client.fuck2Thread();
         User.setAllUsers(client.getAllUsers());
         if (!client.threadIsNull())
             client.acknowledge(this, privateChatBox);
     }
 
     private void setChatRoomPrivate(Supporter supporter) {
-        //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         Map<String, List<String>> users = supporter.getUsers();
