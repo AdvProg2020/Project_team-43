@@ -6,18 +6,13 @@ import View.GraphicController.SupporterMenuController;
 import controller.client.BuyerProcessor;
 import controller.client.Processor;
 
-import javafx.application.Application;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.*;
 import model.request.Request;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.Socket;
-import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Client {
@@ -599,20 +594,18 @@ public class Client {
     }
 
     public void acknowledge(BuyerMenuController buyerMenuController, VBox vBox) {
-        thread = new Thread() {
-            public void run() {
-                while (true) {
-                    try {
-                        String command = dataInputStream.readUTF();
-                        String username = command.split(" ")[0];
-                        String message = command.substring(command.indexOf(" ") + 1);
-                        buyerMenuController.updateChatRoom(username, message, vBox);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        thread = new Thread(() -> {
+            while (true) {
+                try {
+                    String command = dataInputStream.readUTF();
+                    String username = command.split(" ")[0];
+                    String message = command.substring(command.indexOf(" ") + 1);
+                    buyerMenuController.updateChatRoom(username, message, vBox);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        };
+        });
         thread.setName("fuck");
         thread.start();
     }
