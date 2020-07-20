@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import model.*;
 import model.request.Request;
 import org.apache.commons.io.FilenameUtils;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -27,6 +28,8 @@ public class ServerImp {
 
     public void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
+        System.out.println("server is ready");
+        System.out.println("waiting for clients ...");
         ServerImp server = this;
         while (true) {
             Socket socket = serverSocket.accept();
@@ -391,7 +394,7 @@ public class ServerImp {
     }
 
     public void removeFileSeller(String token, String path) {
-        Seller seller = (Seller)users.get(token);
+        Seller seller = (Seller) users.get(token);
         seller.removeFile(seller.getFileByAddress(path));
     }
 }
