@@ -142,6 +142,8 @@ public class ClientHandler extends Thread {
 
     private void acknowledgeSupporter(String command) {
         try {
+            dataOutputStream.writeUTF("send message");
+            dataOutputStream.flush();
             String message = dataInputStream.readUTF();
             System.out.println(message);
             String username = command.split(" ")[1];
@@ -610,10 +612,36 @@ public class ClientHandler extends Thread {
 
     public void acknowledgeChat(User user, String message) {
         try {
+            if (User.getUserByUserName(username) instanceof Supporter) {
+                checkUserInSupporter(user, message);
+            } else {
+                checkSupporterInUser((Supporter) user, message);
+            }
             dataOutputStream.writeUTF(user.getUsername() + " " + message);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void checkUserInSupporter(User user, String message) {
+        Supporter supporter = (Supporter) (User.getUserByUserName(username));
+        if (!supporter.getUsers().containsKey(user.getUsername())) {
+            ArrayList<String> messages = new ArrayList<>();
+            messages.add(user.getUsername() + " : " + message);
+            supporter.getUsers().put(user.getUsername(), messages);
+        } else {
+            supporter.getUsers().get(user.getUsername()).add(user.getUsername() + " : " + message);
+        }
+    }
+
+    public void checkSupporterInUser(Supporter supporter, String message) {
+        if (!supporter.getUsers().containsKey(username)) {
+            ArrayList<String> messages = new ArrayList<>();
+            messages.add(supporter.getUsername() + " : " + message);
+            supporter.getUsers().put(username, messages);
+        } else {
+            supporter.getUsers().get(username).add(supporter.getUsername() + " : " + message);
         }
     }
 }

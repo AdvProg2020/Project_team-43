@@ -60,7 +60,7 @@ public class SupporterMenuController extends Controller {
     }
 
     public void sendMessage() {
-        String userName = "alireza";
+        String userName = selectedUser.getUsername();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
         updateChatRoom(user.getUsername(), message, privateChatBox);
@@ -90,6 +90,7 @@ public class SupporterMenuController extends Controller {
 
     public void chatWithUser() {
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
+        if(selectedUser==User.getUserByUserName(userName))return;
         init();
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) return;
@@ -97,7 +98,7 @@ public class SupporterMenuController extends Controller {
     }
 
     private void setChatRoomPrivate(User user) {
-        //todo get supporter.map from server
+        init();
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         for (String message : ((Supporter) user).getUsers().get(user.getUsername())) {
@@ -172,6 +173,33 @@ public class SupporterMenuController extends Controller {
         setUserImage(user, profilePhoto);
         updateUsersListView();
         updateOnlineUserListView();
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", privateChatBox);
+        updateChatRoom("null", "salam bi namoos", privateChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+        updateChatRoom(user.getUsername(), "salam kos kesh", globalChatBox);
+        updateChatRoom("null", "salam bi namoos", globalChatBox);
+
     }
 
     public void updateUsersListView() {
@@ -179,6 +207,7 @@ public class SupporterMenuController extends Controller {
         for (String userName : ((Supporter) user).getUsers().keySet()) {
             Text text = new Text(userName);
             text.setFont(new Font("Monospaced", 10));
+            users.add(userName);
         }
         usersListView.setItems(users);
 

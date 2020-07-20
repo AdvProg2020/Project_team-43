@@ -568,6 +568,7 @@ public class Client {
         try {
             dataOutputStream.writeUTF("sendMessage " + userName + " " + token);
             dataOutputStream.flush();
+            dataInputStream.readUTF();
             dataOutputStream.writeUTF(message);
             dataOutputStream.flush();
         } catch (IOException e) {
@@ -582,7 +583,10 @@ public class Client {
                     String command = dataInputStream.readUTF();
                     String username = command.split(" ")[0];
                     String message = command.substring(command.indexOf(" ") + 1);
-                    supporterMenuController.updateChatRoom(username, message, vBox);
+                    supporterMenuController.updateUsersListView();
+                    if(supporterMenuController.selectedUser!=null && supporterMenuController.selectedUser.getUsername().equals(username)) {
+                        supporterMenuController.updateChatRoom(username, message, vBox);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -615,4 +619,5 @@ public class Client {
     public boolean threadIsNull() {
         return thread == null;
     }
+
 }

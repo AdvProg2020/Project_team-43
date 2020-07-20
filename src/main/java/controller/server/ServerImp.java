@@ -367,13 +367,13 @@ public class ServerImp {
     }
 
     public Object getOnlineSupporters() {
-        ArrayList<String> usernames = new ArrayList<>();
+        ArrayList<String> userNames = new ArrayList<>();
         for (User user : User.getAllUsers()) {
             if (user.getUserType() == UserType.SUPPORTER && ((Supporter) user).isOnline()) {
-                usernames.add(user.getUsername());
+                userNames.add(user.getUsername());
             }
         }
-        return usernames;
+        return userNames;
     }
 
     public void acknowledgeSupporter(String username, String token, String message) {
