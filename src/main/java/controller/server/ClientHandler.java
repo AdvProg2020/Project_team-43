@@ -3,6 +3,7 @@ package controller.server;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
+
 import java.io.*;
 import java.net.Socket;
 import java.text.ParseException;
@@ -129,15 +130,14 @@ public class ClientHandler extends Thread {
                 } else if (command.startsWith("getOnlineSupporters")) {
                     getOnlineSupporters();
                 } else if (command.startsWith("sendMessage")) {
-                    acknowledgeSupporter(command);
+                    sendMessage(command);
                 } else if (command.startsWith("endInputStream")) {
                     endInputStream();
                 } else if (command.startsWith("addFileSeller")) {
                     addFileSeller(command);
-                } else if (command.startsWith("removeFileSeller")){
+                } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
-                }
-                else{
+                } else {
                     System.out.println("What the fuck command");
                 }
             }
@@ -169,16 +169,14 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void acknowledgeSupporter(String command) {
-        try {
-            String message = dataInputStream.readUTF();
-            System.out.println(message);
-            String username = command.split(" ")[1];
-            String token = command.split(" ")[2];
-            server.acknowledgeSupporter(username, token, message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void sendMessage(String command) {
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (.+)"));
+        Matcher matcher = pattern.matcher(command);
+        matcher.find();
+        String username = matcher.group(2);
+        String token = matcher.group(3);
+        String message = matcher.group(4);
+        server.acknowledgeSupporter(username, token, message);
     }
 
     private void getOnlineSupporters() {

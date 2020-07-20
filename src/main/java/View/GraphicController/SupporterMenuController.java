@@ -99,7 +99,7 @@ public class SupporterMenuController extends Controller {
         if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) return;
-        Platform.runLater(() -> setChatRoomPrivate(selectedUser));
+        setChatRoomPrivate(selectedUser);
     }
 
     private void setChatRoomPrivate(User user) {
@@ -133,15 +133,6 @@ public class SupporterMenuController extends Controller {
         HBox hbox = new HBox(12);
 
         Circle img = new Circle(32, 32, 16);
-        /*try {
-            String path = new File(("sadra.jpg")).toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        } catch (Exception ex) {
-            String path = new File("sadra.jpg").toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        }/*/
-
-//        img.getStyleClass().add("imageView");
 
         if (!user.getUsername().equals(username)) {
 
@@ -186,13 +177,13 @@ public class SupporterMenuController extends Controller {
         } else {
             init();
         }
+        users.clear();
+        for (String userName : ((Supporter) user).getUsers().keySet()) {
+            Text text = new Text(userName);
+            text.setFont(new Font("Monospaced", 10));
+            users.add(userName);
+        }
         Platform.runLater(() -> {
-            users.clear();
-            for (String userName : ((Supporter) user).getUsers().keySet()) {
-                Text text = new Text(userName);
-                text.setFont(new Font("Monospaced", 10));
-                users.add(userName);
-            }
             usersListView.getItems().clear();
             usersListView.getItems().addAll(users);
         });
@@ -209,7 +200,7 @@ public class SupporterMenuController extends Controller {
     }
 
     private void init() {
-        client.fuck2Thread();
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
         user = User.getUserByUserName(user.getUsername());
         if (!client.threadIsNull())

@@ -304,11 +304,9 @@ public class BuyerMenuController extends Controller {
         String userName = supportersListView.getSelectionModel().getSelectedItem();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        Platform.runLater(() -> {
-            updateChatRoom(user.getUsername(), message, privateChatBox);
-            textMessage.clear();
-            scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
-        });
+        updateChatRoom(user.getUsername(), message, privateChatBox);
+        textMessage.clear();
+        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
         client.fuck2Thread();
         client.sendMessage(user, userName, message);
         client.acknowledge(this, privateChatBox);
@@ -343,15 +341,6 @@ public class BuyerMenuController extends Controller {
         HBox hbox = new HBox(12);
 
         Circle img = new Circle(32, 32, 16);
-        /*try {
-            String path = new File(("sadra.jpg")).toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        } catch (Exception ex) {
-            String path = new File("sadra.jpg").toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        }/*/
-
-//        img.getStyleClass().add("imageView");
 
         if (!user.getUsername().equals(username)) {
 
@@ -381,12 +370,12 @@ public class BuyerMenuController extends Controller {
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
-        Platform.runLater(() -> setChatRoomPrivate(selectedSupporter));
+        setChatRoomPrivate(selectedSupporter);
         client.acknowledge(this, privateChatBox);
     }
 
     private void init() {
-        client.fuck2Thread();
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
         if (!client.threadIsNull())
             client.acknowledge(this, privateChatBox);
