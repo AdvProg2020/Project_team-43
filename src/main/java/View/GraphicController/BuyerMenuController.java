@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerMenuController extends Controller {
+    private boolean isChatTabOpen;
     private static boolean isBack = false;
     public ListView<String> products;
     public Text userName;
@@ -67,6 +68,7 @@ public class BuyerMenuController extends Controller {
 
     @FXML
     public void initialize() {
+        isChatTabOpen = false;
         user = (Buyer) buyerProcessor.getUser();
         userName.setText(user.getUsername());
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
@@ -216,9 +218,16 @@ public class BuyerMenuController extends Controller {
     }
 
     public void getOnlineSupporters() {
-        ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
-        supportersListView.getItems().clear();
-        supportersListView.getItems().addAll(supportersUsername);
+        isChatTabOpen = !isChatTabOpen;
+        if (isChatTabOpen) {
+            ArrayList<String> supportersUsername = client.getAllOnlineSupporters(user);
+            Platform.runLater(() -> {
+                supportersListView.getItems().clear();
+                supportersListView.getItems().addAll(supportersUsername);
+            });
+        } else {
+            client.fuck2Thread();
+        }
 
     }
 
@@ -298,7 +307,9 @@ public class BuyerMenuController extends Controller {
         updateChatRoom(user.getUsername(), message, privateChatBox);
         textMessage.clear();
         scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        client.fuck2Thread();
         client.sendMessage(user, userName, message);
+        client.acknowledge(this, privateChatBox);
     }
 
     public void globalSendMessage() {
@@ -364,7 +375,7 @@ public class BuyerMenuController extends Controller {
 
     public void chatWithUser() {
         String userName = supportersListView.getSelectionModel().getSelectedItem();
-        if(selectedSupporter == (Supporter)User.getUserByUserName(userName))return;
+        if (selectedSupporter != null && selectedSupporter.getUsername().equals(userName)) return;
         init();
         selectedSupporter = (Supporter) User.getUserByUserName(userName);
         if (selectedSupporter == null) return;
@@ -373,10 +384,14 @@ public class BuyerMenuController extends Controller {
     }
 
     private void init() {
+        client.fuckThread();
         User.setAllUsers(client.getAllUsers());
+        if (!client.threadIsNull())
+            client.acknowledge(this, privateChatBox);
     }
 
     private void setChatRoomPrivate(Supporter supporter) {
+        //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         Map<String, List<String>> users = supporter.getUsers();

@@ -1,11 +1,8 @@
 package controller.server;
 
-import controller.client.BuyerProcessor;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
-
-import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
 import java.text.ParseException;
@@ -13,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientHandler extends Thread {
     private DataInputStream dataInputStream;
@@ -20,7 +19,6 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
-    //private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -132,18 +130,47 @@ public class ClientHandler extends Thread {
                     getOnlineSupporters();
                 } else if (command.startsWith("sendMessage")) {
                     acknowledgeSupporter(command);
+                } else if (command.startsWith("endInputStream")) {
+                    endInputStream();
+                } else if (command.startsWith("addFileSeller")) {
+                    addFileSeller(command);
+                } else if (command.startsWith("removeFileSeller")){
+                    removeFileSeller(command);
                 }
-                System.out.println(command);
+                else{
+                    System.out.println("What the fuck command");
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
+    private void removeFileSeller(String command) {
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (.+)"));
+        Matcher matcher = pattern.matcher(command);
+        matcher.find();
+        server.removeFileSeller(matcher.group(2), matcher.group(3));
+    }
+
+    private void addFileSeller(String command) {
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (.+)"));
+        Matcher matcher = pattern.matcher(command);
+        matcher.find();
+        server.addFileSeller(matcher.group(2), matcher.group(3), matcher.group(4));
+    }
+
+    private void endInputStream() {
+        try {
+            dataOutputStream.writeUTF("fuck");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void acknowledgeSupporter(String command) {
         try {
-            dataOutputStream.writeUTF("send message");
-            dataOutputStream.flush();
             String message = dataInputStream.readUTF();
             System.out.println(message);
             String username = command.split(" ")[1];
@@ -371,7 +398,7 @@ public class ClientHandler extends Thread {
     }
 
     private void register(String command) throws IOException {
-        String result = null;
+        String result;
         String[] commands = command.split(" ");
         result = server.register(commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], commands[7]);
         dataOutputStream.writeUTF(result);
@@ -380,7 +407,7 @@ public class ClientHandler extends Thread {
     }
 
     private void update(String command) throws IOException {
-        String result = null;
+        String result;
         String[] commands = command.split(" ");
         String firstName = commands[1];
         String lastName = commands[2];
