@@ -2,11 +2,13 @@ package View.GraphicController;
 
 import controller.client.BuyerProcessor;
 import View.graphic.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import model.UserType;
 
 public class MainMenuController extends Controller {
+    public Button filesPanel;
     private BuyerProcessor buyerProcessor = BuyerProcessor.getInstance();
     @FXML
     private Button loginButton;
@@ -23,7 +25,7 @@ public class MainMenuController extends Controller {
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
             SellerUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SellerUserWindow.getInstance().start(stage);
-        } else if (buyerProcessor.getUser().getUserType()==UserType.SUPPORTER) {
+        } else if (buyerProcessor.getUser().getUserType() == UserType.SUPPORTER) {
             SupporterUserWindow.getInstance().setParent(MainWindow.getInstance(), null);
             SupporterUserWindow.getInstance().start(stage);
         } else {
@@ -61,5 +63,8 @@ public class MainMenuController extends Controller {
     public void productsPanelButtonClicked() {
         Music.getInstance().open();
         ProductPanelWindow.getInstance().start(stage);
+    }
+
+    public void filesPanelButtonClicked() {
     }
 }
