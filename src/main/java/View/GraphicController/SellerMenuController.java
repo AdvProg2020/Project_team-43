@@ -541,14 +541,12 @@ public class SellerMenuController extends Controller {
                 return;
             }
             client.addFile(user, Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
+            sellerProcessor.addFile(Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
             updateFilesJFXListView();
         }
     }
 
     private void updateFilesJFXListView() {
-        User.setAllUsers(client.getAllUsers());
-        Processor.setUser(User.getUserByUserName(user.getUsername()));
-        user = (Seller) Processor.user;
         FilesJFXListView.getItems().clear();
         for (FileProduct file : user.getFiles()) {
             HBox hBox = new HBox();
@@ -556,6 +554,7 @@ public class SellerMenuController extends Controller {
             Button button = new Button("remove");
             button.setOnAction(event -> {
                 client.removeFile(user, file.getAddress());
+                sellerProcessor.removeFile(file.getAddress());
                 updateFilesJFXListView();
             });
             hBox.getChildren().add(button);

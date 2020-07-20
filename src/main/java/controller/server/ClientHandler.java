@@ -140,7 +140,6 @@ public class ClientHandler extends Thread {
                 else{
                     System.out.println("What the fuck command");
                 }
-                System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -399,7 +398,7 @@ public class ClientHandler extends Thread {
     }
 
     private void register(String command) throws IOException {
-        String result = null;
+        String result;
         String[] commands = command.split(" ");
         result = server.register(commands[1], commands[2], commands[3], commands[4], commands[5], commands[6], commands[7]);
         dataOutputStream.writeUTF(result);
@@ -408,7 +407,7 @@ public class ClientHandler extends Thread {
     }
 
     private void update(String command) throws IOException {
-        String result = null;
+        String result;
         String[] commands = command.split(" ");
         String firstName = commands[1];
         String lastName = commands[2];

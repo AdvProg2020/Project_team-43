@@ -2,6 +2,7 @@ package controller.client;
 
 import model.*;
 import View.console.SellerShowAndCatch;
+import org.apache.commons.io.FilenameUtils;
 
 
 import java.text.ParseException;
@@ -194,5 +195,13 @@ public class SellerProcessor extends Processor {
 
     public void editOff(String offId, String field, String newField) {
         ((Seller) user).editOff(((Seller) user).getOffById(offId), field, newField);
+    }
+
+    public void addFile(int price, String path) {
+        ((Seller) user).addFile(FilenameUtils.getName(path), price, FilenameUtils.getExtension(path), path);
+    }
+
+    public void removeFile(String path) {
+        ((Seller) user).removeFile(((Seller) user).getFileByAddress(path));
     }
 }
