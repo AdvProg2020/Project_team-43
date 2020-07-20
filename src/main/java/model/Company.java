@@ -2,6 +2,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Company  implements Serializable {
+public class Company implements Serializable {
     private static String fileAddress = "database/Company.dat";
     public static ArrayList<Company> allCompanies = new ArrayList<>();
 
@@ -67,6 +68,10 @@ public class Company  implements Serializable {
 
 
     public static void save() throws IOException {
+        Sqlite sqlite = new Sqlite();
+        for (Company company : allCompanies) {
+            sqlite.saveCompany(company.getName(), company.getInfo());
+        }
         Saver.save(allCompanies, fileAddress);
     }
 
