@@ -1,9 +1,13 @@
 package model.database;
 
+import model.Company;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Sqlite {
     Connection conn;
+
     public Sqlite() {
         conn = Sqlite.connect();
     }
@@ -22,7 +26,7 @@ public class Sqlite {
         return conn;
     }
 
-    public void saveCompany(String name, String info){
+    public void saveCompany(String name, String info) {
         String sql = "INSERT INTO company(name,info) VALUES(?,?)";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -32,6 +36,23 @@ public class Sqlite {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Company> loadCompany() {
+        String sql = "SELECT  name, info FROM company";
+        ArrayList<Company> allCompanies = new ArrayList<>();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String info = rs.getString("info");
+                allCompanies.add(new Company(name, info));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return allCompanies;
     }
 
 }
