@@ -64,6 +64,9 @@ public class Company implements Serializable {
         if (companies != null) {
             allCompanies = new ArrayList<>(Arrays.asList(companies));
         }
+        for (Company company : new Sqlite().loadCompany()) {
+            System.out.println(company);
+        }
     }
 
 
