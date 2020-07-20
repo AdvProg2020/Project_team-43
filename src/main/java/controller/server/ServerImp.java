@@ -4,6 +4,7 @@ import controller.client.BuyerProcessor;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -384,6 +385,15 @@ public class ServerImp {
 
             }
         }
+    }
+
+    public void addFileSeller(String price, String token, String path) {
+        ((Seller) users.get(token)).addFile(FilenameUtils.getName(path), Integer.parseInt(price), FilenameUtils.getExtension(path), path);
+    }
+
+    public void removeFileSeller(String token, String path) {
+        Seller seller = (Seller)users.get(token);
+        seller.removeFile(seller.getFileByAddress(path));
     }
 }
 

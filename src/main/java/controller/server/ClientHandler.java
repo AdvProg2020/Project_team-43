@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientHandler extends Thread {
     private DataInputStream dataInputStream;
@@ -20,7 +22,6 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
-    //private HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -133,13 +134,42 @@ public class ClientHandler extends Thread {
                 } else if (command.startsWith("sendMessage")) {
                     acknowledgeSupporter(command);
                 } else if (command.startsWith("endInputStream")) {
-                    dataOutputStream.writeUTF("fuck");
-                    dataOutputStream.flush();
+                    endInputStream();
+                } else if (command.startsWith("addFileSeller")) {
+                    addFileSeller(command);
+                } else if (command.startsWith("removeFileSeller")){
+                    removeFileSeller(command);
+                }
+                else{
+                    System.out.println("What the fuck command");
                 }
                 System.out.println(command);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void removeFileSeller(String command) {
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (.+)"));
+        Matcher matcher = pattern.matcher(command);
+        matcher.find();
+        server.removeFileSeller(matcher.group(2), matcher.group(3));
+    }
+
+    private void addFileSeller(String command) {
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (.+)"));
+        Matcher matcher = pattern.matcher(command);
+        matcher.find();
+        server.addFileSeller(matcher.group(2), matcher.group(3), matcher.group(4));
+    }
+
+    private void endInputStream() {
+        try {
+            dataOutputStream.writeUTF("fuck");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

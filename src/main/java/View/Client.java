@@ -641,5 +641,25 @@ public class Client {
 
         }
     }
+
+    public void addFile(User user, int price, String absolutePath) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("addFileSeller " + price + " " + token + " " + absolutePath);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFile(User user, String absolutePath) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("removeFileSeller " + token + " " + absolutePath);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

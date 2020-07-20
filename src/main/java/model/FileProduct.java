@@ -1,9 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class FileProduct {
-    private static final ArrayList<FileProduct> files = new ArrayList<>();
+public class FileProduct implements Serializable {
+    private static final ArrayList<FileProduct> allFiles = new ArrayList<>();
     private int price;
     private String fileName;
     private String address;
@@ -17,6 +20,15 @@ public class FileProduct {
         this.address = address;
         this.sellerUsername = sellerUsername;
         this.extension = extension;
+        allFiles.add(this);
+    }
+
+    public static List<FileProduct> getAllFiles() {
+        return Collections.unmodifiableList(allFiles);
+    }
+
+    public static void removeFile(FileProduct fileProduct) {
+        allFiles.remove(fileProduct);
     }
 
     public void setFileName(String fileName) {
@@ -64,4 +76,5 @@ public class FileProduct {
     public int getPrice() {
         return price;
     }
+
 }
