@@ -253,26 +253,59 @@ public class Sqlite {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String productId = rs.getString(1);
-                State.ProductState productState = (State.ProductState)this.stringToObject(rs.getString(2), State.ProductState.class);
+                State.ProductState productState = (State.ProductState) this.stringToObject(rs.getString(2), State.ProductState.class);
                 String name = rs.getString(3);
                 String companyName = rs.getString(4);
                 double price = rs.getDouble(5);
                 int visit = rs.getInt(6);
                 String date = rs.getString(7);
                 int availableCount = rs.getInt(8);
-                HashMap<String, String > featureMap = (HashMap<String, String>) this.stringToObject(rs.getString(9), HashMap.class);
+                HashMap<String, String> featureMap = (HashMap<String, String>) this.stringToObject(rs.getString(9), HashMap.class);
                 String description = rs.getString(10);
-                ProductScore productScore = (ProductScore)this.stringToObject(rs.getString(11), ProductScore.class);
+                ProductScore productScore = (ProductScore) this.stringToObject(rs.getString(11), ProductScore.class);
                 Comment[] commentsArray = (Comment[]) this.stringToObject(rs.getString(12), Comment[].class);
                 ArrayList<Comment> comments = new ArrayList<>(Arrays.asList(commentsArray));
                 String categoryName = rs.getString(13);
-                ArrayList<String > sellersName = (ArrayList<String>)this.stringToObject(rs.getString(14), ArrayList.class);
-                new Product(productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName);
+                ArrayList<String> sellersName = (ArrayList<String>) this.stringToObject(rs.getString(14), ArrayList.class);
+                new Product(productId, productState, name, companyName, price, visit, date, availableCount, featureMap, description, productScore, comments, categoryName, sellersName);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    public void saveSellOrder(ArrayList<SellOrder> sellOrders) {
+        String sqlDelete = "DELETE FROM sellOrder";
+        try {
+            conn.prepareStatement(sqlDelete).executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        String sql = "INSERT INTO sellOrder(payment,offAmount,productId,buyerUserName,deliveryStatus,number) VALUES(?,?,?,?,?,?)";
+        for (SellOrder sellOrder : sellOrders) {
+            double payment = sellOrder.getPayment();
+            double offAmount = sellOrder.getOffAmount();
+            String productId = sellOrder.getProduct().getProductId();
+            String buyerUserName = sellOrder.getBuyer().getUsername();
+            String deliveryStatus = this.objectToString(sellOrder.getDeliveryStatus());
+            int number = sellOrder.getNumber();
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setDouble(1, payment);
+                pstmt.setDouble(2, offAmount);
+                pstmt.setString(3, productId);
+                pstmt.setString(4, buyerUserName);
+                pstmt.setString(5, deliveryStatus);
+                pstmt.setInt(6, number);
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
+
+
