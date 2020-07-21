@@ -3,6 +3,7 @@ package model;
 import javafx.scene.image.Image;
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -96,9 +97,11 @@ public abstract class User implements Serializable {
     }
 
     public static void load() throws FileNotFoundException {
-        Buyer.load();
+//        Buyer.load();
+        new Sqlite().loadBuyer();
         Seller.load();
         Manager.load();
+
     }
 
 

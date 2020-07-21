@@ -1,22 +1,39 @@
 package model.database;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.Buyer;
 import model.Company;
+import model.UserPersonalInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Sqlite {
-    Connection conn;
+    private Connection conn;
+    private GsonBuilder gsonBuilder;
+    Gson gson;
 
     public Sqlite() {
         conn = Sqlite.connect();
+        gsonBuilder = new GsonBuilder();
+        gson = gsonBuilder.create();
+    }
+
+    public String objectToString(Object object) {
+        return gson.toJson(object);
+    }
+
+    public Object stringToObject(String string, Class type) {
+        return gson.fromJson(string, type);
     }
 
     public static Connection connect() {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:/Users/ASUS/IdeaProjects/newPro/sqlDataBase/company.db";
+            String url = "jdbc:sqlite:sqlDataBase/company.db";
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,6 +70,54 @@ public class Sqlite {
             System.out.println(e.getMessage());
         }
         return allCompanies;
+    }
+
+    public void saveBuyer(ArrayList<Buyer> buyers) {
+        String sql = "INSERT INTO buyer(username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId) VALUES(?,?,?,?,?,?)";
+        for (Buyer buyer : buyers) {
+            String username = buyer.getUsername();
+            String userPersonalInfo = this.objectToString(buyer.getUserPersonalInfo());
+            double balance = buyer.getBalance();
+            double sumOfPaymentForCoddedDiscount = buyer.getSumOfPaymentForCoddedDiscount();
+            String codedDiscountId = objectToString(buyer.getCodedDiscountsId());
+            String buyOrdersId = objectToString(buyer.getBuyOrdersId());
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                pstmt.setString(2, userPersonalInfo);
+                pstmt.setDouble(3, balance);
+                pstmt.setDouble(4, sumOfPaymentForCoddedDiscount);
+                pstmt.setString(5, codedDiscountId);
+                pstmt.setString(6, buyOrdersId);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void loadBuyer() {
+        String sql = "SELECT  username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId FROM buyer";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String username = rs.getString(1);
+                UserPersonalInfo userPersonalInfo = (UserPersonalInfo) this.stringToObject(rs.getString(2), UserPersonalInfo.class);
+                double balance = rs.getDouble(3);
+                double sumOfPaymentForCoddedDiscount = rs.getDouble(4);
+                HashMap<String, Double> codedDiscountId = (HashMap)this.stringToObject(rs.getString(5), HashMap.class);
+                HashMap<String , Integer> codedDiscountId2 = new HashMap<>();
+                for (String key : codedDiscountId.keySet()) {
+                    codedDiscountId2.put(key,codedDiscountId.get(key).intValue());
+                }
+                ArrayList<String> buyOrdersId = (ArrayList<String >)this.stringToObject(rs.getString(6), ArrayList.class);
+                new Buyer(username, userPersonalInfo, balance, sumOfPaymentForCoddedDiscount, codedDiscountId2, buyOrdersId);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }

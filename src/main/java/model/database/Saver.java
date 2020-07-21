@@ -12,11 +12,11 @@ public class Saver {
 
     public static void save(ArrayList objects, String address) throws IOException {
         Writer writer = new FileWriter(address);
-
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
         gson.toJson(objects, writer);
         writer.close();
     }
+
 }
 

@@ -3,6 +3,7 @@ package model;
 import javafx.util.Pair;
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +22,33 @@ public class Buyer extends User {
     private ArrayList<BuyOrder> orders;
     private ArrayList<String> buyOrdersId;
 
+    public HashMap<String, Integer> getCodedDiscountsId() {
+        return codedDiscountsId;
+    }
+
+    public void setCodedDiscountsId(HashMap<String, Integer> codedDiscountsId) {
+        this.codedDiscountsId = codedDiscountsId;
+    }
+
+    public ArrayList<String> getBuyOrdersId() {
+        return buyOrdersId;
+    }
+
+    public void setBuyOrdersId(ArrayList<String> buyOrdersId) {
+        this.buyOrdersId = buyOrdersId;
+    }
+
+    public Buyer (String username , UserPersonalInfo userPersonalInfo,double balance, double sumOfPaymentForCoddedDiscount, HashMap<String, Integer> codedDiscountsId, ArrayList<String> buyOrdersId ){
+        super(username, userPersonalInfo);
+        newBuyerCart = new HashMap<>();
+        this.balance = balance;
+        this.sumOfPaymentForCoddedDiscount = sumOfPaymentForCoddedDiscount;
+        codedDiscounts = new HashMap<>();
+        orders = new ArrayList<BuyOrder>();
+        this.codedDiscountsId = codedDiscountsId;
+        this.buyOrdersId = buyOrdersId;
+        allUsers.add(this);
+    }
 
     public Buyer(String username, UserPersonalInfo userPersonalInfo) {
         super(username, userPersonalInfo);
@@ -33,6 +61,13 @@ public class Buyer extends User {
         allUsers.add(this);
     }
 
+    public double getSumOfPaymentForCoddedDiscount() {
+        return sumOfPaymentForCoddedDiscount;
+    }
+
+    public void setSumOfPaymentForCoddedDiscount(double sumOfPaymentForCoddedDiscount) {
+        this.sumOfPaymentForCoddedDiscount = sumOfPaymentForCoddedDiscount;
+    }
 
     @Override
     public void setUserType() {
@@ -231,7 +266,6 @@ public class Buyer extends User {
             sellers.add(productSellerPair.getValue());
         }
         return sellers;
-
     }
 
     public static void load() throws FileNotFoundException {
@@ -242,7 +276,6 @@ public class Buyer extends User {
         }
     }
 
-
     public static void save() throws IOException {
         ArrayList<Buyer> allBuyers = new ArrayList<>();
         for (User user : allUsers) {
@@ -250,6 +283,7 @@ public class Buyer extends User {
                 allBuyers.add((Buyer) user);
             }
         }
+        new Sqlite().saveBuyer(allBuyers);
         Saver.save(allBuyers, fileAddress);
     }
 
@@ -339,5 +373,4 @@ public class Buyer extends User {
         }
         orders = ordersFromDataBase;
     }
-
 }
