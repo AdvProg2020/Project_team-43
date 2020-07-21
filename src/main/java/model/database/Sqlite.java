@@ -6,9 +6,12 @@ import com.google.gson.GsonBuilder;
 import model.*;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Sqlite {
@@ -305,6 +308,39 @@ public class Sqlite {
             }
         }
     }
+
+    public void loadSellOrder() {
+        String sql = "SELECT payment,offAmount,date,productId,buyerUserName,deliveryStatus,number FROM sellOrder";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                double payment = rs.getDouble(1);
+                double offAmount = rs.getDouble(2);
+                String date = rs.getString(3);
+                String productId = rs.getString(4);
+                String buyerUserName = rs.getString(5);
+                DeliveryStatus deliveryStatus = (DeliveryStatus)this.stringToObject(rs.getString(6), DeliveryStatus.class);
+                int number = rs.getInt(7);
+                new SellOrder(payment,offAmount,changeDate(date),productId,buyerUserName,deliveryStatus,number);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public Date changeDate(String date){
+        Date theSameDate = null;
+        try {
+            theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return theSameDate;
+    }
+
+
+
+
 }
 
 
