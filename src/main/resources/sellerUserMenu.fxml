@@ -236,7 +236,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <VBox fx:id="applyVBox" alignment="CENTER" layoutX="475.0" layoutY="292.0" prefHeight="269.0" prefWidth="327.0">
+                        <VBox fx:id="applyVBox" alignment="CENTER" layoutX="487.0" layoutY="249.0" prefHeight="337.0" prefWidth="327.0">
                             <children>
                                 <ListView fx:id="categoryFeaturesListView" prefHeight="163.0" prefWidth="327.0" visible="false">
                                     <padding>
@@ -246,11 +246,12 @@
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </ListView>
-                                <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply">
-                                    <VBox.margin>
-                                        <Insets top="10.0" />
-                                    </VBox.margin>
-                                </Button>
+                        <Button mnemonicParsing="false" onAction="#browseFile" text="Browse File">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </Button>
+                                <Button mnemonicParsing="false" onAction="#addNewProduct" text="Apply" />
                             </children>
                         </VBox>
                         <Button layoutX="135.0" layoutY="177.0" mnemonicParsing="false" onAction="#addExistingProduct" text="Apply" />

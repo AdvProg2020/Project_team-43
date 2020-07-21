@@ -93,6 +93,8 @@ public class SellerMenuController extends Controller {
     private Seller user;
     private Product product;
     private Off off;
+    private File file;
+
 
     @FXML
     public void initialize() {
@@ -170,6 +172,12 @@ public class SellerMenuController extends Controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void browseFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
+        file = fileChooser.showOpenDialog(stage);
     }
 
     @FXML
@@ -522,14 +530,6 @@ public class SellerMenuController extends Controller {
 
     public void decreaseBalance() {
         BankForWithdrawWindow.getInstance().start(MainWindow.getInstance().getStage());
-    }
-
-    private File file;
-
-    public void browseFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
-        file = fileChooser.showOpenDialog(stage);
     }
 
     public void addFile() {
