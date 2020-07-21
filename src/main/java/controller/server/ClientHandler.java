@@ -5,6 +5,7 @@ import model.*;
 import model.request.Request;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -137,6 +138,8 @@ public class ClientHandler extends Thread {
                     addFileSeller(command);
                 } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
+                } else if (command.startsWith("addFileServer")) {
+                    addFileServer(command);
                 } else {
                     System.out.println("What the fuck command");
                 }
@@ -144,6 +147,14 @@ public class ClientHandler extends Thread {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void addFileServer(String command) {
+        String[] commands = command.split(" ");
+        String IP = commands[1];
+        int port = Integer.parseInt(commands[2]);
+        String token = commands[3];
+        server.addFileServer(IP, port, token);
     }
 
     private void removeFileSeller(String command) {

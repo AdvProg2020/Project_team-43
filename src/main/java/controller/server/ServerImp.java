@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class ServerImp {
     private ArrayList<ClientHandler> allClientsThreads = new ArrayList<>();
     private HashMap<String, User> users = new HashMap<>();
+    private HashMap<String, Pair<String, Integer>> filesIPAndPort = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
     public static final int PORT = 2020;

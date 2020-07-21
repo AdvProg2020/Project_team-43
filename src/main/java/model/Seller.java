@@ -41,7 +41,6 @@ public class Seller extends User implements Serializable {
     }
 
     public void addFile(String fileName, int price, String extension, String fileAddress) {
-        files.add(new FileProduct(fileName, fileAddress, this.username, extension, price));
     }
 
     public void removeFile(FileProduct fileProduct) {
