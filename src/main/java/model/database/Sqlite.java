@@ -73,7 +73,7 @@ public class Sqlite {
     }
 
     public void saveBuyer(ArrayList<Buyer> buyers) {
-        String sql = "INSERT INTO buyer(username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO buyer(username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId,filesId) VALUES(?,?,?,?,?,?,?)";
         for (Buyer buyer : buyers) {
             String username = buyer.getUsername();
             String userPersonalInfo = this.objectToString(buyer.getUserPersonalInfo());
@@ -81,6 +81,7 @@ public class Sqlite {
             double sumOfPaymentForCoddedDiscount = buyer.getSumOfPaymentForCoddedDiscount();
             String codedDiscountId = objectToString(buyer.getCodedDiscountsId());
             String buyOrdersId = objectToString(buyer.getBuyOrdersId());
+            String filesId = objectToString(buyer.getFilesId());
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, username);
@@ -89,6 +90,8 @@ public class Sqlite {
                 pstmt.setDouble(4, sumOfPaymentForCoddedDiscount);
                 pstmt.setString(5, codedDiscountId);
                 pstmt.setString(6, buyOrdersId);
+                pstmt.setString(7, filesId);
+
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -97,7 +100,7 @@ public class Sqlite {
     }
 
     public void loadBuyer() {
-        String sql = "SELECT  username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId FROM buyer";
+        String sql = "SELECT  username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId,filesId FROM buyer";
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -112,7 +115,8 @@ public class Sqlite {
                     codedDiscountId2.put(key,codedDiscountId.get(key).intValue());
                 }
                 ArrayList<String> buyOrdersId = (ArrayList<String >)this.stringToObject(rs.getString(6), ArrayList.class);
-                new Buyer(username, userPersonalInfo, balance, sumOfPaymentForCoddedDiscount, codedDiscountId2, buyOrdersId);
+                HashMap<String,String> filesId = (HashMap<String, String>)this.stringToObject(rs.getString(7), HashMap.class);
+                new Buyer(username, userPersonalInfo, balance, sumOfPaymentForCoddedDiscount, codedDiscountId2, buyOrdersId, filesId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

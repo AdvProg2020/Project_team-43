@@ -40,7 +40,7 @@ public class Buyer extends User {
         this.buyOrdersId = buyOrdersId;
     }
 
-    public Buyer (String username , UserPersonalInfo userPersonalInfo,double balance, double sumOfPaymentForCoddedDiscount, HashMap<String, Integer> codedDiscountsId, ArrayList<String> buyOrdersId ){
+    public Buyer (String username , UserPersonalInfo userPersonalInfo,double balance, double sumOfPaymentForCoddedDiscount, HashMap<String, Integer> codedDiscountsId, ArrayList<String> buyOrdersId, HashMap<String, String> filesId ){
         super(username, userPersonalInfo);
         newBuyerCart = new HashMap<>();
         this.balance = balance;
@@ -49,6 +49,7 @@ public class Buyer extends User {
         orders = new ArrayList<BuyOrder>();
         this.codedDiscountsId = codedDiscountsId;
         this.buyOrdersId = buyOrdersId;
+        this.filesId = filesId;
         allUsers.add(this);
     }
 
@@ -303,7 +304,7 @@ public class Buyer extends User {
                 allBuyers.add((Buyer) user);
             }
         }
-        new Sqlite().saveBuyer(allBuyers);
+//        new Sqlite().saveBuyer(allBuyers);
         Saver.save(allBuyers, fileAddress);
     }
 
