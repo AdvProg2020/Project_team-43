@@ -155,12 +155,26 @@ public class Sqlite {
         }
     }
 
-    public void saveManager(ArrayList<Manager> managers){
+    public void saveManager(ArrayList<Manager> managers) {
         String sqlDelete = "DELETE FROM manager";
         try {
             conn.prepareStatement(sqlDelete).executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        String sql = "INSERT INTO manager(username,userPersonalInfo) VALUES(?,?)";
+        for (Manager manager : managers) {
+            String username = manager.getUsername();
+            String userPersonalInfo = this.objectToString(manager.getUserPersonalInfo());
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, username);
+                pstmt.setString(2, userPersonalInfo);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
