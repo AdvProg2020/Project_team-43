@@ -27,6 +27,18 @@ public class Seller extends User implements Serializable {
     private ArrayList<String> sellOrdersId;
     private ArrayList<String> filesId;
 
+    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName,HashMap<String , Integer> productsNumberWithId ,ArrayList<String> offsId, ArrayList<String> sellOrdersId, ArrayList<String> filesId) {
+        super(username, userPersonalInfo);
+        this.company = Company.getCompanyByName(companyName);
+        this.offsId = offsId;
+        this.sellOrdersId = sellOrdersId;
+        this.productsNumberWithId = productsNumberWithId;
+        this.filesId = filesId;
+        productsNumber = new HashMap<>();
+        offs = new ArrayList<>();
+        orders = new ArrayList<>();
+        setUserType();
+    }
 
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
@@ -45,6 +57,22 @@ public class Seller extends User implements Serializable {
         FileProduct fileProduct = new FileProduct(fileName, fileAddress, this.username, extension, price, Company.getCompanyByName(companyName), Category.getCategoryByName(categoryName));
         fileProduct.setFeaturesMap(features);
         filesId.add(fileProduct.getProductId());
+    }
+
+    public ArrayList<String> getFilesId() {
+        return filesId;
+    }
+
+    public HashMap<String, Integer> getProductsNumberWithId() {
+        return productsNumberWithId;
+    }
+
+    public ArrayList<String> getSellOrdersId() {
+        return sellOrdersId;
+    }
+
+    public ArrayList<String> getOffsId() {
+        return offsId;
     }
 
     public ArrayList<String> getFilesId() {
@@ -143,7 +171,8 @@ public class Seller extends User implements Serializable {
         Product.allProductsInQueueEdit.add(product);
     }
 
-    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features) {
+    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<
+            String, String> features) {
         Product product = new Product(name, company, price, category);
         product.setFeaturesMap(features);
         new ProductRequest(product, this, number);

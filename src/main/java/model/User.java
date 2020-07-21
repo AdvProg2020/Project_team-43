@@ -104,7 +104,6 @@ public abstract class User implements Serializable {
 
     }
 
-
     public static void save() throws IOException {
         Buyer.save();
         Seller.save();
