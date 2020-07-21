@@ -2,10 +2,7 @@ package model.database;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import model.Buyer;
-import model.Company;
-import model.Seller;
-import model.UserPersonalInfo;
+import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,7 +113,7 @@ public class Sqlite {
             String productsNumberWithId = this.objectToString(seller.getProductsNumberWithId());
             String offsId = this.objectToString(seller.getOffsId());
             String sellOrdersId = this.objectToString(seller.getSellOrdersId());
-            String filesId;
+            String filesId = this.objectToString(seller.getFilesId());
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, username);
@@ -156,6 +153,16 @@ public class Sqlite {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void saveManager(ArrayList<Manager> managers){
+        String sqlDelete = "DELETE FROM manager";
+        try {
+            conn.prepareStatement(sqlDelete).executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

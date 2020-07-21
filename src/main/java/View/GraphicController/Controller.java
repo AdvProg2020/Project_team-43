@@ -1,7 +1,7 @@
 package View.GraphicController;
 
 import controller.client.BuyerProcessor;
-import View.Client;
+import controller.client.Client;
 import View.graphic.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;

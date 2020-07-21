@@ -1,12 +1,11 @@
 
 import View.GraphicController.Controller;
-import View.console.App;
 import View.graphic.MainWindow;
 import javafx.application.Application;
 
 import javafx.stage.Stage;
 
-import View.Client;
+import controller.client.Client;
 
 public class View extends Application {
     @Override

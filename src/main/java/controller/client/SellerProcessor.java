@@ -197,9 +197,6 @@ public class SellerProcessor extends Processor {
         ((Seller) user).editOff(((Seller) user).getOffById(offId), field, newField);
     }
 
-    public void addFile(int price, String path) {
-        ((Seller) user).addFile(FilenameUtils.getName(path), price, FilenameUtils.getExtension(path), path);
-    }
 
     public void removeFile(String path) {
         ((Seller) user).removeFile(((Seller) user).getFileByAddress(path));
