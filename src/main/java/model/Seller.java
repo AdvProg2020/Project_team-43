@@ -27,7 +27,7 @@ public class Seller extends User implements Serializable {
     private ArrayList<String> sellOrdersId;
     private ArrayList<String> filesId;
 
-    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName, HashMap<String, Integer> productsNumberWithId, ArrayList<String> offsId, ArrayList<String> sellOrdersId, ArrayList<String> filesId) {
+    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName,HashMap<String , Integer> productsNumberWithId ,ArrayList<String> offsId, ArrayList<String> sellOrdersId, ArrayList<String> filesId) {
         super(username, userPersonalInfo);
         this.company = Company.getCompanyByName(companyName);
         this.offsId = offsId;
@@ -57,8 +57,8 @@ public class Seller extends User implements Serializable {
         FileProduct fileProduct = new FileProduct(fileName, fileAddress, this.username, extension, price, Company.getCompanyByName(companyName), Category.getCategoryByName(categoryName));
         fileProduct.setFeaturesMap(features);
         filesId.add(fileProduct.getProductId());
+        productsNumber.put(fileProduct, 2100000000);
     }
-
 
     public HashMap<String, Integer> getProductsNumberWithId() {
         return productsNumberWithId;
@@ -76,24 +76,16 @@ public class Seller extends User implements Serializable {
         return filesId;
     }
 
-    public void removeFile(FileProduct fileProduct) {
-        filesId.remove(fileProduct);
-        FileProduct.removeFile(fileProduct);
-    }
-
-    public FileProduct getFileByAddress(String fileAddress) {
-        for (String fileId : filesId) {
-            if (((FileProduct) getProductById(fileId)).getAddress().equals(fileAddress)) {
-                return (FileProduct) getProductById(fileId);
-            }
-        }
-        return null;
+    public void removeFile(String id) {
+        filesId.remove(id);
+        Product.getAllProductsInList().remove(Product.getProductById(id));
+        productsNumber.remove(Product.getProductById(id));
     }
 
     public List<FileProduct> getFiles() {
         ArrayList<FileProduct> fileProducts = new ArrayList<>();
         for (String id : filesId) {
-            fileProducts.add((FileProduct) getProductById(id));
+            fileProducts.add((FileProduct) Product.getProductById(id));
         }
         return Collections.unmodifiableList(fileProducts);
     }
@@ -168,8 +160,7 @@ public class Seller extends User implements Serializable {
         Product.allProductsInQueueEdit.add(product);
     }
 
-    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<
-            String, String> features) {
+    public void addNewProduct(String name, Company company, Double price, Category category, int number, HashMap<String, String> features) {
         Product product = new Product(name, company, price, category);
         product.setFeaturesMap(features);
         new ProductRequest(product, this, number);
