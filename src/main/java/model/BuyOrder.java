@@ -68,6 +68,9 @@ public class BuyOrder extends Order  implements Serializable {
         return deliveryStatus;
     }
 
+    public ArrayList<String> getSellersId() {
+        return sellersId;
+    }
 
     public double getPayment() {
         return payment;

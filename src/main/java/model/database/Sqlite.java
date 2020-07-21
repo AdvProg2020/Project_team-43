@@ -1,5 +1,6 @@
 package model.database;
 
+import View.GraphicController.BuyerMenuController;
 import View.GraphicController.ProductPanelController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -336,6 +337,42 @@ public class Sqlite {
             e.printStackTrace();
         }
         return theSameDate;
+    }
+
+    public void saveBuyOrder(ArrayList<BuyOrder> buyOrders){
+        String sqlDelete = "DELETE FROM buyOrder";
+        try {
+            conn.prepareStatement(sqlDelete).executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "INSERT INTO buyOrder(payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date) VALUES(?,?,?,?,?,?,?,?)";
+        for (BuyOrder buyOrder : buyOrders) {
+            double payment = buyOrder.getPayment();
+            double codedDiscountAmount = buyOrder.getCodedDiscountAmount();
+            String productsId = this.objectToString(buyOrder.getProductsId());
+            String sellersId = this.objectToString(buyOrder.getSellersId());
+            String deliveryStatus = this.objectToString(buyOrder.getDeliveryStatus());
+            String address = buyOrder.getAddress();
+            String phoneNumber =buyOrder.getPhoneNumber();
+            String date = buyOrder.getDate().toString();
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setDouble(1, payment);
+                pstmt.setDouble(2, codedDiscountAmount);
+                pstmt.setString(3, productsId);
+                pstmt.setString(4, sellersId);
+                pstmt.setString(5, deliveryStatus);
+                pstmt.setString(6, address);
+                pstmt.setString(7, phoneNumber);
+                pstmt.setString(8, date);
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
