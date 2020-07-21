@@ -389,13 +389,13 @@ public class ServerImp {
         }
     }
 
-    public void addFileSeller(String price, String token, String path) {
-        //((Seller) users.get(token)).addFile(FilenameUtils.getName(path), Integer.parseInt(price), FilenameUtils.getExtension(path), path);
+    public void removeFileSeller(String token, String id) {
+        Seller seller = (Seller) users.get(token);
+        seller.removeFile(id);
     }
 
-    public void removeFileSeller(String token, String path) {
-        Seller seller = (Seller) users.get(token);
-        seller.removeFile(seller.getFileByAddress(path));
+    public void addFileSeller(String name, String company, String category, String price, String token, String path, HashMap<String, String> features) {
+        ((Seller) users.get(token)).addFile(name, Integer.parseInt(price), FilenameUtils.getExtension(path), path, company, category, features);
     }
 }
 

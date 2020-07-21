@@ -650,6 +650,20 @@ public class Client {
         //TODO
     }
 
+    public User updateMe(User user) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("fuckMe " + token);
+            dataOutputStream.flush();
+            User getUser = (User) getObject();
+            System.out.println(getUser.getUsername());
+            return getUser;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void addFile(User user, String name, String company, String category, String price, HashMap<String, String> features, File file) {
         checkTokenValidation(user);
         try {
