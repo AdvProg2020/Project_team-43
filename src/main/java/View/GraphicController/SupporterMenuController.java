@@ -94,7 +94,6 @@ public class SupporterMenuController extends Controller {
 
 
     public void chatWithUser() {
-        init();
         String userName = usersListView.getSelectionModel().getSelectedItem();
         if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);
@@ -216,12 +215,13 @@ public class SupporterMenuController extends Controller {
     }
 
     public void setOnline() {
-        client.setUserOnline(user);
         ((Supporter) user).setOnline(!((Supporter) user).isOnline());
         if (((Supporter) user).isOnline()) {
+            client.setUserOnline(user);
             client.acknowledge(this, privateChatBox);
         } else {
             client.fuck2Thread();
+            client.setUserOnline(user);
         }
 
     }

@@ -626,6 +626,7 @@ public class Client {
             try {
                 dataOutputStream.writeUTF("endInputStream");
                 dataOutputStream.flush();
+                System.out.println(dataInputStream.readUTF());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -651,6 +652,11 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void downloadFile(Buyer user, String fileId) {
+        checkTokenValidation(user);
+        //TODO
     }
 }
 

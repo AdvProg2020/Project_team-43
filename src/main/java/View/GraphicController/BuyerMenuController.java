@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuyerMenuController extends Controller {
+    public JFXListView<HBox> FilesJFXListView;
     private boolean isChatTabOpen;
     private static boolean isBack = false;
     public ListView<String> products;
@@ -82,9 +83,25 @@ public class BuyerMenuController extends Controller {
         setCart();
         setDiscountCodes();
         setOrders();
+        setFilesForDownload();
         if (isBack) {
             isBack = false;
             tabPane.getSelectionModel().select(cartTab);
+        }
+    }
+
+    private void setFilesForDownload() {
+        FilesJFXListView.getItems().clear();
+        HashMap<String, String> files = user.getFilesId();
+        for (String fileId : files.keySet()) {
+            HBox hBox = new HBox();
+            hBox.getChildren().add(new Label(fileId + "   Price: " + files.get(fileId) + "   "));
+            Button button = new Button("download");
+            button.setOnAction(event -> {
+                client.downloadFile(user, fileId);
+            });
+            hBox.getChildren().add(button);
+            FilesJFXListView.getItems().add(hBox);
         }
     }
 
@@ -298,6 +315,7 @@ public class BuyerMenuController extends Controller {
             else
                 getListView().getItems().remove(getItem());
         }
+
     }
 
     public void sendMessage() {
@@ -375,7 +393,7 @@ public class BuyerMenuController extends Controller {
     }
 
     private void init() {
-        client.fuckThread();
+        client.fuck2Thread();
         User.setAllUsers(client.getAllUsers());
         if (!client.threadIsNull())
             client.acknowledge(this, privateChatBox);

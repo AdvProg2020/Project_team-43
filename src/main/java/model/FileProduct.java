@@ -1,11 +1,10 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class FileProduct implements Serializable {
+public class FileProduct extends Product {
     private static final ArrayList<FileProduct> allFiles = new ArrayList<>();
     private int price;
     private String fileName;
@@ -14,9 +13,8 @@ public class FileProduct implements Serializable {
     private String extension;
 
 
-    public FileProduct(String fileName, String address, String sellerUsername, String extension, int price) {
-        this.fileName = fileName;
-        this.price = price;
+    public FileProduct(String fileName, String address, String sellerUsername, String extension, int price, Company company, Category category) {
+        super(fileName, company, price, category);
         this.address = address;
         this.sellerUsername = sellerUsername;
         this.extension = extension;
@@ -73,7 +71,7 @@ public class FileProduct implements Serializable {
         this.price = price;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

@@ -22,6 +22,8 @@ public class Buyer extends User {
     private ArrayList<BuyOrder> orders;
     private ArrayList<String> buyOrdersId;
 
+    private HashMap<String, String> filesId;
+
     public HashMap<String, Integer> getCodedDiscountsId() {
         return codedDiscountsId;
     }
@@ -55,9 +57,10 @@ public class Buyer extends User {
         newBuyerCart = new HashMap<>();
         sumOfPaymentForCoddedDiscount = 0;
         codedDiscounts = new HashMap<>();
-        orders = new ArrayList<BuyOrder>();
+        orders = new ArrayList<>();
         codedDiscountsId = new HashMap<>();
-        buyOrdersId = new ArrayList<String>();
+        buyOrdersId = new ArrayList<>();
+        filesId = new HashMap<>();
         allUsers.add(this);
     }
 
@@ -67,6 +70,10 @@ public class Buyer extends User {
 
     public void setSumOfPaymentForCoddedDiscount(double sumOfPaymentForCoddedDiscount) {
         this.sumOfPaymentForCoddedDiscount = sumOfPaymentForCoddedDiscount;
+    }
+
+    public HashMap<String, String> getFilesId() {
+        return filesId;
     }
 
     @Override
@@ -161,15 +168,20 @@ public class Buyer extends User {
     public boolean purchase(double discount, String address, String phoneNumber) {
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             synchronized (productSellerPair) {
-                if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
-                    decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
-                } else {
-                    return false;
+                if (!(productSellerPair.getKey() instanceof FileProduct)) {
+                    if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
+                        decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
         HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
+            if (productSellerPair.getKey() instanceof FileProduct) {
+                addNewFile(productSellerPair.getKey().getProductId(), ((FileProduct) productSellerPair.getKey()).getFileName());
+            }
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(new Date(),
@@ -266,6 +278,14 @@ public class Buyer extends User {
             sellers.add(productSellerPair.getValue());
         }
         return sellers;
+    }
+
+    public void setFilesId(HashMap<String, String> filesId) {
+        this.filesId = filesId;
+    }
+
+    private void addNewFile(String fileId, String fileName) {
+        filesId.put(fileId, fileName);
     }
 
     public static void load() throws FileNotFoundException {

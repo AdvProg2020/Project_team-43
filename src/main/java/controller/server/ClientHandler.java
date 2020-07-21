@@ -162,7 +162,9 @@ public class ClientHandler extends Thread {
 
     private void endInputStream() {
         try {
-            dataOutputStream.writeUTF("fuck");
+            dataOutputStream.writeUTF("fuck1");
+            dataOutputStream.flush();
+            dataOutputStream.writeUTF("fuck2");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
