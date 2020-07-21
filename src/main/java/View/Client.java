@@ -628,6 +628,7 @@ public class Client {
             try {
                 dataOutputStream.writeUTF("endInputStream");
                 dataOutputStream.flush();
+                System.out.println(dataInputStream.readUTF());
             } catch (IOException e) {
                 e.printStackTrace();
             }

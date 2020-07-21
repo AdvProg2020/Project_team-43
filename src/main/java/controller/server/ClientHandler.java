@@ -3,6 +3,7 @@ package controller.server;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
+
 import java.io.*;
 import java.net.Socket;
 import java.text.ParseException;
@@ -134,10 +135,9 @@ public class ClientHandler extends Thread {
                     endInputStream();
                 } else if (command.startsWith("addFileSeller")) {
                     addFileSeller(command);
-                } else if (command.startsWith("removeFileSeller")){
+                } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
-                }
-                else{
+                } else {
                     System.out.println("What the fuck command");
                 }
             }
@@ -162,7 +162,9 @@ public class ClientHandler extends Thread {
 
     private void endInputStream() {
         try {
-            dataOutputStream.writeUTF("fuck");
+            dataOutputStream.writeUTF("fuck1");
+            dataOutputStream.flush();
+            dataOutputStream.writeUTF("fuck2");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

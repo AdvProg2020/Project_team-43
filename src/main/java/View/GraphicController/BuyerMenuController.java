@@ -384,7 +384,7 @@ public class BuyerMenuController extends Controller {
     }
 
     private void init() {
-        client.fuckThread();
+        client.fuck2Thread();
         User.setAllUsers(client.getAllUsers());
         if (!client.threadIsNull())
             client.acknowledge(this, privateChatBox);
