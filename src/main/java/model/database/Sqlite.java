@@ -1,11 +1,14 @@
 package model.database;
 
+import View.GraphicController.ProductPanelController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Sqlite {
@@ -178,7 +181,7 @@ public class Sqlite {
         }
     }
 
-    public void loadManager(){
+    public void loadManager() {
         String sql = "SELECT  username,userPersonalInfo FROM manager";
         try {
             Statement stmt = conn.createStatement();
@@ -193,7 +196,7 @@ public class Sqlite {
         }
     }
 
-    public void saveProduct(ArrayList<Product> products){
+    public void saveProduct(ArrayList<Product> products) {
         String sqlDelete = "DELETE FROM product";
         try {
             conn.prepareStatement(sqlDelete).executeUpdate();
@@ -201,7 +204,7 @@ public class Sqlite {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO manager(productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO product(productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (Product product : products) {
             String productId = product.getProductId();
             String productState = this.objectToString(product.getProductState());
@@ -241,9 +244,35 @@ public class Sqlite {
                 e.printStackTrace();
             }
         }
-
     }
 
+    public void loadProduct() {
+        String sql = "SELECT productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName FROM product";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String productId = rs.getString(1);
+                State.ProductState productState = (State.ProductState)this.stringToObject(rs.getString(2), State.ProductState.class);
+                String name = rs.getString(3);
+                String companyName = rs.getString(4);
+                double price = rs.getDouble(5);
+                int visit = rs.getInt(6);
+                String date = rs.getString(7);
+                int availableCount = rs.getInt(8);
+                HashMap<String, String > featureMap = (HashMap<String, String>) this.stringToObject(rs.getString(9), HashMap.class);
+                String description = rs.getString(10);
+                ProductScore productScore = (ProductScore)this.stringToObject(rs.getString(11), ProductScore.class);
+                Comment[] commentsArray = (Comment[]) this.stringToObject(rs.getString(12), Comment[].class);
+                ArrayList<Comment> comments = new ArrayList<>(Arrays.asList(commentsArray));
+                String categoryName = rs.getString(13);
+                ArrayList<String > sellersName = (ArrayList<String>)this.stringToObject(rs.getString(14), ArrayList.class);
+                new Product(productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 
 }

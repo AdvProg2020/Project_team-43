@@ -7,6 +7,8 @@ import model.database.Saver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Product implements Serializable {
@@ -42,6 +44,33 @@ public class Product implements Serializable {
     private ArrayList<Seller> sellers;
     private ArrayList<String> sellersName;
 
+    public Product(String productId, State.ProductState productState, String name, String companyName, double price, int visit, String date, int availableCount, HashMap<String, String> featureMap, String description, ProductScore productScore, ArrayList<Comment> comments, String categoryName, ArrayList<String> sellersName) {
+        this.productId = productId;
+        this.productState=productState;
+        this.name = name;
+        this.company = Company.getCompanyByName(companyName);
+        this.price = price;
+        this.visit = visit;
+        this.date = changeDate(date);
+        this.availableCount = availableCount;
+        this.featuresMap = featureMap;
+        this.description = description;
+        this.score = productScore;
+        this.comments = comments;
+        this.categoryName = categoryName;
+        this.sellersName = sellersName;
+
+    }
+
+    public Date changeDate(String date){
+        Date theSameDate = null;
+        try {
+            theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return theSameDate;
+    }
 
     public Product(String name, Company company, double price, Category category) {
         this.productId = "" + constructId;
