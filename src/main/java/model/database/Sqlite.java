@@ -176,7 +176,21 @@ public class Sqlite {
                 e.printStackTrace();
             }
         }
+    }
 
+    public void loadManager(){
+        String sql = "SELECT  username,userPersonalInfo FROM manager";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                String username = rs.getString(1);
+                UserPersonalInfo userPersonalInfo = (UserPersonalInfo) this.stringToObject(rs.getString(2), UserPersonalInfo.class);
+                new Manager(username, userPersonalInfo);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
