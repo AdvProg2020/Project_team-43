@@ -1,13 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class FileProduct extends Product {
-    private static final ArrayList<FileProduct> allFiles = new ArrayList<>();
-    private int price;
-    private String fileName;
     private String address;
     private String sellerUsername;
     private String extension;
@@ -17,20 +11,18 @@ public class FileProduct extends Product {
         super(fileName, company, price, category);
         this.address = address;
         this.sellerUsername = sellerUsername;
+        super.setAvailableCount(2100000000);
+        super.addSeller((Seller) User.getUserByUserName(sellerUsername));
+
         this.extension = extension;
-        allFiles.add(this);
+        allProductsInList.add(this);
+        allProductsInQueueExpect.remove(this);
+        this.setProductState(State.ProductState.CONFIRMED);
     }
 
-    public static List<FileProduct> getAllFiles() {
-        return Collections.unmodifiableList(allFiles);
-    }
 
     public static void removeFile(FileProduct fileProduct) {
-        allFiles.remove(fileProduct);
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+        allProductsInList.remove(fileProduct);
     }
 
 
@@ -41,11 +33,6 @@ public class FileProduct extends Product {
 
     public void setSellerUsername(String sellerUsername) {
         this.sellerUsername = sellerUsername;
-    }
-
-
-    public String getFileName() {
-        return fileName;
     }
 
 
@@ -64,15 +51,6 @@ public class FileProduct extends Product {
 
     public String getExtension() {
         return extension;
-    }
-
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
 }

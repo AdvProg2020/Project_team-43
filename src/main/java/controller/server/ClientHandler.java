@@ -5,6 +5,7 @@ import model.*;
 import model.request.Request;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -137,6 +138,12 @@ public class ClientHandler extends Thread {
                     addFileSeller(command);
                 } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
+                } else if (command.startsWith("fuckMe")) {
+                    updateMe(command);
+                } else if (command.startsWith("addFileServer")) {
+                    addFileServer(command);
+                } else if (command.startsWith("serverOfFileEnd")) {
+                    endServerOfFile(command);
                 } else {
                     System.out.println("What the fuck command");
                 }
@@ -144,6 +151,36 @@ public class ClientHandler extends Thread {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void endServerOfFile(String command) {
+        String token = command.split(" ")[1];
+        server.endServerOfFiles(token);
+        try {
+            dataOutputStream.writeUTF("done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addFileServer(String command) {
+        String[] commands = command.split(" ");
+        String IP = commands[1];
+        int port = Integer.parseInt(commands[2]);
+        String token = commands[3];
+        server.addFileServer(IP, port, token);
+        try {
+            dataOutputStream.writeUTF("files added successfully");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateMe(String command) {
+        String token = command.split(" ")[1];
+        sendObject(server.getUser(token));
     }
 
     private void removeFileSeller(String command) {
@@ -154,10 +191,11 @@ public class ClientHandler extends Thread {
     }
 
     private void addFileSeller(String command) {
-        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (.+)"));
+        HashMap<String, String> features = (HashMap<String, String>) getObject();
+        Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (.+)"));
         Matcher matcher = pattern.matcher(command);
         matcher.find();
-        server.addFileSeller(matcher.group(2), matcher.group(3), matcher.group(4));
+        server.addFileSeller(matcher.group(2), matcher.group(3), matcher.group(4), matcher.group(5), matcher.group(6), matcher.group((7)), features);
     }
 
     private void endInputStream() {

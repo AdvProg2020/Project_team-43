@@ -22,6 +22,7 @@ public class Client {
     private String token;
     private Thread thread;
     private Socket socket;
+    private ServerForFile serverForFile;
 
     public void run() {
         try {
@@ -47,12 +48,20 @@ public class Client {
                 if (user.getUserType() == UserType.BUYER) {
                     BuyerProcessor.getInstance().setNewBuyerCart();
                 }
+                if (user.getUserType() == UserType.SELLER) {
+                    addFileServer((Seller) user);
+                }
             }
             return result;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    private void addFileServer(Seller seller) {
+        checkTokenValidation(seller);
+        serverForFile = new ServerForFile(seller, token, dataOutputStream, dataInputStream);
     }
 
     private boolean checkResultForLogin(String result) {
@@ -650,6 +659,20 @@ public class Client {
         //TODO
     }
 
+    public User updateMe(User user) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("fuckMe " + token);
+            dataOutputStream.flush();
+            User getUser = (User) getObject();
+            System.out.println(getUser.getUsername());
+            return getUser;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void addFile(User user, String name, String company, String category, String price, HashMap<String, String> features, File file) {
         checkTokenValidation(user);
         try {
@@ -658,6 +681,20 @@ public class Client {
             sendObject(features);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void killServerOfFile(User user) {
+        if (user.getUserType() == UserType.SELLER) {
+            checkTokenValidation(user);
+            serverForFile.killThread();
+            try {
+                dataOutputStream.writeUTF("serverOfFileEnd " + token);
+                dataOutputStream.flush();
+                dataInputStream.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

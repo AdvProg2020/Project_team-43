@@ -40,7 +40,7 @@ public class Buyer extends User {
         this.buyOrdersId = buyOrdersId;
     }
 
-    public Buyer (String username , UserPersonalInfo userPersonalInfo,double balance, double sumOfPaymentForCoddedDiscount, HashMap<String, Integer> codedDiscountsId, ArrayList<String> buyOrdersId, HashMap<String, String> filesId ){
+    public Buyer(String username, UserPersonalInfo userPersonalInfo, double balance, double sumOfPaymentForCoddedDiscount, HashMap<String, Integer> codedDiscountsId, ArrayList<String> buyOrdersId, HashMap<String, String> filesId) {
         super(username, userPersonalInfo);
         newBuyerCart = new HashMap<>();
         this.balance = balance;
@@ -181,7 +181,7 @@ public class Buyer extends User {
         HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
             if (productSellerPair.getKey() instanceof FileProduct) {
-                addNewFile(productSellerPair.getKey().getProductId(), ((FileProduct) productSellerPair.getKey()).getFileName());
+                addNewFile(productSellerPair.getKey().getProductId(), ((FileProduct) productSellerPair.getKey()).getName());
             }
             order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }

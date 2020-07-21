@@ -534,15 +534,17 @@ public class SellerMenuController extends Controller {
         BankForWithdrawWindow.getInstance().start(MainWindow.getInstance().getStage());
     }
 
-    private void updateFilesJFXListView() {
+    public void updateFilesJFXListView() {
+        init();
         FilesJFXListView.getItems().clear();
+        user = (Seller) client.updateMe(user);
         for (FileProduct file : user.getFiles()) {
             HBox hBox = new HBox();
-            hBox.getChildren().add(new Label(file.getFileName() + "   Price: " + file.getPrice() + "   "));
+            hBox.getChildren().add(new Label("ID: " + file.getProductId() + "   Name: " + file.getName() + "   Price: " + file.getPrice() + "   "));
             Button button = new Button("remove");
             button.setOnAction(event -> {
-                client.removeFile(user, file.getAddress());
-                sellerProcessor.removeFile(file.getAddress());
+                client.removeFile(user, file.getProductId());
+                sellerProcessor.removeFile(file.getProductId());
                 updateFilesJFXListView();
             });
             hBox.getChildren().add(button);
