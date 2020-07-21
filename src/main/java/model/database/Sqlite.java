@@ -193,6 +193,57 @@ public class Sqlite {
         }
     }
 
+    public void saveProduct(ArrayList<Product> products){
+        String sqlDelete = "DELETE FROM product";
+        try {
+            conn.prepareStatement(sqlDelete).executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "INSERT INTO manager(productId,productState,name,companyName,price,visit,date,availableCount,featureMap,description,productScore,comments,categoryName,sellersName) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        for (Product product : products) {
+            String productId = product.getProductId();
+            String productState = this.objectToString(product.getProductState());
+            String name = this.objectToString(product.getName());
+            String companyName = product.getCompany().getName();
+            double price = product.getPrice();
+            int visit = product.getVisit();
+            String date = product.getDate().toString();
+            int availableCount = product.getAvailableCount();
+            String featureMap = this.objectToString(product.getFeaturesMap());
+            String description = product.getDescription();
+            String productScore = this.objectToString(product.getScore());
+            Comment[] commentsArray = (Comment[]) product.getComments().toArray();
+            String comments = this.objectToString(commentsArray);
+            String categoryName = product.getCategory().getName();
+            String sellersName = this.objectToString(product.getSellersName());
+
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, productId);
+                pstmt.setString(2, productScore);
+                pstmt.setString(3, name);
+                pstmt.setString(4, companyName);
+                pstmt.setDouble(5, price);
+                pstmt.setInt(6, visit);
+                pstmt.setString(7, date);
+                pstmt.setInt(8, availableCount);
+                pstmt.setString(9, featureMap);
+                pstmt.setString(10, description);
+                pstmt.setString(11, productScore);
+                pstmt.setString(12, comments);
+                pstmt.setString(13, categoryName);
+                pstmt.setString(14, sellersName);
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
 
 }

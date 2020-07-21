@@ -36,7 +36,6 @@ public class Product implements Serializable {
     private String description;
     private ProductScore score;
     private ArrayList<Comment> comments;
-
     private Category category;
     private String categoryName;
 
@@ -62,6 +61,10 @@ public class Product implements Serializable {
         comments = new ArrayList<>();
         allProductsInQueueExpect.add(this);
         constructId += 1;
+    }
+
+    public ArrayList<String> getSellersName() {
+        return sellersName;
     }
 
     public void setVisit(int visit) {
