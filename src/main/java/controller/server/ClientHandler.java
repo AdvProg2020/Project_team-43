@@ -142,12 +142,25 @@ public class ClientHandler extends Thread {
                     updateMe(command);
                 } else if (command.startsWith("addFileServer")) {
                     addFileServer(command);
+                } else if (command.startsWith("serverOfFileEnd")) {
+                    endServerOfFile(command);
                 } else {
                     System.out.println("What the fuck command");
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void endServerOfFile(String command) {
+        String token = command.split(" ")[1];
+        server.endServerOfFiles(token);
+        try {
+            dataOutputStream.writeUTF("done");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

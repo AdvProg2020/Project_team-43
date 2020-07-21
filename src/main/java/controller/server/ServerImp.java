@@ -408,6 +408,13 @@ public class ServerImp {
             filesIPAndPort.put(fileId, new Pair<>(ip, port));
         }
     }
+
+    public void endServerOfFiles(String token) {
+        Seller seller = (Seller) users.get(token);
+        for (String fileId : seller.getFilesId()) {
+            filesIPAndPort.remove(fileId);
+        }
+    }
 }
 
 class ExpireToken extends Thread {

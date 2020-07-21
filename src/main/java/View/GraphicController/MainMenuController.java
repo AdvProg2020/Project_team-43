@@ -2,6 +2,7 @@ package View.GraphicController;
 
 import controller.client.BuyerProcessor;
 import View.graphic.*;
+import controller.client.Processor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,6 +49,7 @@ public class MainMenuController extends Controller {
         if (!(buyerProcessor.isUserLoggedIn())) {
             LoginWindow.getInstance().start(stage);
         } else {
+            client.killServerOfFile(Processor.user);
             client.logout();
             buyerProcessor.logout();
             buyerProcessor.clearCart();

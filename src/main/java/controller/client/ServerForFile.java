@@ -6,12 +6,11 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
 public class ServerForFile {
     private ServerSocket serverSocket;
     private String IP;
     private int port;
+    private Thread thread;
 
     public ServerForFile(Seller seller, String token, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
         try {
@@ -31,7 +30,7 @@ public class ServerForFile {
     }
 
     public void run() {
-        new Thread() {
+        thread = new Thread() {
             @Override
             public void run() {
                 while (true) {
@@ -42,7 +41,12 @@ public class ServerForFile {
                     }
                 }
             }
-        }.start();
+        };
+        thread.setDaemon(true);
+        thread.start();
+    }
+    public void killThread(){
+        thread.stop();
     }
 
 

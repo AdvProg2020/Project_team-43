@@ -22,6 +22,7 @@ public class Client {
     private String token;
     private Thread thread;
     private Socket socket;
+    private ServerForFile serverForFile;
 
     public void run() {
         try {
@@ -60,7 +61,7 @@ public class Client {
 
     private void addFileServer(Seller seller) {
         checkTokenValidation(seller);
-        ServerForFile serverForFile = new ServerForFile(seller, token, dataOutputStream, dataInputStream);
+        serverForFile = new ServerForFile(seller, token, dataOutputStream, dataInputStream);
     }
 
     private boolean checkResultForLogin(String result) {
@@ -680,6 +681,20 @@ public class Client {
             sendObject(features);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void killServerOfFile(User user) {
+        if (user.getUserType() == UserType.SELLER) {
+            checkTokenValidation(user);
+            serverForFile.killThread();
+            try {
+                dataOutputStream.writeUTF("serverOfFileEnd " + token);
+                dataOutputStream.flush();
+                dataInputStream.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
