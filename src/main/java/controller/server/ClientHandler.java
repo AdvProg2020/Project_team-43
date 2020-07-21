@@ -5,6 +5,7 @@ import model.*;
 import model.request.Request;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -139,14 +140,23 @@ public class ClientHandler extends Thread {
                     removeFileSeller(command);
                 } else if (command.startsWith("fuckMe")) {
                     updateMe(command);
-                }
-                else {
+                } else if (command.startsWith("addFileServer")) {
+                    addFileServer(command);
+                } else {
                     System.out.println("What the fuck command");
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void addFileServer(String command) {
+        String[] commands = command.split(" ");
+        String IP = commands[1];
+        int port = Integer.parseInt(commands[2]);
+        String token = commands[3];
+        server.addFileServer(IP, port, token);
     }
 
     private void updateMe(String command) {
@@ -162,7 +172,7 @@ public class ClientHandler extends Thread {
     }
 
     private void addFileSeller(String command) {
-        HashMap<String , String> features = (HashMap<String, String>) getObject();
+        HashMap<String, String> features = (HashMap<String, String>) getObject();
         Pattern pattern = (Pattern.compile("(\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (\\S+) (.+)"));
         Matcher matcher = pattern.matcher(command);
         matcher.find();

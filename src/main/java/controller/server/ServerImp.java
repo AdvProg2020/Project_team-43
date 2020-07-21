@@ -19,6 +19,7 @@ import java.util.HashMap;
 public class ServerImp {
     private ArrayList<ClientHandler> allClientsThreads = new ArrayList<>();
     private HashMap<String, User> users = new HashMap<>();
+    private HashMap<String, Pair<String, Integer>> filesIPAndPort = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
     public static final int PORT = 2020;
@@ -396,6 +397,16 @@ public class ServerImp {
 
     public void addFileSeller(String name, String company, String category, String price, String token, String path, HashMap<String, String> features) {
         ((Seller) users.get(token)).addFile(name, Integer.parseInt(price), FilenameUtils.getExtension(path), path, company, category, features);
+    }
+
+    public void addFileServer(String ip, int port, String token) {
+        if (!users.containsKey(token)) {
+            return;
+        }
+        Seller seller = (Seller) users.get(token);
+        for (String fileId : seller.getFilesId()) {
+            filesIPAndPort.put(fileId, new Pair<>(ip, port));
+        }
     }
 }
 

@@ -47,12 +47,20 @@ public class Client {
                 if (user.getUserType() == UserType.BUYER) {
                     BuyerProcessor.getInstance().setNewBuyerCart();
                 }
+                if (user.getUserType() == UserType.SELLER) {
+                    addFileServer((Seller) user);
+                }
             }
             return result;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    private void addFileServer(Seller seller) {
+        checkTokenValidation(seller);
+        new ServerForFile(seller, token, dataOutputStream);
     }
 
     private boolean checkResultForLogin(String result) {
