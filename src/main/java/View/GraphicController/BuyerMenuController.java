@@ -341,15 +341,6 @@ public class BuyerMenuController extends Controller {
         HBox hbox = new HBox(12);
 
         Circle img = new Circle(32, 32, 16);
-        /*try {
-            String path = new File(("sadra.jpg")).toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        } catch (Exception ex) {
-            String path = new File("sadra.jpg").toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        }/*/
-
-//        img.getStyleClass().add("imageView");
 
         if (!user.getUsername().equals(username)) {
 
@@ -391,7 +382,6 @@ public class BuyerMenuController extends Controller {
     }
 
     private void setChatRoomPrivate(Supporter supporter) {
-        //todo get supporter.map from server
         privateChatBox.getChildren().clear();
         Pattern pattern = Pattern.compile("(.+) : (.*)");
         Map<String, List<String>> users = supporter.getUsers();

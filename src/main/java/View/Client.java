@@ -540,7 +540,7 @@ public class Client {
 
     public void setUserOnline(User user) {
         try {
-            //checkTokenValidation(user);
+            checkTokenValidation(user);
             dataOutputStream.writeUTF("setOnline " + token);
             dataOutputStream.flush();
         } catch (IOException e) {
@@ -564,9 +564,7 @@ public class Client {
     public void sendMessage(User user, String userName, String message) {
         checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("sendMessage " + userName + " " + token);
-            dataOutputStream.flush();
-            dataOutputStream.writeUTF(message);
+            dataOutputStream.writeUTF("sendMessage " + userName + " " + token + " " + message);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

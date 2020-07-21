@@ -63,9 +63,12 @@ public class SupporterMenuController extends Controller {
         String userName = selectedUser.getUsername();
         String message = textMessage.getText().trim();
         if (message.equals("")) return;
-        updateChatRoom(user.getUsername(), message, privateChatBox);
-        textMessage.clear();
-        scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        Platform.runLater(() -> {
+            updateChatRoom(user.getUsername(), message, privateChatBox);
+            textMessage.clear();
+            scrollPane21.vvalueProperty().bind(privateChatBox.heightProperty());
+        });
+
         client.fuck2Thread();
         client.sendMessage(user, userName, message);
         client.acknowledge(this, privateChatBox);
@@ -91,7 +94,7 @@ public class SupporterMenuController extends Controller {
 
 
     public void chatWithUser() {
-        //init();
+        init();
         String userName = usersListView.getSelectionModel().getSelectedItem();
         if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);
@@ -130,15 +133,6 @@ public class SupporterMenuController extends Controller {
         HBox hbox = new HBox(12);
 
         Circle img = new Circle(32, 32, 16);
-        /*try {
-            String path = new File(("sadra.jpg")).toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        } catch (Exception ex) {
-            String path = new File("sadra.jpg").toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        }/*/
-
-//        img.getStyleClass().add("imageView");
 
         if (!user.getUsername().equals(username)) {
 
