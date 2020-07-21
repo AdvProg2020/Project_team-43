@@ -653,5 +653,10 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void downloadFile(Buyer user, String fileId) {
+        checkTokenValidation(user);
+        //TODO
+    }
 }
 
