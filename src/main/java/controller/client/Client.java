@@ -2,6 +2,7 @@ package controller.client;
 
 
 import View.GraphicController.BuyerMenuController;
+import View.GraphicController.SellerMenuController;
 import View.GraphicController.SupporterMenuController;
 import controller.client.BuyerProcessor;
 import controller.client.Processor;
@@ -642,16 +643,6 @@ public class Client {
         }
     }
 
-    public void addFile(User user, int price, String absolutePath) {
-        checkTokenValidation(user);
-        try {
-            dataOutputStream.writeUTF("addFileSeller " + price + " " + token + " " + absolutePath);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void removeFile(User user, String absolutePath) {
         checkTokenValidation(user);
         try {
@@ -665,6 +656,17 @@ public class Client {
     public void downloadFile(Buyer user, String fileId) {
         checkTokenValidation(user);
         //TODO
+    }
+
+    public void addFile(User user, String name, String company, String category, String price, HashMap<String, String> features, File file) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("addFileSeller " + name + " " + company + " " + category + " " + price + " " + token + " " + file.getAbsolutePath());
+            dataOutputStream.flush();
+            sendObject(features);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

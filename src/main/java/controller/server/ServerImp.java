@@ -391,7 +391,7 @@ public class ServerImp {
     }
 
     public void addFileSeller(String price, String token, String path) {
-        ((Seller) users.get(token)).addFile(FilenameUtils.getName(path), Integer.parseInt(price), FilenameUtils.getExtension(path), path);
+        //((Seller) users.get(token)).addFile(FilenameUtils.getName(path), Integer.parseInt(price), FilenameUtils.getExtension(path), path);
     }
 
     public void removeFileSeller(String token, String path) {

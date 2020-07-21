@@ -4,10 +4,7 @@ import View.graphic.BankForChargeWindow;
 import View.graphic.BankForWithdrawWindow;
 import View.graphic.MainWindow;
 import com.jfoenix.controls.JFXListView;
-import controller.client.Processor;
 import controller.client.SellerProcessor;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -93,6 +90,8 @@ public class SellerMenuController extends Controller {
     private Seller user;
     private Product product;
     private Off off;
+    private File file;
+
 
     @FXML
     public void initialize() {
@@ -172,6 +171,12 @@ public class SellerMenuController extends Controller {
         alert.showAndWait();
     }
 
+    public void browseFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
+        file = fileChooser.showOpenDialog(stage);
+    }
+
     @FXML
     public void addNewProduct() {
         if (categoryChoiceBox.getValue() == null) {
@@ -185,10 +190,15 @@ public class SellerMenuController extends Controller {
                 features.put(((Label) item.getChildren().get(0)).getText().split(":")[0], ((TextField) item.getChildren().get(1)).getText());
             }
             try {
-                sellerProcessor.addNewProduct(nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
-                        amountNewProduct.getText(), features);
-                client.addNewProduct(user, nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
-                        amountNewProduct.getText(), features);
+                if (file == null) {
+                    sellerProcessor.addNewProduct(nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
+                            amountNewProduct.getText(), features);
+                    client.addNewProduct(user, nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
+                            amountNewProduct.getText(), features);
+                } else {
+                    client.addFile(user, nameNewProduct.getText(), addProductCompanyChoiceBox.getSelectionModel().getSelectedItem(), category.getName(), priceNewProduct.getText(),
+                            features, file);
+                }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Product added successfully");
                 alert.setContentText("Waiting for manager to confirm");
@@ -522,28 +532,6 @@ public class SellerMenuController extends Controller {
 
     public void decreaseBalance() {
         BankForWithdrawWindow.getInstance().start(MainWindow.getInstance().getStage());
-    }
-
-    private File file;
-
-    public void browseFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files (*.*)", "*.*"));
-        file = fileChooser.showOpenDialog(stage);
-    }
-
-    public void addFile() {
-        if (file != null) {
-            if (!filePriceTextField.getText().matches("\\d+")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Price must be integer");
-                alert.showAndWait();
-                return;
-            }
-            client.addFile(user, Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
-            sellerProcessor.addFile(Integer.parseInt(filePriceTextField.getText()), file.getAbsolutePath());
-            updateFilesJFXListView();
-        }
     }
 
     private void updateFilesJFXListView() {
