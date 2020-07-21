@@ -25,7 +25,7 @@ public class Seller extends User implements Serializable {
 
     private ArrayList<SellOrder> orders;
     private ArrayList<String> sellOrdersId;
-    private ArrayList<FileProduct> files;
+    private ArrayList<String> filesId;
 
     public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName) {
         super(username, userPersonalInfo);
@@ -36,30 +36,36 @@ public class Seller extends User implements Serializable {
         productsNumberWithId = new HashMap<>();
         offsId = new ArrayList<>();
         sellOrdersId = new ArrayList<>();
-        files = new ArrayList<>();
+        filesId = new ArrayList<>();
         setUserType();
     }
 
-    public void addFile(String fileName, int price, String extension, String fileAddress) {
-        files.add(new FileProduct(fileName, fileAddress, this.username, extension, price));
+    public void addFile(String fileName, int price, String extension, String fileAddress, String companyName, String categoryName, HashMap<String, String> features) {
+        FileProduct fileProduct = new FileProduct(fileName, fileAddress, this.username, extension, price, Company.getCompanyByName(companyName), Category.getCategoryByName(categoryName));
+        fileProduct.setFeaturesMap(features);
+        filesId.add(fileProduct.getProductId());
     }
 
     public void removeFile(FileProduct fileProduct) {
-        files.remove(fileProduct);
+        filesId.remove(fileProduct);
         FileProduct.removeFile(fileProduct);
     }
 
     public FileProduct getFileByAddress(String fileAddress) {
-        for (FileProduct file : files) {
-            if (file.getAddress().equals(fileAddress)) {
-                return file;
+        for (String fileId : filesId) {
+            if (((FileProduct) getProductById(fileId)).getAddress().equals(fileAddress)) {
+                return (FileProduct) getProductById(fileId);
             }
         }
         return null;
     }
 
     public List<FileProduct> getFiles() {
-        return Collections.unmodifiableList(files);
+        ArrayList<FileProduct> fileProducts = new ArrayList<>();
+        for (String id : filesId) {
+            fileProducts.add((FileProduct)getProductById(id));
+        }
+        return Collections.unmodifiableList(fileProducts);
     }
 
     @Override
