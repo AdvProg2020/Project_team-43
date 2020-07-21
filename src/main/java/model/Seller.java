@@ -27,7 +27,7 @@ public class Seller extends User implements Serializable {
     private ArrayList<String> sellOrdersId;
     private ArrayList<String> filesId;
 
-    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName,HashMap<String , Integer> productsNumberWithId ,ArrayList<String> offsId, ArrayList<String> sellOrdersId, ArrayList<String> filesId) {
+    public Seller(String username, UserPersonalInfo userPersonalInfo, String companyName, HashMap<String, Integer> productsNumberWithId, ArrayList<String> offsId, ArrayList<String> sellOrdersId, ArrayList<String> filesId) {
         super(username, userPersonalInfo);
         this.company = Company.getCompanyByName(companyName);
         this.offsId = offsId;
@@ -59,9 +59,6 @@ public class Seller extends User implements Serializable {
         filesId.add(fileProduct.getProductId());
     }
 
-    public ArrayList<String> getFilesId() {
-        return filesId;
-    }
 
     public HashMap<String, Integer> getProductsNumberWithId() {
         return productsNumberWithId;

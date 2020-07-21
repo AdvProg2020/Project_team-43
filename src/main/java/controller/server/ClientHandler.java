@@ -155,6 +155,12 @@ public class ClientHandler extends Thread {
         int port = Integer.parseInt(commands[2]);
         String token = commands[3];
         server.addFileServer(IP, port, token);
+        try {
+            dataOutputStream.writeUTF("files added successfully");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void removeFileSeller(String command) {

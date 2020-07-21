@@ -60,7 +60,7 @@ public class Client {
 
     private void addFileServer(Seller seller) {
         checkTokenValidation(seller);
-        new ServerForFile(seller, token, dataOutputStream);
+        ServerForFile serverForFile = new ServerForFile(seller, token, dataOutputStream, dataInputStream);
     }
 
     private boolean checkResultForLogin(String result) {
