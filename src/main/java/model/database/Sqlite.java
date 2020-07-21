@@ -375,6 +375,31 @@ public class Sqlite {
         }
     }
 
+    public void loadBuyOrder(){
+        String sql = "SELECT payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date FROM buyOrder";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                double payment = rs.getDouble(1);
+                double codedDiscountAmount = rs.getDouble(2);
+                HashMap<String, Integer> productsId = (HashMap<String, Integer>) this.stringToObject(rs.getString(3), ArrayList.class);
+                HashMap<String, Integer> productsId2 = new HashMap<>();
+                for (String key : productsId.keySet()) {
+                    productsId2.put(key, productsId.get(key).intValue());
+                }
+                ArrayList<String> sellersId = (ArrayList<String>)this.stringToObject(rs.getString(4), ArrayList.class);
+                DeliveryStatus deliveryStatus = (DeliveryStatus) this.stringToObject(rs.getString(5), DeliveryStatus.class);
+                String address = rs.getString(6);
+                String phoneNumber = rs.getString(7);
+                String date = rs.getString(8);
+                new BuyOrder(payment,codedDiscountAmount,productsId2,sellersId,deliveryStatus,address,phoneNumber,changeDate(date));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
 
 

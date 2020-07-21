@@ -28,6 +28,19 @@ public class BuyOrder extends Order  implements Serializable {
     private String address;
     private String phoneNumber;
 
+    public BuyOrder(double payment,double codedDiscountAmount,HashMap<String, Integer>productsId,ArrayList<String>sellersId,DeliveryStatus deliveryStatus,String address,String phoneNumber,Date date){
+        super(date);
+        this.payment = payment;
+        this.productsId = productsId;
+        this.codedDiscountAmount = codedDiscountAmount;
+        this.sellersId = sellersId;
+        this.deliveryStatus = deliveryStatus;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        products = new HashMap<>();
+        sellers = new ArrayList<>();
+    }
+
     public BuyOrder(Date date, double payment, double codedDiscountAmount, HashMap<Product, Integer> products, ArrayList<Seller> sellers, String phoneNumber, String address) {
         super(date);
         this.payment = payment;
