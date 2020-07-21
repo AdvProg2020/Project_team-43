@@ -94,7 +94,6 @@ public class SupporterMenuController extends Controller {
 
 
     public void chatWithUser() {
-        init();
         String userName = usersListView.getSelectionModel().getSelectedItem();
         if (selectedUser != null && selectedUser.getUsername().equals(userName)) return;
         selectedUser = User.getUserByUserName(userName);

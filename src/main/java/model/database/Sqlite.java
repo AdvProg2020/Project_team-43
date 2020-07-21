@@ -16,7 +16,7 @@ public class Sqlite {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:/Users/ASUS/IdeaProjects/newPro/sqlDataBase/company.db";
+            String url = "jdbc:sqlite:sqlDataBase/company.db";
             conn = DriverManager.getConnection(url);
         } catch (SQLException e) {
             e.printStackTrace();
