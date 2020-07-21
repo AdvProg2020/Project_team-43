@@ -48,7 +48,7 @@ public class Client {
                     BuyerProcessor.getInstance().setNewBuyerCart();
                 }
                 if (user.getUserType() == UserType.SELLER) {
-                    addFileServer();
+                    addFileServer((Seller) user);
                 }
             }
             return result;
@@ -60,7 +60,7 @@ public class Client {
 
     private void addFileServer(Seller seller) {
         checkTokenValidation(seller);
-        new ServerForFile(seller, dataOutputStream);
+        new ServerForFile(seller, token, dataOutputStream);
     }
 
     private boolean checkResultForLogin(String result) {

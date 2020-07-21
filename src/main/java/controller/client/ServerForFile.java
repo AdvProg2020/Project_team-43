@@ -13,14 +13,16 @@ public class ServerForFile {
     private String IP;
     private int port;
 
-    public ServerForFile(Seller seller, DataOutputStream dataOutputStream) {
+    public ServerForFile(Seller seller, String token, DataOutputStream dataOutputStream) {
         try {
-            this.serverSocket = new ServerSocket(0);
-            this.port = serverSocket.getLocalPort();
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            this.IP = inetAddress.getHostAddress();
-            dataOutputStream.writeUTF("addFileServer " + IP + " " + port + " " +);
-            dataOutputStream.flush();
+            if (seller.getFilesId().size() > 0) {
+                this.serverSocket = new ServerSocket(0);
+                this.port = serverSocket.getLocalPort();
+                InetAddress inetAddress = InetAddress.getLocalHost();
+                this.IP = inetAddress.getHostAddress();
+                dataOutputStream.writeUTF("addFileServer " + IP + " " + port + " " + token);
+                dataOutputStream.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

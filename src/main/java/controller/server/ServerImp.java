@@ -390,13 +390,20 @@ public class ServerImp {
         }
     }
 
-    public void addFileSeller(String price, String token, String path) {
-        //((Seller) users.get(token)).addFile(FilenameUtils.getName(path), Integer.parseInt(price), FilenameUtils.getExtension(path), path);
-    }
 
     public void removeFileSeller(String token, String path) {
         Seller seller = (Seller) users.get(token);
         seller.removeFile(seller.getFileByAddress(path));
+    }
+
+    public void addFileServer(String ip, int port, String token) {
+        if (!users.containsKey(token)) {
+            return;
+        }
+        Seller seller = (Seller) users.get(token);
+        for (String fileId : seller.getFilesId()) {
+            filesIPAndPort.put(fileId, new Pair<>(ip, port));
+        }
     }
 }
 
