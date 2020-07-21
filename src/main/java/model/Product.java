@@ -281,9 +281,25 @@ public class Product implements Serializable {
 
     public static void load() throws FileNotFoundException {
         Product[] products = (Product[]) Loader.load(Product[].class, fileAddress);
+        FileProduct[] fileProducts = (FileProduct[]) Loader.load(FileProduct[].class, "database/Files.dat");
         if (products != null) {
             allProducts = new ArrayList<>(Arrays.asList(products));
             loadProducts();
+        }
+        if (fileProducts != null) {
+            allProducts.addAll((Arrays.asList(fileProducts)));
+            loadFiles();
+        }
+    }
+
+    public static void loadFiles() {
+        for (Product product : allProducts) {
+            if (product instanceof FileProduct)
+                allProductsInList.add(product);
+            int id = Integer.parseInt(product.getProductId());
+            if (constructId <= id) {
+                constructId = id + 1;
+            }
         }
     }
 
@@ -307,10 +323,18 @@ public class Product implements Serializable {
     }
 
     public static void save() throws IOException {
-        ArrayList<Product> products = new ArrayList<>(allProductsInList);
+        ArrayList<FileProduct> files = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
+        for (Product product : allProductsInList) {
+            if (product instanceof FileProduct)
+                files.add((FileProduct) product);
+            else
+                products.add(product);
+        }
         products.addAll(allProductsInQueueExpect);
         products.addAll(allProductsInQueueEdit);
         Saver.save(products, fileAddress);
+        Saver.save(files, "database/Files.dat");
     }
 
     public static void saveFields() {

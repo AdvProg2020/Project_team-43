@@ -5,6 +5,7 @@ import View.console.SellerShowAndCatch;
 import org.apache.commons.io.FilenameUtils;
 
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -198,7 +199,7 @@ public class SellerProcessor extends Processor {
     }
 
 
-    public void removeFile(String path) {
-        ((Seller) user).removeFile(((Seller) user).getFileByAddress(path));
+    public void removeFile(String id) {
+        ((Seller) user).removeFile(id);
     }
 }

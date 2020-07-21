@@ -64,17 +64,10 @@ public class Company implements Serializable {
         if (companies != null) {
             allCompanies = new ArrayList<>(Arrays.asList(companies));
         }
-        for (Company company : new Sqlite().loadCompany()) {
-            System.out.println(company);
-        }
     }
 
 
     public static void save() throws IOException {
-        Sqlite sqlite = new Sqlite();
-        for (Company company : allCompanies) {
-            sqlite.saveCompany(company.getName(), company.getInfo());
-        }
         Saver.save(allCompanies, fileAddress);
     }
 
