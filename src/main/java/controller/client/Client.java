@@ -1,4 +1,4 @@
-package View;
+package controller.client;
 
 
 import View.GraphicController.BuyerMenuController;
