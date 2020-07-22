@@ -246,7 +246,6 @@ public class BuyerMenuController extends Controller {
         } else {
             client.fuck2Thread();
         }
-
     }
 
 

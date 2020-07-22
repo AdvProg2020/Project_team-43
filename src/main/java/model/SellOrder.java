@@ -2,6 +2,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class SellOrder extends Order  implements Serializable {
+public class SellOrder extends Order implements Serializable {
     private static String fileAddress = "database/SellOrder.dat";
     private double payment;
     private double offAmount;
@@ -28,7 +29,7 @@ public class SellOrder extends Order  implements Serializable {
         this.payment = payment;
         this.offAmount = offAmount;
         this.product = Product.getAllProductById(productId);
-        this.buyer = (Buyer)User.getUserByUserName(buyerUsername);
+        this.buyer = (Buyer) User.getUserByUserName(buyerUsername);
         this.deliveryStatus = deliveryStatus;
         this.number = number;
     }
@@ -165,7 +166,8 @@ public class SellOrder extends Order  implements Serializable {
                 allSellOrders.add((SellOrder) order);
             }
         }
-        Saver.save(allSellOrders, fileAddress);
+        new Sqlite().saveSellOrder(allSellOrders);
+        //Saver.save(allSellOrders, fileAddress);
     }
 
     public double getPayment() {
@@ -183,5 +185,13 @@ public class SellOrder extends Order  implements Serializable {
 
     public int getNumber() {
         return number;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getUsername() {
+        return buyerUsername;
     }
 }

@@ -164,9 +164,9 @@ public class ClientHandler extends Thread {
             if (!(IP.equals("server is not ready") || IP.equals("invalid token"))) {
                 port = server.getPort(fileId);
                 dataOutputStream.writeUTF(IP + " " + port);
-                dataOutputStream.flush();
+            } else {
+                dataOutputStream.writeUTF("server is not ready");
             }
-            dataOutputStream.writeUTF("server is not ready");
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

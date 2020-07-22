@@ -304,8 +304,8 @@ public class Buyer extends User {
                 allBuyers.add((Buyer) user);
             }
         }
-//        new Sqlite().saveBuyer(allBuyers);
-        Saver.save(allBuyers, fileAddress);
+        new Sqlite().saveBuyer(allBuyers);
+//        Saver.save(allBuyers, fileAddress);
     }
 
     public static void saveFields() {

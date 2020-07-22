@@ -2,6 +2,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 import model.request.EditOffRequest;
 import model.request.EditProductRequest;
 import model.request.OffRequest;
@@ -283,7 +284,8 @@ public class Seller extends User implements Serializable {
                 allSellers.add((Seller) user);
             }
         }
-        Saver.save(allSellers, fileAddress);
+        new Sqlite().saveSeller(allSellers);
+        //Saver.save(allSellers, fileAddress);
     }
 
     public static void saveAllFields() {

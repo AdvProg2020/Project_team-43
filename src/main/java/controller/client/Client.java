@@ -2,22 +2,18 @@ package controller.client;
 
 
 import View.GraphicController.BuyerMenuController;
-import View.GraphicController.SellerMenuController;
 import View.GraphicController.SupporterMenuController;
-import controller.client.BuyerProcessor;
-import controller.client.Processor;
 
 import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Client {
     private DataInputStream dataInputStream;
@@ -29,7 +25,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("172.20.25.70", 9999);
+            socket = new Socket("localhost", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -668,25 +664,49 @@ public class Client {
             }
             String IP = result.split(" ")[0];
             int port = Integer.parseInt(result.split(" ")[1]);
-            Socket socket = new Socket(IP, port);
-            dataOutputStream.writeUTF(fileId);
-            dataOutputStream.flush();
-            makeCopyOfFile((File) getObject());
-            return "your download starts";
+            connectToSeller(port, IP, fileId);
+            return "your download ends";
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private void makeCopyOfFile(File file) {
+    private void connectToSeller(int port, String IP, String fileId) {
         try {
-            Files.copy(file.toPath(), new File("src/downloads/" + FilenameUtils.getBaseName(file.getAbsolutePath()) + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Socket socket = new Socket(IP, port);
+            DataOutputStream ds = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataInputStream di = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            ds.writeUTF(fileId);
+            ds.flush();
+            String input = di.readUTF();
+            Pattern pattern = Pattern.compile("(\\d+) (.+)");
+            Matcher matcher = pattern.matcher(input);
+            matcher.matches();
+            long fileSize = Long.parseLong(matcher.group(1));
+            String fileName = matcher.group(2);
+            saveFile(socket, fileSize, fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
 
+    private void saveFile(Socket clientSock, long fileSize, String fileName) throws IOException {
+        DataInputStream dis = new DataInputStream(clientSock.getInputStream());
+        FileOutputStream fos = new FileOutputStream("src/downloads/" + fileName);
+        byte[] buffer = new byte[4096];
+        int read = 0;
+        int totalRead = 0;
+        long remaining = fileSize;
+        while ((read = dis.read(buffer, 0, (int) java.lang.Math.min(buffer.length, remaining))) > 0) {
+            totalRead += read;
+            remaining -= read;
+            System.out.println("read " + totalRead + " bytes.");
+            fos.write(buffer, 0, read);
+        }
+        fos.close();
+        dis.close();
     }
 
     public User updateMe(User user) {
