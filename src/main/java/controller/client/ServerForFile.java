@@ -56,7 +56,7 @@ public class ServerForFile {
                 while (true) {
                     try {
                         Socket socket = serverSocket.accept();
-                        new PeerHandler(new DataInputStream(new BufferedInputStream(socket.getInputStream())),
+                        new PeerHandler(socket, new DataInputStream(new BufferedInputStream(socket.getInputStream())),
                                 new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())),
                                 filesIdToAddress);
 
@@ -80,11 +80,13 @@ public class ServerForFile {
         private DataInputStream dataInputStream;
         private DataOutputStream dataOutputStream;
         private HashMap<String, String> filesIdToAddress;
+        private Socket socket;
 
-        public PeerHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, HashMap<String, String> filesIdToAddress) {
+        public PeerHandler(Socket socket, DataInputStream dataInputStream, DataOutputStream dataOutputStream, HashMap<String, String> filesIdToAddress) {
             this.dataInputStream = dataInputStream;
             this.filesIdToAddress = filesIdToAddress;
             this.dataOutputStream = dataOutputStream;
+            this.socket = socket;
             run();
         }
 
@@ -93,11 +95,23 @@ public class ServerForFile {
                 String fileId = dataInputStream.readUTF();
                 String address = filesIdToAddress.get(fileId);
                 File file = new File(address);
-                sendFile(file);
+                sendFile(address);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+        }
+
+        public void sendFile(String file) throws IOException {
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            FileInputStream fis = new FileInputStream(file);
+            byte[] buffer = new byte[4096];
+
+            while (fis.read(buffer) > 0) {
+                dos.write(buffer);
+            }
+            fis.close();
+            dos.close();
         }
 
         private void sendFile(File file) {
