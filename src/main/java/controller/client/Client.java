@@ -681,23 +681,13 @@ public class Client {
         return null;
     }
 
-    private byte[] getFile(DataInputStream dataInputStream) {
-        try {
-            byte[] bytes = new byte[1024];
-            dataInputStream.read(bytes);
-            return bytes;
-        } catch (IOException e) {
-            System.out.println("kiiiir");
-        }
-        return null;
-    }
 
     private void saveFile(Socket clientSock) throws IOException {
         DataInputStream dis = new DataInputStream(clientSock.getInputStream());
-        FileOutputStream fos = new FileOutputStream("downloads/src/az.txt");
+        FileOutputStream fos = new FileOutputStream("src/downloads/a.mp3");
         byte[] buffer = new byte[4096];
 
-        int filesize = 49; // Send file size in separate msg
+        int filesize = 6159967; // Send file size in separate msg
         int read = 0;
         int totalRead = 0;
         int remaining = filesize;
@@ -710,23 +700,6 @@ public class Client {
 
         fos.close();
         dis.close();
-    }
-
-    private void makeCopyOfFile(byte[] bytes) {
-        try {
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            File file = (File) is.readObject();
-            FileOutputStream fileOutputStream = new FileOutputStream("src/downloads/" + file.getName());
-            fileOutputStream.write(bytes);
-            fileOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     public User updateMe(User user) {

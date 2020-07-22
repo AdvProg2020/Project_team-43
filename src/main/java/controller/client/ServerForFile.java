@@ -94,7 +94,7 @@ public class ServerForFile {
             try {
                 String fileId = dataInputStream.readUTF();
                 String address = filesIdToAddress.get(fileId);
-                File file = new File(address);
+
                 sendFile(address);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -106,7 +106,6 @@ public class ServerForFile {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             FileInputStream fis = new FileInputStream(file);
             byte[] buffer = new byte[4096];
-
             while (fis.read(buffer) > 0) {
                 dos.write(buffer);
             }
@@ -114,19 +113,6 @@ public class ServerForFile {
             dos.close();
         }
 
-        private void sendFile(File file) {
-            try {
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(buffer);
-                oos.writeObject(file);
-                oos.close();
-                byte[] rawData = buffer.toByteArray();
-                dataOutputStream.write(rawData);
-                dataOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }
