@@ -29,7 +29,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("172.20.25.70", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {

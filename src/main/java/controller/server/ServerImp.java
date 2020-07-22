@@ -28,7 +28,7 @@ public class ServerImp {
     private final String shopAccountPassword = "a";//TODO
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(8888);
+        ServerSocket serverSocket = new ServerSocket(9999);
         System.out.println("server is ready");
         System.out.println("waiting for clients ...");
         ServerImp server = this;
