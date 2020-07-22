@@ -19,6 +19,7 @@ public class Sqlite {
     private Connection conn;
     private GsonBuilder gsonBuilder;
     Gson gson;
+    private Statement stmt;
 
     public Sqlite() {
         conn = Sqlite.connect();
@@ -84,6 +85,7 @@ public class Sqlite {
     public void loadBuyer() {
         String sql = "SELECT  username,userPersonalInfo,balance,sumOfPaymentForCoddedDiscount,codedDiscountsId,buyOrdersId,filesId FROM buyer";
         try {
+
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -139,14 +141,14 @@ public class Sqlite {
     }
 
     public void loadSeller() {
-        String sql = "SELECT  username,userPersonalInfo,compnayName,productsNumberWithId,offsId,sellOrdersId,filesId FROM seller";
+        String sql = "SELECT  username,userPersonalInfo,companyName,productsNumberWithId,offsId,sellOrdersId,filesId FROM seller";
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 String username = rs.getString(1);
                 UserPersonalInfo userPersonalInfo = (UserPersonalInfo) this.stringToObject(rs.getString(2), UserPersonalInfo.class);
-                String compnayName = rs.getString(3);
+                String companyName = rs.getString(3);
                 HashMap<String, Double> productsId = (HashMap) this.stringToObject(rs.getString(4), HashMap.class);
                 HashMap<String, Integer> productsId2 = new HashMap<>();
                 for (String key : productsId.keySet()) {
@@ -155,7 +157,7 @@ public class Sqlite {
                 ArrayList<String> offsId = (ArrayList<String>) this.stringToObject(rs.getString(5), ArrayList.class);
                 ArrayList<String> sellOrdersId = (ArrayList<String>) this.stringToObject(rs.getString(6), ArrayList.class);
                 ArrayList<String> filesId = (ArrayList<String>) this.stringToObject(rs.getString(7), ArrayList.class);
-                new Seller(username, userPersonalInfo, compnayName, productsId2, offsId, sellOrdersId, filesId);
+                new Seller(username, userPersonalInfo, companyName, productsId2, offsId, sellOrdersId, filesId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -285,10 +287,12 @@ public class Sqlite {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO sellOrder(payment,offAmount,productId,buyerUserName,deliveryStatus,number) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO sellOrder(payment,offAmount,date,productId,buyerUserName,deliveryStatus,number,orderId) VALUES(?,?,?,?,?,?,?,?)";
         for (SellOrder sellOrder : sellOrders) {
+            String id = sellOrder.getOrderId();
             double payment = sellOrder.getPayment();
             double offAmount = sellOrder.getOffAmount();
+            String date = sellOrder.getDate().toString();
             String productId = sellOrder.getProductId();
             String buyerUserName = sellOrder.getUsername();
             String deliveryStatus = this.objectToString(sellOrder.getDeliveryStatus());
@@ -297,10 +301,12 @@ public class Sqlite {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setDouble(1, payment);
                 pstmt.setDouble(2, offAmount);
-                pstmt.setString(3, productId);
-                pstmt.setString(4, buyerUserName);
-                pstmt.setString(5, deliveryStatus);
-                pstmt.setInt(6, number);
+                pstmt.setString(3, date);
+                pstmt.setString(4, productId);
+                pstmt.setString(5, buyerUserName);
+                pstmt.setString(6, deliveryStatus);
+                pstmt.setInt(7, number);
+                pstmt.setString(8, id);
 
                 pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -310,7 +316,7 @@ public class Sqlite {
     }
 
     public void loadSellOrder() {
-        String sql = "SELECT payment,offAmount,date,productId,buyerUserName,deliveryStatus,number FROM sellOrder";
+        String sql = "SELECT payment,offAmount,date,productId,buyerUserName,deliveryStatus,number,orderId FROM sellOrder";
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
@@ -322,7 +328,8 @@ public class Sqlite {
                 String buyerUserName = rs.getString(5);
                 DeliveryStatus deliveryStatus = (DeliveryStatus) this.stringToObject(rs.getString(6), DeliveryStatus.class);
                 int number = rs.getInt(7);
-                new SellOrder(payment, offAmount, changeDate(date), productId, buyerUserName, deliveryStatus, number);
+                String orderId = rs.getString(8);
+                new SellOrder(payment, offAmount, changeDate(date), productId, buyerUserName, deliveryStatus, number, orderId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -347,7 +354,7 @@ public class Sqlite {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO buyOrder(payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date) VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO buyOrder(payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date,orderId) VALUES(?,?,?,?,?,?,?,?,?)";
         for (BuyOrder buyOrder : buyOrders) {
             double payment = buyOrder.getPayment();
             double codedDiscountAmount = buyOrder.getCodedDiscountAmount();
@@ -357,6 +364,7 @@ public class Sqlite {
             String address = buyOrder.getAddress();
             String phoneNumber = buyOrder.getPhoneNumber();
             String date = buyOrder.getDate().toString();
+            String orderId = buyOrder.getOrderId();
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setDouble(1, payment);
@@ -367,6 +375,7 @@ public class Sqlite {
                 pstmt.setString(6, address);
                 pstmt.setString(7, phoneNumber);
                 pstmt.setString(8, date);
+                pstmt.setString(9, orderId);
 
                 pstmt.executeUpdate();
             } catch (SQLException e) {
@@ -376,14 +385,14 @@ public class Sqlite {
     }
 
     public void loadBuyOrder() {
-        String sql = "SELECT payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date FROM buyOrder";
+        String sql = "SELECT payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date,orderId FROM buyOrder";
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 double payment = rs.getDouble(1);
                 double codedDiscountAmount = rs.getDouble(2);
-                HashMap<String, Integer> productsId = (HashMap<String, Integer>) this.stringToObject(rs.getString(3), ArrayList.class);
+                HashMap<String, Double> productsId = (HashMap) this.stringToObject(rs.getString(3), HashMap.class);
                 HashMap<String, Integer> productsId2 = new HashMap<>();
                 for (String key : productsId.keySet()) {
                     productsId2.put(key, productsId.get(key).intValue());
@@ -393,7 +402,8 @@ public class Sqlite {
                 String address = rs.getString(6);
                 String phoneNumber = rs.getString(7);
                 String date = rs.getString(8);
-                new BuyOrder(payment, codedDiscountAmount, productsId2, sellersId, deliveryStatus, address, phoneNumber, changeDate(date));
+                String orderId = rs.getString(9);
+                new BuyOrder(payment, codedDiscountAmount, productsId2, sellersId, deliveryStatus, address, phoneNumber, changeDate(date), orderId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -60,6 +60,13 @@ public class Product implements Serializable {
         this.comments = comments;
         this.categoryName = categoryName;
         this.sellersName = sellersName;
+        if (this.productState == State.ProductState.CONFIRMED) {
+            allProductsInList.add(this);
+        } else if (this.productState == State.ProductState.CREATING_PROCESS) {
+            allProductsInQueueExpect.add(this);
+        } else {
+            allProductsInQueueEdit.add(this);
+        }
 
     }
 

@@ -12,13 +12,21 @@ public class Database {
         Company.load();
         Off.load();
         Comment.load();
-        User.load();
+        Sqlite sqlite = new Sqlite();
+        sqlite.loadBuyer();
+        sqlite.loadSeller();
+        sqlite.loadManager();
+        //User.load();
         Category.load();
         CodedDiscount.load();
-        Order.load();
-        Product.load();
+        sqlite.loadBuyOrder();
+        sqlite.loadSellOrder();
+        //Order.load();
+        sqlite.loadProduct();
+        //Product.load();
         Request.load();
         Supporter.load();
+
 
         User.loadFields();
         Request.loadFields();

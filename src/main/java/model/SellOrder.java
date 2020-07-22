@@ -24,14 +24,16 @@ public class SellOrder extends Order implements Serializable {
     private DeliveryStatus deliveryStatus;
     private int number;
 
-    public SellOrder(double payment, double offAmount, Date date, String productId, String buyerUsername, DeliveryStatus deliveryStatus, int number) {
+    public SellOrder(double payment, double offAmount, Date date, String productId, String buyerUsername, DeliveryStatus deliveryStatus, int number, String orderId) {
         super(date);
+        this.orderId = orderId;
         this.payment = payment;
         this.offAmount = offAmount;
         this.product = Product.getAllProductById(productId);
         this.buyer = (Buyer) User.getUserByUserName(buyerUsername);
         this.deliveryStatus = deliveryStatus;
         this.number = number;
+        allOrders.add(this);
     }
 
     public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer) {
