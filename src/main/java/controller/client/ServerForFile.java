@@ -50,22 +50,19 @@ public class ServerForFile {
     }
 
     public void run() {
-        thread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Socket socket = serverSocket.accept();
-                        new PeerHandler(socket, new DataInputStream(new BufferedInputStream(socket.getInputStream())),
-                                new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())),
-                                filesIdToAddress);
+        thread = new Thread(() -> {
+            while (true) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    new PeerHandler(socket, new DataInputStream(new BufferedInputStream(socket.getInputStream())),
+                            new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())),
+                            filesIdToAddress);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
-        };
+        });
         thread.setDaemon(true);
         thread.start();
     }
@@ -95,37 +92,21 @@ public class ServerForFile {
                 String fileId = dataInputStream.readUTF();
                 String address = filesIdToAddress.get(fileId);
                 File file = new File(address);
-                sendFile(address);
+                sendFile(address,dataOutputStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
 
-        public void sendFile(String file) throws IOException {
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+        public void sendFile(String file,DataOutputStream dos) throws IOException {
             FileInputStream fis = new FileInputStream(file);
             byte[] buffer = new byte[4096];
-
             while (fis.read(buffer) > 0) {
                 dos.write(buffer);
             }
             fis.close();
             dos.close();
-        }
-
-        private void sendFile(File file) {
-            try {
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(buffer);
-                oos.writeObject(file);
-                oos.close();
-                byte[] rawData = buffer.toByteArray();
-                dataOutputStream.write(rawData);
-                dataOutputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
