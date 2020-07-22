@@ -29,7 +29,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("172.20.25.70", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -669,11 +669,28 @@ public class Client {
             String IP = result.split(" ")[0];
             int port = Integer.parseInt(result.split(" ")[1]);
             Socket socket = new Socket(IP, port);
-            dataOutputStream.writeUTF(fileId);
-            dataOutputStream.flush();
-            makeCopyOfFile((File) getObject());
+            DataOutputStream ds = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            DataInputStream di = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            ds.writeUTF(fileId);
+            ds.flush();
+            makeCopyOfFile(getFile(di));
             return "your download starts";
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private File getFile(DataInputStream dataInputStream) {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return (File) is.readObject();
+        } catch (IOException e) {
+            System.out.println("done");
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;
