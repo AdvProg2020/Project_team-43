@@ -36,7 +36,7 @@ public class ServerForFile {
 
     private Object getObject(DataInputStream dataInputStream) {
         try {
-            byte[] bytes = new byte[30000];
+            byte[] bytes = new byte[300000];
             dataInputStream.read(bytes);
             ByteArrayInputStream in = new ByteArrayInputStream(bytes);
             ObjectInputStream is = new ObjectInputStream(in);
