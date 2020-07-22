@@ -98,7 +98,8 @@ public class BuyerMenuController extends Controller {
             hBox.getChildren().add(new Label(fileId + "   Price: " + files.get(fileId) + "   "));
             Button button = new Button("download");
             button.setOnAction(event -> {
-                client.downloadFile(user, fileId);
+                String result = client.downloadFile(user, fileId);
+                new Alert(Alert.AlertType.INFORMATION, result).showAndWait();
             });
             hBox.getChildren().add(button);
             FilesJFXListView.getItems().add(hBox);

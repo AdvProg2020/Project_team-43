@@ -415,6 +415,21 @@ public class ServerImp {
             filesIPAndPort.remove(fileId);
         }
     }
+
+    public String getIP(String fileId, String token) {
+        if (!users.containsKey(token)) {
+            return "invalid token";
+        }
+        if (!filesIPAndPort.containsKey(fileId)) {
+            return "server is not ready";
+        }
+        return filesIPAndPort.get(fileId).getKey();
+    }
+
+    public int getPort(String fileId) {
+        return filesIPAndPort.get(fileId).getValue();
+
+    }
 }
 
 class ExpireToken extends Thread {

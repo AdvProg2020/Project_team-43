@@ -144,12 +144,32 @@ public class ClientHandler extends Thread {
                     addFileServer(command);
                 } else if (command.startsWith("serverOfFileEnd")) {
                     endServerOfFile(command);
+                } else if (command.startsWith("getIPAndPort")) {
+                    getIPAndPort(command);
                 } else {
                     System.out.println("What the fuck command");
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void getIPAndPort(String command) {
+        try {
+            String fileId = command.split(" ")[1];
+            String token = command.split(" ")[2];
+            String IP = server.getIP(fileId, token);
+            int port;
+            if (!(IP.equals("server is not ready") || IP.equals("invalid token"))) {
+                port = server.getPort(fileId);
+                dataOutputStream.writeUTF(IP + " " + port);
+                dataOutputStream.flush();
+            }
+            dataOutputStream.writeUTF("server is not ready");
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

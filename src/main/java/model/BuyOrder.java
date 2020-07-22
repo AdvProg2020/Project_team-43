@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
-public class BuyOrder extends Order  implements Serializable {
+public class BuyOrder extends Order implements Serializable {
     private static String fileAddress = "database/BuyOrder.dat";
     private double payment;
     private double codedDiscountAmount;
@@ -28,7 +28,7 @@ public class BuyOrder extends Order  implements Serializable {
     private String address;
     private String phoneNumber;
 
-    public BuyOrder(double payment,double codedDiscountAmount,HashMap<String, Integer>productsId,ArrayList<String>sellersId,DeliveryStatus deliveryStatus,String address,String phoneNumber,Date date){
+    public BuyOrder(double payment, double codedDiscountAmount, HashMap<String, Integer> productsId, ArrayList<String> sellersId, DeliveryStatus deliveryStatus, String address, String phoneNumber, Date date) {
         super(date);
         this.payment = payment;
         this.productsId = productsId;

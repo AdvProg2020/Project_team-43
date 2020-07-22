@@ -654,9 +654,25 @@ public class Client {
         }
     }
 
-    public void downloadFile(Buyer user, String fileId) {
+    public String downloadFile(Buyer user, String fileId) {
         checkTokenValidation(user);
-        //TODO
+        try {
+            dataOutputStream.writeUTF("getIPAndPort " + fileId + " " + token);
+            dataOutputStream.flush();
+            String result = dataInputStream.readUTF();
+            if (result.equals("server is not ready")) {
+                return result;
+            }
+            String IP = result.split(" ")[0];
+            int port = Integer.parseInt(result.split(" ")[1]);
+            Socket socket = new Socket(IP, port);
+            dataOutputStream.writeUTF(fileId);
+            dataOutputStream.flush();
+            return "your download starts";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public User updateMe(User user) {
