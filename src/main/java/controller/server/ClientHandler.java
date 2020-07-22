@@ -193,6 +193,7 @@ public class ClientHandler extends Thread {
         try {
             dataOutputStream.writeUTF("files added successfully");
             dataOutputStream.flush();
+            sendObject(server.getFilesAddresses(token));
         } catch (IOException e) {
             e.printStackTrace();
         }

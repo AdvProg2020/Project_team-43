@@ -430,6 +430,17 @@ public class ServerImp {
         return filesIPAndPort.get(fileId).getValue();
 
     }
+
+    public HashMap<String, String> getFilesAddresses(String token) {
+        if (users.containsKey(token)) {
+            HashMap<String, String> filesAddresses = new HashMap<>();
+            for (FileProduct file : ((Seller) users.get(token)).getFiles()) {
+                filesAddresses.put(file.getProductId(), file.getAddress());
+            }
+            return filesAddresses;
+        }
+        return null;
+    }
 }
 
 class ExpireToken extends Thread {

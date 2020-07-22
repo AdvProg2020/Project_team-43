@@ -10,9 +10,12 @@ import controller.client.Processor;
 import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -668,11 +671,22 @@ public class Client {
             Socket socket = new Socket(IP, port);
             dataOutputStream.writeUTF(fileId);
             dataOutputStream.flush();
+            makeCopyOfFile((File) getObject());
             return "your download starts";
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void makeCopyOfFile(File file) {
+        try {
+            Files.copy(file.toPath(), new File("src/downloads/" + FilenameUtils.getBaseName(file.getAbsolutePath()) + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public User updateMe(User user) {
