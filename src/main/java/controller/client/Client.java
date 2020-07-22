@@ -681,25 +681,28 @@ public class Client {
         return null;
     }
 
-    private File getFile(DataInputStream dataInputStream) {
+    private byte[] getFile(DataInputStream dataInputStream) {
         try {
-            byte[] bytes = new byte[30000];
+            byte[] bytes = new byte[0];
             dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            return (File) is.readObject();
+            return bytes;
         } catch (IOException e) {
-            System.out.println("done");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("kiiiir");
         }
         return null;
     }
 
-    private void makeCopyOfFile(File file) {
+    private void makeCopyOfFile(byte[] bytes) {
         try {
-            Files.copy(file.toPath(), new File("src/downloads/" + FilenameUtils.getBaseName(file.getAbsolutePath()) + "." + FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            File file = (File) is.readObject();
+            FileOutputStream fileOutputStream = new FileOutputStream("src/downloads/" + file.getName());
+            fileOutputStream.write(bytes);
+            fileOutputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
