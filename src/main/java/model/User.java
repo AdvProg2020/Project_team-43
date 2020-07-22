@@ -98,7 +98,6 @@ public abstract class User implements Serializable {
 
     public static void load() throws FileNotFoundException {
         Buyer.load();
-//        new Sqlite().loadBuyer();
         Seller.load();
         Manager.load();
 

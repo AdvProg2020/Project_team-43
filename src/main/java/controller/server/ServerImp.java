@@ -60,6 +60,9 @@ public class ServerImp {
 
     public void logout(String token) {
         if (users.containsKey(token)) {
+            if (users.get(token) instanceof Supporter) {
+                ((Supporter) users.get(token)).setOnline(false);
+            }
             users.remove(token);
         }
     }
