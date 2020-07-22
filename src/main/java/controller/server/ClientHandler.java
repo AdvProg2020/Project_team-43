@@ -9,9 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +19,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
+    private String key;
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -48,8 +47,25 @@ public class ClientHandler extends Thread {
             while (true) {
                 String command = dataInputStream.readUTF();
                 System.out.println(command);
+                if (command.equals("giveFirstKey")) {
+                    giveFirstKey();
+                    continue;
+                }else if (command.startsWith("fuckMe")) {
+                    updateMe(command);
+                    continue;
+                } else if (command.startsWith("sendMessage")) {
+                    sendMessage(command);
+                    continue;
+                } else if (command.startsWith("endInputStream")) {
+                    endInputStream();
+                    continue;
+                }
+                System.out.println(command);
+                command = MyCipher.getInstance().decryptMessage(command, key);
                 if (command.startsWith("login")) {
                     login(command.split(" ")[1], command.split(" ")[2]);
+                } else if (command.equals("giveNewKey")) {
+                    giveNewKey();
                 } else if (command.startsWith("register")) {
                     register(command);
                 } else if (command.startsWith("update")) {
@@ -130,16 +146,10 @@ public class ClientHandler extends Thread {
                     setOnline(command);
                 } else if (command.startsWith("getOnlineSupporters")) {
                     getOnlineSupporters();
-                } else if (command.startsWith("sendMessage")) {
-                    sendMessage(command);
-                } else if (command.startsWith("endInputStream")) {
-                    endInputStream();
                 } else if (command.startsWith("addFileSeller")) {
                     addFileSeller(command);
                 } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
-                } else if (command.startsWith("fuckMe")) {
-                    updateMe(command);
                 } else if (command.startsWith("addFileServer")) {
                     addFileServer(command);
                 } else if (command.startsWith("serverOfFileEnd")) {
@@ -728,6 +738,28 @@ public class ClientHandler extends Thread {
             supporter.getUsers().put(username, messages);
         } else {
             supporter.getUsers().get(username).add(supporter.getUsername() + " : " + message);
+        }
+    }
+
+    public void giveFirstKey() {
+        try {
+            Random rand = new Random();
+            key = rand.nextInt(99999)+"";
+            dataOutputStream.writeUTF(key);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void giveNewKey(){
+        try {
+            Random rand = new Random();
+            String newKey = rand.nextInt(99999)+"";
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage(newKey,key));
+            dataOutputStream.flush();
+            key = newKey;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

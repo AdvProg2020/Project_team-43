@@ -4,10 +4,12 @@ package controller.client;
 import View.GraphicController.BuyerMenuController;
 import View.GraphicController.SupporterMenuController;
 
+import controller.server.MyCipher;
 import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
 
+import javax.crypto.Cipher;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,12 +24,27 @@ public class Client {
     private Thread thread;
     private Socket socket;
     private ServerForFile serverForFile;
+    private String key;
 
     public void run() {
         try {
             socket = new Socket("localhost", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            dataOutputStream.writeUTF("giveFirstKey");
+            dataOutputStream.flush();
+            key = dataInputStream.readUTF();
+            System.out.println(2 + key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeKey(){
+        try {
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("giveNewKey", key));
+            dataOutputStream.flush();
+            key = MyCipher.getInstance().decryptMessage(dataInputStream.readUTF(), key);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,7 +52,8 @@ public class Client {
 
     public String login(String username, String password) {
         try {
-            dataOutputStream.writeUTF("login" + " " + username + " " + password);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("login" + " " + username + " " + password, key));
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             System.out.println(result);
@@ -71,8 +89,10 @@ public class Client {
     }
 
     public String register(String firstName, String lastName, String email, String phone, String password, String username, String companyName) throws IOException {
-        dataOutputStream.writeUTF("register" + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + username + " " + companyName);
+        changeKey();
+        dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("login" + " " + username + " " + password, key));
         dataOutputStream.flush();
+        dataOutputStream.writeUTF("register" + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + username + " " + companyName);
         return dataInputStream.readUTF();
     }
 
@@ -80,7 +100,8 @@ public class Client {
 
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("update " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + password + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("update " + firstName + " " + lastName + " " + email + " " + phoneNumber + " " + password + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -91,7 +112,8 @@ public class Client {
 
     public void logout() {
         try {
-            dataOutputStream.writeUTF("logout " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("logout " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,7 +123,8 @@ public class Client {
     public void addExistingProduct(String id, String amount, Seller user) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("addExistingProduct " + id + " " + amount + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("addExistingProduct " + id + " " + amount + " " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +134,8 @@ public class Client {
     public void addNewProduct(User user, String name, String companyName, String categoryName, String priceString, String number, HashMap<String, String> features) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("addNewProduct " + name + " " + companyName + " " + categoryName + " " + priceString + " " + number + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("addNewProduct " + name + " " + companyName + " " + categoryName + " " + priceString + " " + number + " " + token,key));
             dataOutputStream.flush();
             sendObject(features);
         } catch (IOException e) {
@@ -122,7 +146,8 @@ public class Client {
     public void addOff(Seller user, String startTime, String endTime, double amount, ArrayList<String> productIds) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("addOff " + startTime + " " + endTime + " " + amount + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("addOff " + startTime + " " + endTime + " " + amount + " " + token,key));
             dataOutputStream.flush();
             sendObject(productIds);
         } catch (IOException e) {
@@ -133,7 +158,8 @@ public class Client {
     public void editProduct(Seller user, String productId, String field, String newField) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("editProduct " + productId + " " + field + " " + newField + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("editProduct " + productId + " " + field + " " + newField + " " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -143,7 +169,8 @@ public class Client {
     public void editOff(Seller user, String offId, String field, String newField) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("editOff " + offId + " " + field + " " + newField + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("editOff " + offId + " " + field + " " + newField + " " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,7 +193,8 @@ public class Client {
 
     public ArrayList<Product> getAllProducts() {
         try {
-            dataOutputStream.writeUTF("getAllProducts");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllProducts",key));
             dataOutputStream.flush();
             ArrayList<Product> allProducts = (ArrayList<Product>) getObject();
             return allProducts;
@@ -178,7 +206,8 @@ public class Client {
 
     public ArrayList<Off> getOffs() {
         try {
-            dataOutputStream.writeUTF("getAllOffs");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllOffs",key));
             dataOutputStream.flush();
             ArrayList<Off> allOffs = (ArrayList<Off>) getObject();
             return allOffs;
@@ -190,7 +219,8 @@ public class Client {
 
     public ArrayList<Category> getAllCategories() {
         try {
-            dataOutputStream.writeUTF("getAllCategories");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllCategories",key));
             dataOutputStream.flush();
             ArrayList<Category> allCategories = (ArrayList<Category>) getObject();
             return allCategories;
@@ -202,7 +232,8 @@ public class Client {
 
     public ArrayList<User> getAllUsers() {
         try {
-            dataOutputStream.writeUTF("getAllUsers");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllUsers",key));
             dataOutputStream.flush();
             ArrayList<User> allUsers = (ArrayList<User>) getObject();
             return allUsers;
@@ -214,7 +245,7 @@ public class Client {
 
     public ArrayList<Request> getAllRequests() {
         try {
-            dataOutputStream.writeUTF("getAllRequests");
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllRequests",key));
             dataOutputStream.flush();
             ArrayList<Request> allRequests = (ArrayList<Request>) getObject();
             return allRequests;
@@ -226,7 +257,8 @@ public class Client {
 
     public ArrayList<CodedDiscount> getAllCodedDiscounts() {
         try {
-            dataOutputStream.writeUTF("getAllCodedDiscounts");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllCodedDiscounts",key));
             dataOutputStream.flush();
             ArrayList<CodedDiscount> allCodedDiscounts = (ArrayList<CodedDiscount>) getObject();
             return allCodedDiscounts;
@@ -238,7 +270,8 @@ public class Client {
 
     public ArrayList<Company> getAllCompanies() {
         try {
-            dataOutputStream.writeUTF("getAllCompanies");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getAllCompanies",key));
             dataOutputStream.flush();
             ArrayList<Company> allCompanies = (ArrayList<Company>) getObject();
             return allCompanies;
@@ -267,7 +300,8 @@ public class Client {
     public void addComment(String commentText, boolean isBuy, Product product, User user) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("comment" + "----" + token + "----" + commentText + "----" + isBuy + "----" + product.getProductId());
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("comment" + "----" + token + "----" + commentText + "----" + isBuy + "----" + product.getProductId(),key));
             dataOutputStream.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -276,7 +310,8 @@ public class Client {
 
     private void checkTokenValidation(User user) {
         try {
-            dataOutputStream.writeUTF("checkValid " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("checkValid " + token,key));
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             if (result.equals("expired")) {
@@ -289,7 +324,8 @@ public class Client {
 
     private void setNewToken(String username, String password) {
         try {
-            dataOutputStream.writeUTF("get_token " + username + " " + password);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("get_token " + username + " " + password,key));
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             if (!result.equals("invalid info")) {
@@ -304,7 +340,8 @@ public class Client {
     public String createManagerProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("createManagerProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -316,7 +353,8 @@ public class Client {
     public String createSupporterProfile(String userName, String firstName, String lastName, String email, String phone, String password) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("createSupporterProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("createSupporterProfile" + " " + userName + " " + firstName + " " + lastName + " " + email + " " + phone + " " + password + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -328,7 +366,8 @@ public class Client {
     public String acceptRequest(String requestId) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("acceptRequest" + " " + requestId + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("acceptRequest" + " " + requestId + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -341,7 +380,8 @@ public class Client {
     public void declineRequest(String requestId) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("declineRequest" + " " + requestId + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("declineRequest" + " " + requestId + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -352,7 +392,8 @@ public class Client {
     public void deleteUser(String userName) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("deleteUser" + " " + userName + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("deleteUser" + " " + userName + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -362,7 +403,8 @@ public class Client {
 
     public void editCategory(String categoryName, String newName) {
         try {
-            dataOutputStream.writeUTF("editCategory" + " " + categoryName + " " + newName + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("editCategory" + " " + categoryName + " " + newName + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -373,7 +415,8 @@ public class Client {
     public String addCategoryFeature(String categoryName, String featureName) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("addCategoryFeature" + " " + categoryName + " " + featureName + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -386,7 +429,8 @@ public class Client {
         try {
             checkTokenValidation(Processor.user);
             features.add(categoryName);
-            dataOutputStream.writeUTF("createCategory");
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("createCategory",key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
             sendObject(features);
@@ -399,7 +443,8 @@ public class Client {
     public void editCodedDiscount(String code, String startDate, String endDate, String discountAmount, String repeat) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("editCodedDiscount" + "----" + code + "----" + startDate + "----" + endDate + "----" + discountAmount + "----" + repeat + "----" + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("editCodedDiscount" + "----" + code + "----" + startDate + "----" + endDate + "----" + discountAmount + "----" + repeat + "----" + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -410,7 +455,8 @@ public class Client {
     public void removeCodedDiscount(String code) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("removeCodedDiscount" + " " + code + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("removeCodedDiscount" + " " + code + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -421,7 +467,8 @@ public class Client {
     public String createCodedDiscount(String startDate, String endDate, String amount, String repeat) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("createCodedDiscount" + " " + startDate + " " + endDate + " " + amount + " " + repeat + " " + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -433,7 +480,8 @@ public class Client {
     public void removeCategory(String categoryName) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("removeCategory" + " " + categoryName + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("removeCategory" + " " + categoryName + " " + token, key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -444,7 +492,8 @@ public class Client {
     public void removeProduct(String productId) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("removeProduct" + " " + productId + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("removeProduct" + " " + productId + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -455,7 +504,8 @@ public class Client {
     public String changeFeature(String categoryName, String oldFeature, String newFeature) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("changeFeature" + "----" + categoryName + "----" + oldFeature + "----" + newFeature + "----" + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("changeFeature" + "----" + categoryName + "----" + oldFeature + "----" + newFeature + "----" + token,key));
             dataOutputStream.flush();
             return dataInputStream.readUTF();
         } catch (IOException e) {
@@ -467,7 +517,8 @@ public class Client {
     public void removeFeature(String categoryName, String feature) {
         try {
             checkTokenValidation(Processor.user);
-            dataOutputStream.writeUTF("removeFeature" + " " + categoryName + " " + feature + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("removeFeature" + " " + categoryName + " " + feature + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
         } catch (IOException e) {
@@ -479,7 +530,8 @@ public class Client {
     public void rateProduct(Product product, int rating, User user) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("rate" + " " + product.getProductId() + " " + rating + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("rate" + " " + product.getProductId() + " " + rating + " " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -490,7 +542,8 @@ public class Client {
     public String chargeAccount(String bankUsername, String bankPassword, String amount, String accountId, User user) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("charge " + bankUsername + " " + bankPassword + " " + amount + " " + accountId + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("charge " + bankUsername + " " + bankPassword + " " + amount + " " + accountId + " " + token,key));
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             if (result.equals("done successfully"))
@@ -507,7 +560,8 @@ public class Client {
         try {
             if (user.getBalance() > Double.parseDouble(amount)) {
                 checkTokenValidation(user);
-                dataOutputStream.writeUTF("withdraw " + amount + " " + accountId + " " + token);
+                changeKey();
+                dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("withdraw " + amount + " " + accountId + " " + token,key));
                 dataOutputStream.flush();
                 String result = dataInputStream.readUTF();
                 if (result.equals("done successfully")) {
@@ -525,7 +579,8 @@ public class Client {
     public void useDiscountCode(User user, String codedDiscount) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("useCode " + codedDiscount + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("useCode " + codedDiscount + " " + token,key));
             dataOutputStream.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -535,7 +590,8 @@ public class Client {
     public String purchaseWithCredit(User user, String address, String phoneNumber, double discount) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("purchase " + address + " " + phoneNumber + " " + discount + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("purchase " + address + " " + phoneNumber + " " + discount + " " + token,key));
             dataOutputStream.flush();
             dataInputStream.readUTF();
             sendObject(((Buyer) user).getNewBuyerCart());
@@ -550,7 +606,8 @@ public class Client {
     public void setUserOnline(User user) {
         try {
             checkTokenValidation(user);
-            dataOutputStream.writeUTF("setOnline " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("setOnline " + token,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -561,7 +618,8 @@ public class Client {
     public ArrayList<String> getAllOnlineSupporters(Buyer user) {
         checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("getOnlineSupporters " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getOnlineSupporters " + token,key));
             dataOutputStream.flush();
             return (ArrayList<String>) getObject();
         } catch (IOException e) {
@@ -646,7 +704,8 @@ public class Client {
     public void removeFile(User user, String absolutePath) {
         checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("removeFileSeller " + token + " " + absolutePath);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("removeFileSeller " + token + " " + absolutePath,key));
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -656,7 +715,8 @@ public class Client {
     public String downloadFile(Buyer user, String fileId) {
         checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("getIPAndPort " + fileId + " " + token);
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("getIPAndPort " + fileId + " " + token,key));
             dataOutputStream.flush();
             String result = dataInputStream.readUTF();
             if (result.equals("server is not ready")) {
@@ -726,7 +786,8 @@ public class Client {
     public void addFile(User user, String name, String company, String category, String price, HashMap<String, String> features, File file) {
         checkTokenValidation(user);
         try {
-            dataOutputStream.writeUTF("addFileSeller " + name + " " + company + " " + category + " " + price + " " + token + " " + file.getAbsolutePath());
+            changeKey();
+            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("addFileSeller " + name + " " + company + " " + category + " " + price + " " + token + " " + file.getAbsolutePath(),key));
             dataOutputStream.flush();
             sendObject(features);
         } catch (IOException e) {
@@ -739,7 +800,8 @@ public class Client {
             checkTokenValidation(user);
             serverForFile.killThread();
             try {
-                dataOutputStream.writeUTF("serverOfFileEnd " + token);
+                changeKey();
+                dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage("serverOfFileEnd " + token,key));
                 dataOutputStream.flush();
                 dataInputStream.readUTF();
             } catch (IOException e) {
