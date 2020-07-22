@@ -22,8 +22,8 @@ public class Database {
         sqlite.loadBuyOrder();
         sqlite.loadSellOrder();
         //Order.load();
-        sqlite.loadProduct();
-        //Product.load();
+        //sqlite.loadProduct();
+        Product.load();
         Request.load();
         Supporter.load();
 
