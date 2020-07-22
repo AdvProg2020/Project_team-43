@@ -6,6 +6,8 @@ import model.database.Saver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,6 +22,16 @@ public class SellOrder extends Order  implements Serializable {
     private String buyerUsername;
     private DeliveryStatus deliveryStatus;
     private int number;
+
+    public SellOrder(double payment, double offAmount, Date date, String productId, String buyerUsername, DeliveryStatus deliveryStatus, int number) {
+        super(date);
+        this.payment = payment;
+        this.offAmount = offAmount;
+        this.product = Product.getAllProductById(productId);
+        this.buyer = (Buyer)User.getUserByUserName(buyerUsername);
+        this.deliveryStatus = deliveryStatus;
+        this.number = number;
+    }
 
     public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer) {
         super(date);
@@ -40,6 +52,7 @@ public class SellOrder extends Order  implements Serializable {
         this.deliveryStatus = DeliveryStatus.DELIVERING;
         this.number = number;
     }
+
 
     @Override
     public void setOrderType() {
