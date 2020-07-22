@@ -221,15 +221,14 @@ public class Sqlite {
             String featureMap = this.objectToString(product.getFeaturesMap());
             String description = product.getDescription();
             String productScore = this.objectToString(product.getScore());
-            Comment[] commentsArray = (Comment[]) product.getComments().toArray();
-            String comments = this.objectToString(commentsArray);
-            String categoryName = product.getCategory().getName();
+            String comments = this.objectToString(product.getComments());
+            String categoryName = product.getCategoryName();
             String sellersName = this.objectToString(product.getSellersName());
 
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setString(1, productId);
-                pstmt.setString(2, productScore);
+                pstmt.setString(2, productState);
                 pstmt.setString(3, name);
                 pstmt.setString(4, companyName);
                 pstmt.setDouble(5, price);
@@ -290,8 +289,8 @@ public class Sqlite {
         for (SellOrder sellOrder : sellOrders) {
             double payment = sellOrder.getPayment();
             double offAmount = sellOrder.getOffAmount();
-            String productId = sellOrder.getProduct().getProductId();
-            String buyerUserName = sellOrder.getBuyer().getUsername();
+            String productId = sellOrder.getProductId();
+            String buyerUserName = sellOrder.getUsername();
             String deliveryStatus = this.objectToString(sellOrder.getDeliveryStatus());
             int number = sellOrder.getNumber();
             try {
@@ -321,15 +320,16 @@ public class Sqlite {
                 String date = rs.getString(3);
                 String productId = rs.getString(4);
                 String buyerUserName = rs.getString(5);
-                DeliveryStatus deliveryStatus = (DeliveryStatus)this.stringToObject(rs.getString(6), DeliveryStatus.class);
+                DeliveryStatus deliveryStatus = (DeliveryStatus) this.stringToObject(rs.getString(6), DeliveryStatus.class);
                 int number = rs.getInt(7);
-                new SellOrder(payment,offAmount,changeDate(date),productId,buyerUserName,deliveryStatus,number);
+                new SellOrder(payment, offAmount, changeDate(date), productId, buyerUserName, deliveryStatus, number);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    public Date changeDate(String date){
+
+    public Date changeDate(String date) {
         Date theSameDate = null;
         try {
             theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(date);
@@ -339,7 +339,7 @@ public class Sqlite {
         return theSameDate;
     }
 
-    public void saveBuyOrder(ArrayList<BuyOrder> buyOrders){
+    public void saveBuyOrder(ArrayList<BuyOrder> buyOrders) {
         String sqlDelete = "DELETE FROM buyOrder";
         try {
             conn.prepareStatement(sqlDelete).executeUpdate();
@@ -355,7 +355,7 @@ public class Sqlite {
             String sellersId = this.objectToString(buyOrder.getSellersId());
             String deliveryStatus = this.objectToString(buyOrder.getDeliveryStatus());
             String address = buyOrder.getAddress();
-            String phoneNumber =buyOrder.getPhoneNumber();
+            String phoneNumber = buyOrder.getPhoneNumber();
             String date = buyOrder.getDate().toString();
             try {
                 PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -375,7 +375,7 @@ public class Sqlite {
         }
     }
 
-    public void loadBuyOrder(){
+    public void loadBuyOrder() {
         String sql = "SELECT payment,codedDiscountAmount,productsId,sellersId,deliveryStatus,address,phoneNumber,date FROM buyOrder";
         try {
             Statement stmt = conn.createStatement();
@@ -388,19 +388,17 @@ public class Sqlite {
                 for (String key : productsId.keySet()) {
                     productsId2.put(key, productsId.get(key).intValue());
                 }
-                ArrayList<String> sellersId = (ArrayList<String>)this.stringToObject(rs.getString(4), ArrayList.class);
+                ArrayList<String> sellersId = (ArrayList<String>) this.stringToObject(rs.getString(4), ArrayList.class);
                 DeliveryStatus deliveryStatus = (DeliveryStatus) this.stringToObject(rs.getString(5), DeliveryStatus.class);
                 String address = rs.getString(6);
                 String phoneNumber = rs.getString(7);
                 String date = rs.getString(8);
-                new BuyOrder(payment,codedDiscountAmount,productsId2,sellersId,deliveryStatus,address,phoneNumber,changeDate(date));
+                new BuyOrder(payment, codedDiscountAmount, productsId2, sellersId, deliveryStatus, address, phoneNumber, changeDate(date));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-
-
 
 
 }

@@ -57,7 +57,7 @@ public class ServerForFile {
                     new PeerHandler(new DataInputStream(new BufferedInputStream(socket.getInputStream())),
                             new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())),
                             filesIdToAddress);
-
+                    socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

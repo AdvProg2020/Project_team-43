@@ -3,6 +3,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 import model.request.*;
 
 import java.io.FileNotFoundException;
@@ -261,7 +262,8 @@ public class Manager extends User  implements Serializable {
                 allManagers.add((Manager) user);
             }
         }
-        Saver.save(allManagers, fileAddress);
+        new Sqlite().saveManager(allManagers);
+        //Saver.save(allManagers, fileAddress);
     }
 
 

@@ -3,6 +3,7 @@ package model;
 import javafx.scene.image.Image;
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class Product implements Serializable {
 
     public Product(String productId, State.ProductState productState, String name, String companyName, double price, int visit, String date, int availableCount, HashMap<String, String> featureMap, String description, ProductScore productScore, ArrayList<Comment> comments, String categoryName, ArrayList<String> sellersName) {
         this.productId = productId;
-        this.productState=productState;
+        this.productState = productState;
         this.name = name;
         this.company = Company.getCompanyByName(companyName);
         this.price = price;
@@ -62,7 +63,7 @@ public class Product implements Serializable {
 
     }
 
-    public Date changeDate(String date){
+    public Date changeDate(String date) {
         Date theSameDate = null;
         try {
             theSameDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(date);
@@ -365,7 +366,8 @@ public class Product implements Serializable {
         }
         products.addAll(allProductsInQueueExpect);
         products.addAll(allProductsInQueueEdit);
-        Saver.save(products, fileAddress);
+        //Saver.save(products, fileAddress);
+        new Sqlite().saveProduct(allProducts);
         Saver.save(files, "database/Files.dat");
     }
 
@@ -442,5 +444,9 @@ public class Product implements Serializable {
                 return seller;
         }
         return null;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 }

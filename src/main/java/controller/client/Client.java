@@ -25,7 +25,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("172.20.25.70", 9999);
+            socket = new Socket("localhost", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {

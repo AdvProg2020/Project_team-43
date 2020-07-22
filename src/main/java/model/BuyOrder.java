@@ -2,6 +2,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -194,6 +195,7 @@ public class BuyOrder extends Order implements Serializable {
                 allBuyOrders.add((BuyOrder) order);
             }
         }
-        Saver.save(allBuyOrders, fileAddress);
+        new Sqlite().saveBuyOrder(allBuyOrders);
+        //Saver.save(allBuyOrders, fileAddress);
     }
 }
