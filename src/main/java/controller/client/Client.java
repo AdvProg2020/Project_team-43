@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 9999);
+            socket = new Socket("2.tcp.ngrok.io", 17113);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -43,6 +43,7 @@ public class Client {
             if (checkResultForLogin(result)) {
                 token = result;
                 User user = (User) getObject();
+                System.out.println(user.getUsername());
                 Processor.setUser(user);
                 Processor.setIsLogin(true);
                 if (user.getUserType() == UserType.BUYER) {

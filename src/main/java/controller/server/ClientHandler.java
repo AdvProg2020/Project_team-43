@@ -159,6 +159,7 @@ public class ClientHandler extends Thread {
         }
     }
 
+
     private void getOnlineUsers(String command) {
         String token = command.split(" ")[1];
         sendObject(server.getOnlineUsers());
