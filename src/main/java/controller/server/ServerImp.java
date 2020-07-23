@@ -23,7 +23,7 @@ public class ServerImp {
     private HashMap<String, Pair<String, Integer>> filesIPAndPort = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
-    public static final int PORT = 2020;
+    public static final int PORT = 6666;
     private static int wage;
     private static int minimumBalance;
 
@@ -391,7 +391,11 @@ public class ServerImp {
         }
     }
 
-    public boolean purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<Product, Seller>, Integer> newBuyerCart) {
+    public boolean purchase(String address, String phoneNumber, String discount, String token, HashMap<Pair<String, String>, Integer> newBuyerCartString) {
+        HashMap<Pair<Product, Seller>, Integer> newBuyerCart = new HashMap<>();
+        for (Pair<String, String> pair : newBuyerCartString.keySet()) {
+            newBuyerCart.put(new Pair<>(Product.getProductById(pair.getKey()), (Seller) User.getUserByUserName(pair.getValue())), newBuyerCartString.get(pair));
+        }
         ((Buyer) users.get(token)).setNewBuyerCart(newBuyerCart);
         return ((Buyer) users.get(token)).purchase(Double.parseDouble(discount), address, phoneNumber);
     }

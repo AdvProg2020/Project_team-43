@@ -302,7 +302,7 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
+        HashMap<Pair<String, String>, Integer> newBuyerCart = (HashMap<Pair<String, String>, Integer>) getObject();
         boolean result = server.purchase(address, phoneNumber, discount, token, newBuyerCart);
         try {
             if (result)
@@ -435,36 +435,6 @@ public class ClientHandler extends Thread {
             sendObject(User.getUserByUserName(username));
         }
     }
-
-    private void sendFuckObject(Object object) {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(object);
-            oos.close();
-            byte[] rawData = buffer.toByteArray();
-            dataOutputStream.write(rawData);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Object getFuckObject() {
-        try {
-            byte[] bytes = new byte[30000];
-            dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            return is.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     private boolean checkResultForLogin(String result) {
         if (result.equals("incorrect password"))
@@ -752,12 +722,14 @@ public class ClientHandler extends Thread {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
+            System.out.println("hey");
             return object;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("hoy");
         return null;
 
     }
