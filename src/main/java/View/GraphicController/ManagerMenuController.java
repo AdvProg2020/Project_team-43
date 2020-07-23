@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.*;
@@ -368,7 +369,6 @@ public class ManagerMenuController extends Controller {
         }
         return false;
     }
-
     public boolean hasEmptyFieldInCreateSupporter() {
         if (userNameCreateSupporter.getText().isEmpty()) {
             showErrorAlert("please fill the user name field");
@@ -478,9 +478,11 @@ public class ManagerMenuController extends Controller {
 
     public void updateUsersListView() {
         init();
+        ArrayList<String> onlineUsers = client.getOnlineUsers(user);
         users.clear();
         for (User user : bossProcessor.usersFromController()) {
-            users.add(user.getUsername());
+            String mod = onlineUsers.contains(user.getUsername()) ? "    online" : "    offline";
+            users.add(user.getUsername() + mod);
         }
         usersListView.setItems(users);
     }
@@ -552,7 +554,7 @@ public class ManagerMenuController extends Controller {
             features.add(item.toString());
         }
 //        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
-        client.createCategory(createCategoryName.getText(), features);
+        client.createCategory(user, createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -808,6 +810,9 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
     }
 
+    public void refreshUsers(MouseEvent mouseEvent) {
+        updateUsersListView();
+    }
     public void changeWageAndMinBalance() {
         client.changeWageAndMinBalance(wage.getText(), minBalance.getText());
     }

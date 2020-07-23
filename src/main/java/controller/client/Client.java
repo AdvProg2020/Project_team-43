@@ -7,6 +7,7 @@ import View.GraphicController.SupporterMenuController;
 import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
+import netscape.javascript.JSUtil;
 
 import java.io.*;
 import java.net.Socket;
@@ -382,11 +383,12 @@ public class Client {
         return "done";
     }
 
-    public void createCategory(String categoryName, ArrayList<String> features) {
+    public void createCategory(User user, String categoryName, ArrayList<String> features) {
+        checkTokenValidation(user);
         try {
             checkTokenValidation(Processor.user);
             features.add(categoryName);
-            dataOutputStream.writeUTF("createCategory");
+            dataOutputStream.writeUTF("createCategory " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
             sendObject(features);
@@ -746,6 +748,19 @@ public class Client {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<String> getOnlineUsers(User user) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("getOnlineUsers " + token);
+            dataOutputStream.flush();
+            return (ArrayList<String>) getObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("server nadad.");
+        return null;
     }
 
     public void changeWageAndMinBalance(String wage, String minBalance) {

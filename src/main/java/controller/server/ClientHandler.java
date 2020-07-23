@@ -107,7 +107,7 @@ public class ClientHandler extends Thread {
                 } else if (command.startsWith("removeCodedDiscount")) {
                     removeCodedDiscount(command);
                 } else if (command.startsWith("createCategory")) {
-                    createCategory();
+                    createCategory(command);
                 } else if (command.startsWith("removeCategory")) {
                     removeCategory(command);
                 } else if (command.startsWith("removeProduct")) {
@@ -146,6 +146,8 @@ public class ClientHandler extends Thread {
                     endServerOfFile(command);
                 } else if (command.startsWith("getIPAndPort")) {
                     getIPAndPort(command);
+                } else if (command.startsWith("getOnlineUsers")) {
+                    getOnlineUsers(command);
                 } else if (command.startsWith("changeWage")) {
                     changeWage(command);
                 } else {
@@ -155,6 +157,11 @@ public class ClientHandler extends Thread {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void getOnlineUsers(String command) {
+        String token = command.split(" ")[1];
+        sendObject(server.getOnlineUsers());
     }
 
     private void changeWage(String command) {
@@ -643,13 +650,13 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void createCategory() {
+    private void createCategory(String command) {
         try {
             dataOutputStream.writeUTF("ready to get");
             dataOutputStream.flush();
             ArrayList<String> categoryInfo = (ArrayList<String>) getObject();
-            String categoryName = categoryInfo.remove(categoryInfo.size() - 2);
-            String token = categoryInfo.remove(categoryInfo.size() - 1);
+            String categoryName = categoryInfo.remove(categoryInfo.size() - 1);
+            String token = command.split(" ")[1];
             server.createCategory(categoryName, categoryInfo, token);
             dataOutputStream.writeUTF("createCategory done");
             dataOutputStream.flush();
