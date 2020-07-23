@@ -5,6 +5,7 @@ import View.GraphicController.BuyerMenuController;
 import View.GraphicController.SupporterMenuController;
 
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 import model.*;
 import model.request.Request;
 
@@ -538,8 +539,12 @@ public class Client {
             checkTokenValidation(user);
             dataOutputStream.writeUTF("purchase " + address + " " + phoneNumber + " " + discount + " " + token);
             dataOutputStream.flush();
-            dataInputStream.readUTF();
-            sendObject(((Buyer) user).getNewBuyerCart());
+            System.out.println(dataInputStream.readUTF());
+            HashMap<Pair<String, String>, Integer> buyerCart = new HashMap<>();
+            for (Pair<Product, Seller> pair : ((Buyer) user).getNewBuyerCart().keySet()) {
+                buyerCart.put(new Pair<>(pair.getKey().getProductId(), pair.getValue().getUsername()), ((Buyer) user).getNewBuyerCart().get(pair));
+            }
+            sendObject(buyerCart);
             return dataInputStream.readUTF();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -796,7 +801,7 @@ public class Client {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
-
+            System.out.println("end write");
         } catch (IOException e) {
             e.printStackTrace();
         }
