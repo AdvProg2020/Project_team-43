@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 9999);
+            socket = new Socket("2.tcp.ngrok.io", 17113);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
