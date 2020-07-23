@@ -303,6 +303,7 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
         HashMap<Pair<String, String>, Integer> newBuyerCart = (HashMap<Pair<String, String>, Integer>) getFuckObject();
+        System.out.println("get cart successfully");
         boolean result = server.purchase(address, phoneNumber, discount, token, newBuyerCart);
         try {
             if (result)

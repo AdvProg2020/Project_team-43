@@ -22,9 +22,7 @@ public abstract class Order implements Serializable {
         this.date = date;
         allOrders.add(this);
         constructId += 1;
-        if (constructId <= Integer.parseInt(orderId)) {
-            constructId = Integer.parseInt(orderId) + 1;
-        }
+
         setOrderType();
     }
 

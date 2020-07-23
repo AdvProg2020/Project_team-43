@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 9999);
+            socket = new Socket("0.tcp.ngrok.io", 16205);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -802,6 +802,7 @@ public class Client {
             byte[] rawData = buffer.toByteArray();
             dataOutputStream.write(rawData);
             dataOutputStream.flush();
+            System.out.println("send cart");
         } catch (IOException e) {
             e.printStackTrace();
         }

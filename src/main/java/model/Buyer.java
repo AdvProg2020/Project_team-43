@@ -168,13 +168,11 @@ public class Buyer extends User {
 
     public boolean purchase(double discount, String address, String phoneNumber) {
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            synchronized (productSellerPair) {
-                if (!(productSellerPair.getKey() instanceof FileProduct)) {
-                    if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
-                        decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
-                    } else {
-                        return false;
-                    }
+            if (!(productSellerPair.getKey() instanceof FileProduct)) {
+                if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
+                    decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
+                } else {
+                    return false;
                 }
             }
         }
@@ -190,7 +188,6 @@ public class Buyer extends User {
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
-        this.checkSumPaymentForOff();
         makingSellOrders();
         this.newBuyerCart = new HashMap<>();
         return true;

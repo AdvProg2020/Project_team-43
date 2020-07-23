@@ -33,6 +33,9 @@ public class SellOrder extends Order implements Serializable {
         this.buyerUsername = buyerUsername;
         this.deliveryStatus = deliveryStatus;
         this.number = number;
+        if (constructId <= Integer.parseInt(orderId)) {
+            constructId = Integer.parseInt(orderId) + 1;
+        }
     }
 
     public SellOrder(double offAmount, Date date, double payment, Product product, Buyer buyer) {
