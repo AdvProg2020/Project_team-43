@@ -47,6 +47,9 @@ public class Product implements Serializable {
 
     public Product(String productId, State.ProductState productState, String name, String companyName, double price, int visit, String date, int availableCount, HashMap<String, String> featureMap, String description, ProductScore productScore, ArrayList<Comment> comments, String categoryName, ArrayList<String> sellersName) {
         this.productId = productId;
+        if (constructId <= Integer.parseInt(productId)) {
+            constructId = Integer.parseInt(productId) + 1;
+        }
         this.productState = productState;
         this.name = name;
         this.company = Company.getCompanyByName(companyName);
