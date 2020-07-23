@@ -7,7 +7,6 @@ import View.GraphicController.SupporterMenuController;
 import javafx.scene.layout.VBox;
 import model.*;
 import model.request.Request;
-import netscape.javascript.JSUtil;
 
 import java.io.*;
 import java.net.Socket;
