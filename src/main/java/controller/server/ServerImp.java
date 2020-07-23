@@ -45,7 +45,6 @@ public class ServerImp {
             Scanner scanner = new Scanner(fileInputStream);
             wage = scanner.nextInt();
             minimumBalance = scanner.nextInt();
-            System.out.println(wage + " " + minimumBalance);
             scanner.close();
             fileInputStream.close();
         } catch (FileNotFoundException e) {
