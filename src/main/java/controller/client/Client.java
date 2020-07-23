@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("2.tcp.ngrok.io", 17113);
+            socket = new Socket("localhost", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -145,20 +145,6 @@ public class Client {
         try {
             checkTokenValidation(user);
             dataOutputStream.writeUTF("editOff " + offId + " " + field + " " + newField + " " + token);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendFuckObject(Object object) {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(object);
-            oos.close();
-            byte[] rawData = buffer.toByteArray();
-            dataOutputStream.write(rawData);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -544,7 +530,7 @@ public class Client {
             for (Pair<Product, Seller> pair : ((Buyer) user).getNewBuyerCart().keySet()) {
                 buyerCart.put(new Pair<>(pair.getKey().getProductId(), pair.getValue().getUsername()), ((Buyer) user).getNewBuyerCart().get(pair));
             }
-            sendObject(buyerCart);
+            sendFuckObject(buyerCart);
             return dataInputStream.readUTF();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -802,6 +788,20 @@ public class Client {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             System.out.println("end write");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendFuckObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

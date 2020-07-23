@@ -23,7 +23,7 @@ public class ServerImp {
     private HashMap<String, Pair<String, Integer>> filesIPAndPort = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
-    public static final int PORT = 6666;
+    public static final int PORT = 2020;
     private static int wage;
     private static int minimumBalance;
 
@@ -57,7 +57,7 @@ public class ServerImp {
 
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(6667);
+        ServerSocket serverSocket = new ServerSocket(9999);
         System.out.println("server is ready");
         System.out.println("waiting for clients ...");
         ServerImp server = this;

@@ -302,7 +302,7 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HashMap<Pair<String, String>, Integer> newBuyerCart = (HashMap<Pair<String, String>, Integer>) getObject();
+        HashMap<Pair<String, String>, Integer> newBuyerCart = (HashMap<Pair<String, String>, Integer>) getFuckObject();
         boolean result = server.purchase(address, phoneNumber, discount, token, newBuyerCart);
         try {
             if (result)
@@ -740,6 +740,35 @@ public class ClientHandler extends Thread {
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object getFuckObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void sendFuckObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
+            dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
