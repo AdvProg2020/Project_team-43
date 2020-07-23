@@ -1,18 +1,8 @@
-CREATE TABLE "product" (
-	"productId"	TEXT,
-	"productState"	TEXT,
-	"name"	TEXT,
-	"companyName"	TEXT,
-	"price"	REAL,
-	"visit"	INTEGER,
-	"date"	TEXT,
-	"availableCount"	INTEGER,
-	"featureMap"	TEXT,
-	"description"	TEXT,
-	"productScore"	TEXT,
-	"comments"	TEXT,
-	"categoryName"	TEXT,
-	"sellersName"	TEXT
-);
-
-["0","2","4","5","7","9","11","13","15","17","19","21","23","25","27","29","31","33","35"]
+کارمزد منیجر
+حداقل حساب
+ngrok
+لاگ اوت قرمز
+peer to peer
+کاربران آنلاین
+امنیت
+مشاهده لاگ خرید در مدیر

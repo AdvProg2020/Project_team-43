@@ -444,6 +444,14 @@ public class ServerImp {
         }
         return null;
     }
+
+    public ArrayList<String> getOnlineUsers() {
+        ArrayList<String> username = new ArrayList<>();
+        for (User user : users.values()) {
+            username.add(user.getUsername());
+        }
+        return username;
+    }
 }
 
 class ExpireToken extends Thread {
