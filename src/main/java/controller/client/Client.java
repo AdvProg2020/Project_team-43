@@ -42,7 +42,7 @@ public class Client {
             System.out.println(result);
             if (checkResultForLogin(result)) {
                 token = result;
-                User user = (User) getFuckObject();
+                User user = (User) getObject();
                 Processor.setUser(user);
                 Processor.setIsLogin(true);
                 if (user.getUserType() == UserType.BUYER) {
@@ -151,7 +151,7 @@ public class Client {
         }
     }
 
-    private void sendObject(Object object) {
+    private void sendFuckObject(Object object) {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
@@ -250,7 +250,7 @@ public class Client {
     }
 
 
-    private Object getObject() {
+    private Object getFuckObject() {
         try {
             byte[] bytes = new byte[30000];
             dataInputStream.read(bytes);
@@ -772,9 +772,9 @@ public class Client {
         }
     }
 
-    private Object getFuckObject() {
+    private Object getObject() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
             return object;
         } catch (IOException e) {
@@ -786,9 +786,9 @@ public class Client {
 
     }
 
-    private void sendFuckObject(Object object) {
+    private void sendObject(Object object) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
 
         } catch (IOException e) {

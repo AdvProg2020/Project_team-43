@@ -432,11 +432,11 @@ public class ClientHandler extends Thread {
         dataOutputStream.flush();
         if (checkResultForLogin(result)) {
             setUsername(username);
-            sendFuckObject(User.getUserByUserName(username));
+            sendObject(User.getUserByUserName(username));
         }
     }
 
-    private void sendObject(Object object) {
+    private void sendFuckObject(Object object) {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
@@ -450,7 +450,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private Object getObject() {
+    private Object getFuckObject() {
         try {
             byte[] bytes = new byte[30000];
             dataInputStream.read(bytes);
@@ -748,9 +748,9 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private Object getFuckObject() {
+    private Object getObject() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
             return object;
         } catch (IOException e) {
@@ -762,10 +762,11 @@ public class ClientHandler extends Thread {
 
     }
 
-    private void sendFuckObject(Object object) {
+    private void sendObject(Object object) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
