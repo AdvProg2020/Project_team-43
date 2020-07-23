@@ -41,7 +41,6 @@ public class BuyOrder extends Order implements Serializable {
         products = new HashMap<>();
         sellers = new ArrayList<>();
         this.orderId = orderId;
-        allOrders.add(this);
     }
 
     public BuyOrder(Date date, double payment, double codedDiscountAmount, HashMap<Product, Integer> products, ArrayList<Seller> sellers, String phoneNumber, String address) {

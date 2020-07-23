@@ -30,7 +30,7 @@ public class SellOrder extends Order implements Serializable {
         this.payment = payment;
         this.offAmount = offAmount;
         this.productId = productId;
-        this.buyer = (Buyer) User.getUserByUserName(buyerUsername);
+        this.buyerUsername = buyerUsername;
         this.deliveryStatus = deliveryStatus;
         this.number = number;
     }

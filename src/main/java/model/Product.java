@@ -373,8 +373,9 @@ public class Product implements Serializable {
         }
         products.addAll(allProductsInQueueExpect);
         products.addAll(allProductsInQueueEdit);
-        //Saver.save(products, fileAddress);
-        new Sqlite().saveProduct(allProducts);
+        Saver.save(products, fileAddress);
+        new Sqlite().saveProduct(products);
+        new Sqlite().saveFileProduct(files);
         Saver.save(files, "database/Files.dat");
     }
 
@@ -389,6 +390,10 @@ public class Product implements Serializable {
     }
 
     public static void loadAllCategories() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.loadCategory();
         }
@@ -414,6 +419,10 @@ public class Product implements Serializable {
     }
 
     public static void loadAllSellers() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.loadSellers();
         }

@@ -10,8 +10,6 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -103,7 +101,6 @@ public class ProductWindowController extends Controller {
     public void checkOff() {
         timesRemain.setVisible(false);
         isOff.setVisible(false);
-        System.out.println(Off.isProductInOff(product));
         if (Off.isProductInOff(product) != 0) {
             isOff.setText("off amount : " + Off.isProductInOff(product));
             isOff.setVisible(true);
@@ -320,12 +317,9 @@ public class ProductWindowController extends Controller {
                 mediaPlayer.seek(mediaPlayer.getMedia().getDuration().multiply(timeSlider.getValue() / 100));
             }
         });
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (volumeSlider.isPressed()) {
-                    mediaPlayer.setVolume(volumeSlider.getValue() / 100);
-                }
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (volumeSlider.isPressed()) {
+                mediaPlayer.setVolume(volumeSlider.getValue() / 100);
             }
         });
     }

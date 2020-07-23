@@ -22,10 +22,12 @@ public class Database {
         sqlite.loadBuyOrder();
         sqlite.loadSellOrder();
         //Order.load();
-        //sqlite.loadProduct();
-        Product.load();
+        sqlite.loadProduct();
+        //Product.load();
+        sqlite.loadFileProduct();
         Request.load();
-        Supporter.load();
+        //Supporter.load();
+        sqlite.loadSupporter();
 
 
         User.loadFields();
