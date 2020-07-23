@@ -23,17 +23,12 @@ public class Client {
     private Thread thread;
     private Socket socket;
     private ServerForFile serverForFile;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
 
     public void run() {
         try {
-            socket = new Socket("localhost", 7777);
+            socket = new Socket("localhost", 6666);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            objectInputStream = new ObjectInputStream(dataInputStream);
-            objectOutputStream = new ObjectOutputStream(dataOutputStream);
-            System.out.println("hey");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -776,6 +771,7 @@ public class Client {
 
     private Object getObject() {
         try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
             return object;
         } catch (IOException e) {
@@ -788,6 +784,7 @@ public class Client {
 
     private void sendObject(Object object) {
         try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             System.out.println("end write");
         } catch (IOException e) {

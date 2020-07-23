@@ -21,18 +21,9 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
-
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
-        try {
-            objectInputStream = new ObjectInputStream(dataInputStream);
-            objectOutputStream = new ObjectOutputStream(dataOutputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         this.socket = socket;
         this.server = server;
         username = "null";
@@ -729,19 +720,23 @@ public class ClientHandler extends Thread {
 
     private Object getObject() {
         try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
+            System.out.println("hey");
             return object;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("hoy");
         return null;
 
     }
 
     private void sendObject(Object object) {
         try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
 
