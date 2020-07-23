@@ -21,6 +21,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
+
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
@@ -739,7 +740,6 @@ public class ClientHandler extends Thread {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

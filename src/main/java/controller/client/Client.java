@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 6666);
+            socket = new Socket("0.tcp.ngrok.io", 19840);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -786,6 +786,7 @@ public class Client {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
             System.out.println("end write");
         } catch (IOException e) {
             e.printStackTrace();
