@@ -139,7 +139,6 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateUsersListView();
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) {
@@ -164,7 +163,6 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        init();
         updateProductListView();
         selectedProduct = Product.getAllProductById(productId);
         if (selectedProduct == null) return;
@@ -186,7 +184,6 @@ public class ManagerMenuController extends Controller {
         if (codedDiscountListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateCodedDiscountListView();
         selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
         if (selectedCodedDiscount == null) return;
@@ -204,7 +201,6 @@ public class ManagerMenuController extends Controller {
         if (requestsListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateRequestListView();
         selectedRequest = Request.getRequestById(requestIdPrime);
         if (selectedRequest == null) return;
@@ -260,7 +256,6 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateCategoryListView();
         selectedCategory = Category.getCategoryByName(categoryName);
         if (selectedCategory == null) return;
@@ -459,7 +454,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateRequestListView() {
-        init();
         requests.clear();
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
@@ -477,7 +471,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateUsersListView() {
-        init();
         ArrayList<String> onlineUsers = client.getOnlineUsers(user);
         users.clear();
         for (User user : bossProcessor.usersFromController()) {
@@ -681,7 +674,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCodedDiscountListView() {
-        init();
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -690,7 +682,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateProductListView() {
-        init();
         products.clear();
         for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
@@ -714,7 +705,6 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCategoryListView() {
-        init();
         categories.clear();
         for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());

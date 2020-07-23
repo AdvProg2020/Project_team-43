@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="phase2" />
+        <module name="bamazon" />
         <module name="code" />
         <module name="project" />
-        <module name="porojectAP" />
+        <module name="projectTeam43" />
+        <module name="fuckProject" />
         <module name="Project_team-43" />
         <module name="maven" />
         <module name="Project_team-43New" />
-        <module name="fuckProject" />
         <module name="newPro" />
-        <module name="projectTeam43" />
-        <module name="bamazon" />
+        <module name="porojectAP" />
+        <module name="phase2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
