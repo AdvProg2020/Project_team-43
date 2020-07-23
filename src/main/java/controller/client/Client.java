@@ -586,8 +586,12 @@ public class Client {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
+                    if (command.startsWith("fuck")) {
+                        break;
+                    }
                     String username = command.split(" ")[0];
                     String message = command.substring(command.indexOf(" ") + 1);
+
                     supporterMenuController.updateUsersListView();
                     if (((supporterMenuController.selectedUser != null && supporterMenuController.selectedUser.getUsername().equals(username)) || supporterMenuController.users.isEmpty())) {
                         supporterMenuController.updateChatRoom(username, message, vBox);
@@ -606,6 +610,9 @@ public class Client {
             while (true) {
                 try {
                     String command = dataInputStream.readUTF();
+                    if (command.startsWith("fuck")) {
+                        break;
+                    }
                     String username = command.split(" ")[0];
                     String message = command.substring(command.indexOf(" ") + 1);
                     buyerMenuController.updateChatRoom(username, message, vBox);
@@ -631,12 +638,12 @@ public class Client {
 
     public void fuck2Thread() {
         if (thread != null && thread.isAlive()) {
-            thread.stop();
             thread = null;
             try {
                 dataOutputStream.writeUTF("endInputStream");
                 dataOutputStream.flush();
                 System.out.println(dataInputStream.readUTF());
+                System.out.println("hello");
             } catch (IOException e) {
                 e.printStackTrace();
             }
