@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 6666);
+            socket = new Socket("localhost", 7777);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -157,6 +157,29 @@ public class Client {
             dataOutputStream.flush();
             ArrayList<Product> allProducts = (ArrayList<Product>) getObject();
             return allProducts;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String> getAllProductsId() {
+        try {
+            dataOutputStream.writeUTF("getAllIdProducts");
+            dataOutputStream.flush();
+            return (ArrayList<String>) getObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String> getFilesInfo(Seller user) {
+        checkTokenValidation(user);
+        try {
+            dataOutputStream.writeUTF("getFilesInfo " + token);
+            dataOutputStream.flush();
+            return (ArrayList<String>) getObject();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -377,7 +400,7 @@ public class Client {
             dataOutputStream.writeUTF("createCategory " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
-            sendObject(features);
+            sendFuckObject(features);
             dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();

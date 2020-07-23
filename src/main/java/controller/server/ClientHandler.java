@@ -21,6 +21,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
+
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
@@ -149,13 +150,31 @@ public class ClientHandler extends Thread {
                     getOnlineUsers(command);
                 } else if (command.startsWith("changeWage")) {
                     changeWage(command);
-                } else {
+                } else if (command.startsWith("getAllIdProducts")) {
+                    getAllIdProducts();
+                } else if (command.startsWith("getFilesInfo")) {
+                    getFilesInfo(command);
+                }
+                else {
                     System.out.println("What the fuck command");
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void getFilesInfo(String command) {
+        String token = command.split(" ")[1];
+        sendObject(server.getFilesInfo(token));
+    }
+
+    private void getAllIdProducts() {
+        ArrayList<String> ids = new ArrayList<>();
+        for (Product product : Product.getAllProductsInList()) {
+            ids.add(product.getProductId());
+        }
+        sendObject(ids);
     }
 
 
@@ -625,7 +644,7 @@ public class ClientHandler extends Thread {
         try {
             dataOutputStream.writeUTF("ready to get");
             dataOutputStream.flush();
-            ArrayList<String> categoryInfo = (ArrayList<String>) getObject();
+            ArrayList<String> categoryInfo = (ArrayList<String>) getFuckObject();
             String categoryName = categoryInfo.remove(categoryInfo.size() - 1);
             String token = command.split(" ")[1];
             server.createCategory(categoryName, categoryInfo, token);

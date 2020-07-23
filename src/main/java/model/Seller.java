@@ -79,9 +79,10 @@ public class Seller extends User implements Serializable {
     }
 
     public void removeFile(String id) {
+        Product product = Product.getProductById(id);
         filesId.remove(id);
-        Product.getAllProductsInList().remove(Product.getProductById(id));
-        productsNumber.remove(Product.getProductById(id));
+        Product.getAllProductsInList().remove(product);
+        productsNumber.remove(product);
     }
 
     public List<FileProduct> getFiles() {

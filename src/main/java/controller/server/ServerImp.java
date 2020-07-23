@@ -506,6 +506,15 @@ public class ServerImp {
         }
         return username;
     }
+
+    public ArrayList<String> getFilesInfo(String token) {
+        ArrayList<String> info = new ArrayList<>();
+        Seller seller = (Seller) users.get(token);
+        for (FileProduct file : seller.getFiles()) {
+            info.add(file.getProductId() + ":   Name: " + file.getName() + "   Price: " + file.getPrice());
+        }
+        return info;
+    }
 }
 
 class ExpireToken extends Thread {
