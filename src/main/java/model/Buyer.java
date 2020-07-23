@@ -1,5 +1,6 @@
 package model;
 
+import controller.server.ServerImp;
 import javafx.util.Pair;
 import model.database.Loader;
 import model.database.Saver;
@@ -12,7 +13,6 @@ import java.util.*;
 
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
-
     private double sumOfPaymentForCoddedDiscount;
 
     private HashMap<CodedDiscount, Integer> codedDiscounts;
@@ -217,7 +217,7 @@ public class Buyer extends User {
             double discount = seller.getOffDiscountAmount(product);
             SellOrder sellOrder = new SellOrder(discount, new Date(),
                     product.getPrice() * newBuyerCart.get(productSellerPair), product, this, newBuyerCart.get(productSellerPair));
-            seller.settleMoney(product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair));
+            seller.settleMoney((100 - ServerImp.getWage()) * product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair));
             seller.addOrder(sellOrder);
         }
 

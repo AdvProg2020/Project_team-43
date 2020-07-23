@@ -747,5 +747,14 @@ public class Client {
             }
         }
     }
+
+    public void changeWageAndMinBalance(String wage, String minBalance) {
+        try {
+            dataOutputStream.writeUTF("changeWage " + wage + " " + minBalance + " " + token);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

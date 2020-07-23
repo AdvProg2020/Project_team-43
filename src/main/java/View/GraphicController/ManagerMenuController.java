@@ -1,5 +1,6 @@
 package View.GraphicController;
 
+import com.jfoenix.controls.JFXTextField;
 import controller.client.BossProcessor;
 import controller.client.Processor;
 import javafx.collections.FXCollections;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ManagerMenuController extends Controller {
+    public JFXTextField wage;
+    public JFXTextField minBalance;
     BossProcessor bossProcessor = BossProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -293,7 +296,7 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(passwordCreateManager.getText());
 //            bossProcessor.createManagerProfileFXML(managerInfo);
             String result = client.createManagerProfile(managerInfo.get(0), managerInfo.get(1), managerInfo.get(2), managerInfo.get(3), managerInfo.get(4), managerInfo.get(5));
-            if(!result.equals("done")){
+            if (!result.equals("done")) {
                 showErrorAlert(result);
             }
         }
@@ -312,7 +315,7 @@ public class ManagerMenuController extends Controller {
             supporterInfo.add(phoneCreateSupporter.getText());
             supporterInfo.add(passwordCreateSupporter.getText());
             String result = client.createSupporterProfile(supporterInfo.get(0), supporterInfo.get(1), supporterInfo.get(2), supporterInfo.get(3), supporterInfo.get(4), supporterInfo.get(5));
-            if(!result.equals("done")){
+            if (!result.equals("done")) {
                 showErrorAlert(result);
             }
         }
@@ -365,6 +368,7 @@ public class ManagerMenuController extends Controller {
         }
         return false;
     }
+
     public boolean hasEmptyFieldInCreateSupporter() {
         if (userNameCreateSupporter.getText().isEmpty()) {
             showErrorAlert("please fill the user name field");
@@ -721,7 +725,7 @@ public class ManagerMenuController extends Controller {
         if (!changedFeature.getText().isEmpty()) {
 //                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
             String result = client.changeFeature(selectedCategory.getName(), selectedFeature, changedFeature.getText());
-            if(result.equals("invalidCommandException")){
+            if (result.equals("invalidCommandException")) {
                 showErrorAlert("invalidCommandException");
             }
             changeFeaturePane.setVisible(false);
@@ -804,4 +808,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
     }
 
+    public void changeWageAndMinBalance() {
+        client.changeWageAndMinBalance(wage.getText(), minBalance.getText());
+    }
 }

@@ -146,6 +146,8 @@ public class ClientHandler extends Thread {
                     endServerOfFile(command);
                 } else if (command.startsWith("getIPAndPort")) {
                     getIPAndPort(command);
+                } else if (command.startsWith("changeWage")) {
+                    changeWage(command);
                 } else {
                     System.out.println("What the fuck command");
                 }
@@ -153,6 +155,13 @@ public class ClientHandler extends Thread {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void changeWage(String command) {
+        int wage = Integer.parseInt(command.split(" ")[1]);
+        int minBalance = Integer.parseInt(command.split(" ")[2]);
+        String token = command.split(" ")[3];
+        server.changeWage(wage, minBalance, token);
     }
 
     private void getIPAndPort(String command) {

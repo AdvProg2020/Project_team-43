@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 public class ServerImp {
@@ -23,9 +24,38 @@ public class ServerImp {
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
     public static final int PORT = 2020;
+    private static int wage;
+    private static int minimumBalance;
+
+    public static int getWage() {
+        return wage;
+    }
+
+    public static int getMinimumBalance() {
+        return minimumBalance;
+    }
+
     public static final String IP = "127.0.0.1";
     private final String shopAccountUsername = "a";//TODO
     private final String shopAccountPassword = "a";//TODO
+
+    public ServerImp() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("src/main/java/controller/server/info.txt");
+            Scanner scanner = new Scanner(fileInputStream);
+            wage = scanner.nextInt();
+            minimumBalance = scanner.nextInt();
+            System.out.println(wage + " " + minimumBalance);
+            scanner.close();
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(9999);
@@ -159,23 +189,26 @@ public class ServerImp {
 
     public synchronized String withdraw(String amount, String accountId, String token) {
         try {
-            Socket socket = new Socket(IP, PORT);
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
-            dos.flush();
-            String bankToken = dis.readUTF();
-            dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
-            dos.flush();
-            String payID = dis.readUTF();
-            dos.writeUTF("pay" + " " + payID);
-            dos.flush();
-            String result = dis.readUTF();
-            if (result.equals("done successfully")) {
-                serverProcessor.withdraw(amount, users.get(token));
+            if (users.get(token).getBalance() - Integer.parseInt(amount) > minimumBalance) {
+                Socket socket = new Socket(IP, PORT);
+                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+                dos.writeUTF("get_token " + shopAccountUsername + " " + shopAccountPassword);
+                dos.flush();
+                String bankToken = dis.readUTF();
+                dos.writeUTF("create_receipt" + " " + bankToken + " " + "move" + " " + amount + " " + shopAccountId + " " + accountId);
+                dos.flush();
+                String payID = dis.readUTF();
+                dos.writeUTF("pay" + " " + payID);
+                dos.flush();
+                String result = dis.readUTF();
+                if (result.equals("done successfully")) {
+                    serverProcessor.withdraw(amount, users.get(token));
+                }
+                socket.close();
+                return result;
             }
-            socket.close();
-            return result;
+            return "minimum amount is not enough";
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -443,6 +476,23 @@ public class ServerImp {
             return filesAddresses;
         }
         return null;
+    }
+
+    public synchronized void changeWage(int wage, int minBalance, String token) {
+        if (users.containsKey(token)) {
+            ServerImp.wage = wage;
+            try {
+                ServerImp.minimumBalance = minBalance;
+                System.out.println(wage + " " + minBalance);
+                FileWriter fileWriter = new FileWriter("src/main/java/controller/server/info.txt", false);
+                fileWriter.write(Integer.toString(wage));
+                fileWriter.write("\n");
+                fileWriter.write(Integer.toString(minBalance));
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

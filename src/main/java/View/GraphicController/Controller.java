@@ -3,12 +3,14 @@ package View.GraphicController;
 import controller.client.BuyerProcessor;
 import controller.client.Client;
 import View.graphic.*;
+import controller.client.Processor;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Product;
+import model.Seller;
 import model.User;
 import model.UserType;
 import org.apache.commons.io.FilenameUtils;
@@ -56,11 +58,10 @@ public abstract class Controller {
         } else if (buyerProcessor.getUser().getUserType() == UserType.SELLER) {
             SellerUserWindow.getInstance().setParent(parent, null);
             SellerUserWindow.getInstance().start(stage);
-        }else if (buyerProcessor.getUser().getUserType() == UserType.SUPPORTER) {
+        } else if (buyerProcessor.getUser().getUserType() == UserType.SUPPORTER) {
             SupporterUserWindow.getInstance().setParent(parent, null);
             SupporterUserWindow.getInstance().start(stage);
-        }
-        else {
+        } else {
             BuyerUserWindow.getInstance().setParent(parent, null);
             BuyerUserWindow.getInstance().start(stage);
         }
@@ -144,6 +145,12 @@ public abstract class Controller {
     }
 
     public void logout() {
+        if (Processor.isLogin && Processor.user instanceof Seller) {
+            client.killServerOfFile(Processor.user);
+        }
+        if (Processor.isLogin) {
+            client.logout();
+        }
         BuyerProcessor.getInstance().clearCart();
         client.logout();
         BuyerProcessor.getInstance().logout();

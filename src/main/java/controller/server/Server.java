@@ -9,7 +9,8 @@ public class Server {
     public static void main(String[] args) throws IOException {
         App.getInstance().open();
         new save().start();
-        new ServerImp().run();
+        ServerImp serverImp = new ServerImp();
+        serverImp.run();
     }
 
 }
