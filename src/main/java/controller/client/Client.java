@@ -26,7 +26,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("2.tcp.ngrok.io", 17113);
+            socket = new Socket("localhost", 9999);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -42,8 +42,7 @@ public class Client {
             System.out.println(result);
             if (checkResultForLogin(result)) {
                 token = result;
-                User user = (User) getObject();
-                System.out.println(user.getUsername());
+                User user = (User) getFuckObject();
                 Processor.setUser(user);
                 Processor.setIsLogin(true);
                 if (user.getUserType() == UserType.BUYER) {
@@ -768,6 +767,30 @@ public class Client {
         try {
             dataOutputStream.writeUTF("changeWage " + wage + " " + minBalance + " " + token);
             dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object getFuckObject() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Object object = objectInputStream.readObject();
+            return object;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    private void sendFuckObject(Object object) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(object);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
