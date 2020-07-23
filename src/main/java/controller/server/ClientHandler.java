@@ -758,7 +758,6 @@ public class ClientHandler extends Thread {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

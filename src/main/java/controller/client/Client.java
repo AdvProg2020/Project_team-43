@@ -400,7 +400,7 @@ public class Client {
             dataOutputStream.writeUTF("createCategory " + token);
             dataOutputStream.flush();
             dataInputStream.readUTF();
-            sendFuckObject(features);
+            sendObject(features);
             dataInputStream.readUTF();
         } catch (IOException e) {
             e.printStackTrace();
@@ -809,6 +809,7 @@ public class Client {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
             System.out.println("end write");
         } catch (IOException e) {
             e.printStackTrace();
