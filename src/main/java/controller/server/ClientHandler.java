@@ -431,7 +431,7 @@ public class ClientHandler extends Thread {
         dataOutputStream.flush();
         if (checkResultForLogin(result)) {
             setUsername(username);
-            sendObject(User.getUserByUserName(username));
+            sendFuckObject(User.getUserByUserName(username));
         }
     }
 
@@ -746,4 +746,29 @@ public class ClientHandler extends Thread {
             supporter.getUsers().get(username).add(supporter.getUsername() + " : " + message);
         }
     }
+
+    private Object getFuckObject() {
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            Object object = objectInputStream.readObject();
+            return object;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    private void sendFuckObject(Object object) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectOutputStream.writeObject(object);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
