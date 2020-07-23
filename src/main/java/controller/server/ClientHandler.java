@@ -28,8 +28,8 @@ public class ClientHandler extends Thread {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
         try {
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(dataInputStream);
+            objectOutputStream = new ObjectOutputStream(dataOutputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -730,14 +730,12 @@ public class ClientHandler extends Thread {
     private Object getObject() {
         try {
             Object object = objectInputStream.readObject();
-            System.out.println("hey");
             return object;
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("hoy");
         return null;
 
     }

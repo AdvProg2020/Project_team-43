@@ -28,11 +28,12 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("0.tcp.ngrok.io", 19840);
+            socket = new Socket("localhost", 7777);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(dataInputStream);
+            objectOutputStream = new ObjectOutputStream(dataOutputStream);
+            System.out.println("hey");
         } catch (IOException e) {
             e.printStackTrace();
         }

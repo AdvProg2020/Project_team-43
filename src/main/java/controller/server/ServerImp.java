@@ -57,13 +57,13 @@ public class ServerImp {
 
 
     public void run() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(6666);
+        ServerSocket serverSocket = new ServerSocket(7777);
         System.out.println("server is ready");
         System.out.println("waiting for clients ...");
         ServerImp server = this;
         while (true) {
             Socket socket = serverSocket.accept();
-            System.out.println(socket.getRemoteSocketAddress());
+            System.out.println(socket.getInetAddress());
             DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             ClientHandler clientHandler = new ClientHandler(dataInputStream, dataOutputStream, socket, server);
