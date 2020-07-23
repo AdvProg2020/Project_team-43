@@ -23,12 +23,16 @@ public class Client {
     private Thread thread;
     private Socket socket;
     private ServerForFile serverForFile;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
 
     public void run() {
         try {
             socket = new Socket("0.tcp.ngrok.io", 19840);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -771,7 +775,6 @@ public class Client {
 
     private Object getObject() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
             return object;
         } catch (IOException e) {
@@ -780,12 +783,10 @@ public class Client {
             e.printStackTrace();
         }
         return null;
-
     }
 
     private void sendObject(Object object) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             System.out.println("end write");
         } catch (IOException e) {

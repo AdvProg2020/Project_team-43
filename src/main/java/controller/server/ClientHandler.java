@@ -21,10 +21,18 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
+    private ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
         this.dataOutputStream = dataOutputStream;
+        try {
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.socket = socket;
         this.server = server;
         username = "null";
@@ -721,7 +729,6 @@ public class ClientHandler extends Thread {
 
     private Object getObject() {
         try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
             Object object = objectInputStream.readObject();
             System.out.println("hey");
             return object;
@@ -737,7 +744,6 @@ public class ClientHandler extends Thread {
 
     private void sendObject(Object object) {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
 

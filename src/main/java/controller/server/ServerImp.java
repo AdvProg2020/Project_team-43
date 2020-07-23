@@ -23,7 +23,7 @@ public class ServerImp {
     private HashMap<String, Pair<String, Integer>> filesIPAndPort = new HashMap<>();
     private ServerProcessor serverProcessor = new ServerProcessor();
     private final String shopAccountId = "10001";//TODO
-    public static final int PORT = 18403;
+    public static final int PORT = 6667;
     private static int wage;
     private static int minimumBalance;
 
@@ -63,6 +63,7 @@ public class ServerImp {
         ServerImp server = this;
         while (true) {
             Socket socket = serverSocket.accept();
+            System.out.println(socket.getRemoteSocketAddress());
             DataOutputStream dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             ClientHandler clientHandler = new ClientHandler(dataInputStream, dataOutputStream, socket, server);
