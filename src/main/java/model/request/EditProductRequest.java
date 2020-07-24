@@ -105,7 +105,7 @@ public class EditProductRequest extends Request {
     public static boolean isProductInEditingProcess(Product product) {
         for (Request request : allRequests) {
             if (request.getRequestType().equals("edit product")) {
-                if (((EditProductRequest) request).getProduct().equals(product))
+                if (((EditProductRequest) request).getProduct().getProductId().equals(product.getProductId()))
                     return true;
             }
         }

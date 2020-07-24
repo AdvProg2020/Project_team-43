@@ -1,5 +1,6 @@
 package View.GraphicController;
 
+import com.jfoenix.controls.JFXTextField;
 import controller.client.BossProcessor;
 import controller.client.Processor;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import model.*;
@@ -21,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ManagerMenuController extends Controller {
+    public JFXTextField wage;
+    public JFXTextField minBalance;
     BossProcessor bossProcessor = BossProcessor.getInstance();
     public TextField firstName;
     public TextField lastName;
@@ -135,8 +139,6 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        init();
-        updateUsersListView();
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) {
             return;
@@ -160,9 +162,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        init();
-        updateProductListView();
-        selectedProduct = Product.getAllProductById(productId);
+        selectedProduct = Product.getProductById(productId);
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
@@ -182,7 +182,6 @@ public class ManagerMenuController extends Controller {
         if (codedDiscountListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String discountCodePrime = codedDiscountListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateCodedDiscountListView();
         selectedCodedDiscount = CodedDiscount.getDiscountById(discountCodePrime);
         if (selectedCodedDiscount == null) return;
@@ -200,7 +199,6 @@ public class ManagerMenuController extends Controller {
         if (requestsListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String requestIdPrime = requestsListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateRequestListView();
         selectedRequest = Request.getRequestById(requestIdPrime);
         if (selectedRequest == null) return;
@@ -256,7 +254,6 @@ public class ManagerMenuController extends Controller {
         categoryName.clear();
         newFeature.clear();
         String categoryName = categoryListView.getSelectionModel().getSelectedItem().toString();
-        init();
         updateCategoryListView();
         selectedCategory = Category.getCategoryByName(categoryName);
         if (selectedCategory == null) return;
@@ -293,7 +290,7 @@ public class ManagerMenuController extends Controller {
             managerInfo.add(passwordCreateManager.getText());
 //            bossProcessor.createManagerProfileFXML(managerInfo);
             String result = client.createManagerProfile(managerInfo.get(0), managerInfo.get(1), managerInfo.get(2), managerInfo.get(3), managerInfo.get(4), managerInfo.get(5));
-            if(!result.equals("done")){
+            if (!result.equals("done")) {
                 showErrorAlert(result);
             }
         }
@@ -312,7 +309,7 @@ public class ManagerMenuController extends Controller {
             supporterInfo.add(phoneCreateSupporter.getText());
             supporterInfo.add(passwordCreateSupporter.getText());
             String result = client.createSupporterProfile(supporterInfo.get(0), supporterInfo.get(1), supporterInfo.get(2), supporterInfo.get(3), supporterInfo.get(4), supporterInfo.get(5));
-            if(!result.equals("done")){
+            if (!result.equals("done")) {
                 showErrorAlert(result);
             }
         }
@@ -365,6 +362,7 @@ public class ManagerMenuController extends Controller {
         }
         return false;
     }
+
     public boolean hasEmptyFieldInCreateSupporter() {
         if (userNameCreateSupporter.getText().isEmpty()) {
             showErrorAlert("please fill the user name field");
@@ -455,7 +453,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateRequestListView() {
-        init();
+        Request.setAllRequests(client.getAllRequests());
         requests.clear();
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
@@ -473,10 +471,12 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateUsersListView() {
-        init();
+        User.setAllUsers(client.getAllUsers());
+        ArrayList<String> onlineUsers = client.getOnlineUsers(user);
         users.clear();
         for (User user : bossProcessor.usersFromController()) {
-            users.add(user.getUsername());
+            String mod = onlineUsers.contains(user.getUsername()) ? "    online" : "    offline";
+            users.add(user.getUsername() + mod);
         }
         usersListView.setItems(users);
     }
@@ -548,7 +548,7 @@ public class ManagerMenuController extends Controller {
             features.add(item.toString());
         }
 //        bossProcessor.addCategoryFXML(createCategoryName.getText(), features);
-        client.createCategory(createCategoryName.getText(), features);
+        client.createCategory(user, createCategoryName.getText(), features);
         createCategoryName.clear();
         createCategoryFeatures.clear();
         createCategoryFeaturesListView.setItems(createCategoryFeatures);
@@ -675,7 +675,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCodedDiscountListView() {
-        init();
+        CodedDiscount.setAllCodedDiscount(client.getAllCodedDiscounts());
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -684,7 +684,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateProductListView() {
-        init();
+        Product.setAllProductsInList(client.getAllProducts());
         products.clear();
         for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
@@ -708,7 +708,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCategoryListView() {
-        init();
+        Category.setAllCategories(client.getAllCategories());
         categories.clear();
         for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());
@@ -721,7 +721,7 @@ public class ManagerMenuController extends Controller {
         if (!changedFeature.getText().isEmpty()) {
 //                bossProcessor.changedFeatureFXML(selectedCategory, selectedFeature, changedFeature.getText());
             String result = client.changeFeature(selectedCategory.getName(), selectedFeature, changedFeature.getText());
-            if(result.equals("invalidCommandException")){
+            if (result.equals("invalidCommandException")) {
                 showErrorAlert("invalidCommandException");
             }
             changeFeaturePane.setVisible(false);
@@ -804,4 +804,11 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
     }
 
+    public void refreshUsers(MouseEvent mouseEvent) {
+        updateUsersListView();
+    }
+
+    public void changeWageAndMinBalance() {
+        client.changeWageAndMinBalance(wage.getText(), minBalance.getText());
+    }
 }

@@ -3,6 +3,7 @@ package model;
 
 import model.database.Loader;
 import model.database.Saver;
+import model.database.Sqlite;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,6 +19,13 @@ public class Supporter extends User {
         users = new HashMap<>();
         allUsers.add(this);
 
+    }
+
+    public Supporter(String username, UserPersonalInfo userPersonalInfo, Map<String, List<String>> users, boolean online) {
+        super(username, userPersonalInfo);
+        this.users = users;
+        this.isOnline = online;
+        allUsers.add(this);
     }
 
     @Override
@@ -63,6 +71,7 @@ public class Supporter extends User {
             }
         }
         try {
+            new Sqlite().saveSupporter(allSupporters);
             Saver.save(allSupporters, fileAddress);
         } catch (IOException e) {
             e.printStackTrace();

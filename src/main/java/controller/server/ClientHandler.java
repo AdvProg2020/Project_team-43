@@ -9,7 +9,9 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +21,6 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private ServerImp server;
     private String username;
-    private String key;
 
     public ClientHandler(DataInputStream dataInputStream, DataOutputStream dataOutputStream, Socket socket, ServerImp server) {
         this.dataInputStream = dataInputStream;
@@ -47,25 +48,8 @@ public class ClientHandler extends Thread {
             while (true) {
                 String command = dataInputStream.readUTF();
                 System.out.println(command);
-                if (command.equals("giveFirstKey")) {
-                    giveFirstKey();
-                    continue;
-                }else if (command.startsWith("fuckMe")) {
-                    updateMe(command);
-                    continue;
-                } else if (command.startsWith("sendMessage")) {
-                    sendMessage(command);
-                    continue;
-                } else if (command.startsWith("endInputStream")) {
-                    endInputStream();
-                    continue;
-                }
-                System.out.println(command);
-                command = MyCipher.getInstance().decryptMessage(command, key);
                 if (command.startsWith("login")) {
                     login(command.split(" ")[1], command.split(" ")[2]);
-                } else if (command.equals("giveNewKey")) {
-                    giveNewKey();
                 } else if (command.startsWith("register")) {
                     register(command);
                 } else if (command.startsWith("update")) {
@@ -123,7 +107,7 @@ public class ClientHandler extends Thread {
                 } else if (command.startsWith("removeCodedDiscount")) {
                     removeCodedDiscount(command);
                 } else if (command.startsWith("createCategory")) {
-                    createCategory();
+                    createCategory(command);
                 } else if (command.startsWith("removeCategory")) {
                     removeCategory(command);
                 } else if (command.startsWith("removeProduct")) {
@@ -146,23 +130,64 @@ public class ClientHandler extends Thread {
                     setOnline(command);
                 } else if (command.startsWith("getOnlineSupporters")) {
                     getOnlineSupporters();
+                } else if (command.startsWith("sendMessage")) {
+                    sendMessage(command);
+                } else if (command.startsWith("endInputStream")) {
+                    endInputStream();
                 } else if (command.startsWith("addFileSeller")) {
                     addFileSeller(command);
                 } else if (command.startsWith("removeFileSeller")) {
                     removeFileSeller(command);
+                } else if (command.startsWith("fuckMe")) {
+                    updateMe(command);
                 } else if (command.startsWith("addFileServer")) {
                     addFileServer(command);
                 } else if (command.startsWith("serverOfFileEnd")) {
                     endServerOfFile(command);
                 } else if (command.startsWith("getIPAndPort")) {
                     getIPAndPort(command);
-                } else {
+                } else if (command.startsWith("getOnlineUsers")) {
+                    getOnlineUsers(command);
+                } else if (command.startsWith("changeWage")) {
+                    changeWage(command);
+                } else if (command.startsWith("getAllIdProducts")) {
+                    getAllIdProducts();
+                } else if (command.startsWith("getFilesInfo")) {
+                    getFilesInfo(command);
+                }
+                else {
                     System.out.println("What the fuck command");
                 }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void getFilesInfo(String command) {
+        String token = command.split(" ")[1];
+        sendObject(server.getFilesInfo(token));
+    }
+
+    private void getAllIdProducts() {
+        ArrayList<String> ids = new ArrayList<>();
+        for (Product product : Product.getAllProductsInList()) {
+            ids.add(product.getProductId());
+        }
+        sendObject(ids);
+    }
+
+
+    private void getOnlineUsers(String command) {
+        String token = command.split(" ")[1];
+        sendObject(server.getOnlineUsers());
+    }
+
+    private void changeWage(String command) {
+        int wage = Integer.parseInt(command.split(" ")[1]);
+        int minBalance = Integer.parseInt(command.split(" ")[2]);
+        String token = command.split(" ")[3];
+        server.changeWage(wage, minBalance, token);
     }
 
     private void getIPAndPort(String command) {
@@ -295,7 +320,8 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        HashMap<Pair<Product, Seller>, Integer> newBuyerCart = (HashMap<Pair<Product, Seller>, Integer>) getObject();
+        HashMap<Pair<String, String>, Integer> newBuyerCart = (HashMap<Pair<String, String>, Integer>) getFuckObject();
+        System.out.println("get cart successfully");
         boolean result = server.purchase(address, phoneNumber, discount, token, newBuyerCart);
         try {
             if (result)
@@ -428,36 +454,6 @@ public class ClientHandler extends Thread {
             sendObject(User.getUserByUserName(username));
         }
     }
-
-    private void sendObject(Object object) {
-        try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(object);
-            oos.close();
-            byte[] rawData = buffer.toByteArray();
-            dataOutputStream.write(rawData);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Object getObject() {
-        try {
-            byte[] bytes = new byte[30000];
-            dataInputStream.read(bytes);
-            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-            ObjectInputStream is = new ObjectInputStream(in);
-            return is.readObject();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
     private boolean checkResultForLogin(String result) {
         if (result.equals("incorrect password"))
@@ -644,13 +640,13 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void createCategory() {
+    private void createCategory(String command) {
         try {
             dataOutputStream.writeUTF("ready to get");
             dataOutputStream.flush();
-            ArrayList<String> categoryInfo = (ArrayList<String>) getObject();
-            String categoryName = categoryInfo.remove(categoryInfo.size() - 2);
-            String token = categoryInfo.remove(categoryInfo.size() - 1);
+            ArrayList<String> categoryInfo = (ArrayList<String>) getFuckObject();
+            String categoryName = categoryInfo.remove(categoryInfo.size() - 1);
+            String token = command.split(" ")[1];
             server.createCategory(categoryName, categoryInfo, token);
             dataOutputStream.writeUTF("createCategory done");
             dataOutputStream.flush();
@@ -741,25 +737,59 @@ public class ClientHandler extends Thread {
         }
     }
 
-    public void giveFirstKey() {
+    private Object getObject() {
         try {
-            Random rand = new Random();
-            key = rand.nextInt(99999)+"";
-            dataOutputStream.writeUTF(key);
+            ObjectInputStream objectInputStream = new ObjectInputStream(dataInputStream);
+            Object object = objectInputStream.readObject();
+            System.out.println("hey");
+            return object;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("hoy");
+        return null;
+
+    }
+
+    private void sendObject(Object object) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
+            objectOutputStream.writeObject(object);
+            objectOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object getFuckObject() {
+        try {
+            byte[] bytes = new byte[30000];
+            dataInputStream.read(bytes);
+            ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+            ObjectInputStream is = new ObjectInputStream(in);
+            return is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void sendFuckObject(Object object) {
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(buffer);
+            oos.writeObject(object);
+            oos.close();
+            byte[] rawData = buffer.toByteArray();
+            dataOutputStream.write(rawData);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void giveNewKey(){
-        try {
-            Random rand = new Random();
-            String newKey = rand.nextInt(99999)+"";
-            dataOutputStream.writeUTF(MyCipher.getInstance().encryptMessage(newKey,key));
-            dataOutputStream.flush();
-            key = newKey;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

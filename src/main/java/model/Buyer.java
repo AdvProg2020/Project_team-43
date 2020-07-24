@@ -1,5 +1,6 @@
 package model;
 
+import controller.server.ServerImp;
 import javafx.util.Pair;
 import model.database.Loader;
 import model.database.Saver;
@@ -12,7 +13,6 @@ import java.util.*;
 
 public class Buyer extends User {
     private static String fileAddress = "database/Buyer.dat";
-
     private double sumOfPaymentForCoddedDiscount;
 
     private HashMap<CodedDiscount, Integer> codedDiscounts;
@@ -125,7 +125,6 @@ public class Buyer extends User {
             if (pair.getKey().getProductId().equals(product.getProductId()) && pair.getValue().getUsername().equals(seller.getUsername())) {
                 if (newBuyerCart.get(pair) == 1) {
                     newBuyerCart.remove(pair);
-
                 } else {
                     newBuyerCart.replace(pair,
                             newBuyerCart.get(pair), newBuyerCart.get(pair) - 1);
@@ -167,30 +166,26 @@ public class Buyer extends User {
     }
 
     public boolean purchase(double discount, String address, String phoneNumber) {
+        HashMap<Product, Integer> order = new HashMap<>();
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            synchronized (productSellerPair) {
-                if (!(productSellerPair.getKey() instanceof FileProduct)) {
+            if (!(productSellerPair.getKey() instanceof FileProduct)) {
+                synchronized (productSellerPair) {
                     if (productSellerPair.getValue().isProductAvailable(productSellerPair.getKey())) {
                         decreaseInSeller(productSellerPair, newBuyerCart.get(productSellerPair));
                     } else {
                         return false;
                     }
+                    order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
                 }
-            }
-        }
-        HashMap<Product, Integer> order = new HashMap<>();
-        for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
-            if (productSellerPair.getKey() instanceof FileProduct) {
+            } else {
                 addNewFile(productSellerPair.getKey().getProductId(), ((FileProduct) productSellerPair.getKey()).getName());
             }
-            order.put(productSellerPair.getKey(), newBuyerCart.get(productSellerPair));
         }
         BuyOrder buyOrder = new BuyOrder(new Date(),
                 this.getNewCartPrice() * (100 - discount) / 100, discount, order, this.getSellerOfCartProducts(), phoneNumber, address);
         this.orders.add(buyOrder);
         this.balance -= this.getNewCartPrice() * (100 - discount) / 100;
         this.sumOfPaymentForCoddedDiscount += this.getNewCartPrice() * (100 - discount) / 100;
-        this.checkSumPaymentForOff();
         makingSellOrders();
         this.newBuyerCart = new HashMap<>();
         return true;
@@ -203,12 +198,6 @@ public class Buyer extends User {
         productSellerPair.getKey().setAvailableCount(productSellerPair.getKey().getAvailableCount() - decreaseNumber);
     }
 
-    public void checkSumPaymentForOff() {
-        if (sumOfPaymentForCoddedDiscount > 100) {
-            this.makeSpecialCoddedDiscount();
-            sumOfPaymentForCoddedDiscount = 0;
-        }
-    }
 
     public void makingSellOrders() {
         for (Pair<Product, Seller> productSellerPair : newBuyerCart.keySet()) {
@@ -217,7 +206,7 @@ public class Buyer extends User {
             double discount = seller.getOffDiscountAmount(product);
             SellOrder sellOrder = new SellOrder(discount, new Date(),
                     product.getPrice() * newBuyerCart.get(productSellerPair), product, this, newBuyerCart.get(productSellerPair));
-            seller.settleMoney(product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair));
+            seller.settleMoney((100 - ServerImp.getWage()) * product.getPrice() * (100 - discount) / 100 * newBuyerCart.get(productSellerPair) / 100);
             seller.addOrder(sellOrder);
         }
 

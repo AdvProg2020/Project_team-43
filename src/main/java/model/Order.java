@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 
-public abstract class Order  implements Serializable {
+public abstract class Order implements Serializable {
     public static int constructId = 0;
     public static ArrayList<Order> allOrders = new ArrayList<Order>();
     protected String orderId;
@@ -22,6 +22,7 @@ public abstract class Order  implements Serializable {
         this.date = date;
         allOrders.add(this);
         constructId += 1;
+
         setOrderType();
     }
 

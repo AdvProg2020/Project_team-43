@@ -84,7 +84,6 @@ public class SellerMenuController extends Controller {
     public Label productAvailableCount;
     public Button browseVideoButton;
     public JFXListView<HBox> FilesJFXListView;
-    public TextField filePriceTextField;
 
     SellerProcessor sellerProcessor = SellerProcessor.getInstance();
     private Seller user;
@@ -92,10 +91,13 @@ public class SellerMenuController extends Controller {
     private Off off;
     private File file;
 
+    private ArrayList<String> productsInListId;
+
 
     @FXML
     public void initialize() {
         init();
+        sellerProcessor.setUser((Seller) client.updateMe(user));
         user = (Seller) sellerProcessor.getUser();
         usernameText.setText(user.getUsername());
         UserPersonalInfo userPersonalInfo = user.getUserPersonalInfo();
@@ -113,13 +115,13 @@ public class SellerMenuController extends Controller {
         initializeViewOrders();
         setProductsIds();
         setOffsIds();
-        updateFilesJFXListView();
+        //updateFilesJFXListView();
     }
 
     private void init() {
         Category.setAllCategories(client.getAllCategories());
         Company.setAllCompanies(client.getAllCompanies());
-        Product.setAllProductsInList(client.getAllProducts());
+        productsInListId = client.getAllProductsId();
     }
 
     private void initializeViewOrders() {
@@ -146,8 +148,8 @@ public class SellerMenuController extends Controller {
                 categoryFeaturesListView.getItems().add(hBox);
             }
         });
-        for (Product product1 : Product.getAllProductsInList()) {
-            existingProductsIds.getItems().add(product1.getProductId());
+        for (String id : productsInListId) {
+            existingProductsIds.getItems().add(id);
         }
     }
 
@@ -535,16 +537,15 @@ public class SellerMenuController extends Controller {
     }
 
     public void updateFilesJFXListView() {
-        init();
         FilesJFXListView.getItems().clear();
         user = (Seller) client.updateMe(user);
-        for (FileProduct file : user.getFiles()) {
+        for (String info : client.getFilesInfo(user)) {
             HBox hBox = new HBox();
-            hBox.getChildren().add(new Label("ID: " + file.getProductId() + "   Name: " + file.getName() + "   Price: " + file.getPrice() + "   "));
+            hBox.getChildren().add(new Label(info + "   "));
             Button button = new Button("remove");
             button.setOnAction(event -> {
-                client.removeFile(user, file.getProductId());
-                sellerProcessor.removeFile(file.getProductId());
+                client.removeFile(user, info.substring(0, info.indexOf(":")));
+                sellerProcessor.removeFile(info.substring(0, info.indexOf(":")));
                 updateFilesJFXListView();
             });
             hBox.getChildren().add(button);

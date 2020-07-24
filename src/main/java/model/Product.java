@@ -47,6 +47,9 @@ public class Product implements Serializable {
 
     public Product(String productId, State.ProductState productState, String name, String companyName, double price, int visit, String date, int availableCount, HashMap<String, String> featureMap, String description, ProductScore productScore, ArrayList<Comment> comments, String categoryName, ArrayList<String> sellersName) {
         this.productId = productId;
+        if (constructId <= Integer.parseInt(productId)) {
+            constructId = Integer.parseInt(productId) + 1;
+        }
         this.productState = productState;
         this.name = name;
         this.company = Company.getCompanyByName(companyName);
@@ -60,6 +63,13 @@ public class Product implements Serializable {
         this.comments = comments;
         this.categoryName = categoryName;
         this.sellersName = sellersName;
+        if (this.productState == State.ProductState.CONFIRMED) {
+            allProductsInList.add(this);
+        } else if (this.productState == State.ProductState.CREATING_PROCESS) {
+            allProductsInQueueExpect.add(this);
+        } else {
+            allProductsInQueueEdit.add(this);
+        }
 
     }
 
@@ -366,8 +376,9 @@ public class Product implements Serializable {
         }
         products.addAll(allProductsInQueueExpect);
         products.addAll(allProductsInQueueEdit);
-        //Saver.save(products, fileAddress);
-        new Sqlite().saveProduct(allProducts);
+        Saver.save(products, fileAddress);
+        new Sqlite().saveProduct(products);
+        new Sqlite().saveFileProduct(files);
         Saver.save(files, "database/Files.dat");
     }
 
@@ -382,6 +393,10 @@ public class Product implements Serializable {
     }
 
     public static void loadAllCategories() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.loadCategory();
         }
@@ -407,6 +422,10 @@ public class Product implements Serializable {
     }
 
     public static void loadAllSellers() {
+        allProducts.clear();
+        allProducts.addAll(allProductsInQueueEdit);
+        allProducts.addAll(allProductsInList);
+        allProducts.addAll(allProductsInQueueExpect);
         for (Product product : allProducts) {
             product.loadSellers();
         }
