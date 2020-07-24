@@ -364,6 +364,7 @@ public class ManagerMenuController extends Controller {
         }
         return false;
     }
+
     public boolean hasEmptyFieldInCreateSupporter() {
         if (userNameCreateSupporter.getText().isEmpty()) {
             showErrorAlert("please fill the user name field");
@@ -454,6 +455,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateRequestListView() {
+        Request.setAllRequests(client.getAllRequests());
         requests.clear();
         for (Request request : bossProcessor.requestsFromController()) {
             requests.add(request.getRequestId());
@@ -471,6 +473,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateUsersListView() {
+        User.setAllUsers(client.getAllUsers());
         ArrayList<String> onlineUsers = client.getOnlineUsers(user);
         users.clear();
         for (User user : bossProcessor.usersFromController()) {
@@ -674,6 +677,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCodedDiscountListView() {
+        CodedDiscount.setAllCodedDiscount(client.getAllCodedDiscounts());
         codedDiscounts.clear();
         for (CodedDiscount codedDiscount : bossProcessor.codedDiscountsFromController()) {
             codedDiscounts.add(codedDiscount.getDiscountCode());
@@ -682,6 +686,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateProductListView() {
+        Product.setAllProductsInList(client.getAllProducts());
         products.clear();
         for (Product product : bossProcessor.productsFromController()) {
             products.add(product.getName() + " / " + product.getAvailableCount());
@@ -705,6 +710,7 @@ public class ManagerMenuController extends Controller {
     }
 
     public void updateCategoryListView() {
+        Category.setAllCategories(client.getAllCategories());
         categories.clear();
         for (Category category : bossProcessor.categoriesFromController()) {
             categories.add(category.getName());
@@ -803,6 +809,7 @@ public class ManagerMenuController extends Controller {
     public void refreshUsers(MouseEvent mouseEvent) {
         updateUsersListView();
     }
+
     public void changeWageAndMinBalance() {
         client.changeWageAndMinBalance(wage.getText(), minBalance.getText());
     }

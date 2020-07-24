@@ -127,6 +127,7 @@ public class Manager extends User  implements Serializable {
     public void acceptEditProductRequest(EditProductRequest editProductRequest) throws InvalidCommandException {
         Product product = editProductRequest.getProduct();
         product.editField(editProductRequest.getField(), editProductRequest.getInput());
+        allRequest.remove(editProductRequest);
         if (!EditProductRequest.isProductInEditingProcess(product)) {
             product.setProductState(State.ProductState.CONFIRMED);
             Product.allProductsInList.add(product);
