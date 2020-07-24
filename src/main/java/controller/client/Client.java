@@ -156,7 +156,15 @@ public class Client {
         try {
             dataOutputStream.writeUTF("getAllProducts");
             dataOutputStream.flush();
-            ArrayList<Product> allProducts = (ArrayList<Product>) getObject();
+            ArrayList<Product> products1 = (ArrayList<Product>) getObject();
+            ArrayList<Product> products2 = (ArrayList<Product>) getObject();
+            ArrayList<Product> products3 = (ArrayList<Product>) getObject();
+            ArrayList<Product> products4 = (ArrayList<Product>) getObject();
+            ArrayList<Product> allProducts = new ArrayList<>();
+            allProducts.addAll(products1);
+            allProducts.addAll(products2);
+            allProducts.addAll(products3);
+            allProducts.addAll(products4);
             return allProducts;
         } catch (IOException e) {
             e.printStackTrace();
@@ -191,7 +199,12 @@ public class Client {
         try {
             dataOutputStream.writeUTF("getAllOffs");
             dataOutputStream.flush();
-            ArrayList<Off> allOffs = (ArrayList<Off>) getObject();
+            int size = Integer.parseInt(dataInputStream.readUTF());
+            ArrayList<Off> allOffs = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                allOffs.add((Off) getObject());
+
+            }
             return allOffs;
         } catch (IOException e) {
             e.printStackTrace();
@@ -215,13 +228,15 @@ public class Client {
         try {
             dataOutputStream.writeUTF("getAllUsers");
             dataOutputStream.flush();
-            ArrayList<User> buyers = (ArrayList<User>)getObject();
-            ArrayList<User> sellers = (ArrayList<User>)getObject();
-            ArrayList<User> managers = (ArrayList<User>)getObject();
+            ArrayList<User> buyers = (ArrayList<User>) getObject();
+            ArrayList<User> sellers = (ArrayList<User>) getObject();
+            ArrayList<User> managers = (ArrayList<User>) getObject();
+            ArrayList<User> supporters = (ArrayList<User>) getObject();
             ArrayList<User> allUsers = new ArrayList<>();
             allUsers.addAll(buyers);
             allUsers.addAll(sellers);
             allUsers.addAll(managers);
+            allUsers.addAll(supporters);
             return allUsers;
         } catch (IOException e) {
             e.printStackTrace();

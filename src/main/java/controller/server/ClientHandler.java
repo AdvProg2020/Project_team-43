@@ -415,17 +415,21 @@ public class ClientHandler extends Thread {
         ArrayList<User> buyers = new ArrayList<>();
         ArrayList<User> sellers = new ArrayList<>();
         ArrayList<User> managers = new ArrayList<>();
+        ArrayList<User> supporters = new ArrayList<>();
         for (User user : arrayList) {
             if (user.getUserType() == UserType.BUYER)
                 buyers.add(user);
             else if (user.getUserType() == UserType.SELLER)
                 sellers.add(user);
-            else
+            else if (user.getUserType() == UserType.MANAGER)
                 managers.add(user);
+            else
+                supporters.add(user);
         }
         sendObject(buyers);
         sendObject(sellers);
         sendObject(managers);
+        sendObject(supporters);
 
     }
 
@@ -438,11 +442,38 @@ public class ClientHandler extends Thread {
     }
 
     private void getAllOffs() {
-        sendObject(server.getAllOffs());
+        ArrayList<Off> allOffs = server.getAllOffs();
+        try {
+            System.out.println(allOffs.size());
+            dataOutputStream.writeUTF(allOffs.size() + "");
+            dataOutputStream.flush();
+            for (Off off : allOffs) {
+                sendObject(off);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getAllProducts() {
-        sendObject(server.getAllProducts());
+        ArrayList<Product> allProducts = server.getAllProducts();
+        ArrayList<Product> products1 = new ArrayList<>();
+        ArrayList<Product> products2 = new ArrayList<>();
+        ArrayList<Product> products3 = new ArrayList<>();
+        ArrayList<Product> products4 = new ArrayList<>();
+        for (Product product : allProducts) {
+            if (product.getName().indexOf(0) > 'a' && product.getName().indexOf(0) < 'f') {
+                products1.add(product);
+            } else if (product.getName().indexOf(0) >= 'f' && product.getName().indexOf(0) < 'o') {
+                products2.add(product);
+            } else if (product.getName().indexOf(0) >= 'o' && product.getName().indexOf(0) < 'z') {
+                products3.add(product);
+            } else products4.add(product);
+        }
+        sendObject(products1);
+        sendObject(products2);
+        sendObject(products3);
+        sendObject(products4);
     }
 
     private void getAllRequests() {
