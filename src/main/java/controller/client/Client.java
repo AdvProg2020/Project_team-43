@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -26,7 +27,7 @@ public class Client {
 
     public void run() {
         try {
-            socket = new Socket("localhost", 7777);
+            socket = new Socket("0.tcp.ngrok.io", 14779);
             dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dataOutputStream = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -214,7 +215,13 @@ public class Client {
         try {
             dataOutputStream.writeUTF("getAllUsers");
             dataOutputStream.flush();
-            ArrayList<User> allUsers = (ArrayList<User>) getObject();
+            ArrayList<User> buyers = (ArrayList<User>)getObject();
+            ArrayList<User> sellers = (ArrayList<User>)getObject();
+            ArrayList<User> managers = (ArrayList<User>)getObject();
+            ArrayList<User> allUsers = new ArrayList<>();
+            allUsers.addAll(buyers);
+            allUsers.addAll(sellers);
+            allUsers.addAll(managers);
             return allUsers;
         } catch (IOException e) {
             e.printStackTrace();
@@ -830,5 +837,6 @@ public class Client {
             e.printStackTrace();
         }
     }
+
 }
 

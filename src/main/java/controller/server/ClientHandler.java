@@ -3,8 +3,12 @@ package controller.server;
 import javafx.util.Pair;
 import model.*;
 import model.request.Request;
+import org.apache.commons.io.FileUtils;
 
+import javax.xml.bind.JAXB;
 import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
@@ -154,8 +158,7 @@ public class ClientHandler extends Thread {
                     getAllIdProducts();
                 } else if (command.startsWith("getFilesInfo")) {
                     getFilesInfo(command);
-                }
-                else {
+                } else {
                     System.out.println("What the fuck command");
                 }
             }
@@ -408,7 +411,22 @@ public class ClientHandler extends Thread {
     }
 
     private void getAllUsers() {
-        sendObject(server.getAllUsers());
+        ArrayList<User> arrayList = server.getAllUsers();
+        ArrayList<User> buyers = new ArrayList<>();
+        ArrayList<User> sellers = new ArrayList<>();
+        ArrayList<User> managers = new ArrayList<>();
+        for (User user : arrayList) {
+            if (user.getUserType() == UserType.BUYER)
+                buyers.add(user);
+            else if (user.getUserType() == UserType.SELLER)
+                sellers.add(user);
+            else
+                managers.add(user);
+        }
+        sendObject(buyers);
+        sendObject(sellers);
+        sendObject(managers);
+
     }
 
     private void getAllCompanies() {
@@ -758,6 +776,7 @@ public class ClientHandler extends Thread {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(dataOutputStream);
             objectOutputStream.writeObject(object);
             objectOutputStream.flush();
+            System.out.println("write done");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -791,5 +810,4 @@ public class ClientHandler extends Thread {
             e.printStackTrace();
         }
     }
-
 }
