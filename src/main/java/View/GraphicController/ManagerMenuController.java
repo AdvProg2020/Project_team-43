@@ -139,7 +139,6 @@ public class ManagerMenuController extends Controller {
         if (usersListView.getSelectionModel().getSelectedItem() == null) return;
         Music.getInstance().open();
         String userName = usersListView.getSelectionModel().getSelectedItem().toString();
-        updateUsersListView();
         selectedUser = User.getUserByUserName(userName);
         if (selectedUser == null) {
             return;
@@ -163,8 +162,7 @@ public class ManagerMenuController extends Controller {
         Music.getInstance().open();
         String productNameAndId = productsListView.getSelectionModel().getSelectedItem().toString();
         String productId = productNameAndId.split(" / ")[1].trim();
-        updateProductListView();
-        selectedProduct = Product.getAllProductById(productId);
+        selectedProduct = Product.getProductById(productId);
         if (selectedProduct == null) return;
         showProduct(selectedProduct);
 
